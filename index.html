@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalysteon — Environment Art</title>
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #010810; --surface: #051322; --surface2: #091B32;
+  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
+  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22);
+  --accent: #C9A84C;
+  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
+  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px;
+  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+  --display: 'Bebas Neue', sans-serif;
+}
+html, body { height: 100%; }
+body {
+  background-color: #020A16;
+  background-image:
+    radial-gradient(ellipse at 20% 0%,   rgba(10,30,80,0.60) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(6,20,55,0.50) 0%, transparent 50%);
+  color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column; min-height: 100vh;
+}
+
+/* VIDEO BG */
+.bg-video { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.bg-video video { width: 100%; height: 100%; object-fit: cover; opacity: 0.18; }
+.bg-video::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(1,8,16,0.55) 0%, rgba(2,10,22,0.35) 60%, rgba(1,8,16,0.70) 100%);
+}
+
+/* HEADER */
+header {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 2.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.20);
+}
+.logo { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.28); border-radius: 20px; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.05); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; cursor: pointer; padding: 0.15rem 0.3rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-btn.active { color: var(--accent); }
+.lang-sep { color: var(--text-dim); font-size: 0.6rem; }
+
+/* MAIN */
+main {
+  position: relative; z-index: 10;
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 3rem 2rem 4rem;
+  gap: 3.5rem;
+}
+
+/* HERO TEXT */
+.hero-text { text-align: center; }
+.eyebrow {
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.28em;
+  color: var(--accent); text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ''; display: inline-block; width: 24px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.eyebrow::after { background: linear-gradient(to left, transparent, var(--gold)); }
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  letter-spacing: 0.05em; line-height: 0.9;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.hero-title em {
+  background: linear-gradient(110deg,
+    #C9A84C 0%,
+    #C9A84C 35%,
+    #F2D777 44%,
+    #fffaee 50%,
+    #F2D777 56%,
+    #C9A84C 65%,
+    #C9A84C 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; font-style: normal;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -100% center; }
+}
+.hero-sub {
+  font-family: var(--mono); font-size: 0.8rem;
+  color: var(--text-muted); letter-spacing: 0.06em; line-height: 1.7;
+}
+
+/* PARTICLES */
+#particle-canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+/* CHOICE CARDS */
+.choices { display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 780px; }
+
+.choice-card {
+  flex: 1; min-width: 280px; max-width: 360px;
+  text-decoration: none;
+  background: linear-gradient(145deg, rgba(9,27,50,0.80) 0%, rgba(5,19,34,0.90) 100%);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2rem 1.75rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), border-color 0.28s;
+  position: relative; overflow: hidden;
+}
+/* top inner glow */
+.choice-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% -10%, rgba(201,168,76,0.10) 0%, transparent 65%);
+  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+/* mouse spotlight */
+.choice-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(201,168,76,0.11) 0%, transparent 65%);
+  opacity: 0; transition: opacity 0.35s; pointer-events: none;
+}
+.choice-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(201,168,76,0.40);
+  animation: card-breathe 2.8s ease-in-out infinite;
+}
+.choice-card:hover::before { opacity: 1; }
+.choice-card:hover::after  { opacity: 1; }
+
+@keyframes card-breathe {
+  0%,100% { box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 18px rgba(201,168,76,0.08); }
+  50%      { box-shadow: 0 20px 60px rgba(0,0,0,0.60), 0 0 38px rgba(201,168,76,0.18), 0 0 70px rgba(201,168,76,0.05); }
+}
+
+.card-icon { font-size: 1.6rem; line-height: 1; }
+.card-label {
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent);
+}
+.card-title {
+  font-family: var(--display); font-size: 2rem; letter-spacing: 0.06em;
+  color: var(--text); line-height: 1;
+}
+.card-desc {
+  font-family: var(--sans); font-size: 0.8rem;
+  color: var(--text-muted); line-height: 1.65;
+  flex: 1;
+}
+.card-cta {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold-bright); margin-top: 0.25rem;
+}
+.card-cta::after { content: '→'; transition: transform 0.18s; }
+.choice-card:hover .card-cta::after { transform: translateX(4px); }
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  border-top: 1px solid var(--border-mid);
+}
+.footer-copy { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-link { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .choices { flex-direction: column; align-items: center; }
+  .choice-card { min-width: 0; width: 100%; max-width: 400px; }
+  header { padding: 1.25rem 1.5rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+<div class="bg-video">
+  <video autoplay muted loop playsinline>
+    <source src="img/hero-reel.mp4" type="video/mp4">
+  </video>
+</div>
+
+<header>
+  <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
+  <nav class="header-nav" style="display:flex;align-items:center;gap:0.25rem;position:absolute;left:50%;transform:translateX(-50%)">
+    <a style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:20px;transition:all 0.18s" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+    <a style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:20px;transition:all 0.18s" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+    <a style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:20px;transition:all 0.18s" href="about.html" data-en="About" data-fr="À propos">About</a>
+  </nav>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" id="lang-btn-fr" onclick="setLang('fr')">FR</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero-text">
+    <div class="eyebrow" data-en="Environment Art Studio" data-fr="Studio de création d'environnements">Environment Art Studio</div>
+    <h1 class="hero-title" data-en="KALYS<em>T</em>EON" data-fr="KALYS<em>T</em>EON">KALYS<em>T</em>EON</h1>
+    <p class="hero-sub" data-en="Terrain assets &amp; custom environment art for Unreal Engine 5 &amp; Unity" data-fr="Assets terrain &amp; art environnemental sur mesure pour Unreal Engine 5 &amp; Unity">Terrain assets &amp; custom environment art for Unreal Engine 5 &amp; Unity</p>
+  </div>
+
+  <div class="choices">
+
+    <a class="choice-card" href="products.html">
+      <div class="card-icon">📦</div>
+      <div class="card-label" data-en="Asset Store" data-fr="Boutique">Asset Store</div>
+      <div class="card-title" data-en="PRODUCTS" data-fr="PRODUITS">PRODUCTS</div>
+      <p class="card-desc" data-en="Ready-to-use environment packs — landscapes, glaciers, icebergs and more. Available on Fab, Unity Asset Store and ArtStation." data-fr="Packs environnements prêts à l'emploi — paysages, glaciers, icebergs et plus. Disponibles sur Fab, Unity Asset Store et ArtStation.">Ready-to-use environment packs — landscapes, glaciers, icebergs and more. Available on Fab, Unity Asset Store and ArtStation.</p>
+      <div class="card-cta" data-en="Browse packs" data-fr="Voir les packs">Browse packs</div>
+    </a>
+
+    <a class="choice-card" href="commission.html">
+      <div class="card-icon">✦</div>
+      <div class="card-label" data-en="Custom Work" data-fr="Travail sur mesure">Custom Work</div>
+      <div class="card-title" data-en="COMMISSION" data-fr="COMMISSION">COMMISSION</div>
+      <p class="card-desc" data-en="Custom environment art tailored to your project — terrain, biomes, hero assets and full scenes. Built for studios and independent developers." data-fr="Art environnemental sur mesure pour votre projet — terrain, biomes, assets héros et scènes complètes. Pour studios et développeurs indépendants.">Custom environment art tailored to your project — terrain, biomes, hero assets and full scenes. Built for studios and independent developers.</p>
+      <div class="card-cta" data-en="Request a commission" data-fr="Faire une demande">Request a commission</div>
+    </a>
+
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-copy">© 2026 Kalysteon — Andrei Bobe</span>
+  <div class="footer-links">
+    <a class="footer-link" href="https://www.fab.com/sellers/Kalysteon" target="_blank">Fab</a>
+    <a class="footer-link" href="https://assetstore.unity.com/publishers/104184" target="_blank">Unity</a>
+    <a class="footer-link" href="https://www.artstation.com/andreibobe/store" target="_blank">ArtStation</a>
+  </div>
+</footer>
+
+<script>
+/* ── LANG ── */
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-en]').forEach(function(el) {
+    var txt = el.getAttribute('data-' + lang);
+    if (txt) el.innerHTML = txt;
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active', b.id === 'lang-btn-' + lang);
+  });
+}
+
+/* ── PARTICLES ── */
+(function() {
+  var canvas = document.getElementById('particle-canvas');
+  var ctx = canvas.getContext('2d');
+  var pts = [];
+  var W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (var i = 0; i < 60; i++) {
+    pts.push({
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      r:  Math.random() * 1.1 + 0.3,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      a:  Math.random() * 0.35 + 0.08,
+      da: (Math.random() > 0.5 ? 1 : -1) * 0.0025
+    });
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      p.a += p.da;
+      if (p.a < 0.05) p.da =  Math.abs(p.da);
+      if (p.a > 0.42) p.da = -Math.abs(p.da);
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+      ctx.fillStyle = 'rgba(201,168,76,' + p.a.toFixed(3) + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ── CARD MOUSE SPOTLIGHT ── */
+document.querySelectorAll('.choice-card').forEach(function(card) {
+  card.addEventListener('mousemove', function(e) {
+    var r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+  });
+});
+</script>
+</body>
+</html>

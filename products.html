@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalysteon — Environment Packs</title>
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #010810; --surface: #051322; --surface2: #091B32; --surface3: #0E2240;
+  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
+  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22); --border-dark: rgba(0,3,10,0.90);
+  --accent: #C9A84C; --accent-bright: #F2D777;
+  --accent-dim: rgba(201,168,76,0.09); --accent-glow: rgba(201,168,76,0.18);
+  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
+  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px; --radius-xs: 6px;
+  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+  --display: 'Bebas Neue', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background-color: #020A16;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(10,30,80,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(6,20,55,0.45) 0%, transparent 50%);
+  color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
+.logo { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 1.5rem; }
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.28); border-radius: 20px; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.05); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; cursor: pointer; padding: 0.15rem 0.3rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-btn.active { color: var(--accent); }
+.lang-sep { color: var(--text-dim); font-size: 0.6rem; }
+.header-nav { display: flex; align-items: center; gap: 0.25rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-link { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 20px; transition: all 0.18s; }
+.nav-link:hover { color: var(--text); background: rgba(201,168,76,0.07); }
+.nav-link.active { color: var(--gold-bright); background: rgba(201,168,76,0.10); }
+@media (max-width: 768px) { .header-nav { display: none; } }
+
+/* PAGE BANNER */
+.page-banner { padding: 4rem 2.5rem 3rem; border-bottom: 1px solid var(--border-mid); background: linear-gradient(180deg, rgba(10,28,65,0.30) 0%, transparent 100%); }
+.banner-wrap { max-width: 1300px; margin: 0 auto; }
+.banner-eyebrow { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.25em; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+.banner-eyebrow::before { content: ''; display: inline-block; width: 28px; height: 2px; background: linear-gradient(to right, var(--gold-dark), var(--gold-bright)); }
+.banner-title { font-family: var(--display); font-size: clamp(2.8rem, 6vw, 5rem); letter-spacing: 0.04em; line-height: 0.92; color: var(--text); margin-bottom: 1rem; }
+.banner-title em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.banner-sub { font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; }
+
+/* STORE */
+.store-section { padding: 3rem 0 6rem; }
+.store-wrap { max-width: 1300px; margin: 0 auto; padding: 0 2.5rem; }
+.store-tabs { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--border-mid); margin-bottom: 1.75rem; }
+.store-tab { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 0.7rem 1.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.18s; }
+.store-tab:hover { color: var(--text); }
+.store-tab.active { color: var(--gold-bright); border-bottom-color: var(--gold); }
+.tab-count { background: var(--accent-dim); border: 1px solid var(--border-mid); color: var(--text-dim); font-size: 0.56rem; padding: 0.1rem 0.45rem; border-radius: 20px; }
+.store-tab.active .tab-count { color: var(--gold); border-color: var(--border); }
+
+/* FILTER BARS */
+.store-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+.filter-pill { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: 1px solid var(--border-mid); padding: 0.28rem 0.75rem; border-radius: 20px; cursor: pointer; transition: all 0.15s; }
+.filter-pill:hover { color: var(--text); border-color: var(--border); }
+.filter-pill.active { color: var(--gold-bright); background: rgba(201,168,76,0.09); border-color: var(--border); }
+.filter-pill.active[data-filter="realistic"] { color: #E05555; background: rgba(224,85,85,0.09); border-color: rgba(224,85,85,0.4); }
+.filter-pill.active[data-filter="stylized"]  { color: #5BA4F5; background: rgba(91,164,245,0.09); border-color: rgba(91,164,245,0.4); }
+.filter-pill.active[data-filter="polygonal"] { color: #5ECFB7; background: rgba(94,207,183,0.09); border-color: rgba(94,207,183,0.4); }
+.filter-pill.active[data-filter="cartoon"]   { color: #A87AF0; background: rgba(168,122,240,0.09); border-color: rgba(168,122,240,0.4); }
+.filter-pill.active[data-filter="retro"]     { color: #F0D060; background: rgba(240,208,96,0.09); border-color: rgba(240,208,96,0.4); }
+
+/* COLLECTION PICKER */
+.coll-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; padding: 2.5rem 0 1rem; align-items: stretch; }
+.coll-card { position: relative; min-height: 400px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 1px solid transparent; background: var(--surface2) center/cover no-repeat; transition: transform 0.28s, border-color 0.28s, box-shadow 0.28s; }
+.coll-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,8,20,0.97) 0%, rgba(4,12,28,0.60) 38%, rgba(4,10,22,0.08) 100%); }
+
+/* ── Frostholm : warm gold glow ── */
+.coll-card--featured { border-color: rgba(201,168,76,0.55); box-shadow: 0 0 0 1px rgba(201,168,76,0.22), 0 0 28px rgba(201,168,76,0.45), 0 0 70px rgba(201,168,76,0.20), 0 10px 38px rgba(0,0,0,0.65); }
+.coll-card--featured:hover { transform: translateY(-7px) scale(1.016); border-color: rgba(230,195,100,0.85); box-shadow: 0 0 0 1px rgba(230,195,100,0.40), 0 0 45px rgba(201,168,76,0.65), 0 0 100px rgba(201,168,76,0.32), 0 22px 60px rgba(0,0,0,0.75); }
+.coll-card--featured .coll-card-overlay { background: linear-gradient(to top, rgba(14,8,2,0.97) 0%, rgba(20,13,3,0.58) 40%, rgba(8,10,20,0.05) 100%); }
+.coll-card--featured .coll-card-name { background: linear-gradient(90deg, #e8d08a 0%, var(--gold-bright) 50%, #c9a84c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+/* Flagship badge */
+.coll-flagship-badge { position: absolute; top: 1.1rem; right: 1.1rem; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.07)); border: 1px solid rgba(201,168,76,0.55); color: var(--gold); padding: 0.25rem 0.65rem; border-radius: 20px; backdrop-filter: blur(4px); }
+
+/* ── 8K Terrain : spectral multi-biome glow ── */
+#coll-card-8k { border-color: rgba(255,145,55,0.45); box-shadow: 0 0 22px rgba(255,90,30,0.30), 0 0 45px rgba(55,175,255,0.22), 0 0 70px rgba(70,220,130,0.16), 0 10px 38px rgba(0,0,0,0.65); }
+#coll-card-8k:hover { transform: translateY(-7px) scale(1.016); border-color: rgba(255,175,80,0.75); box-shadow: 0 0 35px rgba(255,90,30,0.50), 0 0 65px rgba(55,175,255,0.38), 0 0 95px rgba(70,220,130,0.28), 0 22px 60px rgba(0,0,0,0.75); }
+
+/* ── Arctic Landscapes : sky blue silver glow ── */
+#coll-card-arctic { border-color: rgba(100,190,255,0.50); box-shadow: 0 0 0 1px rgba(100,190,255,0.18), 0 0 28px rgba(100,190,255,0.40), 0 0 70px rgba(160,215,255,0.20), 0 10px 38px rgba(0,0,0,0.65); }
+#coll-card-arctic:hover { transform: translateY(-7px) scale(1.016); border-color: rgba(140,210,255,0.85); box-shadow: 0 0 0 1px rgba(140,210,255,0.38), 0 0 45px rgba(100,190,255,0.60), 0 0 100px rgba(160,215,255,0.32), 0 22px 60px rgba(0,0,0,0.75); }
+#coll-card-arctic .coll-card-overlay { background: linear-gradient(to top, rgba(2,8,22,0.97) 0%, rgba(4,14,32,0.60) 38%, rgba(4,12,24,0.06) 100%); }
+#coll-card-arctic .coll-card-count { color: rgba(140,210,255,0.90); }
+#coll-card-arctic .coll-card-cta { color: rgba(140,210,255,0.85); border-bottom-color: rgba(100,190,255,0.35); }
+/* Body & text */
+.coll-card-body { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem 2rem; }
+.coll-card-count { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.4rem; opacity: 0.85; }
+.coll-card-name { font-family: var(--display); font-size: 2.6rem; font-weight: 900; letter-spacing: -0.01em; color: #fff; line-height: 1; margin-bottom: 0.55rem; text-transform: uppercase; }
+.coll-card-sub { font-family: var(--mono); font-size: 0.58rem; color: rgba(255,255,255,0.42); letter-spacing: 0.09em; margin-bottom: 1.2rem; line-height: 1.65; }
+.coll-card-cta { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-bright); border-bottom: 1px solid rgba(201,168,76,0.4); display: inline-block; padding-bottom: 0.15rem; transition: color 0.15s, border-color 0.15s; }
+.coll-card:hover .coll-card-cta { color: #fff; border-color: rgba(255,255,255,0.45); }
+@media (max-width: 768px) { .coll-picker { grid-template-columns: 1fr; gap: 1rem; } .coll-card { min-height: 260px; } .coll-card-name { font-size: 2rem; } }
+
+/* BACK BUTTON */
+.coll-back { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; background: none; border: 1px solid var(--border-mid); color: var(--text-muted); padding: 0.5rem 1.1rem; border-radius: var(--radius-xs); cursor: pointer; margin-bottom: 1.6rem; transition: color 0.15s, border-color 0.15s, background 0.15s; display: inline-block; }
+.coll-back:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.05); }
+
+/* GRID */
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.products-grid-5 { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 1200px) { .products-grid { grid-template-columns: repeat(3, 1fr); } .products-grid-5 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); } .products-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .products-grid { grid-template-columns: 1fr; } .products-grid-5 { grid-template-columns: 1fr; } }
+
+/* PRODUCT CARD */
+.product-card { background: var(--surface); border: 1px solid var(--border-mid); border-radius: var(--radius-md); overflow: hidden; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+.product-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.45); box-shadow: 0 12px 35px rgba(0,0,0,0.50), 0 0 20px rgba(201,168,76,0.07); }
+.product-thumb-wrap { aspect-ratio: 16/9; overflow: hidden; background: var(--surface2); }
+.product-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; display: block; }
+.product-card:hover .product-thumb-wrap img { transform: scale(1.05); }
+.product-body { padding: 0.85rem 1rem 0.6rem; display: flex; flex-direction: column; gap: 0.35rem; flex: 1; }
+.product-title { font-family: var(--sans); font-weight: 500; font-size: 0.8rem; color: var(--text); line-height: 1.35; }
+.product-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 0.45rem; margin-top: auto; flex-wrap: wrap; gap: 0.35rem; }
+.badge-wrap { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.style-badge { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.18rem 0.52rem; border-radius: 3px; border: 1px solid; }
+.badge-realistic { color: #E05555; border-color: rgba(224,85,85,0.35); background: rgba(224,85,85,0.07); }
+.badge-stylized  { color: #5BA4F5; border-color: rgba(91,164,245,0.35); background: rgba(91,164,245,0.07); }
+.badge-polygonal { color: #5ECFB7; border-color: rgba(94,207,183,0.35); background: rgba(94,207,183,0.07); }
+.badge-cartoon   { color: #A87AF0; border-color: rgba(168,122,240,0.35); background: rgba(168,122,240,0.07); }
+.badge-retro     { color: #F0D060; border-color: rgba(240,208,96,0.35); background: rgba(240,208,96,0.07); }
+.badge-pack { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
+.biome-badge { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.18rem 0.52rem; border-radius: 3px; border: 1px solid; }
+.biome-m { color: #7AABB5; border-color: rgba(122,171,181,0.35); background: rgba(122,171,181,0.07); }
+.biome-a { color: #D4845A; border-color: rgba(212,132,90,0.35); background: rgba(212,132,90,0.07); }
+.biome-c { color: #A5C8E8; border-color: rgba(165,200,232,0.35); background: rgba(165,200,232,0.07); }
+.biome-l { color: #6FBB85; border-color: rgba(111,187,133,0.35); background: rgba(111,187,133,0.07); }
+.biome-sub { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
+.product-price { font-family: var(--mono); font-size: 0.85rem; color: var(--gold-bright); font-weight: 500; flex-shrink: 0; }
+.product-link { display: block; text-align: center; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.55rem; border-top: 1px solid var(--border-mid); transition: all 0.15s; }
+.product-link:hover { color: var(--gold-bright); background: rgba(201,168,76,0.06); }
+.product-link::after { content: ' ↗'; }
+
+/* STORE FOOTER */
+.store-footer { margin-top: 2.5rem; display: flex; justify-content: center; }
+.btn-store-more { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: 1px solid var(--border); padding: 0.65rem 2rem; border-radius: 20px; transition: all 0.18s; }
+.btn-store-more:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+/* DRAWER OVERLAY */
+.drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0); z-index: 200; pointer-events: none; transition: background 0.3s; }
+.drawer-overlay.open { background: rgba(0,0,0,0.55); pointer-events: all; }
+.drawer { position: fixed; top: 0; right: -860px; width: 860px; max-width: 98vw; height: 100vh; background: linear-gradient(160deg, #0C1E3C 0%, #061322 100%); border-left: 1px solid var(--border); z-index: 201; overflow-y: auto; transition: right 0.32s cubic-bezier(0.22,1,0.36,1); display: flex; flex-direction: column; }
+.drawer.open { right: 0; }
+.drawer-close { position: absolute; top: 1.1rem; right: 1.1rem; background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; line-height: 1; padding: 0.3rem 0.5rem; border-radius: var(--radius-xs); transition: color 0.15s, background 0.15s; z-index: 1; }
+.drawer-close:hover { color: var(--text); background: rgba(201,168,76,0.08); }
+.drawer-hero { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: var(--surface2); flex-shrink: 0; position: relative; }
+.drawer-hero img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.18s; cursor: zoom-in; }
+/* LIGHTBOX */
+.lightbox { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.92); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.lightbox.open { opacity: 1; pointer-events: all; }
+.lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 4px; box-shadow: 0 20px 80px rgba(0,0,0,0.8); display: block; }
+.lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; background: none; border: none; color: rgba(255,255,255,0.7); font-size: 1.8rem; cursor: pointer; line-height: 1; transition: color 0.15s; }
+.lightbox-close:hover { color: #fff; }
+.lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; color: rgba(255,255,255,0.8); font-size: 1.4rem; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+.lightbox-arrow:hover { background: rgba(255,255,255,0.18); color: #fff; }
+.lightbox-arrow.prev { left: 1.5rem; }
+.lightbox-arrow.next { right: 1.5rem; }
+.lightbox-counter { position: absolute; bottom: 1.2rem; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); }
+.drawer-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.45); border: none; color: rgba(255,255,255,0.85); font-size: 1rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; z-index: 2; }
+.drawer-hero-arrow:hover { background: rgba(0,0,0,0.70); color: #fff; }
+.drawer-hero-arrow.prev { left: 0.6rem; }
+.drawer-hero-arrow.next { right: 0.6rem; }
+.drawer-hero-counter { position: absolute; bottom: 0.5rem; right: 0.6rem; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.65); background: rgba(0,0,0,0.45); padding: 0.18rem 0.5rem; border-radius: 20px; }
+/* GALLERY STRIP */
+.drawer-gallery-strip { display: flex; gap: 0.35rem; padding: 0.5rem 0.75rem; background: rgba(0,0,0,0.25); overflow-x: auto; flex-shrink: 0; scrollbar-width: thin; scrollbar-color: rgba(201,168,76,0.25) transparent; }
+.drawer-gallery-strip::-webkit-scrollbar { height: 3px; }
+.drawer-gallery-strip::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.25); border-radius: 2px; }
+.gallery-thumb { width: 54px; height: 34px; border-radius: 3px; overflow: hidden; flex-shrink: 0; cursor: pointer; border: 1px solid transparent; transition: border-color 0.15s, opacity 0.15s; opacity: 0.55; }
+.gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-thumb:hover { opacity: 0.85; }
+.gallery-thumb.active { border-color: var(--gold); opacity: 1; }
+.drawer-body { padding: 1.4rem 1.75rem 2rem; display: flex; flex-direction: column; gap: 0; flex: 1; }
+
+/* DRAWER HEAD */
+.drawer-title { font-family: var(--display); font-size: 1.55rem; letter-spacing: 0.05em; color: var(--text); line-height: 1.05; }
+.drawer-head-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+.drawer-price { font-family: var(--mono); font-size: 1.3rem; color: var(--gold-bright); font-weight: 500; flex-shrink: 0; }
+.drawer-sep { height: 1px; background: linear-gradient(to right, var(--border), transparent); margin: 0.9rem 0; }
+.drawer-coll { margin-bottom: 0.6rem; }
+.drawer-desc { font-family: var(--sans); font-size: 0.83rem; color: var(--text-muted); line-height: 1.78; }
+.drawer-style-note { font-family: var(--mono); font-size: 0.75rem; color: rgba(201,168,76,0.6); line-height: 1.6; margin-top: 0.55rem; font-style: italic; }
+
+/* RICH DESCRIPTION */
+.rdesc-intro { font-family: var(--sans); font-size: 0.83rem; color: var(--text-muted); line-height: 1.78; margin-bottom: 1rem; }
+.rdesc-block { margin-bottom: 0.9rem; }
+.rdesc-label { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); opacity: 0.70; margin-bottom: 0.45rem; }
+.rdesc-types { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.rdesc-type { background: rgba(255,255,255,0.025); border: 1px solid rgba(201,168,76,0.18); border-radius: 8px; padding: 0.6rem 0.75rem; transition: border-color 0.18s, background 0.18s; }
+.rdesc-type:hover { border-color: rgba(201,168,76,0.38); }
+.rdesc-type[data-gidx] { cursor: pointer; }
+.rdesc-type[data-gidx]:hover { border-color: var(--gold-bright); background: rgba(201,168,76,0.08); }
+.rdesc-type-tooltip { position: fixed; z-index: 9999; pointer-events: none; display: none; width: 220px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.7); border: 1px solid rgba(201,168,76,0.35); }
+.rdesc-type-tooltip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rdesc-type b { display: block; font-family: var(--mono); font-size: 0.68rem; font-weight: 600; color: var(--text); margin-bottom: 0.12rem; }
+.rdesc-type span { font-family: var(--mono); font-size: 0.60rem; color: var(--text-muted); line-height: 1.45; }
+.rdesc-mats { display: flex; flex-direction: column; gap: 0.35rem; }
+.rdesc-mat b { font-family: var(--mono); font-size: 0.68rem; font-weight: 600; color: var(--text); margin-right: 0.45rem; }
+.rdesc-mat { font-family: var(--mono); font-size: 0.63rem; color: var(--text-muted); line-height: 1.55; }
+/* Expand / collapse */
+.rdesc-expandable { max-height: 0; overflow: hidden; transition: max-height 0.38s ease; }
+.rdesc-expandable.open { max-height: 600px; }
+.rdesc-more-btn { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(201,168,76,0.60); background: none; border: 1px solid rgba(201,168,76,0.22); border-radius: 20px; padding: 0.22rem 0.75rem; cursor: pointer; margin-top: 0.75rem; transition: color 0.15s, border-color 0.15s, background 0.15s; display: inline-block; }
+.rdesc-more-btn:hover { color: var(--gold); border-color: rgba(201,168,76,0.50); background: rgba(201,168,76,0.05); }
+.rdesc-features { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.rdesc-feature { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-bright); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); border-radius: 20px; padding: 0.22rem 0.65rem; }
+.rdesc-doc-btn { display: block; font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.10em; text-transform: uppercase; text-align: center; color: var(--text-muted); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.10); border-radius: 8px; padding: 0.52rem 1rem; text-decoration: none; margin-top: 0.6rem; transition: border-color 0.15s, background 0.15s; }
+.rdesc-doc-btn:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); color: var(--text); }
+.rdesc-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.75rem; }
+.rdesc-cta-btn { display: block; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.09em; text-transform: uppercase; text-align: center; text-decoration: none; border-radius: 8px; padding: 0.52rem 0.6rem; line-height: 1.4; transition: opacity 0.15s, background 0.15s; }
+.rdesc-cta-playtest { color: #c8daf8; background: rgba(30,70,160,0.30); border: 1px solid rgba(80,140,240,0.30); }
+.rdesc-cta-playtest:hover { background: rgba(30,70,160,0.45); }
+.rdesc-cta-showcase { color: var(--gold-bright); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.28); }
+.rdesc-cta-showcase:hover { background: rgba(201,168,76,0.15); }
+.rdesc-platforms { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.rdesc-platform { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 6px; padding: 0.22rem 0.65rem; border: 1px solid; }
+.rdesc-platform-fab { color: #e8d5a3; background: rgba(60,40,10,0.45); border-color: rgba(180,140,60,0.32); }
+.rdesc-platform-unity { color: #bfd4f0; background: rgba(10,30,60,0.45); border-color: rgba(80,140,220,0.32); }
+.rdesc-platform-artstation { color: #b8dcc0; background: rgba(10,50,25,0.45); border-color: rgba(60,170,85,0.32); }
+.rdesc-pairswith { display: flex; gap: 0.5rem; margin-top: 0.1rem; }
+.rdesc-pair-card { flex: 1; display: flex; flex-direction: column; text-decoration: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; background: rgba(255,255,255,0.03); cursor: pointer; transition: border-color 0.18s, background 0.18s; }
+.rdesc-pair-card:hover { border-color: rgba(201,168,76,0.30); background: rgba(201,168,76,0.04); }
+.rdesc-pair-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.rdesc-pair-card span { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.60); padding: 0.28rem 0.5rem 0.35rem; line-height: 1.4; }
+
+/* DRAWER SECTION */
+.drawer-section { margin-top: 1.1rem; }
+.drawer-section-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.6rem; }
+.drawer-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-mid); }
+
+/* VIDEO PLAYER */
+.drawer-vtabs { display: flex; gap: 0.3rem; margin-bottom: 0.55rem; }
+.vtab { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); background: none; border: 1px solid var(--border-mid); padding: 0.28rem 0.75rem; border-radius: 20px; cursor: pointer; transition: all 0.15s; }
+.vtab.active { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.07); }
+.drawer-vplayer { position: relative; aspect-ratio: 16/9; background: var(--surface2); border-radius: var(--radius-sm); overflow: hidden; cursor: pointer; border: 1px solid var(--border-mid); transition: border-color 0.15s; }
+.drawer-vplayer:hover { border-color: var(--border); }
+.drawer-vplayer img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.2s; }
+.drawer-vplayer:hover img { opacity: 0.82; }
+.drawer-vplayer iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.drawer-vplaybtn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.22); pointer-events: none; }
+.drawer-vplaybtn::before { content: ''; width: 0; height: 0; border-style: solid; border-width: 14px 0 14px 24px; border-color: transparent transparent transparent rgba(255,255,255,0.90); filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
+.drawer-vplayer:hover .drawer-vplaybtn { background: rgba(0,0,0,0.38); }
+
+/* SPECS GRID */
+.drawer-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; }
+.spec-item { background: rgba(9,27,50,0.7); border: 1px solid var(--border-mid); border-radius: var(--radius-xs); padding: 0.55rem 0.7rem; display: flex; flex-direction: column; gap: 0.12rem; }
+.spec-k { font-family: var(--mono); font-size: 0.53rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+.spec-v { font-family: var(--mono); font-size: 0.73rem; color: var(--text); }
+
+/* TAGS */
+.drawer-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.dtag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); border: 1px solid var(--border-mid); padding: 0.15rem 0.5rem; border-radius: 2px; }
+
+/* AMBIENT SHORT VIDEO */
+.drawer-desc-row { display: flex; gap: 1.1rem; align-items: flex-start; margin-top: 0.2rem; }
+.drawer-desc-col { flex: 1; min-width: 0; }
+.drawer-ambient-slot {
+  width: 195px; flex-shrink: 0;
+  aspect-ratio: 9/16;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface2);
+  position: relative;
+  margin-top: 0.1rem;
+}
+.drawer-ambient-slot iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none; pointer-events: none;
+}
+.drawer-ambient-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+  border: 1px dashed rgba(201,168,76,0.18); border-radius: var(--radius-sm);
+}
+.drawer-ambient-placeholder::before { content: '▶'; font-size: 0.8rem; color: var(--text-dim); opacity: 0.35; }
+.drawer-ambient-placeholder span { font-family: var(--mono); font-size: 0.44rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-align: center; padding: 0 0.25rem; line-height: 1.5; }
+
+/* CTA */
+.drawer-cta { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-mid); }
+.btn-buy { display: block; text-align: center; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.95rem 1.5rem; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); color: #010810; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); }
+.btn-buy:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
+.drawer-stores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.btn-store { display: block; text-align: center; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.6rem 0.5rem; border-radius: var(--radius-xs); border: 1px solid var(--border-mid); color: var(--text-muted); transition: all 0.15s; }
+.btn-store:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.06); }
+.btn-store--na { opacity: 0.28; pointer-events: none; cursor: default; text-decoration: line-through; }
+
+/* FOOTER */
+footer { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-top: 1px solid var(--border-mid); }
+.footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-link { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
+  <nav class="header-nav">
+    <a class="nav-link active" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+    <a class="nav-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+    <a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a>
+  </nav>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" id="lang-btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-banner">
+  <div class="banner-wrap">
+    <div class="banner-eyebrow" data-en="Asset Store" data-fr="Boutique d'assets">Asset Store</div>
+    <h1 class="banner-title" data-en="ENVIRONMENT <em>PACKS</em>" data-fr="PACKS <em>ENVIRONNEMENT</em>">ENVIRONMENT <em>PACKS</em></h1>
+    <p class="banner-sub" data-en="Production-ready terrain assets for Unreal Engine 5 &amp; Unity" data-fr="Assets terrain prêts à l'emploi pour Unreal Engine 5 &amp; Unity">Production-ready terrain assets for Unreal Engine 5 &amp; Unity</p>
+  </div>
+</div>
+
+<section class="store-section">
+<div class="store-wrap">
+
+  <!-- ══ COLLECTION PICKER ══ -->
+  <div class="coll-picker" id="coll-picker">
+    <div class="coll-card coll-card--featured" id="coll-card-frostholm" data-bg="img/collections/frostholm-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/2e69c18f-e70c-4d7e-a60c-d07f7f04cbbe/72da04d4-51e7-4571-a625-2eeb4b1fe45b.jpg" onclick="openCollection('frostholm')">
+      <div class="coll-flagship-badge">★ Flagship</div>
+      <div class="coll-card-overlay"></div>
+      <div class="coll-card-body">
+        <div class="coll-card-count">16 packs</div>
+        <div class="coll-card-name">Frosth&#246;lm</div>
+        <div class="coll-card-sub" data-en="A complete glacial fantasy universe spanning four biomes and four art styles. Everything you need to craft your frozen world." data-fr="Un univers glacial fantastique couvrant quatre biomes et quatre styles artistiques. Tout ce qu'il vous faut pour construire votre monde gelé.">A complete glacial fantasy universe spanning four biomes and four art styles. Everything you need to craft your frozen world.</div>
+        <div class="coll-card-cta" data-en="Explore ↗" data-fr="Explorer ↗">Explore ↗</div>
+      </div>
+    </div>
+    <div class="coll-card" id="coll-card-8k" data-bg="img/collections/8k-terrain-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" onclick="openCollection('8k')">
+      <div class="coll-card-overlay"></div>
+      <div class="coll-card-body">
+        <div class="coll-card-count">21 packs</div>
+        <div class="coll-card-name">8K Terrain</div>
+        <div class="coll-card-sub" data-en="Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like there is a terrain for it." data-fr="Vingt et un environnements 8K chacun construit autour d'un biome distinct. Quel que soit votre univers il y a un terrain pour ça.">Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like there is a terrain for it.</div>
+        <div class="coll-card-cta" data-en="Explore ↗" data-fr="Explorer ↗">Explore ↗</div>
+      </div>
+    </div>
+    <div class="coll-card" id="coll-card-arctic" data-bg="img/collections/arctic-landscapes-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg" onclick="openCollection('arctic')">
+      <div class="coll-card-overlay"></div>
+      <div class="coll-card-body">
+        <div class="coll-card-count">5 packs</div>
+        <div class="coll-card-name">Arctic Landscapes</div>
+        <div class="coll-card-sub" data-en="The original Arctic landscape fully rebuilt for modern engines and now available in five distinct art directions optimized for UE5 and Unity." data-fr="Le paysage Arctique original entièrement reconstruit pour les moteurs modernes et désormais disponible en cinq directions artistiques optimisées pour UE5 et Unity.">The original Arctic landscape fully rebuilt for modern engines and now available in five distinct art directions optimized for UE5 and Unity.</div>
+        <div class="coll-card-cta" data-en="Explore ↗" data-fr="Explorer ↗">Explore ↗</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STORE INNER (hidden until collection selected) ══ -->
+  <div id="store-inner" style="display:none">
+    <button class="coll-back" onclick="backToCollections()" data-en="← Collections" data-fr="← Collections">← Collections</button>
+
+    <div class="store-tabs">
+      <button class="store-tab active" data-col="frostholm" onclick="switchCollection('frostholm')" data-en="Frosth&#246;lm" data-fr="Frosth&#246;lm">Frosth&#246;lm <span class="tab-count">16</span></button>
+      <button class="store-tab" data-col="8k" onclick="switchCollection('8k')" data-en="8K Terrain Packs" data-fr="8K Terrain Packs">8K Terrain Packs <span class="tab-count">21</span></button>
+      <button class="store-tab" data-col="arctic" onclick="switchCollection('arctic')" data-en="Arctic Landscapes" data-fr="Arctic Landscapes">Arctic Landscapes <span class="tab-count">5</span></button>
+    </div>
+
+    <div class="store-filters" id="filters-style">
+      <button class="filter-pill active" data-filter="all" onclick="applyFilter('all')">All</button>
+      <button class="filter-pill" data-filter="realistic" onclick="applyFilter('realistic')" data-en="Realistic" data-fr="Réaliste">Realistic</button>
+      <button class="filter-pill" data-filter="stylized" onclick="applyFilter('stylized')" data-en="Stylized" data-fr="Stylisé">Stylized</button>
+      <button class="filter-pill" data-filter="polygonal" onclick="applyFilter('polygonal')" data-en="Polygonal" data-fr="Polygonal">Polygonal</button>
+      <button class="filter-pill" data-filter="cartoon" onclick="applyFilter('cartoon')" data-en="Cartoon" data-fr="Cartoon">Cartoon</button>
+      <button class="filter-pill" data-filter="retro" onclick="applyFilter('retro')" data-en="Retro" data-fr="Retro">Retro</button>
+    </div>
+
+    <div class="store-filters" id="filters-biome" style="display:none">
+      <button class="filter-pill active" data-filter="all" onclick="applyFilter('all')">All</button>
+      <button class="filter-pill" data-filter="m" onclick="applyFilter('m')" data-en="Mountain" data-fr="Montagne">Mountain</button>
+      <button class="filter-pill" data-filter="a" onclick="applyFilter('a')" data-en="Arid" data-fr="Aride">Arid</button>
+      <button class="filter-pill" data-filter="c" onclick="applyFilter('c')" data-en="Cold" data-fr="Froid">Cold</button>
+      <button class="filter-pill" data-filter="l" onclick="applyFilter('l')" data-en="Lush" data-fr="Luxuriant">Lush</button>
+    </div>
+
+    <div class="products-grid" id="store-grid"></div>
+  </div>
+
+</div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Kalysteon — Andrei Bobe</span>
+  <div class="footer-links">
+    <a class="footer-link" href="https://www.fab.com/sellers/Kalysteon" target="_blank">Fab</a>
+    <a class="footer-link" href="https://assetstore.unity.com/publishers/104184" target="_blank">Unity</a>
+    <a class="footer-link" href="https://www.artstation.com/andreibobe/store" target="_blank">ArtStation</a>
+  </div>
+</footer>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">✕</button>
+  <div class="drawer-hero">
+    <img id="drawer-img" src="" alt="" onclick="openLightbox()">
+    <button class="drawer-hero-arrow prev" id="drawer-prev" onclick="galleryNav(-1)">&#8249;</button>
+    <button class="drawer-hero-arrow next" id="drawer-next" onclick="galleryNav(1)">&#8250;</button>
+    <span class="drawer-hero-counter" id="drawer-counter"></span>
+  </div>
+  <div class="drawer-gallery-strip" id="drawer-gallery-strip"></div>
+  <div class="drawer-body">
+
+    <h2 class="drawer-title" id="drawer-title"></h2>
+    <div class="drawer-head-row">
+      <div id="drawer-meta"></div>
+      <span class="drawer-price" id="drawer-price"></span>
+    </div>
+    <div class="drawer-sep"></div>
+    <div class="drawer-coll" id="drawer-coll"></div>
+    <div class="drawer-desc-row">
+      <div class="drawer-desc-col" id="drawer-desc-col">
+        <p class="drawer-desc" id="drawer-desc"></p>
+        <p class="drawer-style-note" id="drawer-style-note"></p>
+      </div>
+      <div class="drawer-ambient-slot" id="drawer-ambient-slot"></div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="drawer-section" id="drawer-vsec">
+      <div class="drawer-section-label" data-en="Videos" data-fr="Vidéos">Videos</div>
+      <div class="drawer-vtabs" id="drawer-vtabs"></div>
+      <div class="drawer-vplayer" id="drawer-vplayer" onclick="playCurrentVideo()">
+        <img id="drawer-vthumb" src="" alt="" loading="lazy">
+        <div class="drawer-vplaybtn" id="drawer-vplaybtn"></div>
+      </div>
+    </div>
+
+    <!-- SPECS -->
+    <div class="drawer-section">
+      <div class="drawer-section-label" data-en="Technical" data-fr="Technique">Technical</div>
+      <div class="drawer-specs-grid" id="drawer-specs"></div>
+    </div>
+
+    <!-- TAGS -->
+    <div class="drawer-section" id="drawer-tags-sec">
+      <div class="drawer-section-label" data-en="Tags" data-fr="Tags">Tags</div>
+      <div class="drawer-tags" id="drawer-tags"></div>
+    </div>
+
+    <!-- CTA -->
+    <div class="drawer-cta">
+      <a class="btn-buy" href="#" id="drawer-btn-buy" target="_blank" rel="noopener" data-en="Buy here ↗" data-fr="Acheter ↗">Buy here ↗</a>
+      <div class="drawer-stores">
+        <a class="btn-store" id="drawer-btn-fab"    href="#" target="_blank" rel="noopener">Fab ↗</a>
+        <a class="btn-store" id="drawer-btn-unity"  href="#" target="_blank" rel="noopener">Unity ↗</a>
+        <a class="btn-store" id="drawer-btn-art"    href="#" target="_blank" rel="noopener">ArtStation ↗</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-arrow prev" onclick="lightboxNav(-1);event.stopPropagation()">&#8249;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-arrow next" onclick="lightboxNav(1);event.stopPropagation()">&#8250;</button>
+  <span class="lightbox-counter" id="lightbox-counter"></span>
+</div>
+
+<script>
+/* ═══ LANGUAGE ═══ */
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-en]').forEach(function(el) {
+    var txt = el.getAttribute('data-' + lang);
+    if (txt) el.innerHTML = txt;
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.id === 'lang-btn-' + lang); });
+}
+
+/* ═══ PRODUCT DATA ═══ */
+var PRODUCTS = [
+  // ── FROSTHOLM — Mountains ──────────────────────────────────────────────
+  {id:'2baaee7f-3fe2-45c3-9142-dd262aad2cb3',t:'Frostholm Mountains Realistic',p:109.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/012bb0d1-5666-41f2-b414-c34da51f7744/501b1f71-e80c-4410-bb40-478c4abdca58.jpg',vf:'6TlRJ0xKaTw',vs:'NmlZeYBv9nE'},
+  {id:'59260bb5-cb8f-49e9-a25e-ac79f8238276',t:'Frostholm Mountains Stylized',p:99.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/9e7b14ba-0234-45ea-96c2-36c0e0957048/511a6d3f-0971-49d1-b495-4dd5ff18c8e7.jpg',vf:'6TlRJ0xKaTw',vs:'RYkey4ZYt84'},
+  {id:'38504349-c565-48e4-b732-c6ab65adb270',t:'Frostholm Mountains Polygonal',p:69.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/f2e0f90f-3b30-4d64-b075-216349a35f70/38030626-d573-47cf-9438-d0b64334ef9c.jpg',vf:'6TlRJ0xKaTw',vs:'B-YuwXKU6ZY'},
+  {id:'a657b6ad-42a2-4c6b-a0e0-ef005a9f9b91',t:'Frostholm Mountains Cartoon',p:89.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/15bd8cf5-f5e5-4522-a391-1e7c3fa1312b/b45ca24a-8f03-4fa0-adf1-c9121a94149f.jpg',vf:'6TlRJ0xKaTw',vs:'oubUPLo6WMQ'},
+  // ── FROSTHOLM — Fields ─────────────────────────────────────────────────
+  {id:'1b7d67e9-2279-4bb2-829a-4b846031f059',t:'Frostholm Fields Realistic',p:89.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/3d801e4f-f714-4452-90cf-7b5de6d5f10f/ca79d9d7-7e40-4a52-9fe1-8724b2b1541e.jpg',vf:'DBV3C_E1NxE',vs:'4EyrGKDdPZE'},
+  {id:'7765b549-60a4-4854-9f21-13c2d473db90',t:'Frostholm Fields Stylized',p:79.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/4f2cf20c-b086-4bb1-8665-c6f398045b58/716227e3-a75e-483d-9f97-1cf3ee8e1147.jpg',vf:'DBV3C_E1NxE',vs:'Wfp_Uj8XawY'},
+  {id:'48c58be4-9b2f-444f-b312-8f86b221a6ed',t:'Frostholm Fields Polygonal',p:49.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/9a286699-c24a-41b6-9a78-0eb6b40341d2/d86373de-589c-43d3-8a8a-26fc96235194.jpg',vf:'DBV3C_E1NxE',vs:'2Nr9B4757pk'},
+  {id:'5ae6cc28-c1cc-441d-8ea5-7c064428f63c',t:'Frostholm Fields Cartoon',p:69.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/d6a35c4f-42a7-4fd5-b750-6ca0649f8227/03735ff3-184d-433e-b1d4-72b9970ce08e.jpg',vf:'DBV3C_E1NxE',vs:'sRC54e-jPtg'},
+  // ── FROSTHOLM — Icebergs ───────────────────────────────────────────────
+  {id:'51f7b813-321d-42d0-9050-c260e1a5d6ec',t:'Frostholm Icebergs Realistic',p:99.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/e4b93b01-ff2d-431e-914b-851a5d6ab4e8/2e3af0d3-8b21-42e1-af87-93bc431e3dfe.jpg',vf:'Z8cmZkcJe-g',vs:'goPLVfbxJ4c'},
+  {id:'025a3a0d-2c96-4398-afec-db91ecc58c0f',t:'Frostholm Icebergs Stylized',p:89.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/0e7947fa-e5e1-4e5b-83a2-bbf6ff75c1b0/e861917f-b66e-439c-8dcb-bba13111be4d.jpg',vf:'Z8cmZkcJe-g',vs:'mhieupfSv4g'},
+  {id:'5cf3fa06-d27f-49d7-8d49-a61bf18f0fe5',t:'Frostholm Icebergs Polygonal',p:59.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/e41496e7-b6a7-43d0-986c-dfa96f5a155e/2b498ae3-7583-4d30-b28f-d3f70256a81c.jpg',vf:'Z8cmZkcJe-g',vs:'UN9vOc9vlkE'},
+  {id:'7dd6414f-d3cb-4f63-970d-c1693ae83829',t:'Frostholm Icebergs Cartoon',p:79.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/439d4b81-a7e6-4b45-a6cb-ef7a4d1017db/ce244aa5-7402-49c7-aa8f-fe9146a14824.jpg',vf:'Z8cmZkcJe-g',vs:'ruqnt0S0qo4'},
+  // ── FROSTHOLM — Glaciers ───────────────────────────────────────────────
+  {id:'080a6e16-809b-4feb-bae5-bcc7ff42ce5a',t:'Frostholm Glaciers Realistic',p:119.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/c26e49bb-8662-401b-ab8b-531e51ecbcf1/e061f54f-861e-4761-87ca-5f677f55ccbb.jpg',vf:'PkkmyndfI2Y',vs:'FgO3BbIakJ4'},
+  {id:'1645ee54-4c64-48d2-8d59-5fc5ad8627eb',t:'Frostholm Glaciers Stylized',p:109.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/fb2af5c4-0de5-49d7-8253-3835dc166944/dd29c5f3-3c55-48c8-97e2-abd6a40c4837.jpg',vf:'PkkmyndfI2Y',vs:'wv54akUcAeA'},
+  {id:'a5161656-4501-4f49-89eb-f87bdf98a69e',t:'Frostholm Glaciers Polygonal',p:79.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c6ebc88d-341f-4752-8c97-b409f77f82fc/355c1fc8-253d-4724-ac71-2259471185a1.jpg',vf:'PkkmyndfI2Y',vs:'68M48VDEaOA'},
+  {id:'386fc789-f1d7-402f-89d4-a80913f2db2f',t:'Frostholm Glaciers Cartoon',p:99.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/3d681940-6d10-405a-a7ec-f6beb0cef3b5/6873e8a0-86f5-412f-a33e-1cd948dba9f6.jpg',vf:'PkkmyndfI2Y',vs:'z0CtDTxMvWE'},
+  // ── 8K PACKS ──────────────────────────────────────────────────────────
+  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vs:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
+  {id:'72f2e599-e00d-454e-a1c3-1227b12fe90e',t:'8K Island Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg',vs:'Az2pWjcJwZ0',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-island-landscape-pack-294443',pa:'https://www.artstation.com/marketplace/p/JNNk/8k-island-landscape-pack'},
+  {id:'d1cc7e58-1282-4985-84de-722052e1f263',t:'8K Canyon Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Desert',th:'https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg',vs:'ZUwPlwBBY54',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-canyon-landscape-pack-297171',pa:'https://www.artstation.com/marketplace/p/7Gyd/8k-canyon-landscape-pack'},
+  {id:'2d95efdd-74f4-40e2-8189-8402aec130c4',t:'8K Volcano Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Volcanic',th:'https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg',vs:'G833u3tenyE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-volcano-landscape-pack-300480',pa:'https://www.artstation.com/marketplace/p/n7k2V/8k-volcano-landscape-pack'},
+  {id:'6d867688-80b8-4c45-9c83-ddddd52eafcf',t:'8K Alpine Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Snow',th:'https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg',vs:'gVUtd2-DbaM',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-alpine-landscape-pack-305335'},
+  {id:'7f935664-3728-4cb0-971d-a88f798a1004',t:'8K Coastal Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Shore',th:'https://media.fab.com/image_previews/gallery_images/d6db6a4a-0650-4c57-8784-4613b138252b/1b66bbd7-95b5-45c4-9b88-0467e05880f3.jpg',vs:'2fKF2e2Z7rM',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-coastal-landscape-pack-310036',pa:'https://www.artstation.com/marketplace/p/mJ8n6/8k-coastal-landscape-pack'},
+  {id:'d5b011c9-2c16-4013-bc78-c11b69505942',t:'8K Dune Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Sand',th:'https://media.fab.com/image_previews/gallery_images/b08c2551-ad3a-4726-b695-261e8accba97/83202882-1a1e-4637-b47e-6f06208fef95.jpg',vs:'UMNGjn4Vfy4',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-dune-landscape-pack-314388',pa:'https://www.artstation.com/marketplace/p/9nvYn/8k-dune-landscape-pack'},
+  {id:'c862c4eb-f37a-4ed2-9846-5e1ae02e716f',t:'8K Valley Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'River',th:'https://media.fab.com/image_previews/gallery_images/b594fe20-e0ea-4fc8-855e-2fdcb6386b14/d03da4e3-51bb-4f4c-9e33-427368e97657.jpg',vs:'xNkAe2FVtKE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-valley-landscape-pack-320161'},
+  {id:'6baa964b-95dc-4043-ab4c-185624c36ba1',t:'8K Nordic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Forest',th:'https://media.fab.com/image_previews/gallery_images/44ee62da-b7f2-4932-b8e3-bb06a8b5bff4/d3539ac9-3274-4a18-95c3-6d7b477734d7.jpg'},
+  {id:'3e2f982b-fd76-42c9-9435-b381a7cfd3e1',t:'8K Savannah Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Grass',th:'https://media.fab.com/image_previews/gallery_images/b62b081f-61da-433f-bd15-f2dd22fbe2ae/ec6629c8-8365-4b67-b2a0-fb1b98d64e74.jpg'},
+  {id:'3dda2235-b89a-4d54-8949-3c9341d1a854',t:'8K Provencal Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Field',th:'https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg'},
+  {id:'dab7957e-c32d-4170-966a-c73d76cd5566',t:'8K Karakoram Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Snow',th:'https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg'},
+  {id:'6f4c30ac-3fd7-4a9f-81bf-a34f1b78df60',t:'8K Garni Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Rock',th:'https://media.fab.com/image_previews/gallery_images/6d54cbf8-2cd8-4181-bc45-148bb1e43661/c0ba2120-00d1-4ab9-bd88-9805fde0604e.jpg'},
+  {id:'4e30dcd7-f726-43e7-be22-c31761b8c760',t:'8K Highlands Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Grass',th:'https://media.fab.com/image_previews/gallery_images/79d4b9a6-2d2b-4df6-8dad-59a9c5d018b6/b7f9f22d-34f8-4dc6-9bb3-03fbffd709af.jpg'},
+  {id:'ce9c9f49-dfb5-49c6-a96d-817f90cb3620',t:'8K Patagonia Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/6a75cfd9-b762-47ba-9654-2a482fd86fd7/5aa18acb-561b-461b-b420-709280104f18.jpg'},
+  {id:'7177546c-582f-4833-86b2-0a09f92de594',t:'8K Zhangjiajie Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Tropical',th:'https://media.fab.com/image_previews/gallery_images/29bda059-5c27-4bc7-97ba-33f7bb1c5d4e/f940571a-5fea-43fa-b034-9892e642f6af.jpg'},
+  {id:'7e198e93-4c8e-463f-8585-77a7f5be6bc3',t:'8K Desolate Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Barren',th:'https://media.fab.com/image_previews/gallery_images/e00fed35-9e51-4b9c-971a-d260f064c01a/b5520b69-aeef-45d5-b126-b492d170a4e2.jpg'},
+  {id:'964ab5d7-06e8-4a99-a27a-1a4e6ded09e6',t:'8K Salar Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Salt',th:'https://media.fab.com/image_previews/gallery_images/bc4595d0-8035-41c6-b818-a1a285e7957b/8eaab037-7655-4bd6-8ef3-ebe86e4cb240.jpg'},
+  {id:'0529cee3-ed8f-46e0-9f01-1cd2923f8fda',t:'8K Amazon Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Jungle',th:'https://media.fab.com/image_previews/gallery_images/daf07ad7-78d8-4c83-82bb-f5ecbf238943/8658bec5-eb1f-4acd-a16e-f154124cc285.jpg'},
+  {id:'9c46865c-f968-486d-b6e2-21509e7b2a30',t:'8K African Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Savannah',th:'https://media.fab.com/image_previews/gallery_images/f2c73e5d-321c-4641-a3f2-b2dd2ef30a3b/76325299-2667-46bf-8fe5-9521eec8429f.jpg'},
+  {id:'fa24aee0-b5d1-4341-8983-bada3212ed1a',t:'8K Hills Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Meadow',th:'https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/7183dd63-2c5e-4c9e-86ad-d6140ec113a8.jpg',vs:'PW313kfwkwQ'},
+  // ── LANDSCAPE COLLECTION — Arctic Series ──────────────────────────────
+  {id:'897b47f0-8d34-4b40-a45a-0c73a2315849',t:'Arctic Landscape Realistic',p:69.99,col:'arctic',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-realistic-364126',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1KdyjABMr22rjrIdF1PaKnk8C2IWi1Kjq/view'},
+  {id:'5e439f0f-f6f2-4104-873a-245a60aec3ff',t:'Arctic Landscape Stylized',p:59.99,col:'arctic',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/06807a5b-7cc4-4579-8dee-c1e8ccc7f90b/eaebf142-cded-4d32-916f-961f95f7e639.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-stylized-364268',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1sb8Eq6rx2tEhYh3CkRTncr_tV0eomHwc/view'},
+  {id:'14e34309-cb57-4901-be0e-11e60494cc56',t:'Arctic Landscape Polygonal',p:39.99,col:'arctic',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c845301e-8c3c-47a0-8db1-f1b5f54f09da/a2d85eca-af38-4f68-ab54-026ea85752cb.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-polygonal-364270',pa:'https://www.artstation.com/marketplace/p/zRDaR/arctic-landscape-polygonal',pd:'https://drive.google.com/file/d/1qWHGUIWAShhQMd8uB7nHAK9xlQIE9IDL/view'},
+  {id:'3d96a640-b331-4bd8-ab4f-1b7d01fd3ace',t:'Arctic Landscape Cartoon',p:49.99,col:'arctic',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/672b01ac-c243-4f32-abd5-9e9094101509/213f0996-8942-42ef-a719-5495da103558.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-cartoon-364272',pa:'https://www.artstation.com/marketplace/p/6egnq/arctic-landscape-cartoon',pd:'https://drive.google.com/file/d/1QKRKlxZTqSyM6N11YweTqj5qqhKm0IhW/view'},
+  {id:'af813c5f-5482-4d22-8e4a-90ac4e1d83eb',t:'Arctic Landscape Retro',p:29.99,col:'arctic',st:'retro',th:'https://media.fab.com/image_previews/gallery_images/0e65a55f-3067-4e30-9ceb-3bb539d6c8a3/f4d800bf-c2a4-4543-a2d5-77cab864f40c.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-retro-364274',pa:'https://www.artstation.com/marketplace/p/bDvAd/arctic-landscape-retro',pd:'https://drive.google.com/file/d/13Q7upxLBmfW3w4tXfHZdbgfjZrZd0wy1/view'}
+];
+
+/* ═══ DESCRIPTIONS ═══ */
+var LANDSCAPE_INTRO = {
+  'Mountains': 'Part of Frosthölm — a vast fantasy frozen world. The Mountains pack features Classic, Bulk, Terraced and Peak forms with 16 mesh variants and fully customizable snow, cliff and outcrop materials.',
+  'Fields': 'Part of Frosthölm — a vast fantasy frozen world. The Fields pack delivers sweeping frozen plains with 16 mesh variants and customizable snow, frost and soil materials.',
+  'Icebergs': 'Part of Frosthölm — a vast fantasy frozen world. The Icebergs pack captures the monumental scale of ocean ice formations with highly customizable materials, including bioluminescence controls.',
+  'Glaciers': 'Part of Frosthölm — a vast fantasy frozen world. The Glaciers pack features Tongue, Spike, Dome and Fractured glacier types, each with 4 variants and full bioluminescence and snow controls.'
+};
+var STYLE_DESC = {
+  realistic: 'High-fidelity photorealistic version with 4K PBR materials, Nanite-ready geometry and full Lumen support.',
+  stylized:  'Hand-crafted stylized version with expressive colour palettes and clean geometry suited for artistic productions.',
+  polygonal: 'Low-poly aesthetic version with bold geometric forms — optimised for performance and stylised visual direction.',
+  cartoon:   'Vibrant cartoon version with flat-shaded materials, exaggerated proportions and playful colour palette.',
+  retro:     'Retro-inspired low-poly version with a nostalgic aesthetic and limited colour palette.'
+};
+var DESC_8K = {
+  '85fe6436': 'Inspired by the icy landscapes of the Arctic — snow-capped mountains, monumental peaks and erosion-sculpted terrain. 10 heightmaps at 8K resolution with customizable ice, cliff and mud materials.',
+  '72f2e599': 'Inspired by the islands of the world — sandy beaches, deep green hills and tropical landscapes capturing natural and exotic beauty. 10 heightmaps at 8K resolution.',
+  'd1cc7e58': 'Inspired by the world\'s most iconic canyons — towering cliffs, winding ravines and expansive rocky landscapes. 10 heightmaps at 8K resolution with customizable sandstone and cliff materials.',
+  '2d95efdd': 'Inspired by the world\'s most volcanic regions — molten rivers, ash-covered terrains and towering peaks. 10 heightmaps at 8K resolution with lava, rock and smoke materials.',
+  '6d867688': 'Inspired by the beauty of alpine regions — serene meadows, rugged peaks and snow-dusted valleys. 10 heightmaps at 8K resolution with snow, grass, rock and flower materials.',
+  '7f935664': 'Inspired by Mediterranean shores — sunlit cliffs, sandy beaches and tranquil seas. 10 heightmaps at 8K resolution with cliff, grass, bark and coastal materials.',
+  'd5b011c9': 'Inspired by vast desert expanses — rolling sand dunes, arid plains and windswept ridges. 10 heightmaps at 8K resolution with sand, stone, rock and canyon materials.',
+  'c862c4eb': 'Inspired by the majesty of vast valley basins — rolling hills, steep cliffs and open plains. 10 heightmaps at 8K resolution with grass, tree, rock and pine materials.',
+  '6baa964b': 'Huge Nordic landscapes for gaming or cinematic use — 10 detailed environments of 64 km² with snow, pine, rock and grass assets for Scandinavian settings.',
+  '3e2f982b': 'Huge Savannah landscapes for gaming or cinematic use — 10 detailed environments of 64 km² with African terrain, grass, trees and soil variety.',
+  '3dda2235': 'Huge Provencal landscapes for gaming or cinematic use — 10 environments with lavender fields, pine trees, rocky slopes and gravel terrain.',
+  'dab7957e': 'Huge Karakoram landscapes inspired by the world\'s most dramatic mountain ranges — 10 environments of towering peaks, snow, rock and gravel terrain.',
+  '6f4c30ac': 'Inspired by the landscape around the temple of Garni — 10 environments with forest plateaus, autumn colour, rocky cliffs and mountain terrain.',
+  '4e30dcd7': 'Huge Highlands landscapes inspired by Scottish terrain — 10 environments with lake, river, grass, gravel and sweeping highland scenery.',
+  'ce9c9f49': 'Huge Patagonia landscapes inspired by the Patagonian lands of Argentina — 10 environments of dramatic mountains, lakes, rivers and sweeping plains.',
+  '7177546c': 'Inspired by the Zhangjiajie national forest park in China — huge tropical landscapes with towering stone pillars, dense jungle and lush vegetation.',
+  '7e198e93': 'Huge desolate landscapes for gaming or cinematic use — stark rocky terrain, arid wasteland, barren cliffs and dramatic formations.',
+  '964ab5d7': 'Inspired by Bolivia\'s Salar de Uyuni — white salt flat expanses, cacti, mountain backdrops and dramatic open terrain.',
+  '0529cee3': 'Huge Amazon jungle landscapes for gaming or cinematic use — dense tropical terrain with real mesh cliffs, lush vegetation and jungle canopy.',
+  '9c46865c': 'Inspired by South Africa\'s Kruger National Park — diverse African landscapes with savannah, rocky outcrops, baobab trees and wildlife-ready terrain.',
+  'fa24aee0': 'Inspired by temperate countryside — rolling hills, sparse forests, sunny meadows and peaceful rural environments at 8K resolution.'
+};
+
+/* ═══ TAGS ═══ */
+var PRODUCT_TAGS = {
+  '2baaee7f-3fe2-45c3-9142-dd262aad2cb3': ['Landscape','Mountain','Snow','Rock','Arctic','Polar','Fantasy','Realistic','Nanite','4K'],
+  '59260bb5-cb8f-49e9-a25e-ac79f8238276': ['Landscape','Mountain','Snow','Fantasy','Arctic','Stylized','Ice','Polar','Modular'],
+  '38504349-c565-48e4-b732-c6ab65adb270': ['Landscape','Mountain','Snow','Low-Poly','Arctic','Polygonal','Fantasy','Modular'],
+  'a657b6ad-42a2-4c6b-a0e0-ef005a9f9b91': ['Landscape','Mountain','Snow','Cartoon','Arctic','Fantasy','Ice','Stylized'],
+  '1b7d67e9-2279-4bb2-829a-4b846031f059': ['Landscape','Fields','Snow','River','Modular','Polar','Floating','Fantasy','Arctic','Terrain','Detailed','Level','Glacier','Realistic','Valley','Frost','Winter','Hill','Island','Ice','Antarctica','Cliff'],
+  '7765b549-60a4-4854-9f21-13c2d473db90': ['Landscape','Fields','Snow','River','Modular','Polar','Floating','Fantasy','Arctic','Terrain','Painterly','Level','Glacier','Stylized','Valley','Frost','Winter','Hill','Island','Ice','Antarctica','Cliff'],
+  '48c58be4-9b2f-444f-b312-8f86b221a6ed': ['Landscape','Fields','Snow','River','Modular','Polar','Floating','Fantasy','Arctic','Terrain','Geometric','Level','Glacier','Polygonal','Valley','Frost','Winter','Hill','Island','Ice','Antarctica','Cliff'],
+  '5ae6cc28-c1cc-441d-8ea5-7c064428f63c': ['Landscape','Fields','Snow','River','Modular','Polar','Floating','Fantasy','Arctic','Terrain','Whimsical','Level','Glacier','Cartoon','Valley','Frost','Winter','Hill','Island','Ice','Antarctica','Cliff'],
+  '51f7b813-321d-42d0-9050-c260e1a5d6ec': ['Landscape','Snow','Icelandic','Modular','Iceland','Polar','Floating','Fantasy','Arctic','Terrain','Glacial','Detailed','Level','Glacier','Realistic','Frost','Winter','Environmental','Island','Ice','Antarctica'],
+  '025a3a0d-2c96-4398-afec-db91ecc58c0f': ['Landscape','Snow','Icelandic','Modular','Iceland','Polar','Floating','Fantasy','Arctic','Terrain','Glacial','Painterly','Level','Glacier','Stylized','Frost','Winter','Environmental','Island','Ice','Antarctica'],
+  '5cf3fa06-d27f-49d7-8d49-a61bf18f0fe5': ['Landscape','Snow','Icelandic','Modular','Iceland','Polar','Floating','Fantasy','Arctic','Terrain','Glacial','Geometric','Level','Glacier','Polygonal','Frost','Winter','Environmental','Island','Ice','Antarctica'],
+  '7dd6414f-d3cb-4f63-970d-c1693ae83829': ['Landscape','Snow','Icelandic','Modular','Iceland','Polar','Floating','Fantasy','Arctic','Terrain','Glacial','Whimsical','Level','Glacier','Cartoon','Frost','Winter','Environmental','Island','Ice','Antarctica'],
+  '080a6e16-809b-4feb-bae5-bcc7ff42ce5a': ['Landscape','Snow','Modular','Iceland','Polar','Fantasy','Arctic','Terrain','Realistic','Detailed','Nature','Level','Cold','Frost','Winter','Cave','Frozen','Ice','Antarctica','Smooth','Cliff','World'],
+  '1645ee54-4c64-48d2-8d59-5fc5ad8627eb': ['Landscape','Snow','Modular','Iceland','Polar','Fantasy','Arctic','Terrain','Stylized','Painterly','Nature','Level','Cold','Frost','Winter','Cave','Frozen','Ice','Antarctica','Smooth','Cliff','World'],
+  'a5161656-4501-4f49-89eb-f87bdf98a69e': ['Landscape','Snow','Modular','Iceland','Polar','Fantasy','Arctic','Terrain','Polygonal','Geometric','Nature','Level','Cold','Frost','Winter','Cave','Frozen','Ice','Antarctica','Smooth','Cliff','World'],
+  '386fc789-f1d7-402f-89d4-a80913f2db2f': ['Landscape','Snow','Modular','Iceland','Polar','Fantasy','Arctic','Terrain','Cartoon','Whimsical','Nature','Level','Cold','Frost','Winter','Cave','Frozen','Ice','Antarctica','Smooth','Cliff','World'],
+  '85fe6436-38a3-475b-95d7-9ec0f4a57733': ['Landscape','Snow','Rock','Arctic','Mountain','Ice','Cliff','8K','Realistic'],
+  '72f2e599-e00d-454e-a1c3-1227b12fe90e': ['Landscape','Tropical','Beach','Island','Grass','Tree','Sand','Jungle','8K'],
+  'd1cc7e58-1282-4985-84de-722052e1f263': ['Landscape','Canyon','Desert','Rock','Cliff','Arid','Sandstone','Sand','8K'],
+  '2d95efdd-74f4-40e2-8189-8402aec130c4': ['Landscape','Volcano','Lava','Rock','Magma','Arid','Wasteland','Dark','8K'],
+  '6d867688-80b8-4c45-9c83-ddddd52eafcf': ['Landscape','Alpine','Snow','Mountain','Grass','Rock','Flower','Cliff','8K'],
+  '7f935664-3728-4cb0-971d-a88f798a1004': ['Landscape','Coastal','Mediterranean','Beach','Sea','Rock','Cliff','Summer','8K'],
+  'd5b011c9-2c16-4013-bc78-c11b69505942': ['Landscape','Dune','Desert','Sand','Rock','Arid','Egyptian','Cliff','8K'],
+  'c862c4eb-f37a-4ed2-9846-5e1ae02e716f': ['Landscape','Valley','Mountain','Forest','River','Rock','Grass','Cliff','8K'],
+  '6baa964b-95dc-4043-ab4c-185624c36ba1': ['Landscape','Nordic','Snow','Mountain','Forest','Pine','Scandinavian','Cliff','8K'],
+  '3e2f982b-fd76-42c9-9435-b381a7cfd3e1': ['Landscape','Savannah','African','Grass','Tree','Dirt','Rock','Field','8K'],
+  '3dda2235-b89a-4d54-8949-3c9341d1a854': ['Landscape','Provencal','Lavender','Grass','Tree','Pine','Mountain','Cliff','8K'],
+  'dab7957e-c32d-4170-966a-c73d76cd5566': ['Landscape','Karakoram','Mountain','Snow','Pakistan','Rock','Peak','Cliff','8K'],
+  '6f4c30ac-3fd7-4a9f-81bf-a34f1b78df60': ['Landscape','Garni','Mountain','Rock','Autumn','Forest','Plateau','Cliff','8K'],
+  '4e30dcd7-f726-43e7-be22-c31761b8c760': ['Landscape','Highlands','Scotland','Mountain','Grass','Lake','River','Cliff','8K'],
+  'ce9c9f49-dfb5-49c6-a96d-817f90cb3620': ['Landscape','Patagonia','Argentina','Mountain','Snow','River','Forest','Cliff','8K'],
+  '7177546c-582f-4833-86b2-0a09f92de594': ['Landscape','Zhangjiajie','China','Tropical','Rock','Forest','Jungle','Cliff','8K'],
+  '7e198e93-4c8e-463f-8585-77a7f5be6bc3': ['Landscape','Desolate','Arid','Rock','Wasteland','Barren','Mountain','Cliff','8K'],
+  '964ab5d7-06e8-4a99-a27a-1a4e6ded09e6': ['Landscape','Bolivia','Salt','White','Rock','Lake','Cactus','Mountain','8K'],
+  '0529cee3-ed8f-46e0-9f01-1cd2923f8fda': ['Landscape','Amazon','Jungle','Tropical','Forest','Tree','River','Brazil','8K'],
+  '9c46865c-f968-486d-b6e2-21509e7b2a30': ['Landscape','Africa','Safari','Savannah','Tree','Rock','Baobab','Wildlife','8K'],
+  'fa24aee0-b5d1-4341-8983-bada3212ed1a': ['Landscape','Hills','Countryside','Grass','Tree','Meadow','Peaceful','Green','8K'],
+  '897b47f0-8d34-4b40-a45a-0c73a2315849': ['Bundle','Arctic','Snow','Mountain','Glacier','Ice','Realistic','Gameready','Nanite'],
+  '5e439f0f-f6f2-4104-873a-245a60aec3ff': ['Bundle','Arctic','Snow','Mountain','Glacier','Ice','Stylized','Gameready'],
+  '14e34309-cb57-4901-be0e-11e60494cc56': ['Bundle','Arctic','Snow','Mountain','Glacier','Ice','Polygonal','Gameready'],
+  '3d96a640-b331-4bd8-ab4f-1b7d01fd3ace': ['Bundle','Arctic','Snow','Mountain','Glacier','Ice','Cartoon','Gameready'],
+  'af813c5f-5482-4d22-8e4a-90ac4e1d83eb': ['Bundle','Arctic','Snow','Mountain','Glacier','Ice','Retro','Gameready']
+};
+
+/* ═══ SPECS ═══ */
+var SPECS_DATA = {
+  frostholm: [{k:'Engine',v:'UE 5.3 to 5.7'},{k:'Textures',v:'4K PBR'},{k:'Rendering',v:'Nanite · Lumen'},{k:'Platform',v:'Windows 64-bit'}],
+  '8k':      [{k:'Engine',v:'UE 5.3 to 5.7'},{k:'Resolution',v:'8K Heightmaps'},{k:'Terrains',v:'10 environments'},{k:'Platform',v:'Windows 64-bit'}],
+  arctic:    [{k:'Engine',v:'UE 5.3 to 5.7'},{k:'Type',v:'Ready-to-Play'},{k:'Textures',v:'4K PBR'},{k:'Platform',v:'Windows 64-bit'}]
+};
+var PRODUCT_SPECS = {
+  '2baaee7f': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'56 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'3 + 18 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'15,0 Go'}
+  ],
+  '59260bb5': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'56 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'3 + 18 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'3,65 Go'}
+  ],
+  '38504349': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'56 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'3 + 18 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'33,9 Mo'}
+  ],
+  'a657b6ad': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'56 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'3 + 18 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'814 Mo'}
+  ],
+  '1b7d67e9': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'68 · all 4K PBR'},
+    {k:'Meshes',    v:'24 static meshes'},
+    {k:'Materials', v:'5 + 66 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'12,2 Go'}
+  ],
+  '7765b549': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'68 · all 4K PBR'},
+    {k:'Meshes',    v:'24 static meshes'},
+    {k:'Materials', v:'5 + 66 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'9,0 Go'}
+  ],
+  '48c58be4': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'68 · all 4K PBR'},
+    {k:'Meshes',    v:'24 static meshes'},
+    {k:'Materials', v:'5 + 66 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'1,0 Go'}
+  ],
+  '5ae6cc28': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'68 · all 4K PBR'},
+    {k:'Meshes',    v:'24 static meshes'},
+    {k:'Materials', v:'5 + 66 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'4,7 Go'}
+  ],
+  '51f7b813': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'52 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'2 + 17 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'12,4 Go'}
+  ],
+  '025a3a0d': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'52 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'2 + 17 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'7,8 Go'}
+  ],
+  '5cf3fa06': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'52 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'2 + 17 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'820 Mo'}
+  ],
+  '7dd6414f': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'52 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'2 + 17 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'6,1 Go'}
+  ],
+  '080a6e16': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'64 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'1 + 16 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'8,38 Go'}
+  ],
+  '1645ee54': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'64 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'1 + 16 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'7,08 Go'}
+  ],
+  'a5161656': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'64 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'1 + 16 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'1,14 Go'}
+  ],
+  '386fc789': [
+    {k:'Engine',    v:'UE 5.3 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Rendering', v:'Nanite · Lumen'},
+    {k:'Textures',  v:'64 · all 4K PBR'},
+    {k:'Meshes',    v:'16 static meshes'},
+    {k:'Materials', v:'1 + 16 instances'},
+    {k:'Levels',    v:'2 demo levels'},
+    {k:'Size',      v:'5,22 Go'}
+  ],
+  '897b47f0': [
+    {k:'Engine',    v:'UE 5.5 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Terrain',   v:'64km\u00b2'},
+    {k:'Textures',  v:'8K terrain \u00b7 4K mats \u00b7 2K assets'},
+    {k:'Rendering', v:'Nanite \u00b7 Lumen \u00b7 HDRP \u00b7 URP'},
+    {k:'Includes',  v:'Water system \u00b7 Skybox'},
+    {k:'Levels',    v:'1 demo level'},
+    {k:'Size',      v:'4,11 Go'}
+  ],
+  '5e439f0f': [
+    {k:'Engine',    v:'UE 5.5 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Terrain',   v:'64km\u00b2'},
+    {k:'Textures',  v:'8K terrain \u00b7 4K mats \u00b7 2K assets'},
+    {k:'Rendering', v:'Nanite \u00b7 Lumen \u00b7 HDRP \u00b7 URP'},
+    {k:'Includes',  v:'Water system \u00b7 Skybox'},
+    {k:'Levels',    v:'1 demo level'},
+    {k:'Size',      v:'1,29 Go'}
+  ],
+  '14e34309': [
+    {k:'Engine',    v:'UE 5.5 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Terrain',   v:'64km\u00b2'},
+    {k:'Textures',  v:'8K terrain \u00b7 4K mats \u00b7 2K assets'},
+    {k:'Rendering', v:'Nanite \u00b7 Lumen \u00b7 HDRP \u00b7 URP'},
+    {k:'Includes',  v:'Water system \u00b7 Skybox'},
+    {k:'Levels',    v:'1 demo level'},
+    {k:'Size',      v:'927 Mo'}
+  ],
+  '3d96a640': [
+    {k:'Engine',    v:'UE 5.5 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Terrain',   v:'64km\u00b2'},
+    {k:'Textures',  v:'8K terrain \u00b7 4K mats \u00b7 2K assets'},
+    {k:'Rendering', v:'Nanite \u00b7 Lumen \u00b7 HDRP \u00b7 URP'},
+    {k:'Includes',  v:'Water system \u00b7 Skybox'},
+    {k:'Levels',    v:'1 demo level'},
+    {k:'Size',      v:'966 Mo'}
+  ],
+  'af813c5f': [
+    {k:'Engine',    v:'UE 5.5 to 5.7'},
+    {k:'Platform',  v:'Windows 64-bit'},
+    {k:'Terrain',   v:'64km\u00b2'},
+    {k:'Textures',  v:'8K terrain \u00b7 4K mats \u00b7 2K assets'},
+    {k:'Rendering', v:'Nanite \u00b7 Lumen \u00b7 HDRP \u00b7 URP'},
+    {k:'Includes',  v:'Water system \u00b7 Skybox'},
+    {k:'Levels',    v:'1 demo level'},
+    {k:'Size',      v:'451 Mo'}
+  ],
+  'd1cc7e58': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Sandstone \u00b7 Cliff \u00b7 Sand'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  '2d95efdd': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Lava \u00b7 Rock \u00b7 Ash'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  '72f2e599': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Sand \u00b7 Grass \u00b7 Rock'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  '85fe6436': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Ice \u00b7 Cliff \u00b7 Mud'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  '6d867688': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Snow \u00b7 Grass \u00b7 Rock'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  '7f935664': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Cliff \u00b7 Sand \u00b7 Grass'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  'd5b011c9': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Sand \u00b7 Stone \u00b7 Rock'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  'c862c4eb': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Resolution', v:'8192\u00d78192 per heightmap'},
+    {k:'Terrains',   v:'10 unique landscapes'},
+    {k:'Materials',  v:'Grass \u00b7 Rock \u00b7 Pine'},
+    {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
+    {k:'Format',     v:'PNG heightmaps'},
+    {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ]
+};
+
+/* ═══ GALLERY ═══ */
+var GALLERY = {
+  '2baaee7f': ['https://media.fab.com/image_previews/gallery_images/2e69c18f-e70c-4d7e-a60c-d07f7f04cbbe/72da04d4-51e7-4571-a625-2eeb4b1fe45b.jpg','https://media.fab.com/image_previews/gallery_images/fb960aaf-2bec-4a1a-8dcb-473b71fc5edc/914d64d3-368c-4528-99be-dd03b36d8b98.jpg','https://media.fab.com/image_previews/gallery_images/a0424925-a696-4a9f-90fc-824adcad1a8d/d39fc175-5cb0-4a51-ba64-ef94d92a5cfd.jpg','https://media.fab.com/image_previews/gallery_images/d63f0c6f-e01f-4982-840e-472e39ff611b/9e8224d2-8798-4622-8e7f-878e8ed71c66.jpg','https://media.fab.com/image_previews/gallery_images/4fcd0349-9321-4c9e-9965-e6f8c63689a2/998ba509-e506-4158-b96d-ae0b062ac4b6.jpg','https://media.fab.com/image_previews/gallery_images/e7a8ad97-6623-4af1-9537-8965b38a8a32/dcd8defc-b865-4b09-b3e0-3d7d9bb99890.jpg','https://media.fab.com/image_previews/gallery_images/7d66c847-02a8-4581-a61a-fabde81101e4/c829e940-9691-4161-bdfc-e089135cbd15.jpg','https://media.fab.com/image_previews/gallery_images/e5ad1fe6-2d19-4a56-9c39-f2b89184d17e/9937100c-dcd3-4d8e-82d1-1adfd3257ba1.jpg','https://media.fab.com/image_previews/gallery_images/d8a2e94f-9921-4582-b4bd-1380118038c2/d016ed7a-4301-4b6c-9827-e62a03f7e907.jpg','https://media.fab.com/image_previews/gallery_images/6c8cf540-21d6-4b26-ab09-40428a1dd9d6/06d014ba-2d8e-4bdc-8fd7-7d5f9128d9fc.jpg','https://media.fab.com/image_previews/gallery_images/d84170b6-0e9a-4732-a9cb-23e6fd17fbc1/a4f21e9d-4341-4be3-be28-b7b2f4316a29.jpg'],
+  '59260bb5': ['https://media.fab.com/image_previews/gallery_images/c7deb018-2e8c-43c4-ad4d-e2e21dfbf081/c0c07026-ee17-45bc-bd2c-5ee7a29a9c2a.jpg','https://media.fab.com/image_previews/gallery_images/dee294fa-78c6-4ecf-be96-67a3e8251daf/56f727d4-e6e8-4237-bce4-128f49da4245.jpg','https://media.fab.com/image_previews/gallery_images/ef45b8cc-6311-44da-a8ca-87ac01beaffb/ad81dd84-ea60-4cb5-b12c-6639cd5b5b5f.jpg','https://media.fab.com/image_previews/gallery_images/4a4fcf4f-2c6e-4c00-ba39-1f17a9808b03/43dfbad5-a683-4144-9fac-a530b83fd256.jpg','https://media.fab.com/image_previews/gallery_images/7c9fad37-832a-41bb-ab1e-cda8606f54c7/7b67247d-96ea-44dc-968c-29e630c93331.jpg','https://media.fab.com/image_previews/gallery_images/d02aceff-c5b8-4c57-948a-a5f4ae84628a/5f1a7980-bee7-412b-a3ef-450c3bdb14b4.jpg','https://media.fab.com/image_previews/gallery_images/8fa75b3e-1f30-486f-af7e-e1ad40712d8c/53252247-e684-415e-a19d-58cadbb10db9.jpg','https://media.fab.com/image_previews/gallery_images/55b18438-430c-4155-a3be-e5497a2f5f3d/7e95286e-ecf1-4068-80dd-613723c22fd0.jpg','https://media.fab.com/image_previews/gallery_images/6272edb1-dc1d-4abc-ae2a-936802e9bd3e/9bc45b20-7b4f-4a99-a13a-745c9f79018c.jpg','https://media.fab.com/image_previews/gallery_images/965e5bde-6bed-4de3-9c33-95bffa8b6c93/e9ee5814-7bcc-4bbd-bf8d-f8d1b6b31911.jpg','https://media.fab.com/image_previews/gallery_images/fc86776b-9eb7-4f26-8ea3-794a9ceafa16/be7b90a8-17a3-4d4b-bc73-9f584d426c1c.jpg'],
+  '38504349': ['https://media.fab.com/image_previews/gallery_images/c6381ed0-5a38-45cd-90ba-10d63437abd7/860b4547-fe4d-48cc-a4ec-07763fb115ed.jpg','https://media.fab.com/image_previews/gallery_images/86d42f0d-0750-4094-968f-49fb487891ba/54e9bfb2-c5d7-470e-b7f9-c9a7b96199f6.jpg','https://media.fab.com/image_previews/gallery_images/7d9c7075-881a-410c-b403-a7694bb8b250/6121e10b-f9c0-4e47-9fc5-c81021f889bd.jpg','https://media.fab.com/image_previews/gallery_images/a46e2f68-5e64-4a8a-b09a-2b936820c085/ae23cea4-e299-4687-9ed3-8bd6a14eed52.jpg','https://media.fab.com/image_previews/gallery_images/92855a81-f268-473a-a936-1945a6c45bfd/716cc5e4-d547-40e2-ad4c-824f783c0f20.jpg','https://media.fab.com/image_previews/gallery_images/a85c98f7-8aa4-45ce-bee3-acfbf516c21d/be8b60f0-9ce5-464b-a7f7-992d407a2a59.jpg','https://media.fab.com/image_previews/gallery_images/254c9567-52da-4206-a459-7bdaef9634b0/0ad47f1f-65ef-4802-a045-7b26ec910275.jpg','https://media.fab.com/image_previews/gallery_images/961089c3-630c-4311-81d2-f0300bc7f9af/d3b1aea2-36a3-410d-99df-e4d3f6cff862.jpg','https://media.fab.com/image_previews/gallery_images/d36814be-a2e1-4b1c-851f-071c84212198/9ca2a0dd-bb67-422e-9ded-f19e56835211.jpg'],
+  'a657b6ad': ['https://media.fab.com/image_previews/gallery_images/83605424-c330-4f48-ba4f-f38feb99daf9/ae4e3035-f022-408c-84be-98e6476d2805.jpg','https://media.fab.com/image_previews/gallery_images/bc8e0243-7ace-4e1e-a196-c3502d5fa827/d17168a3-356f-4204-88be-69aa410e583b.jpg','https://media.fab.com/image_previews/gallery_images/9915a125-320d-4e90-987e-12a027cc442d/9e2ac887-8647-4257-bf01-5e295c165fd8.jpg','https://media.fab.com/image_previews/gallery_images/dd3b9095-9115-428a-906c-1b5ec9010a28/c79f46a9-4519-4c51-843e-5dd380755b49.jpg','https://media.fab.com/image_previews/gallery_images/f6ec9e1e-ad29-48d5-a519-ab3bcc2e3aa2/9b27a71f-f63f-488d-bf78-71496df9bb1d.jpg','https://media.fab.com/image_previews/gallery_images/aa45d323-3e38-4a63-8979-4888ff16ee68/13c2ef54-0063-43c1-b4d1-56fb7cb5bf64.jpg','https://media.fab.com/image_previews/gallery_images/e2e2c79c-c8d4-4558-8493-f47d46e6ed90/e50034f3-22ed-40f9-b9be-36de66c107a9.jpg','https://media.fab.com/image_previews/gallery_images/b2c8698c-8047-4db7-b017-b61645409d34/1821b947-ce85-4251-ba38-d2a886740147.jpg','https://media.fab.com/image_previews/gallery_images/27e23073-ecdf-45cf-9e6d-0c542f75e186/1efcaccf-a9ce-48fe-9902-e829e22eabb6.jpg'],
+  '1b7d67e9': ['https://media.fab.com/image_previews/gallery_images/2399e112-92a2-4665-8ce6-e2f8c879a4db/1fa74380-bc3d-4fcc-bca1-abb8229b7c8f.jpg','https://media.fab.com/image_previews/gallery_images/6b430453-7fe0-4d6c-a922-5c09a56ecafb/bd232fbe-e7b5-47de-9ca9-ced22a904271.jpg','https://media.fab.com/image_previews/gallery_images/f8c2aef8-dd14-4e01-a85e-6c39cf3a80e8/d2259378-3a66-4dc5-87ad-7748e856d435.jpg','https://media.fab.com/image_previews/gallery_images/af652ac9-8f95-45ed-b5a1-d5e59c346e0b/612a58ff-70b8-4c90-9be6-b11c0644213f.jpg','https://media.fab.com/image_previews/gallery_images/bf49e0fa-e1f1-461b-a93c-dc3a6a9fda46/0af057f3-e501-44d7-9142-7a75dae73a93.jpg','https://media.fab.com/image_previews/gallery_images/c67dae99-85a1-486c-be37-061390f6c8b9/b4b671a8-9c94-46e9-9f43-0f2ad10aa003.jpg','https://media.fab.com/image_previews/gallery_images/5acb4b63-7e1c-4901-ac48-6ca9471af920/3b129d99-d74c-45e7-8330-0c9d0ac0877d.jpg','https://media.fab.com/image_previews/gallery_images/9fe44ae0-08f9-4cbf-b62f-429d18946b8f/06910444-6bb6-4432-921a-1772f02b8032.jpg','https://media.fab.com/image_previews/gallery_images/ec6e7763-7cc7-42b1-80ea-045d8c91933d/a7ed9d15-b070-4328-8c42-6aa3c383904a.jpg','https://media.fab.com/image_previews/gallery_images/db555fec-2399-43a0-a0d3-c8575fc5df93/79b021f4-7a19-474a-bab5-98981490e028.jpg','https://media.fab.com/image_previews/gallery_images/6e934ef3-c7c8-474a-85df-c6de82fc0a10/088a7168-870d-49c3-a79c-c563e6722bc2.jpg'],
+  '7765b549': ['https://media.fab.com/image_previews/gallery_images/a6ccdbe6-7146-455c-ad97-15db34023e02/0d103204-bef4-4537-9254-1071bea566a6.jpg','https://media.fab.com/image_previews/gallery_images/e6d08812-9a23-403d-8a06-730f5edfcb14/5612c23c-e956-422b-920e-45b169f3efc2.jpg','https://media.fab.com/image_previews/gallery_images/a4addf4e-3a6b-4d32-8143-91c2f014e0ed/b108aa30-9b1d-4bae-a649-862f7ede4140.jpg','https://media.fab.com/image_previews/gallery_images/d1cc7871-b144-48c9-b9a0-9d46abd24be1/9d80b53f-ca34-4273-b411-abc869e7450a.jpg','https://media.fab.com/image_previews/gallery_images/02bb0b8c-9a4f-44f2-ba6e-6f7b19591345/4b639820-cc1a-49d4-a722-efa37e464ae5.jpg','https://media.fab.com/image_previews/gallery_images/92e45f1b-6b2d-4c89-ac25-2bf8081387c8/11509b00-4788-4288-8486-1a71b396b37f.jpg','https://media.fab.com/image_previews/gallery_images/b7ca1c49-adf0-4270-a955-e08512ab34b0/27c82589-11d7-4dc6-903f-e10cf93f8cdf.jpg','https://media.fab.com/image_previews/gallery_images/cac56e38-1ddf-4e8a-a0c2-83c5644a8bf1/ae5a4f89-b2d1-4872-aabc-f36b8a014a27.jpg','https://media.fab.com/image_previews/gallery_images/8b2068a5-8eed-48ee-8244-79daf65cdf97/0d6a5e95-e45b-4517-92d5-09b9fff8bf43.jpg','https://media.fab.com/image_previews/gallery_images/ffe78b81-bc76-4646-a010-ec9bc2c0fefc/1d3f26fc-6fe0-454a-87cf-484f237cccf1.jpg','https://media.fab.com/image_previews/gallery_images/310b8330-4ce3-4fdc-9d87-672f85c83b9f/1dde332d-ebef-4025-9ce7-449c23d97f49.jpg','https://media.fab.com/image_previews/gallery_images/b77ebdaf-cd00-4d39-8386-787ffc87d497/c9a95f85-4c2e-41b9-b131-6aaefa7b6fcc.jpg','https://media.fab.com/image_previews/gallery_images/50f232ae-16a8-4031-afdc-57517a076edd/052c8208-a84c-41da-a1dc-eaf1290e8c41.jpg'],
+  '48c58be4': ['https://media.fab.com/image_previews/gallery_images/7b3bcedc-1f43-4232-9869-82d59397344e/78140c33-2ff7-48fb-ab38-71f802324400.jpg','https://media.fab.com/image_previews/gallery_images/17dff699-26a0-49a6-95a4-d800fd659e75/41643340-598a-417f-b308-eb617e46bdda.jpg','https://media.fab.com/image_previews/gallery_images/7eab94c0-9589-420b-8a12-fc50e538bba9/3e8893e8-ffca-4f0e-ba52-34ea1bf795d7.jpg','https://media.fab.com/image_previews/gallery_images/dc3c1aff-8995-46f5-b639-c10aa5365541/d70356ab-5a23-4c77-9b97-313c02ef53c0.jpg','https://media.fab.com/image_previews/gallery_images/2b97df2f-f7e4-427b-a95b-64279cd5bb65/8b13d130-b044-417c-8ad7-7056d0124058.jpg','https://media.fab.com/image_previews/gallery_images/76ca7561-c4aa-4ce1-b915-e8400e07b8cd/b748cc7d-7801-4588-9b7e-5ed98f6deec4.jpg','https://media.fab.com/image_previews/gallery_images/d8e391fa-6edc-47d6-8e15-329fc0ae055e/5e1d4d4c-1d1c-4504-9b8c-2147349fea44.jpg','https://media.fab.com/image_previews/gallery_images/a0bbb9fe-3b33-482b-8f39-81adcb25bd75/14d608c5-2563-4491-8631-fb7544170f0f.jpg','https://media.fab.com/image_previews/gallery_images/2fad0f74-fdc3-476e-abd4-3ee70f7b9838/4913ee7a-5d9d-4c6c-bbec-1fd552574450.jpg','https://media.fab.com/image_previews/gallery_images/15941bb5-e839-47c3-b85b-69f94e380b30/7e73cb28-aa56-4324-9951-5eb2ad05afd1.jpg','https://media.fab.com/image_previews/gallery_images/dd33df43-4515-4443-9556-5f750fa12340/08e9a65a-6aca-47b1-95b8-11844bca26d1.jpg','https://media.fab.com/image_previews/gallery_images/1b1fcddd-2093-4289-a5f6-54626d5092e4/dc7a1e06-621c-490b-8bc2-cbca158e2bd5.jpg','https://media.fab.com/image_previews/gallery_images/7327708b-06e7-4f7b-9a51-f485249a91c8/07c77dc3-0f2b-48c6-9acd-f4bb153f2a9b.jpg'],
+  '5ae6cc28': ['https://media.fab.com/image_previews/gallery_images/8b57a4cc-a7b8-4db7-b2cb-012cb85ef0fc/df42b801-b7d6-45bd-8562-38f154a10640.jpg','https://media.fab.com/image_previews/gallery_images/25901439-7f77-42db-b6e7-5480e90cc437/cf12fa76-97f8-46c0-b138-9da7d21e467b.jpg','https://media.fab.com/image_previews/gallery_images/16708940-0021-47db-93dc-a3d070c9445b/07766bf3-5ec7-4f0d-88ea-f3bd10fe273b.jpg','https://media.fab.com/image_previews/gallery_images/0a9fdda4-69e0-482b-b953-a016a3b04dc5/48cc56c2-8dd3-4373-aba2-b186e32b8d66.jpg','https://media.fab.com/image_previews/gallery_images/eaaaa20b-16b0-4f9c-878b-5a05efd41e8c/b9fd9939-8423-485c-b1d8-878a809f4e8d.jpg','https://media.fab.com/image_previews/gallery_images/dcad3478-34d5-40dc-af55-fb588e9b0ec8/3793ab75-0abf-47c5-bccd-ee420e33cc49.jpg','https://media.fab.com/image_previews/gallery_images/a4ef2181-d610-4bf1-9e6d-0204ffead75e/e0edc60e-db6a-49c8-9235-4806ac1f619e.jpg','https://media.fab.com/image_previews/gallery_images/a9f52ec1-8bc6-4df0-946e-f77923e8dca2/11447a18-cdef-48ef-a75b-421fdc7ed56e.jpg','https://media.fab.com/image_previews/gallery_images/e08e7afe-7fa6-4b13-90d4-e896fc13a270/662b92a9-6a14-4c8e-80b8-93de9d44933b.jpg','https://media.fab.com/image_previews/gallery_images/629728d0-219d-4534-a77e-2346c07b367d/aff18220-4c1a-44b0-b931-8d3dcebdc4b9.jpg','https://media.fab.com/image_previews/gallery_images/8b253d53-fecc-41bf-9155-f8f41e6297d5/ec407b13-5201-4dfe-85f2-2bb3e383702c.jpg','https://media.fab.com/image_previews/gallery_images/c9ce60ee-a089-4931-b740-2be91dfd8a56/f7c98ea7-4560-445c-a7c7-a765dd1abb6b.jpg','https://media.fab.com/image_previews/gallery_images/6b62a3f2-efb7-4d3c-993e-66dbb2b14aca/2649d67c-f5ac-44e5-b563-1e5fc547fbb6.jpg'],
+  '51f7b813': ['https://media.fab.com/image_previews/gallery_images/8adb5f65-00cb-47cd-9def-7a21b514c224/40a5bcef-1f41-472a-9301-0a6ddcb1f996.jpg','https://media.fab.com/image_previews/gallery_images/d168fff0-9174-493c-b122-36d0bee34fb1/17b972cb-0ef2-4dec-9e6b-06bb3ea22aa5.jpg','https://media.fab.com/image_previews/gallery_images/59dae8c9-ad1a-4163-b115-e3ba1a9b82fa/7308b50c-f38f-4b43-b4dc-036aa568988c.jpg','https://media.fab.com/image_previews/gallery_images/6bfc5cb3-37db-4387-92be-428c6ef49e23/cb7b96f5-042e-4e29-bf2c-e80fe7466beb.jpg','https://media.fab.com/image_previews/gallery_images/eb33bef2-2f00-4b20-92a2-70f9f45029b6/d875018f-56f2-4b62-a74b-d7993e5adf46.jpg','https://media.fab.com/image_previews/gallery_images/15fdacec-4773-4d8e-89be-b8396c296053/4cb141e4-6d57-4d8d-8395-43d58eb03182.jpg','https://media.fab.com/image_previews/gallery_images/7dc14e43-08f3-41f0-ad9b-22e577dfbd55/64d3f43a-7acd-44e3-b399-b67d387f454f.jpg','https://media.fab.com/image_previews/gallery_images/cbbe5ea7-93b2-4446-9ea9-b690c778ca9b/6bf37f16-c209-4034-946f-de3ba9ec117a.jpg','https://media.fab.com/image_previews/gallery_images/e3554664-50e8-4f4f-adbb-8b5ae9e1a793/b55b9f45-29d7-4809-8781-387ed26b7309.jpg','https://media.fab.com/image_previews/gallery_images/1f5ff282-2fd6-4940-9f5c-ddfdc44a890f/7ce5f62d-e6c3-4550-8e2a-42e6cc52b9ef.jpg','https://media.fab.com/image_previews/gallery_images/f72a1e1b-2075-4c50-a8ca-fc1cb3dee012/8b98a433-b0de-4f7b-ab4f-8bb1ea631b64.jpg','https://media.fab.com/image_previews/gallery_images/01e61ae0-1c9c-410e-b425-220d6f891e12/18989474-b4ea-448b-b49b-5ff38a0df2eb.jpg'],
+  '025a3a0d': ['https://media.fab.com/image_previews/gallery_images/160ce8e5-89e5-4672-a3da-bb423b90f217/cdcbba11-1cce-4a94-b6cc-b4b2047a1520.jpg','https://media.fab.com/image_previews/gallery_images/dafee80e-ab0d-4d2f-9b2b-c481d6554767/39693af2-b5c9-4c7f-8bfb-6991a541f4bc.jpg','https://media.fab.com/image_previews/gallery_images/536311ee-5c92-411c-9e3c-1fef2a9cf4e4/ae06a615-9f5f-46e9-a1e7-24e3154803cb.jpg','https://media.fab.com/image_previews/gallery_images/edbc2721-e73e-4edf-84ec-458eabe4f7b3/b5c1c67e-2a0d-458d-b327-dbb9ec0664af.jpg','https://media.fab.com/image_previews/gallery_images/09570587-2ddb-47aa-80a2-0b0ee56b8499/50db882e-b18f-4f25-923f-d0cedc6423c6.jpg','https://media.fab.com/image_previews/gallery_images/6364a558-6e7e-400b-a84d-68865b21c621/eeba6b71-b05a-452c-bd48-b08e0a210c18.jpg','https://media.fab.com/image_previews/gallery_images/33abbe84-2ffc-4157-91c4-ffa340b40488/e53b6f17-b14d-4548-b8bd-8ce48b0591dd.jpg','https://media.fab.com/image_previews/gallery_images/6250c728-aa5f-40f9-8837-f80f764f5e1d/dc7ae1ea-72d2-44b9-a623-49e0c8eabb4c.jpg','https://media.fab.com/image_previews/gallery_images/b30850b3-2abe-455c-ad3c-3503623ee731/afa167eb-c960-4bce-b41b-05008763f5b6.jpg','https://media.fab.com/image_previews/gallery_images/6750a33c-9d28-4818-8f42-ee3039498f1e/13cfab0b-a957-4c02-97b3-0de7361aadac.jpg','https://media.fab.com/image_previews/gallery_images/df26fdfe-3f76-4d8b-88df-c1fdc7e276f6/f30a8705-5214-40a7-bf22-9bc7d8681478.jpg','https://media.fab.com/image_previews/gallery_images/2abd3b3e-7cc4-4afc-bcdb-42600733af36/781cac5f-cf3d-448b-9a8e-8f0acbcf875b.jpg'],
+  '5cf3fa06': ['https://media.fab.com/image_previews/gallery_images/17c4faab-1d9e-4e03-9554-7667692b3e0a/5106e4e3-13cb-4834-bf47-bc1c5a461a6b.jpg','https://media.fab.com/image_previews/gallery_images/88389396-f93e-4e14-9207-d8a51c2dd60d/19e79bbe-9cc3-4ed6-98ec-a05008604787.jpg','https://media.fab.com/image_previews/gallery_images/3334d090-44b7-408a-8e00-3bcf5a2c1ed5/182163f3-bcea-4b50-91ca-22f428bf6ab6.jpg','https://media.fab.com/image_previews/gallery_images/7c412290-6aa6-4fae-80e3-3741b0d2c5bc/27a016cb-0e33-456e-848e-8aed8a2cf2b0.jpg','https://media.fab.com/image_previews/gallery_images/0d9719d0-6bee-47cb-b134-7644dabf408c/d65604ef-b939-438c-b518-b5899596ff9b.jpg','https://media.fab.com/image_previews/gallery_images/d7687f9d-61a1-4825-a3af-48b073eadce2/047f3b60-3a0e-43ce-9cd0-945df576ee3c.jpg','https://media.fab.com/image_previews/gallery_images/25167681-1d10-4faa-a743-7cc96c523bd4/2ec645c1-3d77-4ad6-89f0-41e7362bb594.jpg','https://media.fab.com/image_previews/gallery_images/0a53a934-0cc3-4c51-9f03-85aefea11956/c1af7d24-ba9d-451e-8ed0-7f9331ee46dc.jpg','https://media.fab.com/image_previews/gallery_images/6521bfe9-25bf-4dd2-be1e-61a7a2a53be6/e46e0f6e-ca6b-4009-9b27-fd501d9f154a.jpg','https://media.fab.com/image_previews/gallery_images/b395e546-db08-4de6-8be8-122ddd1e2a2d/5222a982-51e0-4a71-bc3c-1043edca72d0.jpg','https://media.fab.com/image_previews/gallery_images/96eddf9a-2806-4ad5-8d9c-67eb9e3da2b7/73329f44-0ef6-4d7d-8d49-b97c169ee0f0.jpg','https://media.fab.com/image_previews/gallery_images/ea0f0411-93f8-46f7-bed6-bffe59c2eeed/8ad825f0-b434-4967-843c-27a0ffd64863.jpg'],
+  '7dd6414f': ['https://media.fab.com/image_previews/gallery_images/5a0df060-93e0-4921-94d0-0061bb24d735/4d7c87fb-c0d9-413f-a348-ce429b1bf480.jpg','https://media.fab.com/image_previews/gallery_images/10828c60-08a4-4d92-a330-dc635412f080/1d0a4a87-52b6-4654-a1f7-a44df2e9ec59.jpg','https://media.fab.com/image_previews/gallery_images/972f0176-cd99-4b10-8cb0-de580a36d8a3/4bdd7370-19d3-4515-941e-6385ac3c23c5.jpg','https://media.fab.com/image_previews/gallery_images/b13cb94c-d85c-470b-9248-a0cc7205f827/9eaa274f-b278-4822-a62b-9cd39013b78d.jpg','https://media.fab.com/image_previews/gallery_images/16e53696-0067-472c-849a-98d4dc24bd04/82bfba06-b7b8-4ef3-b55c-19cc1dc7f30a.jpg','https://media.fab.com/image_previews/gallery_images/4d603afe-3c42-42fd-b99d-505c25e18588/2f0d3837-8d93-42f7-90bb-1ad5434abd4d.jpg','https://media.fab.com/image_previews/gallery_images/4562afc3-2184-4d2b-a550-6fe9e74005e8/b9dd8ca1-58f9-44b0-aa86-456614d68a3d.jpg','https://media.fab.com/image_previews/gallery_images/a963af41-d3df-4015-bc84-7ff6be528037/03be9519-8e48-4e5a-b427-f2d1e73ca027.jpg','https://media.fab.com/image_previews/gallery_images/36a4f386-b68f-46f0-9b73-2a33099eede2/9fe8f4de-a1bb-41ef-ab3d-5eddc4708aeb.jpg','https://media.fab.com/image_previews/gallery_images/dae8a148-46f2-4541-a6c4-0b7c35e26a93/52618a5e-c3d7-4157-ae43-3ddca46b929a.jpg','https://media.fab.com/image_previews/gallery_images/4b7c1cbd-a4fa-4563-a0d5-bac4e66e460f/15ddbe9d-3d76-46bf-b789-7a7512d293c2.jpg','https://media.fab.com/image_previews/gallery_images/c4c2f6cb-ecc3-4096-afc6-ec36a2292685/3cd2adae-a0a2-4831-b5e3-d3d081061fe0.jpg'],
+  '080a6e16': ['https://media.fab.com/image_previews/gallery_images/cfe4b491-edd7-4dcd-98e3-8ff04fb3d548/da71ddaf-6bd9-40a9-a22c-fcd032bbc826.jpg','https://media.fab.com/image_previews/gallery_images/2c96790d-cec6-4218-a18c-6ad27288cf92/f8180d7c-137a-407a-a823-80cd5dd18777.jpg','https://media.fab.com/image_previews/gallery_images/374ac030-bafd-4f02-bab4-608a8ba500dc/66c5a971-50a7-4479-a8ba-afde03a859a4.jpg','https://media.fab.com/image_previews/gallery_images/80ca80a3-e60c-427a-a2de-b93dc0a2472e/e4082a7a-6e4a-4a92-a1e7-da46ebfad086.jpg','https://media.fab.com/image_previews/gallery_images/f451d536-c5f7-44a8-ae6a-7d4516bcc813/0c5caeba-f48d-4d13-b80b-3bce021bdf4f.jpg','https://media.fab.com/image_previews/gallery_images/372009ee-21fb-46c0-869b-9e83c5c71947/8163b815-5fe1-482f-8ec8-9038ff9e790c.jpg','https://media.fab.com/image_previews/gallery_images/92ed91cf-f090-4c91-a300-77e9c7488c64/ae6788a2-1a5c-400b-b425-d49ccc0f32ae.jpg','https://media.fab.com/image_previews/gallery_images/ebcf6dcb-8ecf-4164-9ac0-527202d239ba/eac3ddac-8861-49ce-a997-95e87ab050e1.jpg','https://media.fab.com/image_previews/gallery_images/3137fcb3-2412-4dcf-90fe-7a587cfe87db/d0454714-83f2-4106-ab23-b3a6739d2be3.jpg','https://media.fab.com/image_previews/gallery_images/bd0938ff-d4b4-4cfb-9160-5791b7f0e9d1/e4e27c6c-424d-4bb4-be86-959193a921f2.jpg','https://media.fab.com/image_previews/gallery_images/8ce69ce5-a852-4454-ba34-66f785e3aa24/3da93d8b-9948-4f9f-80c5-bbdb4838f670.jpg','https://media.fab.com/image_previews/gallery_images/d3bea783-92e2-4199-a6cb-0609738ce5bb/9e74abb9-bbce-410f-8678-e15cd25480d9.jpg','https://media.fab.com/image_previews/gallery_images/26164d57-1be2-4318-9833-41cb58279a8d/3b097514-47fe-4445-a4a4-b640145b963a.jpg'],
+  '1645ee54': ['https://media.fab.com/image_previews/gallery_images/9bb97c7f-54d3-4776-a101-0bf12dd19047/bc0af2dd-c113-4f87-bb65-16fcc7884be4.jpg','https://media.fab.com/image_previews/gallery_images/544913c6-ff85-41eb-a40f-878b13f9cf63/9229d011-e9a4-468b-b462-6c93ada66ae7.jpg','https://media.fab.com/image_previews/gallery_images/1451017d-1e15-49a8-ab7c-8fc4f351f7ce/2d012c02-b9f2-4aa5-8753-46e0e8fa2bf1.jpg','https://media.fab.com/image_previews/gallery_images/5b83f981-2147-4e5f-be30-848699da4c1b/2f669dd9-5e5f-4197-b130-d0f69fdb27a1.jpg','https://media.fab.com/image_previews/gallery_images/69b20f92-b70a-424a-a1b2-b0a4dc4c68c4/9bbb003d-3bd0-419b-8100-c1372900c549.jpg','https://media.fab.com/image_previews/gallery_images/9aae632a-43c3-4720-bc00-8a45f0eeb0ab/2250e0a9-6315-4ecb-a3d2-7898fe2056fd.jpg','https://media.fab.com/image_previews/gallery_images/d35aa7ec-5b8b-4b33-a263-9f72feabba83/7433dec7-1c30-42df-93dc-8f16ff7403ea.jpg','https://media.fab.com/image_previews/gallery_images/26edd775-a94b-4087-a234-cef015397b43/c1afe8b3-1d0a-456d-8d55-5cfd703a772c.jpg','https://media.fab.com/image_previews/gallery_images/af116d96-9962-4896-9599-eb108e737368/d94275d8-a7c9-43a8-9951-cf0f71f46b72.jpg','https://media.fab.com/image_previews/gallery_images/743032b4-8a16-48ee-ae22-b4d09d2b531a/79e5b085-3efd-479e-a931-6d073818dac8.jpg','https://media.fab.com/image_previews/gallery_images/9baf6e6e-68a9-4644-ba27-78942926ba33/d1c82504-0e53-460b-96dd-f57b26a8c1e3.jpg','https://media.fab.com/image_previews/gallery_images/f5494452-d5d8-4856-b7be-95d89da3f005/bae04392-28bb-4735-9cbd-4e7e59d83529.jpg','https://media.fab.com/image_previews/gallery_images/1c1dccac-7cd5-4a44-a6cd-2cbb3d9e530f/d02880f6-a10d-4542-9027-0686cf74cdda.jpg'],
+  'a5161656': ['https://media.fab.com/image_previews/gallery_images/64e99420-e4ac-422b-b7fd-f54f1140aced/c97baf7a-c3b8-4b78-a1a2-4462a26b8835.jpg','https://media.fab.com/image_previews/gallery_images/3e79b3fa-ad65-4121-a535-e7624edc694d/393016ec-78fa-45e0-8938-7daa75a5f937.jpg','https://media.fab.com/image_previews/gallery_images/039be7f9-5608-4ac3-964e-81ba90966143/1baa241e-440d-4fe3-9040-65897a839bed.jpg','https://media.fab.com/image_previews/gallery_images/248df646-adba-4e5c-a7b2-f634cbd91498/ef5bd21b-d109-47ab-a7ef-36d51f8e5a5d.jpg','https://media.fab.com/image_previews/gallery_images/68d84875-edcd-4d7a-b83b-6b7a5a3df57f/ea06b4b7-6837-46f9-a2b2-e66a1a0e2781.jpg','https://media.fab.com/image_previews/gallery_images/6089b706-fa09-482a-92db-aacf595033da/61da5c32-37bd-4df5-9849-c1b0993c99d9.jpg','https://media.fab.com/image_previews/gallery_images/9eb73cb7-8fdb-4102-b596-0ae174607916/ea6e3a9f-056e-4f11-91b0-af8f66eb0ee2.jpg','https://media.fab.com/image_previews/gallery_images/c666c417-1ce2-40ff-ab51-5804504632eb/c2a27e3c-6f60-49c4-8ec6-6d8705d1c572.jpg','https://media.fab.com/image_previews/gallery_images/c8ffab2e-2431-4719-a668-180c1e3cc950/99878185-4f31-43d1-bc71-7120521fd2a6.jpg','https://media.fab.com/image_previews/gallery_images/f163be61-a453-452b-8262-b1998b035600/bba6e318-4913-4f34-b1f6-3f8906050d30.jpg','https://media.fab.com/image_previews/gallery_images/fc7cd6d6-e7bc-4cc1-be8d-3a8ab6e33c24/70e6be06-7b79-4f73-9d77-49085a3f72ca.jpg','https://media.fab.com/image_previews/gallery_images/47a1d752-6914-4b9c-a87b-83eab374eedc/fbc7d362-9c5e-4ce8-891e-b788c5976bcd.jpg','https://media.fab.com/image_previews/gallery_images/81ad3130-eb00-48db-bbba-6a2ed3c45207/8e0ce3a2-3cff-4f1b-979a-34b2a42483b4.jpg'],
+  '897b47f0': ['https://media.fab.com/image_previews/gallery_images/f65ba5a6-66a6-40d7-af38-5e3e4fa7c03b/20ba8166-19b1-4bdb-bf1e-7acb2fd10e01.jpg','https://media.fab.com/image_previews/gallery_images/360d436a-5514-48fd-bbd3-abd04eb1836d/db0f095d-2841-4709-87f5-3d61e18f8804.jpg','https://media.fab.com/image_previews/gallery_images/c798c3ac-3f8e-42e2-b3fb-546a1ab9289a/e9ab30d9-6ce8-4c04-b1b6-2f0878a7bfa9.jpg','https://media.fab.com/image_previews/gallery_images/8251ba7d-8648-4917-96be-4e6c818c6f58/107f2f82-7453-4abe-9d6f-37d999733a89.jpg','https://media.fab.com/image_previews/gallery_images/20bec5fb-821f-4cf4-9a8b-6eb09bfe676c/69cb25e3-c5ed-4f7e-9bad-e65867ff196a.jpg','https://media.fab.com/image_previews/gallery_images/c316363f-a88d-4f4d-be2b-c164d88da88c/c0addef0-68e8-4ee4-9efc-1ba8a212ac8b.jpg','https://media.fab.com/image_previews/gallery_images/f43605b9-2087-459f-b81c-0ca967988f17/51eb82d7-28da-41bd-8403-7b86b3827c0a.jpg','https://media.fab.com/image_previews/gallery_images/6c36b179-9ed2-4424-ab06-d6819fb4292d/0f1d4713-a8a9-4943-bc65-f54f98fa24d7.jpg','https://media.fab.com/image_previews/gallery_images/4b2f9788-5e23-4435-8040-8a7e616f06ca/43db709e-0098-4502-8845-9b707581b3f9.jpg','https://media.fab.com/image_previews/gallery_images/8716f8ef-b8c0-483a-9c9a-3ca6799f6559/874fed74-83e2-4bcb-9e49-6bccece31c57.jpg','https://media.fab.com/image_previews/gallery_images/79949f3f-ef16-40ab-a693-9cb17c046b46/3e27fa98-0690-49df-b9f7-9c62bef735c5.jpg','https://media.fab.com/image_previews/gallery_images/7a0890ef-39f0-4d87-bbd8-61426299cf60/3813f1dc-4979-468e-9c41-b80ed53f258c.jpg','https://media.fab.com/image_previews/gallery_images/ab1e1ded-a724-46ee-8920-025427006960/0f95987c-88b0-46ef-a9a8-ad824fc9653c.jpg','https://media.fab.com/image_previews/gallery_images/ff56846d-8ee1-4e0c-91a7-8e2938cfaff5/302498a8-f3a9-49a4-8649-3110d4099937.jpg'],
+  '5e439f0f': ['https://media.fab.com/image_previews/gallery_images/8bf05d56-89c3-473b-abfe-32d1d94e9236/f241b7fc-d7ea-44b5-ae70-e553bbd69d87.jpg','https://media.fab.com/image_previews/gallery_images/ade10b82-7809-4ad2-816b-ea103ff5c6cd/27cd42b5-ac21-4071-b12e-9daa470b64f8.jpg','https://media.fab.com/image_previews/gallery_images/06345ee9-e0c1-4077-a91f-327a64222801/a5925f89-d6f5-4527-9582-9bf2273b3cbc.jpg','https://media.fab.com/image_previews/gallery_images/78e07455-f845-414a-93ff-7ad5a317154d/bed85aa1-75dc-40bb-b31f-850c73cf40ec.jpg','https://media.fab.com/image_previews/gallery_images/6688d479-64ca-413d-9df2-20708df42d18/910c63ee-1e31-42dd-a9d5-4e02cf63a7ff.jpg','https://media.fab.com/image_previews/gallery_images/3443e87d-4f8a-4410-86ad-fbf1cb9a31c8/8e5e6f66-7154-4664-87ee-6b376ca71a33.jpg','https://media.fab.com/image_previews/gallery_images/594323ad-601c-4738-94a4-09aaab77c8ce/ee6f9283-0553-42bc-b35c-8350931c2ca9.jpg','https://media.fab.com/image_previews/gallery_images/c944ea06-44ef-4db3-b915-8066592ce438/5c3cf33d-6dd5-4c39-b59a-1d8fbc8abe0e.jpg','https://media.fab.com/image_previews/gallery_images/76d50a78-e763-416a-9727-1fa4fb19eba8/66ff96c6-6cd3-478a-8a7d-293a1324f999.jpg','https://media.fab.com/image_previews/gallery_images/a20c00dc-d7a5-45d1-8796-d2fdb2b10d89/9dfd53bf-f20a-460a-bc47-47009653612d.jpg','https://media.fab.com/image_previews/gallery_images/2b2e3fc3-9b07-49fa-95b3-a1d9c762e643/e4b5b5b9-39a9-49f6-ab8e-07edf4dd8f32.jpg','https://media.fab.com/image_previews/gallery_images/82c72514-98ed-4cc7-b17e-a02fd0fc9e6f/fab4a445-fdc7-41e6-a27e-92b8c1afb0f3.jpg','https://media.fab.com/image_previews/gallery_images/9f12795b-024b-4815-b518-35c5c8dba12e/acc655c7-9610-4444-bfb5-62b2d3a4d339.jpg','https://media.fab.com/image_previews/gallery_images/9113636b-eb89-4195-8e50-61f780d4e156/f9488fbd-235f-494d-ba79-71f70576de75.jpg'],
+  '14e34309': ['https://media.fab.com/image_previews/gallery_images/11863af5-5183-4fca-88b6-bbc612b7fee1/28210320-aca7-49e8-82ed-f84e5d852806.jpg','https://media.fab.com/image_previews/gallery_images/c34d2d39-6707-4e2f-9545-fe2b375bc7e3/eff2797a-c52d-4353-8d8e-baad7f02ed88.jpg','https://media.fab.com/image_previews/gallery_images/abea353e-701e-4a86-91fd-d870f62d13c7/dc9e5394-d3f2-495a-9a52-dc0d4a177fea.jpg','https://media.fab.com/image_previews/gallery_images/7aab9d9f-2db9-464f-899a-f55d209e3889/74604e10-6894-401d-aaa8-ede336969e61.jpg','https://media.fab.com/image_previews/gallery_images/7a556ca5-08eb-4000-a44e-3f0233b02757/7c740d59-c5c9-47f8-a1bf-09e4c6c886cf.jpg','https://media.fab.com/image_previews/gallery_images/f6e7eb8e-f194-443f-adda-5be43d3e6bca/8ba10ad7-e4c5-485c-8596-0d3545366ba1.jpg','https://media.fab.com/image_previews/gallery_images/539a01bb-2d91-4832-8e46-fa616e43aa66/54296370-6657-40cf-92c7-bec5f6382a9b.jpg','https://media.fab.com/image_previews/gallery_images/1c0be19f-0655-4c47-a968-155bfa32b705/79c17de7-d3bc-4e00-bf0e-cb2ddc2c7d03.jpg','https://media.fab.com/image_previews/gallery_images/c7c5e50e-daae-4b70-ab3e-686af140fa9c/9cdf046f-8201-4120-ae41-121acb3bba2c.jpg','https://media.fab.com/image_previews/gallery_images/8e25335e-76af-4754-9b5b-ce9ad5805957/3080453f-fa90-4d23-857f-dbe39830019c.jpg','https://media.fab.com/image_previews/gallery_images/56faf69b-5fbb-40fb-86f6-9e1bd74aae5c/77cf20f9-6169-4bdd-8fac-2f0d16a5a114.jpg','https://media.fab.com/image_previews/gallery_images/76edd5c4-498b-4eda-8e2a-a37386198638/e9ea8144-bccb-4233-b689-43e5fcf6f61b.jpg','https://media.fab.com/image_previews/gallery_images/28c40959-3ea7-4dfa-a346-0b88260c17f7/29e48f0d-cebb-4b8a-a3e8-bd93445c80f7.jpg','https://media.fab.com/image_previews/gallery_images/8b9f3d8c-d92c-49b7-978b-e098d0fdfb40/ed6cf55f-2601-4d73-a596-6a131a493119.jpg'],
+  '3d96a640': ['https://media.fab.com/image_previews/gallery_images/60cf7af8-e5c0-4345-b61e-adf54317cb63/ff7a318c-d909-48e3-9444-6ac72faf47d5.jpg','https://media.fab.com/image_previews/gallery_images/8b870098-d442-4c62-84cd-aaa926fad694/b6ac74fd-a908-4e35-8ac2-898172068d02.jpg','https://media.fab.com/image_previews/gallery_images/e9125d03-d264-44e2-a61b-e37696669765/f1d6ba57-e003-4ca6-9fcb-5331192911d6.jpg','https://media.fab.com/image_previews/gallery_images/0f7172fd-c5d6-42e5-8bae-8e3b33cea158/baf95048-e3e8-477d-9a63-5c5b78d1a545.jpg','https://media.fab.com/image_previews/gallery_images/28aa9bc6-6b79-40e6-a545-c575da3a259e/ab0d4011-ab53-4400-ad4f-cf7958ba1841.jpg','https://media.fab.com/image_previews/gallery_images/06d9b7d7-9582-4017-ae72-510d13b89163/c3f826eb-8759-4da0-b3ae-cc4c116f4eff.jpg','https://media.fab.com/image_previews/gallery_images/506b385f-a281-4c64-944a-1271f4bbfcbb/cc3c66fc-6c74-4d4c-9b99-c7a3026c47af.jpg','https://media.fab.com/image_previews/gallery_images/5ffc2002-8b16-4d51-9fe0-69865e592cda/3f7e2de9-fe06-438b-a49b-a33340426b38.jpg','https://media.fab.com/image_previews/gallery_images/74ab6864-5331-4244-9671-6813f3ace2b5/c0af56f8-0151-4709-a9c2-79d5216b5e7d.jpg','https://media.fab.com/image_previews/gallery_images/e84ddd93-079d-4fd1-b839-7d69a4a9623c/c5d362d3-7075-4ab5-8e97-659af3a0e66e.jpg','https://media.fab.com/image_previews/gallery_images/08e13bb7-92a9-47e4-9b9b-6e444bf4ea76/98ceb1da-f988-4013-900b-b7bfac17b58c.jpg','https://media.fab.com/image_previews/gallery_images/160505f7-8316-4eb2-aef4-6e14ffdc42c6/a3434054-4b76-4de2-968b-3648af4b5b7d.jpg','https://media.fab.com/image_previews/gallery_images/9fcae400-eed3-4345-9b81-524eb1739a85/6ae26c9b-c3f2-4ea8-aba8-08e7d79f0a3b.jpg','https://media.fab.com/image_previews/gallery_images/0b5ccdd3-3fc8-48fa-bd57-b549cf53f90b/4f99bb5a-6593-4bcd-aded-e9287b51632d.jpg'],
+  'af813c5f': ['https://media.fab.com/image_previews/gallery_images/5b2b9d38-a764-4625-86d8-6333a5c2b463/c676f6ea-32b3-4906-b04a-d463caad48a6.jpg','https://media.fab.com/image_previews/gallery_images/4f790b31-c2f1-45bb-8147-24af55b9ef39/486543ab-6265-410a-b57a-7c515d59e9dd.jpg','https://media.fab.com/image_previews/gallery_images/f1e85862-9d5e-4655-bd31-7f18c52e49fc/364a987c-8b03-45d8-b5ee-955507fe8973.jpg','https://media.fab.com/image_previews/gallery_images/8a5317fe-30e7-4df1-9cf2-1249dc87ee0c/11a80c83-141d-40fc-9a3c-9c7c20097d70.jpg','https://media.fab.com/image_previews/gallery_images/ab7e3f58-e7e1-4a7c-b2dc-be3cff02a112/efa9c773-be18-40f5-a524-9c127a15776c.jpg','https://media.fab.com/image_previews/gallery_images/a599524c-54b5-4361-a3a2-d3aa42862b75/78735a8b-7fa3-4052-9af0-4f8470aff6f5.jpg','https://media.fab.com/image_previews/gallery_images/8c44af42-3cf8-4d93-bf67-17535eec7f6f/22d90042-6fff-4157-b5e5-fcaf28542549.jpg','https://media.fab.com/image_previews/gallery_images/0f51e229-11ee-416a-9c18-7f9970569d0e/1f343ed3-9864-443b-9e29-24d52cba49aa.jpg','https://media.fab.com/image_previews/gallery_images/cf5bd20f-5219-42d2-83c6-d27aa4411202/0be4fe5a-18e0-4aa6-be75-ac2615be6769.jpg','https://media.fab.com/image_previews/gallery_images/5aa0b0c2-5ffb-4c56-b578-9e835f96dfec/9f4e7531-443c-45a3-8bb1-607975ddc3a4.jpg','https://media.fab.com/image_previews/gallery_images/297109c0-0317-4b17-a469-d3b971f7a28b/7b8ca73d-f547-46cc-b823-6b1666a57c85.jpg','https://media.fab.com/image_previews/gallery_images/a5c91894-6632-48bb-ac94-306023d02928/70ef5524-e444-4f24-8d98-a92f8046a7a5.jpg','https://media.fab.com/image_previews/gallery_images/83b4b73a-d5fc-427f-b85b-f71d9de7f5b7/fb1a7322-bc0a-49ba-8c08-3414ed1ab701.jpg','https://media.fab.com/image_previews/gallery_images/759ff7d8-c0bc-45eb-bbaa-edbdb754922c/483a70f5-dcf2-4294-a5d8-898ad5e87ad1.jpg'],
+  '72f2e599': ['https://media.fab.com/image_previews/gallery_images/b08e3e5b-91b2-4c4d-b688-c7dc0f78d173/6cd00a19-f10c-4db5-845d-6f30a5d01994.jpg','https://media.fab.com/image_previews/gallery_images/67721396-6624-44f8-8ba4-c2e12a2b97cc/ccbe2caf-d08c-4834-b953-fc82259ca268.jpg','https://media.fab.com/image_previews/gallery_images/9a9c1bed-405a-47e2-95d7-7fa6597f9b42/e68587c1-f01e-4299-8a9c-2a6c5fceb8ee.jpg','https://media.fab.com/image_previews/gallery_images/936f5147-ee1c-46e5-9b81-c4a2b43a18a5/6b3a5635-f81e-42c5-a6ca-29b0cdf01b1c.jpg','https://media.fab.com/image_previews/gallery_images/d4be029b-9b7e-41d0-a662-64ff0d2864f1/62bf2f37-575a-419f-8bbb-fc0ffd2b7594.jpg','https://media.fab.com/image_previews/gallery_images/d53eb996-256e-468e-9f6e-e608cc193aba/698f1312-42bf-40c5-9dc7-77304649bee9.jpg','https://media.fab.com/image_previews/gallery_images/6580f62d-edbe-4e79-8258-1ceab7049fe3/89760123-834f-4483-a65a-f37294d743c9.jpg','https://media.fab.com/image_previews/gallery_images/2d180bb5-1950-4235-8ce8-e2737bfb70ba/cbe39f67-65a3-4fa4-ad9d-faca03a8790f.jpg','https://media.fab.com/image_previews/gallery_images/7892a3b3-6d77-487c-8380-1a18a400c1cb/89d5b412-332f-47fc-95aa-76267f7be8b4.jpg','https://media.fab.com/image_previews/gallery_images/ffea570d-6ed8-42bf-9f97-1d8231887cac/aea66b14-a615-4e20-a5f4-b6653f60030e.jpg','https://media.fab.com/image_previews/gallery_images/1fa0342f-2daa-4b76-862f-771f61faacba/b7c82f05-d25c-40b4-a565-6e5462b93428.jpg','https://media.fab.com/image_previews/gallery_images/8a34dd1a-bc5f-4e5c-b3fd-4c3f698e4530/926dc0bb-e64e-4ce3-a511-59c0ad1919d8.jpg','https://media.fab.com/image_previews/gallery_images/afea3f17-dbec-498e-a921-47c1b523af75/40a87641-c5c5-4edc-a93c-9d47976a56c5.jpg','https://media.fab.com/image_previews/gallery_images/2e9af4cc-c8a7-4c09-81c0-cc594915c9e2/f9545dd8-85eb-46e3-aed4-6ecaafc54f83.jpg','https://media.fab.com/image_previews/gallery_images/b8a6cd62-edae-46da-b377-975b00e28270/e3b8482b-2162-4430-b154-ea875c360ba6.jpg','https://media.fab.com/image_previews/gallery_images/4bbb3333-7280-4fdb-b084-ae458d55b2e1/0953b2a5-228a-4ea5-ac9a-f222a816f4b0.jpg'],
+  '85fe6436': ['https://media.fab.com/image_previews/gallery_images/4fd77857-9e63-4751-891c-77f36783ff55/8c533eb6-2781-4133-abcd-11a3431e2046.jpg','https://media.fab.com/image_previews/gallery_images/9452e926-62c0-495a-8d49-1f9dafc614b4/8b32c04a-a8b0-4ee4-807a-27cbf41ec9a5.jpg','https://media.fab.com/image_previews/gallery_images/b3240064-a363-4749-9b4c-a0d2adbc8b60/6426a4b1-ce63-4e98-b436-7432e19bc8dd.jpg','https://media.fab.com/image_previews/gallery_images/e3a13ed0-35b2-4f37-bbea-85fd60aeabb5/8773fb0b-753b-4974-936e-d7bf11c67e06.jpg','https://media.fab.com/image_previews/gallery_images/a1b2f017-0d34-4072-befa-80b967b4f867/a1f2d81f-e85e-4c73-a7a6-df88a177c647.jpg','https://media.fab.com/image_previews/gallery_images/1cffe7c2-82d2-4dca-8a2f-7c606e2f7a43/c9d093bd-6639-4262-86ac-c53a7656b38d.jpg','https://media.fab.com/image_previews/gallery_images/8d447ca9-7f79-4999-bc8b-c470ba3369f0/b3b6004c-b3a6-40f9-8612-4aa606f99a18.jpg','https://media.fab.com/image_previews/gallery_images/951331df-8fcc-40f4-8fea-cc68cd4272bf/e161884b-f429-418e-a65b-fe5e19e47c18.jpg','https://media.fab.com/image_previews/gallery_images/7b541c95-bd0c-4303-a540-5dd6c0f10746/ca160af5-72aa-48bf-b3a7-08a1b44e8dfa.jpg','https://media.fab.com/image_previews/gallery_images/94d68005-d3e5-45c1-b76c-fdef7eef2a69/4ec8fb10-9295-48ec-951e-cad5fe2ce02a.jpg','https://media.fab.com/image_previews/gallery_images/2b0b9592-6755-4bec-8bd4-7ed566a6b57f/e8527c54-5de3-4145-97d1-bb58b9eb1906.jpg','https://media.fab.com/image_previews/gallery_images/24d63b6a-1f54-4b31-9277-4550f5e64f1d/039c4b7a-3e70-40b0-b869-a3f22378cd4b.jpg','https://media.fab.com/image_previews/gallery_images/122f1a48-4776-4b85-a237-f93c8ebd03fd/168d416e-76a9-44a9-bfb6-2d61e4a018bd.jpg','https://media.fab.com/image_previews/gallery_images/f8200703-c1e8-4789-8905-2831b3a9273b/948df076-cd80-4713-8380-757d7b47d1d8.jpg','https://media.fab.com/image_previews/gallery_images/d0aafe5f-dbdc-42e0-b35b-563a86a12341/a4f068c3-8d65-4439-a44e-4db732f27251.jpg'],
+  'd1cc7e58': ['https://media.fab.com/image_previews/gallery_images/ccb290a6-7bcd-489c-aea9-9d2d33400537/1a77bb95-b0e0-4cbf-a3fd-e45ae5976219.jpg','https://media.fab.com/image_previews/gallery_images/460a60a8-863a-49a6-9361-331f2173f007/11d8f2b0-d6ef-4e8a-895b-032fd2f33fd5.jpg','https://media.fab.com/image_previews/gallery_images/08f5e39e-9b8b-47e3-a6ed-7b061ff4ec62/25fc69ba-4807-4fe4-a94a-fdc7d7e0347a.jpg','https://media.fab.com/image_previews/gallery_images/94450cac-8960-4162-9eaa-ed1be6497be9/eb5b11b3-43ce-4a3d-905f-d4367169c981.jpg','https://media.fab.com/image_previews/gallery_images/ef832cc9-e849-4668-b7f1-b2a2f60c19c5/ba58032b-133a-4931-b6ae-74785a8d36e3.jpg','https://media.fab.com/image_previews/gallery_images/1b78f8af-41bf-43af-ab04-d44b6670c6ce/37dd73e5-6a33-422d-bb6f-cc0e1677a923.jpg','https://media.fab.com/image_previews/gallery_images/dc3008b5-b542-4cf3-8dff-e8133fe3e3cb/c921d485-aa5d-4a03-b1c1-b9b3412bb5b1.jpg','https://media.fab.com/image_previews/gallery_images/9f7b5007-da2c-4b29-9191-23e5ef1a0b00/86ae89d6-73e2-48f6-bcee-41a93ac39de1.jpg','https://media.fab.com/image_previews/gallery_images/63ae33dc-6e3e-4e9a-90df-db05a7b293db/1137afef-3f0f-4e0d-8995-ca054662c2b3.jpg','https://media.fab.com/image_previews/gallery_images/74441b8e-8a61-4d11-821f-fd268c1c6ff5/e748263d-9044-40ec-935c-0f5d090da300.jpg','https://media.fab.com/image_previews/gallery_images/3388f74b-79dc-4cec-8c86-cfc27c1e157d/7f144193-9b73-4d48-a1e5-92229db5725a.jpg','https://media.fab.com/image_previews/gallery_images/12bdb816-29b4-42c8-8cc4-44243662d2b3/f24973c2-1d1d-4892-9d41-9db52c9f42d5.jpg','https://media.fab.com/image_previews/gallery_images/4397d136-1474-42d3-9ea2-951cb9c72bda/8c84ae76-7797-4ac4-af5e-5792032aa8e1.jpg','https://media.fab.com/image_previews/gallery_images/51362a94-59b3-4f65-99fb-906f1337bdd3/24cfd04b-633a-4ff7-a0ae-dcae430c6510.jpg','https://media.fab.com/image_previews/gallery_images/cb0daad5-9f6f-4275-bc63-4da4d384c482/e38c6e8c-df4e-4799-b07b-90c695b73ab1.jpg','https://media.fab.com/image_previews/gallery_images/14b83f6a-5612-4337-9dcb-dfdf03c4f73d/8f01d176-314d-4b88-bb33-46c9704274d1.jpg'],
+  '2d95efdd': ['https://media.fab.com/image_previews/gallery_images/2b5a34c4-b946-466d-96f5-29920c5dedf5/93cacc13-2014-42ae-a34a-edeb3c6f67fe.jpg','https://media.fab.com/image_previews/gallery_images/a0fde355-686a-4853-a1b3-ea92d2d8ba6e/5f0d3056-c1b3-4e70-a51c-5b7c576ce8ce.jpg','https://media.fab.com/image_previews/gallery_images/97bcb561-dfaa-4d76-93d9-828dc2646294/2c4d817b-4aba-4b5b-87f9-779c145bfc62.jpg','https://media.fab.com/image_previews/gallery_images/66bcee44-5709-4c99-8519-67482cdb4a5b/5201728b-c6ca-481d-89e9-eed3af85bf47.jpg','https://media.fab.com/image_previews/gallery_images/6daa900a-a367-489d-8d3d-4022db59d3e1/a1dc52d5-3a66-4ccc-806f-86131d2da492.jpg','https://media.fab.com/image_previews/gallery_images/abcea552-194a-4fbd-b783-7b0a6f64dd41/e84e8b68-0816-4c90-9e3c-a77e9d4ba935.jpg','https://media.fab.com/image_previews/gallery_images/4552e917-f009-456e-908c-22d51471c122/3af19e3f-d57e-44bb-80e5-8776763f4a8d.jpg','https://media.fab.com/image_previews/gallery_images/9cca5830-ecc0-4c6f-bec5-667e2212c9ec/848ce8a9-703c-4ef0-9aba-8eb30e6f46d7.jpg','https://media.fab.com/image_previews/gallery_images/e9398584-60b4-463c-b851-8fb35f8f2ea0/e310ab23-c751-4db5-a6e0-53954b5f488e.jpg','https://media.fab.com/image_previews/gallery_images/3b05a2c1-3871-4898-850e-ba0f2e3d6e89/001885fc-3710-481a-abdf-7a6ab4f829a0.jpg','https://media.fab.com/image_previews/gallery_images/56826433-d8bb-4999-87c0-9df9bb0ac9ed/5c0ba484-0f78-4eaa-a732-204b1face2c6.jpg','https://media.fab.com/image_previews/gallery_images/4cb3061c-b388-4f73-a471-d8e76d8a1cd9/031ee2be-171b-4e41-9373-88563c42edef.jpg','https://media.fab.com/image_previews/gallery_images/7aa53419-fb42-4862-9832-27288b4580a5/598c058d-a25a-46ef-9fac-babaf246cff0.jpg','https://media.fab.com/image_previews/gallery_images/c6e2369c-d1e4-4441-95e7-ae93d656a359/9aa273ba-a156-4196-849d-52b5b673cb37.jpg','https://media.fab.com/image_previews/gallery_images/7d2cc2b0-6fbd-4c4d-903b-dc41e10cec0e/8bdb1e86-19e0-4e91-9616-7898eb5e2152.jpg','https://media.fab.com/image_previews/gallery_images/5cf107f0-d5c2-404a-927d-851c8ebc8615/9a5b1afb-d70a-44cd-9d6e-ab3aba9fa681.jpg'],
+  '6d867688': ['https://media.fab.com/image_previews/gallery_images/0037be8f-5f87-404e-a2d3-3f4f72d0fa7b/ba046eb8-b293-4310-930e-4b303252f618.jpg','https://media.fab.com/image_previews/gallery_images/192f62f4-64b0-4209-a905-a883e4e084d0/b40b0309-d19d-4606-bae7-04d67f37ab84.jpg','https://media.fab.com/image_previews/gallery_images/d15ac76d-5ff4-4698-9e98-c37d0962fd83/7dc64785-8871-406d-a4c4-6c1b99edff78.jpg','https://media.fab.com/image_previews/gallery_images/de42066e-d9ed-43e4-a419-ac0a6d306ef1/05606c83-2b3e-474f-9a78-2c7d887adf84.jpg','https://media.fab.com/image_previews/gallery_images/ad44abd2-afc5-4889-80be-7d331e06547f/76a9b8cc-2954-4add-bd9c-75129882ae8f.jpg','https://media.fab.com/image_previews/gallery_images/d8c35a79-cb27-431c-82a4-78327f6b83aa/63366fa8-c85c-4534-9a65-75bc099f5432.jpg','https://media.fab.com/image_previews/gallery_images/51b637bf-639a-44ac-afb0-54529cdb5c11/643c4fa1-5286-4bb7-8d15-a84497563a1a.jpg','https://media.fab.com/image_previews/gallery_images/cd0830b5-b2ed-4eda-bc08-509317cf6376/86fd3ae4-5b8b-4a9b-b4cd-54d2d7bab4b9.jpg','https://media.fab.com/image_previews/gallery_images/5edc9e26-770d-41b8-8733-1ad7deb175d0/e4da687b-ca60-4662-9b26-304977767ce8.jpg','https://media.fab.com/image_previews/gallery_images/239f4514-73c9-4adb-bf22-c926b43d2a51/f987d4f0-9ad3-49f3-8105-3aeffaf62c71.jpg','https://media.fab.com/image_previews/gallery_images/336409b5-e1c0-4847-a99e-7e484d2ceb58/053ceffa-22ee-49ac-9a1c-6a40f4c32da9.jpg','https://media.fab.com/image_previews/gallery_images/dfaccc0e-ee22-4dc8-b550-ff8a755b42d5/1d7e1af7-0d99-42c4-95e5-74157d361ccb.jpg','https://media.fab.com/image_previews/gallery_images/fb44515d-af80-4724-bd6a-a24aef60bbc7/951f3ea4-f08f-4efa-bf57-b9843588a3a6.jpg','https://media.fab.com/image_previews/gallery_images/87d47613-42ab-4266-8c84-c0ec2b88be25/7abb2f6a-b1a4-4fdb-9f22-6be13d36b98c.jpg','https://media.fab.com/image_previews/gallery_images/18534154-03e7-46f0-97fa-a1ccadced650/ec2b8960-38a2-40ac-be82-54d0e23e518e.jpg','https://media.fab.com/image_previews/gallery_images/bb8dd544-b4b1-4901-9fc3-f612ebc24f15/d765f5d4-8f4c-4fd3-b5bd-036aa10e2e29.jpg'],
+  '7f935664': ['https://media.fab.com/image_previews/gallery_images/33e0d6fe-b195-498b-be0d-946a0ad64fe7/60918a11-e3dd-429f-9513-79ed9e721f5f.jpg','https://media.fab.com/image_previews/gallery_images/46d3bead-927a-418b-a29f-4ae83d22d4b2/fc689ed0-fe20-4f9d-9efb-043715a10445.jpg','https://media.fab.com/image_previews/gallery_images/f9a4629f-c44e-443a-8589-7d0b6fd36b65/17e27a30-304e-403f-937b-b9ab17b60135.jpg','https://media.fab.com/image_previews/gallery_images/c55620e9-3ef6-4105-881c-d206565707d5/8cff9b8a-a2bf-4e33-b59a-adce7c006afb.jpg','https://media.fab.com/image_previews/gallery_images/76469c4b-ab08-4ebc-89d5-618656628cff/4195fb53-cb47-488b-940d-a0c40c861a3a.jpg','https://media.fab.com/image_previews/gallery_images/880e92e1-43f3-40b2-879f-146dc277c289/33d40f0f-b4f7-48d1-add4-552d15753fd1.jpg','https://media.fab.com/image_previews/gallery_images/2c0bacaa-1130-4669-aafa-cb590547e858/f2cc2a52-88f5-4444-9e61-0a6b52028863.jpg','https://media.fab.com/image_previews/gallery_images/44b112b0-a0b5-420a-a14b-00a87a3ab325/53f269a7-0cbc-4bc4-841a-9938dfb3866a.jpg','https://media.fab.com/image_previews/gallery_images/1ca97049-edb6-4fa9-b432-36c178d85df1/e12563b4-024c-4de7-bfd0-e6d908a8645f.jpg','https://media.fab.com/image_previews/gallery_images/3b945ace-eb35-4067-843f-bd97ec6b38c3/e0138949-e5dd-4159-b888-dc7664bc629d.jpg','https://media.fab.com/image_previews/gallery_images/4283f79b-088d-4841-ae50-c717748f841c/95272df4-5bb3-4edd-8a39-164619194fd7.jpg','https://media.fab.com/image_previews/gallery_images/543ceb34-a4f6-4f76-b290-2e98e67e76f4/4ef4dcb6-84a9-4df6-91b9-1625d6903690.jpg','https://media.fab.com/image_previews/gallery_images/b88e4994-a17a-4abf-9861-770b08f5e1d0/67403ad4-d979-4ccf-9013-abaa70962499.jpg','https://media.fab.com/image_previews/gallery_images/7e191587-36c2-4f42-8d24-54c581206dab/e6906ac1-cff7-4a75-bdf9-30e61f9109d2.jpg','https://media.fab.com/image_previews/gallery_images/359f3e1c-5161-403a-b44b-4adc30da3b0e/64fa0f4f-7533-4ebe-b6e3-3f8c21990977.jpg','https://media.fab.com/image_previews/gallery_images/39a71dc7-877a-40e3-90ac-3793f1a9ac7f/a52dedd3-3a2b-46e9-b5e2-fa3615732345.jpg'],
+  'd5b011c9': ['https://media.fab.com/image_previews/gallery_images/c8ee501d-bbda-403f-8bc3-492bbc2d75a9/079b01eb-3bd6-4e5b-9e85-c933143916cf.jpg','https://media.fab.com/image_previews/gallery_images/bc13a68f-4fcf-4573-a24c-2bbc95638ab1/c0f9d521-0ebf-4aea-93b5-42dcf57ae45d.jpg','https://media.fab.com/image_previews/gallery_images/efccd1cd-3e5e-4377-a288-87b7391cf922/ac8aac3f-67b6-4624-ad7c-1433c01499a4.jpg','https://media.fab.com/image_previews/gallery_images/f57ac4dc-a060-4c3d-9613-270642cf392b/71da715d-4156-4b94-8427-21792ba8fa57.jpg','https://media.fab.com/image_previews/gallery_images/6ac4c6a4-2c6a-4045-9ef8-0311dd954fda/dcdca7de-b737-400e-ba4d-3f03e3a9054d.jpg','https://media.fab.com/image_previews/gallery_images/65be8570-30c5-4508-a1b8-7740a5589902/8ad59514-9e19-47d8-ab7c-185d8da42db7.jpg','https://media.fab.com/image_previews/gallery_images/6377878c-0b96-4a12-b90c-ee05a6ea2226/08de07f2-e8eb-4ea8-a7d3-ab6d86a45bb2.jpg','https://media.fab.com/image_previews/gallery_images/420220e3-c2ca-465d-9e7f-413b420db2fc/a0fedf47-f231-4190-a151-64d6f2f78940.jpg','https://media.fab.com/image_previews/gallery_images/0bb0b587-4f9e-4ea0-a210-b3c897a2ab57/4de95d7f-af06-4181-b89c-2e8e817b4ecd.jpg','https://media.fab.com/image_previews/gallery_images/f8024994-30c9-4bf7-b86c-6a641cb59ca5/f7b86551-0479-4410-ac69-4a6a76fd718c.jpg','https://media.fab.com/image_previews/gallery_images/31b82257-1cf1-465e-8295-88a7dfe4af74/d7b3b6ab-e835-489b-acc4-5649d586184a.jpg','https://media.fab.com/image_previews/gallery_images/dd06aabb-8eba-4f2a-87f1-75a673e3763b/53cf2384-6c0f-4903-9d30-f82f21211d67.jpg','https://media.fab.com/image_previews/gallery_images/a5884c75-b970-4184-a8ed-db5d15ea6270/e6890547-6b6d-4de3-bd6a-b3a7cca56173.jpg','https://media.fab.com/image_previews/gallery_images/9d7f3c73-efac-42ed-b2be-7b72cb0d8ad2/d7c346da-b88d-475e-b8a6-0645df14dbff.jpg','https://media.fab.com/image_previews/gallery_images/d804ead4-ed28-42f4-83be-59bffa333cdc/520c9ed5-b7f7-4737-a70e-8d5e5704d859.jpg'],
+  'c862c4eb': ['https://media.fab.com/image_previews/gallery_images/0145b873-fc5f-417b-9f89-aa76bdc5ebcd/9a1323bb-38f4-4a5b-bf68-d43dd42ba5c1.jpg','https://media.fab.com/image_previews/gallery_images/a67695a5-5dec-47fb-bdb8-204515fb9bbc/f0fda6a1-033d-4e7c-a819-d78866693406.jpg','https://media.fab.com/image_previews/gallery_images/c08cb5b7-dbef-477b-9abc-4754603c8f75/2bb3d31f-8679-4c7c-97fa-2001ce421dd6.jpg','https://media.fab.com/image_previews/gallery_images/7e8e3231-28f8-4f7b-9cf7-3d576f732408/21b4d427-7c03-4f54-a6c2-5f4f281a5988.jpg','https://media.fab.com/image_previews/gallery_images/43d1c98c-7a01-462b-8f62-f743953009ca/55fdbbd5-68b1-4aa4-ab2f-fed70e10b022.jpg','https://media.fab.com/image_previews/gallery_images/66482ebb-8fb0-4976-8af5-7fd6979c954c/ede96034-ffbb-4613-ad44-4cfdd6d7615f.jpg','https://media.fab.com/image_previews/gallery_images/a7253dec-6ded-4d55-bc49-3ce4de339b46/9b2a8aca-ccc8-44c2-8fb4-dfdf9134ee4c.jpg','https://media.fab.com/image_previews/gallery_images/aa96cd77-76b4-4661-afbe-18187545dd90/4cf23e08-ae90-47f3-a8d7-882eeeb40373.jpg','https://media.fab.com/image_previews/gallery_images/6f67bc84-6538-4dc5-a458-dbb8be1073a1/2a2bfdcb-0bb6-4d74-95eb-f5993cbb8a34.jpg','https://media.fab.com/image_previews/gallery_images/9a6d619d-6a90-462f-9372-a822cb9b7d7c/fe49460d-5fc6-4e56-8280-c4e1cefaff9c.jpg','https://media.fab.com/image_previews/gallery_images/0198aaf9-1878-4db1-97fd-4593474c2c03/6309f87e-2b28-465c-bc4f-c8ea99ba2ac6.jpg','https://media.fab.com/image_previews/gallery_images/f17a10ac-f133-4782-aee1-5b0a114ad311/9579a4ef-d10f-4297-a1cd-ab3f91baf233.jpg','https://media.fab.com/image_previews/gallery_images/617fc8a5-0ab1-41bd-8fae-a8990c861cbc/c99e8a46-5a27-46ce-8a5c-4e2d67d676d7.jpg','https://media.fab.com/image_previews/gallery_images/2d05d3d5-5cf3-46ad-8fde-491ed7b6f691/41113d41-20f3-4008-98d6-2a8d414362a1.jpg','https://media.fab.com/image_previews/gallery_images/b52273fa-a3fd-462c-b6b8-a82a7553f484/f949b219-5f6d-4871-9a95-af6a4efab29d.jpg','https://media.fab.com/image_previews/gallery_images/b463f0bd-673d-4c33-9443-514423e9a270/54e34ef7-f345-42fc-93d9-959bd6f06dbf.jpg'],
+  '386fc789': ['https://media.fab.com/image_previews/gallery_images/9c0222e7-97c6-48e4-857b-cfbeb1ca7414/943321cb-aab3-4ef4-9de8-1955aa08b382.jpg','https://media.fab.com/image_previews/gallery_images/f00934ee-bec5-4d43-b2bf-40be117b39e1/3e4708c3-135c-411d-8f19-d442e27c6827.jpg','https://media.fab.com/image_previews/gallery_images/8c7bd9c9-4674-46fd-9009-c79c77199b92/e5c32d83-0c4e-4194-bd8e-156bfe7c04f5.jpg','https://media.fab.com/image_previews/gallery_images/0705887b-1462-4839-b0a1-23e2187bf2cb/2cb69bac-7ef3-4b62-b003-64792d663488.jpg','https://media.fab.com/image_previews/gallery_images/98df298e-50ba-4701-b113-999c9d9c2d78/879d7b6d-0ffe-4dc4-8b12-501ec5c1c8ed.jpg','https://media.fab.com/image_previews/gallery_images/1fe52468-0b47-4262-bb85-8773f7eebb34/81e60ed7-3000-4558-920a-1bba03c7ae1c.jpg','https://media.fab.com/image_previews/gallery_images/369779ad-01eb-466e-b7a6-0612dfd25363/4ffdeb79-d501-4eb5-8f52-ca1afaafb926.jpg','https://media.fab.com/image_previews/gallery_images/522c80e8-aa13-41a6-b165-d9aa03018820/3216b9bb-9827-472a-8d4e-5374764180ce.jpg','https://media.fab.com/image_previews/gallery_images/46f1af0d-de8d-43cb-8085-b4aff713e2b1/9eb4cf6a-1884-41d9-8983-a7a65c007ad9.jpg','https://media.fab.com/image_previews/gallery_images/2b30925a-82ed-4bea-b2eb-39a1b8e24ae0/5f919961-8455-4182-98d9-a96082b8b231.jpg','https://media.fab.com/image_previews/gallery_images/9cfa3eb6-e92d-4bfe-b4d4-158e7ccbe384/951f1f50-30a8-4c87-9af9-8eb90528ce58.jpg','https://media.fab.com/image_previews/gallery_images/2a038ef6-a60b-450e-82b5-aab9fa988f98/0f25e817-189c-4752-be64-e6271f28833c.jpg','https://media.fab.com/image_previews/gallery_images/a96ea590-a533-4ed2-8278-2864143490ee/5f90f409-c5d6-4151-991a-26e7414487a7.jpg']
+};
+
+var BIOME_LABEL = { m:'Mountain', a:'Arid', c:'Cold', l:'Lush' };
+
+/* ═══ RENDER GRID ═══ */
+function makeCard(p, idx) {
+  var badges = '';
+  if (p.col === '8k') {
+    badges = '<span class="biome-badge biome-' + p.bi + '">' + BIOME_LABEL[p.bi] + '</span>' +
+             '<span class="biome-badge biome-sub">' + p.b2 + '</span>';
+  } else if (p.st) {
+    badges = '<span class="style-badge badge-' + p.st + '">' + p.st.charAt(0).toUpperCase() + p.st.slice(1) + '</span>';
+  }
+  return '<div class="product-card" onclick="openDrawer(' + idx + ')" style="cursor:pointer">' +
+    '<div class="product-thumb-wrap"><img src="' + p.th + '" alt="' + p.t + '" loading="lazy"></div>' +
+    '<div class="product-body">' +
+      '<div class="product-title">' + p.t + '</div>' +
+      '<div class="product-meta">' +
+        '<div class="badge-wrap">' + badges + '</div>' +
+        '<span class="product-price">€' + p.p.toFixed(2) + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="product-link">Details &amp; buy</div>' +
+  '</div>';
+}
+
+var _col = 'frostholm';
+var _filter = 'all';
+
+/* ═══ COLLECTION PICKER ═══ */
+(function initCollCards() {
+  ['frostholm', '8k', 'arctic'].forEach(function(col) {
+    var card = document.getElementById('coll-card-' + col);
+    if (!card) return;
+    var bg = card.dataset.bg;
+    var fallback = card.dataset.bgFallback;
+    if (!bg) {
+      var first = PRODUCTS.find(function(p){ return p.col === col; });
+      if (first) bg = first.th;
+    }
+    if (!bg) return;
+    // Try local image; if it fails (404), fall back to CDN URL
+    var img = new Image();
+    img.onload = function() { card.style.backgroundImage = 'url(' + bg + ')'; };
+    img.onerror = function() {
+      var src = fallback || (PRODUCTS.find(function(p){ return p.col === col; }) || {}).th;
+      if (src) card.style.backgroundImage = 'url(' + src + ')';
+    };
+    img.src = bg;
+  });
+})();
+
+function openCollection(col) {
+  document.getElementById('coll-picker').style.display = 'none';
+  document.getElementById('store-inner').style.display = '';
+  switchCollection(col);
+}
+
+function backToCollections() {
+  document.getElementById('store-inner').style.display = 'none';
+  document.getElementById('coll-picker').style.display = '';
+}
+
+function renderStore() {
+  var grid = document.getElementById('store-grid');
+  var filtered = PRODUCTS.filter(function(p) {
+    if (p.col !== _col) return false;
+    if (_filter === 'all') return true;
+    if (_col === '8k') return p.bi === _filter;
+    return p.st === _filter;
+  });
+  grid.innerHTML = filtered.map(function(p) { return makeCard(p, PRODUCTS.indexOf(p)); }).join('');
+  grid.className = _col === 'arctic' ? 'products-grid products-grid-5' : 'products-grid';
+}
+
+function switchCollection(col) {
+  _col = col; _filter = 'all';
+  document.querySelectorAll('.store-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.col === col); });
+  document.getElementById('filters-style').style.display = col === 'frostholm' || col === 'arctic' ? '' : 'none';
+  document.getElementById('filters-biome').style.display = col === '8k' ? '' : 'none';
+  document.querySelector('.filter-pill[data-filter="retro"]').style.display = col === 'arctic' ? '' : 'none';
+  document.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === 'all'); });
+  renderStore();
+}
+
+function applyFilter(f) {
+  _filter = f;
+  var activeBar = _col === '8k' ? document.getElementById('filters-biome') : document.getElementById('filters-style');
+  activeBar.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === f); });
+  renderStore();
+}
+
+renderStore();
+
+/* ═══ GALLERY CAROUSEL ═══ */
+var _galleryImgs = [];
+var _galleryIdx  = 0;
+
+function buildGallery(p) {
+  var imgs = GALLERY[p.id.substring(0,8)];
+  _galleryImgs = (imgs && imgs.length) ? imgs : [p.th];
+  _galleryIdx  = 0;
+
+  var strip = document.getElementById('drawer-gallery-strip');
+  var prev  = document.getElementById('drawer-prev');
+  var next  = document.getElementById('drawer-next');
+
+  if (_galleryImgs.length <= 1) {
+    strip.style.display = 'none';
+    prev.style.display  = 'none';
+    next.style.display  = 'none';
+  } else {
+    strip.style.display = 'flex';
+    prev.style.display  = '';
+    next.style.display  = '';
+    strip.innerHTML = imgs.map(function(url, i) {
+      return '<div class="gallery-thumb' + (i === 0 ? ' active' : '') + '" onclick="setGalleryIdx(' + i + ')">' +
+             '<img src="' + url + '" loading="lazy"></div>';
+    }).join('');
+  }
+  setGalleryIdx(0);
+}
+
+function setGalleryIdx(idx) {
+  _galleryIdx = Math.max(0, Math.min(idx, _galleryImgs.length - 1));
+  var img = document.getElementById('drawer-img');
+  img.src = _galleryImgs[_galleryIdx];
+  // counter
+  var counter = document.getElementById('drawer-counter');
+  if (_galleryImgs.length > 1) {
+    counter.textContent = (_galleryIdx + 1) + ' / ' + _galleryImgs.length;
+    counter.style.display = '';
+  } else {
+    counter.style.display = 'none';
+  }
+  // thumbs active state
+  document.querySelectorAll('.gallery-thumb').forEach(function(t, i) {
+    t.classList.toggle('active', i === _galleryIdx);
+  });
+  // scroll active thumb into view
+  var strip = document.getElementById('drawer-gallery-strip');
+  var activThumb = strip && strip.children[_galleryIdx];
+  if (activThumb) activThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function galleryNav(dir) {
+  var next = _galleryIdx + dir;
+  if (next < 0) next = _galleryImgs.length - 1;
+  if (next >= _galleryImgs.length) next = 0;
+  setGalleryIdx(next);
+}
+
+/* ═══ LIGHTBOX ═══ */
+function openLightbox(idx) {
+  var lb = document.getElementById('lightbox');
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lightboxSet(idx != null ? idx : _galleryIdx);
+}
+
+function lightboxSet(idx) {
+  _galleryIdx = Math.max(0, Math.min(idx, _galleryImgs.length - 1));
+  document.getElementById('lightbox-img').src = _galleryImgs[_galleryIdx];
+  document.getElementById('lightbox-counter').textContent =
+    _galleryImgs.length > 1 ? (_galleryIdx + 1) + ' / ' + _galleryImgs.length : '';
+  // sync strip too
+  document.querySelectorAll('.gallery-thumb').forEach(function(t,i){
+    t.classList.toggle('active', i === _galleryIdx);
+  });
+}
+
+function lightboxNav(dir) {
+  var next = _galleryIdx + dir;
+  if (next < 0) next = _galleryImgs.length - 1;
+  if (next >= _galleryImgs.length) next = 0;
+  lightboxSet(next);
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && e.target.tagName === 'IMG') return;
+  document.getElementById('lightbox').classList.remove('open');
+  // don't re-enable body scroll here — drawer is still open
+  document.body.style.overflow = 'hidden';
+}
+
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lightbox');
+  if (lb && lb.classList.contains('open')) {
+    if (e.key === 'ArrowRight') lightboxNav(1);
+    if (e.key === 'ArrowLeft')  lightboxNav(-1);
+    if (e.key === 'Escape') { closeLightbox(); }
+  }
+});
+
+/* ═══ RICH DESCRIPTIONS ═══ */
+var _MOUNTAINS_BODY = [
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Assets \u00b7 4 types \u00d7 4 variants each</div>',
+      '<div class="rdesc-types">',
+        '<div class="rdesc-type" data-gidx="4"><b>Classic</b><span>Recurring triangular forms</span></div>',
+        '<div class="rdesc-type" data-gidx="5"><b>Bulk</b><span>Blocky shapes with heavy snow coverage</span></div>',
+        '<div class="rdesc-type" data-gidx="6"><b>Terraced</b><span>Staircase forms creating natural platforms</span></div>',
+        '<div class="rdesc-type" data-gidx="7"><b>Peak</b><span>Fine aggressive shapes for sharp ridgelines</span></div>',
+      '</div>',
+    '</div>',
+    '<button class="rdesc-more-btn" onclick="toggleRdescMore(this)">+ Materials &amp; brushes</button>',
+    '<div class="rdesc-expandable">',
+      '<div class="rdesc-block" style="margin-top:0.8rem">',
+        '<div class="rdesc-label">Materials \u00b7 3 fully customizable layers</div>',
+        '<div class="rdesc-mats">',
+          '<div class="rdesc-mat"><b>Snow</b>AO, glacier power, 4 texture variants, emissive and opacity controls</div>',
+          '<div class="rdesc-mat"><b>Cliff</b>Color, concave luminosity, snow blend angle, 4 primary and 4 secondary material variants</div>',
+          '<div class="rdesc-mat"><b>Outcrop</b>Ice AO, snow angle, 4 texture variants with full layer controls</div>',
+        '</div>',
+      '</div>',
+      '<div class="rdesc-block">',
+        '<div class="rdesc-label">Heightmap brushes</div>',
+        '<div class="rdesc-mat">Each mountain type includes its own brush version for custom terrain sculpting in UE5.</div>',
+      '</div>',
+    '</div>'
+  ].join('');
+
+var _GLACIERS_BODY = [
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Assets \u00b7 4 types \u00d7 4 variants each</div>',
+      '<div class="rdesc-types">',
+        '<div class="rdesc-type" data-gidx="4"><b>Tongue</b><span>Long, narrow glacial extensions</span></div>',
+        '<div class="rdesc-type" data-gidx="5"><b>Spike</b><span>Sharp needle-like ice formations</span></div>',
+        '<div class="rdesc-type" data-gidx="6"><b>Dome</b><span>Large, hollowed and rounded masses of ice</span></div>',
+        '<div class="rdesc-type" data-gidx="7"><b>Fractured</b><span>Broken cracked glacier surfaces</span></div>',
+      '</div>',
+    '</div>',
+    '<button class="rdesc-more-btn" onclick="toggleRdescMore(this)">+ Materials</button>',
+    '<div class="rdesc-expandable">',
+      '<div class="rdesc-block" style="margin-top:0.8rem">',
+        '<div class="rdesc-label">Materials \u00b7 4 fully customizable layers</div>',
+        '<div class="rdesc-mats">',
+          '<div class="rdesc-mat"><b>Snow</b>4 variants, AO/opacity/size controls, slope expansion, density and smoothness</div>',
+          '<div class="rdesc-mat"><b>Ice</b>Color, AO, concave luminosity, 4 variants, snow angle, emissive, cavity propagation, bioluminescence</div>',
+          '<div class="rdesc-mat"><b>Outcrop</b>Ice AO, concave luminosity, snow angle, 4 variants, emissive and bioluminescence</div>',
+          '<div class="rdesc-mat"><b>Soil</b>Range, power, 4 variants, full AO / emissive / opacity controls</div>',
+        '</div>',
+      '</div>',
+    '</div>'
+  ].join('');
+
+var _ICEBERGS_BODY = [
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Assets \u00b7 4 types \u00d7 4 variants each</div>',
+      '<div class="rdesc-types">',
+        '<div class="rdesc-type" data-gidx="4"><b>Blocky</b><span>Simple bulky shapes with flat tops</span></div>',
+        '<div class="rdesc-type" data-gidx="5"><b>Hollow</b><span>Big cavities with towering internal pillars</span></div>',
+        '<div class="rdesc-type" data-gidx="6"><b>Angular</b><span>Broken angles and fractured surfaces</span></div>',
+        '<div class="rdesc-type" data-gidx="7"><b>Wrapped</b><span>Chaotic surface with twisted spikes</span></div>',
+      '</div>',
+    '</div>',
+    '<button class="rdesc-more-btn" onclick="toggleRdescMore(this)">+ Materials</button>',
+    '<div class="rdesc-expandable">',
+      '<div class="rdesc-block" style="margin-top:0.8rem">',
+        '<div class="rdesc-label">Materials \u00b7 4 fully customizable layers</div>',
+        '<div class="rdesc-mats">',
+          '<div class="rdesc-mat"><b>Global</b>AO, roughness, color &amp; normal power, concavity/convex color and bioluminescence</div>',
+          '<div class="rdesc-mat"><b>Snow</b>AO color, power &amp; range, snow extent, 4 variants, emissive and opacity controls</div>',
+          '<div class="rdesc-mat"><b>Ice</b>Color, AO, concave luminosity, 4 variants, snow angle, emissive, cavity propagation controls</div>',
+          '<div class="rdesc-mat"><b>Outcrop</b>Ice AO, concave luminosity, snow angle, 4 primary + 4 secondary variants, emissive and bioluminescence</div>',
+        '</div>',
+      '</div>',
+    '</div>'
+  ].join('');
+
+var _FIELDS_BODY = [
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Assets \u00b7 4 types \u00d7 4 variants each</div>',
+      '<div class="rdesc-types">',
+        '<div class="rdesc-type" data-gidx="4"><b>Flat</b><span>Wide grounds with rivers and gentle relief</span></div>',
+        '<div class="rdesc-type" data-gidx="5"><b>Hill</b><span>Snow-covered mounds connecting to the sea</span></div>',
+        '<div class="rdesc-type" data-gidx="6"><b>Valley</b><span>Cliff backdrops opening onto frozen plains</span></div>',
+        '<div class="rdesc-type" data-gidx="7"><b>Slope</b><span>Fractured angular shapes for dramatic decor</span></div>',
+      '</div>',
+    '</div>',
+    '<button class="rdesc-more-btn" onclick="toggleRdescMore(this)">+ Materials</button>',
+    '<div class="rdesc-expandable">',
+      '<div class="rdesc-block" style="margin-top:0.8rem">',
+        '<div class="rdesc-label">Materials \u00b7 5 fully customizable layers</div>',
+        '<div class="rdesc-mats">',
+          '<div class="rdesc-mat"><b>Snow</b>4 texture variants, AO, opacity and size controls</div>',
+          '<div class="rdesc-mat"><b>Cliff</b>Global color, AO, concave luminosity, 4 primary + 4 secondary variants, snow amount &amp; angle, emissive, bioluminescence</div>',
+          '<div class="rdesc-mat"><b>Outcrop</b>Ice AO, concave luminosity, snow angle, 4 variants, emissive and bioluminescence controls</div>',
+          '<div class="rdesc-mat"><b>Soil</b>Range, power, 4 variants, full AO / emissive / opacity controls</div>',
+          '<div class="rdesc-mat"><b>Water</b>Absorption, opacity, speed, ripples, caustics, foam and bioluminescence controls</div>',
+        '</div>',
+      '</div>',
+    '</div>'
+  ].join('');
+
+var _ARCTIC_BODY = [
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">Ready-to-Use</span>',
+        '<span class="rdesc-feature">Indie-Friendly</span>',
+        '<span class="rdesc-feature">64km\u00b2 Terrain</span>',
+        '<span class="rdesc-feature">Modular Assets</span>',
+        '<span class="rdesc-feature">UE5 \u00b7 Unity</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>64km\u00b2 arctic landscape \u00b7 8K PBR textures \u00b7 4 fully customizable material layers</div>',
+        '<div class="rdesc-mat"><b>Modular Assets</b>Ice blocks, ice floes, ground formations and rocks \u00b7 all ready to place</div>',
+        '<div class="rdesc-mat"><b>Distant Landscape</b>Background hills, mountains and ranges for depth and scale</div>',
+        '<div class="rdesc-mat"><b>Water System</b>Procedural material with absorption, opacity, ripples and foam controls</div>',
+        '<div class="rdesc-mat"><b>Skybox</b>Matching arctic sky environment included</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-cta-row">',
+      '<a class="rdesc-cta-btn rdesc-cta-playtest" href="#" target="_blank" rel="noopener">\ud83c\udfae Download Playtest Demo</a>',
+      '<a class="rdesc-cta-btn rdesc-cta-showcase" href="https://www.youtube.com/watch?v=6TlRJ0xKaTw" target="_blank" rel="noopener">\ud83c\udfa5 Full Showcase Video</a>',
+    '</div>',
+    '<a class="rdesc-doc-btn" href="https://docs.google.com/document/d/1DownRdEmxJrwAitgFH337fpl9m6RDun3dluee2U-C-E/edit?tab=t.0#heading=h.ljzdrkvd0pkb" target="_blank" rel="noopener">\ud83d\udcc4 Documentation</a>',
+  ].join('');
+
+var PRODUCT_RICH_DESC = {
+  '2baaee7f': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>1/16</b> of it, the mountains. Experience the <b>breathtaking realism</b> of Frosth\u00f6lm\u2019s mountains, meticulously crafted with <b>fine details</b>, <b>polished textures</b>, and lifelike precision for <span style="color:var(--gold-bright)">high-end productions</span> seeking true immersion.</p>' + _MOUNTAINS_BODY,
+  '59260bb5': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>1/16</b> of it, the mountains. Dive into an <b>artistic vision</b> of Frosth\u00f6lm\u2019s mountains. With <b>bold shapes</b> and a <span style="color:var(--gold-bright)">painterly aesthetic</span> reminiscent of fantastical worlds, this version offers a unique balance between <b>fantasy</b> and <b>sophistication</b>.</p>' + _MOUNTAINS_BODY,
+  '38504349': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>1/16</b> of it, the mountains. Explore a <b>simplified, elegant</b> representation of Frosth\u00f6lm\u2019s landscapes. Optimized for <span style="color:var(--gold-bright)">performance</span>, this version delivers <b>clean, minimalist visuals</b> ideal for <b>mobile platforms</b> with a geometric world.</p>' + _MOUNTAINS_BODY,
+  'a657b6ad': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>1/16</b> of it, the mountains. Discover a <b>warm and playful</b> interpretation of Frosth\u00f6lm\u2019s mountains. With <b>soft, smooth shapes</b> and a <span style="color:var(--gold-bright)">childish charm</span>, this version brings life to <b>vibrant and colorful</b> projects tailored for whimsical, <b>lighthearted worlds</b>.</p>' + _MOUNTAINS_BODY,
+  '080a6e16': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>4/16</b> of it, the glaciers. Stunningly detailed, this version captures the <b>raw beauty of ice</b> with <span style="color:var(--gold-bright)">lifelike textures</span>, deep crevasses, and shimmering surfaces for an <b>immersive frozen world</b>.</p>' + _GLACIERS_BODY,
+  '1645ee54': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>4/16</b> of it, the glaciers. A bold, <b>artistic reinterpretation</b> of ice and frost. <span style="color:var(--gold-bright)">Vibrant colors</span>, exaggerated shapes, and surreal lighting bring a <b>unique charm</b> to the frozen landscapes.</p>' + _GLACIERS_BODY,
+  'a5161656': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>4/16</b> of it, the glaciers. <b>Sleek and minimalist</b>, this version simplifies glaciers into <span style="color:var(--gold-bright)">geometric forms</span> with clean sharp edges, maintaining a <b>strong visual impact</b> for aesthetically pleasing frozen worlds.</p>' + _GLACIERS_BODY,
+  '386fc789': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>4/16</b> of it, the glaciers. <b>Playful and vibrant</b>, this version gives glaciers a <span style="color:var(--gold-bright)">smooth, colorful</span> and storybook-like charm, perfect for a <b>fun and whimsical world</b>.</p>' + _GLACIERS_BODY,
+  '51f7b813': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>3/16</b> of it, the icebergs. Showcase the <b>awe-inspiring scale</b> and intricate details of Frosth\u00f6lm\u2019s icebergs. This version focuses on <span style="color:var(--gold-bright)">realism</span>, delivering <b>sharp textures</b> and breathtaking visuals for <b>immersive, lifelike environments</b>.</p>' + _ICEBERGS_BODY,
+  '025a3a0d': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>3/16</b> of it, the icebergs. Reimagine Frosth\u00f6lm\u2019s icebergs with <b>bold, artistic strokes</b> and unique shading. This version creates a <span style="color:var(--gold-bright)">visually striking, painterly effect</span>, perfect for crafting a world that feels both <b>magical and refined</b>.</p>' + _ICEBERGS_BODY,
+  '5cf3fa06': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>3/16</b> of it, the icebergs. Simplify Frosth\u00f6lm\u2019s giant structures with <b>streamlined geometric shapes</b>. This version is ideal for projects seeking <span style="color:var(--gold-bright)">optimized visuals</span>, while maintaining an <b>elegant, efficient aesthetic</b> for all platforms.</p>' + _ICEBERGS_BODY,
+  '7dd6414f': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>3/16</b> of it, the icebergs. Add a <b>smooth, colorful charm</b> to Frosth\u00f6lm\u2019s glaciers. This version transforms cold, jagged ice into <span style="color:var(--gold-bright)">friendly and inviting shapes</span>, perfect for projects seeking a <b>warm, childish visual touch</b>.</p>' + _ICEBERGS_BODY,
+  '1b7d67e9': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>2/16</b> of it, the fields. Capture the <b>vast beauty</b> of Frosth\u00f6lm\u2019s fields with <b>stunning details</b>, crisp textures, and immersive precision. This version delivers <span style="color:var(--gold-bright)">super realistic results</span> for <b>high-end projects</b> aiming for natural beauty.</p>' + _FIELDS_BODY,
+  '7765b549': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>2/16</b> of it, the fields. Discover a <b>pictorial and artistic</b> interpretation of the Frosth\u00f6lm fields. With its <span style="color:var(--gold-bright)">bold, expressive shapes</span> and vibrant shadows, this version evokes a <b>handmade fantasy world</b> full of <b>personality and charm</b>.</p>' + _FIELDS_BODY,
+  '48c58be4': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>2/16</b> of it, the fields. Experience the <b>minimalist elegance</b> of Frosth\u00f6lm\u2019s fields. With <b>simplified shapes</b> and <span style="color:var(--gold-bright)">optimized geometry</span>, this version ensures <b>excellent performance</b> while maintaining a clean and polished style.</p>' + _FIELDS_BODY,
+  '5ae6cc28': '<p class="rdesc-intro">Kalysteon introduces you to the <b>first era</b>, <span style="color:var(--gold-bright)">Frosth\u00f6lm</span>, home of the ice, a vast fantasy world of dizzying landscapes, immense glacier structures and much more. This part of the project concerns <b>2/16</b> of it, the fields. Bring a <b>soft and welcoming touch</b> to Frosth\u00f6lm\u2019s frozen fields. With <span style="color:var(--gold-bright)">smooth curves</span>, vibrant colors, and a <b>childish charm</b>, this version creates a <b>whimsical and cozy atmosphere</b> perfect for lighthearted projects.</p>' + _FIELDS_BODY,
+  '897b47f0': '<p class="rdesc-intro">Discover <b>Arctic Landscapes</b>, a complete ready-to-play environment for <span style="color:var(--gold-bright)">Unreal Engine 5 &amp; Unity</span>. This version captures the <b>breathtaking realism</b> of the arctic tundra with <b>fine details</b>, sharp 8K textures, and lifelike precision for <span style="color:var(--gold-bright)">high-end productions</span> seeking true immersion.</p>' + _ARCTIC_BODY,
+  '5e439f0f': '<p class="rdesc-intro">Discover <b>Arctic Landscapes</b>, a complete ready-to-play environment for <span style="color:var(--gold-bright)">Unreal Engine 5 &amp; Unity</span>. This version offers an <b>artistic vision</b> of the arctic with <b>bold shapes</b>, expressive colors, and a <span style="color:var(--gold-bright)">painterly aesthetic</span> that balances <b>fantasy</b> and <b>sophistication</b>.</p>' + _ARCTIC_BODY,
+  '14e34309': '<p class="rdesc-intro">Discover <b>Arctic Landscapes</b>, a complete ready-to-play environment for <span style="color:var(--gold-bright)">Unreal Engine 5 &amp; Unity</span>. This version delivers a <b>clean, geometric</b> interpretation of the arctic, <span style="color:var(--gold-bright)">optimized for performance</span> while maintaining an <b>elegant, minimalist aesthetic</b> for all platforms.</p>' + _ARCTIC_BODY,
+  '3d96a640': '<p class="rdesc-intro">Discover <b>Arctic Landscapes</b>, a complete ready-to-play environment for <span style="color:var(--gold-bright)">Unreal Engine 5 &amp; Unity</span>. This version brings a <b>warm and playful</b> touch to the arctic with <b>smooth, soft shapes</b> and <span style="color:var(--gold-bright)">vibrant colors</span>, perfect for <b>whimsical and lighthearted worlds</b>.</p>' + _ARCTIC_BODY,
+  'af813c5f': '<p class="rdesc-intro">Discover <b>Arctic Landscapes</b>, a complete ready-to-play environment for <span style="color:var(--gold-bright)">Unreal Engine 5 &amp; Unity</span>. This version channels a <b>retro low-poly spirit</b> with a <span style="color:var(--gold-bright)">nostalgic aesthetic</span> and <b>limited colour palette</b>, evoking the charm of <b>classic games</b> with a modern touch.</p>' + _ARCTIC_BODY,
+  'd1cc7e58': [
+    '<p class="rdesc-intro">Inspired by the world\'s most iconic canyons, with <b>towering cliffs</b>, winding ravines and expansive rocky landscapes. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique canyon landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Sandstone \u00b7 Cliff \u00b7 Sand \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'2d95efdd-74f4-40e2-8189-8402aec130c4\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg" alt="8K Volcano Landscape Pack">',
+          '<span>8K Volcano Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
+          '<span>8K Karakoram Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '2d95efdd': [
+    '<p class="rdesc-intro">Inspired by the world\'s most volcanic regions, with <b>molten rivers</b>, ash-covered terrains and towering peaks. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique volcanic landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Lava \u00b7 Rock \u00b7 Ash \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'d1cc7e58-1282-4985-84de-722052e1f263\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg" alt="8K Canyon Landscape Pack">',
+          '<span>8K Canyon Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6f4c30ac-3fd7-4a9f-81bf-a34f1b78df60\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/6d54cbf8-2cd8-4181-bc45-148bb1e43661/c0ba2120-00d1-4ab9-bd88-9805fde0604e.jpg" alt="8K Garni Landscape Pack">',
+          '<span>8K Garni Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '72f2e599': [
+    '<p class="rdesc-intro">Inspired by the islands of the world, with <b>sandy beaches</b>, deep green hills and tropical landscapes capturing natural and exotic beauty. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique island landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Sand \u00b7 Grass \u00b7 Rock \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'7f935664-3728-4cb0-971d-a88f798a1004\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/d6db6a4a-0650-4c57-8784-4613b138252b/1b66bbd7-95b5-45c4-9b88-0467e05880f3.jpg" alt="8K Coastal Landscape Pack">',
+          '<span>8K Coastal Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
+          '<span>8K Provencal Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '85fe6436': [
+    '<p class="rdesc-intro">Inspired by the icy landscapes of the Arctic, with <b>snow-capped mountains</b>, monumental peaks and erosion-sculpted terrain. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique arctic landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Ice \u00b7 Cliff \u00b7 Mud \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6d867688-80b8-4c45-9c83-ddddd52eafcf\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" alt="8K Alpine Landscape Pack">',
+          '<span>8K Alpine Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
+          '<span>8K Karakoram Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '6d867688': [
+    '<p class="rdesc-intro">Inspired by the beauty of alpine regions, with <b>serene meadows</b>, rugged peaks and snow-dusted valleys. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique alpine landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Snow \u00b7 Grass \u00b7 Rock \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'85fe6436-38a3-475b-95d7-9ec0f4a57733\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg" alt="8K Arctic Landscape Pack">',
+          '<span>8K Arctic Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
+          '<span>8K Karakoram Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '7f935664': [
+    '<p class="rdesc-intro">Inspired by Mediterranean shores, with <b>sunlit cliffs</b>, sandy beaches and tranquil seas. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique coastal landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Cliff \u00b7 Sand \u00b7 Grass \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'72f2e599-e00d-454e-a1c3-1227b12fe90e\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg" alt="8K Island Landscape Pack">',
+          '<span>8K Island Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
+          '<span>8K Provencal Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  'd5b011c9': [
+    '<p class="rdesc-intro">Inspired by vast desert expanses, with <b>rolling sand dunes</b>, arid plains and windswept ridges. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique dune landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Sand \u00b7 Stone \u00b7 Rock \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'d1cc7e58-1282-4985-84de-722052e1f263\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg" alt="8K Canyon Landscape Pack">',
+          '<span>8K Canyon Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'2d95efdd-74f4-40e2-8189-8402aec130c4\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg" alt="8K Volcano Landscape Pack">',
+          '<span>8K Volcano Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  'c862c4eb': [
+    '<p class="rdesc-intro">Inspired by the majesty of vast valley basins, with <b>rolling hills</b>, steep cliffs and open plains. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">8K Resolution</span>',
+        '<span class="rdesc-feature">10 Terrains</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Foliage</span>',
+        '<span class="rdesc-feature">Engine Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Heightmaps</b>10 unique valley landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
+        '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Grass \u00b7 Rock \u00b7 Pine \u00b7 Each with albedo, normal and roughness layers</div>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Pairs Well With</div>',
+      '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6d867688-80b8-4c45-9c83-ddddd52eafcf\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" alt="8K Alpine Landscape Pack">',
+          '<span>8K Alpine Landscape Pack</span>',
+        '</div>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
+          '<span>8K Provencal Landscape Pack</span>',
+        '</div>',
+      '</div>',
+    '</div>',
+  ].join('')
+};
+
+/* ═══ DRAWER ═══ */
+var _drawerVideos = [];
+var _activeVideoIdx = 0;
+
+function openDrawerById(id) {
+  var idx = PRODUCTS.findIndex(function(x){ return x.id === id; });
+  if (idx >= 0) openDrawer(idx);
+}
+function openDrawer(idx) {
+  var p = PRODUCTS[idx];
+
+  // Hero + gallery
+  document.getElementById('drawer-img').alt = p.t;
+  buildGallery(p);
+
+  // Title
+  document.getElementById('drawer-title').textContent = p.t;
+
+  // Price
+  document.getElementById('drawer-price').textContent = '€' + p.p.toFixed(2);
+
+  // Badge
+  var badgeHtml = '';
+  if (p.col === '8k') {
+    badgeHtml = '<span class="biome-badge biome-' + p.bi + '">' + BIOME_LABEL[p.bi] + '</span> ' +
+                '<span class="biome-badge biome-sub">' + p.b2 + '</span>';
+  } else if (p.st) {
+    badgeHtml = '<span class="style-badge badge-' + p.st + '">' + p.st.charAt(0).toUpperCase() + p.st.slice(1) + '</span>';
+  }
+  document.getElementById('drawer-meta').innerHTML = badgeHtml;
+
+  // Collection tag
+  var collLabel = { frostholm: 'Frosth\u00f6lm Collection', '8k': '8K Terrain Packs', arctic: 'Arctic Landscapes' };
+  document.getElementById('drawer-coll').innerHTML =
+    '<span class="style-badge badge-pack">' + collLabel[p.col] + '</span>';
+
+  // Description
+  var descCol = document.getElementById('drawer-desc-col');
+  var richDesc = PRODUCT_RICH_DESC[p.id.substring(0, 8)];
+  if (richDesc) {
+    descCol.innerHTML = richDesc;
+    var playtestBtn = descCol.querySelector('.rdesc-cta-playtest');
+    if (playtestBtn && p.pd) playtestBtn.href = p.pd;
+  } else {
+    descCol.innerHTML = '<p class="drawer-desc" id="drawer-desc"></p><p class="drawer-style-note" id="drawer-style-note" style="display:none"></p>';
+    var desc = '', styleNote = '';
+    if (p.col === 'frostholm') {
+      var parts = p.t.split(' ');
+      var landscape = parts[1] || '';
+      desc = LANDSCAPE_INTRO[landscape] || '';
+      styleNote = p.st ? STYLE_DESC[p.st] || '' : '';
+    } else if (p.col === '8k') {
+      desc = DESC_8K[p.id.substring(0, 8)] || 'Production-ready 8K landscape heightmaps for Unreal Engine 5.';
+    } else if (p.col === 'arctic') {
+      desc = 'Complete ready-to-play Arctic environment. Open the project and start building immediately. Designed for indie developers and small studios who need production-ready environments without heavy setup.';
+      styleNote = p.st ? STYLE_DESC[p.st] || '' : '';
+    }
+    descCol.querySelector('#drawer-desc').textContent = desc;
+    var styleNoteEl = descCol.querySelector('#drawer-style-note');
+    if (styleNote) { styleNoteEl.textContent = styleNote; styleNoteEl.style.display = ''; }
+  }
+
+  // Ambient short video (portrait, muted autoplay)
+  var ambientSlot = document.getElementById('drawer-ambient-slot');
+  ambientSlot.innerHTML = '';
+  if (p.vs) {
+    var af = document.createElement('iframe');
+    af.src = 'https://www.youtube.com/embed/' + p.vs + '?autoplay=1&mute=1&loop=1&playlist=' + p.vs + '&controls=0&rel=0&playsinline=1';
+    af.allow = 'autoplay; encrypted-media';
+    af.referrerPolicy = 'strict-origin-when-cross-origin';
+    ambientSlot.appendChild(af);
+  } else {
+    ambientSlot.innerHTML = '<div class="drawer-ambient-placeholder"><span>Preview<br>coming<br>soon</span></div>';
+  }
+
+  // Full showcase video only (vs is shown ambient, not in tabs)
+  _drawerVideos = [];
+  if (p.vf) _drawerVideos.push({ id: p.vf, label: 'Full Showcase' });
+
+  var vsec = document.getElementById('drawer-vsec');
+  var vtabs = document.getElementById('drawer-vtabs');
+  var vplayer = document.getElementById('drawer-vplayer');
+
+  // Stop any existing video
+  var oldIframe = vplayer.querySelector('iframe');
+  if (oldIframe) oldIframe.remove();
+  document.getElementById('drawer-vthumb').style.display = '';
+  document.getElementById('drawer-vplaybtn').style.display = '';
+
+  if (_drawerVideos.length > 0) {
+    vsec.style.display = '';
+    vtabs.innerHTML = '';
+    vtabs.style.display = 'none';
+    setVideoTab(0);
+  } else {
+    vsec.style.display = 'none';
+  }
+
+  // Specs — product-specific override first, then collection default
+  var specs = PRODUCT_SPECS[p.id.substring(0, 8)] || SPECS_DATA[p.col] || SPECS_DATA['frostholm'];
+  document.getElementById('drawer-specs').innerHTML = specs.map(function(s) {
+    return '<div class="spec-item"><span class="spec-k">' + s.k + '</span><span class="spec-v">' + s.v + '</span></div>';
+  }).join('');
+
+  // Tags
+  var tags = PRODUCT_TAGS[p.id] || [];
+  document.getElementById('drawer-tags').innerHTML = tags.map(function(t) {
+    return '<span class="dtag">' + t + '</span>';
+  }).join('');
+  document.getElementById('drawer-tags-sec').style.display = tags.length ? '' : 'none';
+
+  // CTA — store buttons
+  var fabUrl = 'https://www.fab.com/listings/' + p.id;
+  document.getElementById('drawer-btn-buy').href = fabUrl;
+
+  var btnFab   = document.getElementById('drawer-btn-fab');
+  var btnUnity = document.getElementById('drawer-btn-unity');
+  var btnArt   = document.getElementById('drawer-btn-art');
+
+  // Fab always available
+  btnFab.href = fabUrl;
+  btnFab.classList.remove('btn-store--na');
+
+  // Unity — use p.pu if defined, else N/A
+  if (p.pu) {
+    btnUnity.href = p.pu;
+    btnUnity.removeAttribute('title');
+    btnUnity.classList.remove('btn-store--na');
+  } else {
+    btnUnity.href = '#';
+    btnUnity.title = 'Not available on Unity Asset Store';
+    btnUnity.classList.add('btn-store--na');
+  }
+
+  // ArtStation — use p.pa if defined, else N/A
+  if (p.pa) {
+    btnArt.href = p.pa;
+    btnArt.removeAttribute('title');
+    btnArt.classList.remove('btn-store--na');
+  } else {
+    btnArt.href = '#';
+    btnArt.title = 'Not available on ArtStation';
+    btnArt.classList.add('btn-store--na');
+  }
+
+  // Open
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Scroll drawer to top
+  document.getElementById('drawer').scrollTop = 0;
+}
+
+function setVideoTab(idx) {
+  _activeVideoIdx = idx;
+  var vid = _drawerVideos[idx];
+  if (!vid) return;
+
+  document.querySelectorAll('.vtab').forEach(function(t, i) {
+    t.classList.toggle('active', i === idx);
+  });
+
+  var vplayer = document.getElementById('drawer-vplayer');
+  var iframe = vplayer.querySelector('iframe');
+  if (iframe) iframe.remove();
+  var thumb = document.getElementById('drawer-vthumb');
+  var playbtn = document.getElementById('drawer-vplaybtn');
+  thumb.src = 'https://img.youtube.com/vi/' + vid.id + '/mqdefault.jpg';
+  thumb.alt = vid.label;
+  thumb.style.display = '';
+  playbtn.style.display = '';
+}
+
+function playCurrentVideo() {
+  var vplayer = document.getElementById('drawer-vplayer');
+  if (vplayer.querySelector('iframe')) return;
+  var vid = _drawerVideos[_activeVideoIdx];
+  if (!vid) return;
+
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube.com/embed/' + vid.id + '?rel=0&autoplay=1';
+  iframe.allow = 'autoplay; encrypted-media; fullscreen';
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+  document.getElementById('drawer-vthumb').style.display = 'none';
+  document.getElementById('drawer-vplaybtn').style.display = 'none';
+  vplayer.appendChild(iframe);
+}
+
+function toggleRdescMore(btn) {
+  var exp = btn.nextElementSibling;
+  var isOpen = exp.classList.toggle('open');
+  btn.textContent = isOpen ? '\u2212 Show less' : '+ Materials \u0026 brushes';
+}
+
+function closeDrawer() {
+  // Stop ambient short video
+  var ambientSlot = document.getElementById('drawer-ambient-slot');
+  if (ambientSlot) ambientSlot.innerHTML = '';
+
+  // Stop full showcase video
+  var vplayer = document.getElementById('drawer-vplayer');
+  var iframe = vplayer ? vplayer.querySelector('iframe') : null;
+  if (iframe) {
+    iframe.remove();
+    var thumb = document.getElementById('drawer-vthumb');
+    var playbtn = document.getElementById('drawer-vplaybtn');
+    if (thumb) thumb.style.display = '';
+    if (playbtn) playbtn.style.display = '';
+  }
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDrawer();
+});
+
+/* ═══ RDESC TYPE TOOLTIP ═══ */
+(function() {
+  var tip = null, tipImg = null;
+
+  function getTooltip() {
+    if (!tip) { tip = document.getElementById('rdesc-type-tooltip'); tipImg = document.getElementById('rdesc-type-tooltip-img'); }
+    return tip;
+  }
+
+  function positionTip(e) {
+    var t = getTooltip(); if (!t) return;
+    var x = e.clientX + 18, y = e.clientY - 70;
+    if (x + 220 > window.innerWidth)  x = e.clientX - 238;
+    if (y < 8) y = 8;
+    if (y + 124 > window.innerHeight) y = window.innerHeight - 132;
+    t.style.left = x + 'px';
+    t.style.top  = y + 'px';
+  }
+
+  document.addEventListener('mouseover', function(e) {
+    var el = e.target && e.target.closest && e.target.closest('.rdesc-type[data-gidx]');
+    if (!el) return;
+    var idx = parseInt(el.dataset.gidx, 10);
+    var src = _galleryImgs && _galleryImgs[idx];
+    if (!src) return;
+    var t = getTooltip(); if (!t) return;
+    tipImg.src = src;
+    t.style.display = 'block';
+    positionTip(e);
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (tip && tip.style.display === 'block') positionTip(e);
+  });
+
+  document.addEventListener('mouseout', function(e) {
+    var el = e.target && e.target.closest && e.target.closest('.rdesc-type[data-gidx]');
+    if (!el) return;
+    var t = getTooltip(); if (t) t.style.display = 'none';
+  });
+
+  document.addEventListener('click', function(e) {
+    var el = e.target && e.target.closest && e.target.closest('.rdesc-type[data-gidx]');
+    if (!el) return;
+    var idx = parseInt(el.dataset.gidx, 10);
+    if (!isNaN(idx)) setGalleryIdx(idx);
+  });
+})();
+</script>
+<div id="rdesc-type-tooltip" class="rdesc-type-tooltip"><img id="rdesc-type-tooltip-img" src="" alt=""></div>
+</body>
+</html>
