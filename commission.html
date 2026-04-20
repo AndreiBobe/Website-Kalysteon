@@ -366,6 +366,30 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 /* ABOUT DIVIDER */
 .about-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.30), transparent); margin: 0 2.5rem 4rem; }
 
+/* SERVICE GATEWAY */
+.svc-gateway { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 1160px; margin: 0 auto; padding: 0 2rem 2.5rem; }
+.svc-card { background: linear-gradient(145deg, #0B1D38 0%, #061320 60%, #040D1A 100%); border: 1px solid rgba(201,168,76,0.22); border-radius: var(--radius-lg); padding: 2.5rem; cursor: pointer; position: relative; overflow: hidden; transition: all 0.28s ease; display: flex; flex-direction: column; }
+.svc-card::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; }
+.svc-card::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; border-radius: 0 0 var(--radius-lg) var(--radius-lg); background: linear-gradient(to right, transparent, var(--gold-bright), transparent); transition: width 0.4s ease; }
+.svc-card:hover { border-color: rgba(201,168,76,0.45); box-shadow: 0 12px 50px rgba(0,0,0,0.65), 0 0 30px rgba(201,168,76,0.09), inset 0 1px 0 rgba(201,168,76,0.18); transform: translateY(-3px); background: linear-gradient(145deg, #0E2245 0%, #081A32 60%, #050F22 100%); }
+.svc-card.active { border-color: rgba(201,168,76,0.65); transform: none; background: linear-gradient(145deg, #0E2245 0%, #081A32 60%, #050F22 100%); box-shadow: 0 8px 40px rgba(0,0,0,0.70), 0 0 40px rgba(201,168,76,0.14), inset 0 1px 0 rgba(201,168,76,0.25); }
+.svc-card:hover::after, .svc-card.active::after { width: 65%; }
+#svc-terrain::before { background: linear-gradient(to right, transparent, rgba(80,140,210,0.75), transparent); }
+#svc-hero::before { background: linear-gradient(to right, transparent, rgba(201,168,76,0.90), transparent); }
+.svc-num { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.25em; color: var(--text-dim); margin-bottom: 1.25rem; text-transform: uppercase; }
+.svc-title { font-family: var(--display); font-size: clamp(2rem, 3vw, 2.8rem); letter-spacing: 0.06em; color: var(--text); line-height: 1; margin-bottom: 0.75rem; }
+.svc-desc { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; flex: 1; }
+.svc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+.svc-tag { font-family: var(--mono); font-size: 0.60rem; letter-spacing: 0.08em; color: var(--accent); border: 1px solid rgba(201,168,76,0.40); border-radius: 20px; padding: 0.15rem 0.55rem; text-transform: uppercase; background: rgba(201,168,76,0.06); white-space: nowrap; }
+.svc-price { font-family: var(--display); font-size: 1.7rem; letter-spacing: 0.05em; background: linear-gradient(135deg, #C9A84C, #EDD97C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.2rem; }
+.svc-price-note { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); margin-bottom: 1.25rem; }
+.svc-cta { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s; margin-top: auto; }
+.svc-card:hover .svc-cta, .svc-card.active .svc-cta { color: var(--accent); }
+.svc-cta::after { content: ' →'; }
+/* SERVICE CONTENT */
+.svc-content { height: 0; overflow: hidden; transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1); }
+@media (max-width: 768px) { .svc-gateway { grid-template-columns: 1fr; } }
+
 @media (max-width: 1120px) { .info-panel { display: none; } }
 @media (max-width: 900px)  { .presets { grid-template-columns: repeat(2,1fr); } .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
 @media (max-width: 640px)  {
@@ -428,7 +452,39 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 </div>
 
 <div id="commission"></div>
-<div class="section-label" data-en="Select a preset to get started" data-fr="Choisissez un preset pour commencer">Select a preset to get started</div>
+<div class="section-label" data-en="Select a service to get started" data-fr="Sélectionnez un service pour commencer">Select a service to get started</div>
+
+<div class="svc-gateway">
+  <div class="svc-card" id="svc-terrain" onclick="selectService('terrain')">
+    <div class="svc-num">01 / Service</div>
+    <div class="svc-title">CUSTOM TERRAIN</div>
+    <div class="svc-desc" data-en="Fully crafted terrain from scratch. Indie game levels to AAA open worlds, sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine." data-fr="Terrain entièrement réalisé sur mesure. Du niveau indie à l'open world AAA, sculpté dans Gaea 2, détaillé dans Houdini, livré prêt à l'emploi dans votre moteur.">Fully crafted terrain from scratch. Indie game levels to AAA open worlds, sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine.</div>
+    <div class="svc-tags">
+      <span class="svc-tag">4 scale presets</span>
+      <span class="svc-tag">UE5 · Unity · RAW</span>
+      <span class="svc-tag">2 – 12 weeks</span>
+    </div>
+    <div class="svc-price">1 799 € – Sur devis</div>
+    <div class="svc-price-note">excl. VAT · all options</div>
+    <div class="svc-cta" data-en="Explore presets" data-fr="Explorer les presets">Explore presets</div>
+  </div>
+  <div class="svc-card" id="svc-hero" onclick="selectService('hero')">
+    <div class="svc-num">02 / Service</div>
+    <div class="svc-title">HERO ASSETS</div>
+    <div class="svc-desc" data-en="Landmark-scale, ultra-detailed assets built for cinematic worlds: terrain, vegetation, structures, climate FX." data-fr="Assets à l'échelle d'un monument pour des univers cinématographiques : terrain, végétation, structures, FX climatiques.">Landmark-scale, ultra-detailed assets built for cinematic worlds: terrain, vegetation, structures, climate FX.</div>
+    <div class="svc-tags">
+      <span class="svc-tag">4 asset types</span>
+      <span class="svc-tag">Any engine</span>
+      <span class="svc-tag">Timeline on call</span>
+    </div>
+    <div class="svc-price">On request</div>
+    <div class="svc-price-note">quote after scoping call</div>
+    <div class="svc-cta" data-en="Explore assets" data-fr="Explorer les assets">Explore assets</div>
+  </div>
+</div>
+
+<div class="svc-content" id="svc-content-terrain">
+
 <div class="sec-divider">
   <div class="sec-divider-top"><span class="sec-divider-label" data-en="Custom Terrain" data-fr="Terrain sur-mesure">Custom Terrain</span><span class="sec-divider-line"></span></div>
   <div class="sec-divider-sub" data-en="Commission a fully crafted terrain, from indie game levels to AAA open worlds. Choose a scale preset below, configure your options and get a precise quote within 48h." data-fr="Commandez un terrain entièrement réalisé sur mesure, du niveau indie à l'open world AAA. Choisissez un preset ci-dessous, configurez vos options et recevez un devis précis sous 48h.">Commission a fully crafted terrain, from indie game levels to AAA open worlds. Choose a scale preset below, configure your options and get a precise quote within 48h.</div>
@@ -873,7 +929,9 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
   </div>
 </div>
 
-<div class="about-divider"></div>
+</div><!-- /svc-content-terrain -->
+
+<div class="svc-content" id="svc-content-hero">
 
 <!-- ══ HERO ASSETS ══ -->
 <div class="sec-divider">
@@ -904,10 +962,9 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
       </div>
     </div>
 
-    <!-- 02 · Vegetation / Foliage (coming soon) -->
-    <div class="hero-preset-card hero-preset--soon">
-      <div class="hero-soon-badge" data-en="Coming soon" data-fr="Bientôt disponible">Coming soon</div>
-      <div class="preset-card">
+    <!-- 02 · Vegetation / Foliage -->
+    <div class="hero-preset-card">
+      <div class="preset-card" data-preset="hero-vegetation" data-label="Hero Vegetation" onclick="selectPreset(this)">
         <div class="preset-id">02 / Hero</div>
         <div class="preset-title">VEGETATION</div>
         <div class="preset-target" data-en="Foliage &amp; biome assets" data-fr="Foliage &amp; assets de biome">Foliage &amp; biome assets</div>
@@ -924,10 +981,9 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
       </div>
     </div>
 
-    <!-- 03 · Structures (coming soon) -->
-    <div class="hero-preset-card hero-preset--soon">
-      <div class="hero-soon-badge" data-en="Coming soon" data-fr="Bientôt disponible">Coming soon</div>
-      <div class="preset-card">
+    <!-- 03 · Structures -->
+    <div class="hero-preset-card">
+      <div class="preset-card" data-preset="hero-structure" data-label="Hero Structure" onclick="selectPreset(this)">
         <div class="preset-id">03 / Hero</div>
         <div class="preset-title">STRUCTURE</div>
         <div class="preset-target" data-en="Buildings, villages &amp; castles" data-fr="Bâtiments, villages &amp; châteaux">Buildings, villages &amp; castles</div>
@@ -944,10 +1000,9 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
       </div>
     </div>
 
-    <!-- 04 · Climate FX (coming soon) -->
-    <div class="hero-preset-card hero-preset--soon">
-      <div class="hero-soon-badge" data-en="Coming soon" data-fr="Bientôt disponible">Coming soon</div>
-      <div class="preset-card">
+    <!-- 04 · Climate FX -->
+    <div class="hero-preset-card">
+      <div class="preset-card" data-preset="hero-climate" data-label="Hero Climate FX" onclick="selectPreset(this)">
         <div class="preset-id">04 / Hero</div>
         <div class="preset-title">CLIMATE FX</div>
         <div class="preset-target" data-en="Waterfalls, fire &amp; weather" data-fr="Cascades, feu &amp; météo">Waterfalls, fire &amp; weather</div>
@@ -966,6 +1021,10 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
   </div>
 </div>
+
+</div><!-- /svc-content-hero -->
+
+<div class="about-divider"></div>
 
 <section id="about">
   <div class="about-faq-only">
@@ -1069,9 +1128,12 @@ var sizeOptions = {
   'terrain-m':  [['2km\u00B2','2km\u00B2'],['4km\u00B2','4km\u00B2'],['8km\u00B2','8km\u00B2']],
   'terrain-l':  [['8km\u00B2','8km\u00B2'],['16km\u00B2','16km\u00B2'],['32km\u00B2','32km\u00B2']],
   'terrain-xl':       [['32km\u00B2','32km\u00B2'],['64km\u00B2','64km\u00B2'],['custom','Custom / On request']],
-  'hero-landscape':   [['custom','Custom \u2014 scope on call']]
+  'hero-landscape':   [['custom','Custom \u2014 scope on call']],
+  'hero-vegetation':  [['custom','Custom \u2014 scope on call']],
+  'hero-structure':   [['custom','Custom \u2014 scope on call']],
+  'hero-climate':     [['custom','Custom \u2014 scope on call']]
 };
-var presetTier = { 'terrain-s':'s','terrain-m':'m','terrain-l':'l','terrain-xl':'xl','hero-landscape':'xl' };
+var presetTier = { 'terrain-s':'s','terrain-m':'m','terrain-l':'l','terrain-xl':'xl','hero-landscape':'xl','hero-vegetation':'xl','hero-structure':'xl','hero-climate':'xl' };
 
 var deliveryOptions = {
   'terrain-s': [
@@ -1155,6 +1217,37 @@ function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
 }
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+
+/* ═══ SERVICE GATEWAY ═══ */
+function svcOpen(el) {
+  el.style.transition = 'none';
+  el.style.height = '0px';
+  el.classList.add('open');
+  el.getBoundingClientRect(); // force reflow
+  el.style.transition = '';
+  var h = el.scrollHeight;
+  requestAnimationFrame(function(){ el.style.height = h + 'px'; });
+  el.addEventListener('transitionend', function done(e){
+    if (e.propertyName !== 'height') return;
+    el.style.height = 'auto';
+    el.removeEventListener('transitionend', done);
+  });
+}
+function selectService(type) {
+  document.querySelectorAll('.svc-card').forEach(function(c){ c.classList.remove('active'); });
+  document.getElementById('svc-' + type).classList.add('active');
+  var target = document.getElementById('svc-content-' + type);
+  document.querySelectorAll('.svc-content').forEach(function(c){
+    if (c !== target) {
+      c.style.transition = 'none';
+      c.style.height = '0px';
+      c.classList.remove('open');
+    }
+  });
+  if (!target.classList.contains('open')) svcOpen(target);
+  closeForm();
+  setTimeout(function(){ document.querySelector('.svc-gateway').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+}
 
 /* ═══ PRESET SELECT ═══ */
 function selectPreset(card) {
@@ -1633,6 +1726,14 @@ function submitForm() {
 
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded', function() {
+  /* Move commission form to after both service content blocks so it's
+     reachable whether terrain or hero is the active service */
+  var form = document.getElementById('commission-form-section');
+  var heroContent = document.getElementById('svc-content-hero');
+  if (form && heroContent) {
+    heroContent.parentNode.insertBefore(form, heroContent.nextSibling);
+  }
+
   /* Dropdown hover — JS bridge so gap doesn't break hover */
   var navDd = document.querySelector('.nav-dropdown');
   if (navDd) {
