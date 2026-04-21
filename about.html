@@ -78,6 +78,19 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .stat-num { font-family: var(--display); font-size: 2.4rem; letter-spacing: 0.04em; line-height: 1; background: linear-gradient(135deg, #C9A84C, #F2D777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .stat-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.2rem; }
 
+/* ── NAME LORE ── */
+.name-lore-section { padding: 3.5rem 0; border-bottom: 1px solid var(--border-mid); }
+.name-lore-inner { max-width: 560px; }
+.name-lore-name { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: 0.18em; color: var(--text); margin-bottom: 0.75rem; line-height: 1; }
+.name-lore-name em { font-style: normal; color: var(--accent); }
+.name-lore-roots { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.25rem; }
+.name-lore-root-word { font-family: var(--display); font-size: 0.9rem; letter-spacing: 0.16em; color: var(--accent); opacity: 0.7; }
+.name-lore-root-sep { font-family: var(--mono); font-size: 0.55rem; color: var(--text-dim); }
+.name-lore-body { font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim); line-height: 1.9; }
+.name-lore-body p { margin-bottom: 0.65rem; }
+.name-lore-body p:last-child { margin-bottom: 0; color: var(--text-muted); font-style: italic; }
+.name-lore-body strong { color: var(--accent); font-weight: 500; }
+
 /* ── STACK ── */
 .stack-section { padding: 4rem 0; border-bottom: 1px solid var(--border-mid); }
 .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
@@ -197,6 +210,26 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── NAME LORE ── -->
+<section class="name-lore-section">
+  <div class="wrap">
+    <div class="sec-label" data-en="The name" data-fr="Le nom">The name</div>
+    <div class="name-lore-inner">
+      <div class="name-lore-name">KALYS<em>T</em>EON</div>
+      <div class="name-lore-roots">
+        <span class="name-lore-root-word">Kalos</span>
+        <span class="name-lore-root-sep">+</span>
+        <span class="name-lore-root-word">Eon</span>
+      </div>
+      <div class="name-lore-body">
+        <p data-en="&lt;strong&gt;Kalos&lt;/strong&gt; (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone." data-fr="&lt;strong&gt;Kalos&lt;/strong&gt; (καλός) : grec pour beau. Également à l'origine de la callisthénie, kalos et sthenos, le beau et la force, l'art de maîtriser la forme par le seul corps."><strong>Kalos</strong> (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone.</p>
+        <p data-en="&lt;strong&gt;Eon&lt;/strong&gt;: an era, a geological age. The span of time that actually shapes a place." data-fr="&lt;strong&gt;Eon&lt;/strong&gt; : une ère, un âge géologique. Le temps qu'il faut pour qu'un paysage existe vraiment."><strong>Eon</strong>: an era, a geological age. The span of time that actually shapes a place.</p>
+        <p data-en="That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along." data-fr="C'est comme ça que Kalysteon m'est venu. Le T était déjà là dans callisthénie, entre kalos et sthenos. Je l'ai gardé comme pont naturel vers eon. Rien de forcé, il était dans la racine depuis le début.">That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along.</p>
+      </div>
     </div>
   </div>
 </section>

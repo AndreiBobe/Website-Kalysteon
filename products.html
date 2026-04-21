@@ -75,8 +75,14 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .filter-pill.active[data-filter="retro"]     { color: #F0D060; background: rgba(240,208,96,0.09); border-color: rgba(240,208,96,0.4); }
 
 /* COLLECTION PICKER */
-.coll-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; padding: 2.5rem 0 1rem; align-items: stretch; }
-.coll-card { position: relative; min-height: 400px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 1px solid transparent; background: var(--surface2) center/cover no-repeat; transition: transform 0.28s, border-color 0.28s, box-shadow 0.28s; }
+/* SLOGAN */
+.coll-slogan { font-family: var(--display); font-size: clamp(0.95rem, 1.6vw, 1.3rem); letter-spacing: 0.16em; text-align: center; padding: 1.5rem 0 0.1rem; background: linear-gradient(90deg, #C9A84C 0%, #F2D777 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+.coll-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem 0 1rem; max-width: 1060px; margin: 0 auto; }
+.coll-card { position: relative; border-radius: 18px; overflow: hidden; cursor: pointer; border: 1px solid transparent; background: var(--surface2) center/cover no-repeat; transition: transform 0.28s, border-color 0.28s, box-shadow 0.28s; }
+.coll-card--featured { grid-column: 1 / -1; min-height: 295px; }
+#coll-card-frostholm { background-position: center 18%; }
+#coll-card-8k, #coll-card-arctic { aspect-ratio: 1 / 1; }
 .coll-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,8,20,0.97) 0%, rgba(4,12,28,0.60) 38%, rgba(4,10,22,0.08) 100%); }
 
 /* ── Frostholm : warm gold glow ── */
@@ -104,7 +110,7 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .coll-card-sub { font-family: var(--mono); font-size: 0.58rem; color: rgba(255,255,255,0.42); letter-spacing: 0.09em; margin-bottom: 1.2rem; line-height: 1.65; }
 .coll-card-cta { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-bright); border-bottom: 1px solid rgba(201,168,76,0.4); display: inline-block; padding-bottom: 0.15rem; transition: color 0.15s, border-color 0.15s; }
 .coll-card:hover .coll-card-cta { color: #fff; border-color: rgba(255,255,255,0.45); }
-@media (max-width: 768px) { .coll-picker { grid-template-columns: 1fr; gap: 1rem; } .coll-card { min-height: 260px; } .coll-card-name { font-size: 2rem; } }
+@media (max-width: 768px) { .coll-picker { grid-template-columns: 1fr; gap: 1rem; } .coll-card--featured { min-height: 260px; } #coll-card-8k, #coll-card-arctic { aspect-ratio: unset; min-height: 240px; } .coll-card-name { font-size: 2rem; } }
 
 /* BACK BUTTON */
 .coll-back { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; background: none; border: 1px solid var(--border-mid); color: var(--text-muted); padding: 0.5rem 1.1rem; border-radius: var(--radius-xs); cursor: pointer; margin-bottom: 1.6rem; transition: color 0.15s, border-color 0.15s, background 0.15s; display: inline-block; }
@@ -333,6 +339,9 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 <section class="store-section">
 <div class="store-wrap">
 
+  <!-- ══ SLOGAN ══ -->
+  <div class="coll-slogan" data-en="Choose the sight of your world." data-fr="Choisissez le visage de votre monde.">Choose the sight of your world.</div>
+
   <!-- ══ COLLECTION PICKER ══ -->
   <div class="coll-picker" id="coll-picker">
     <div class="coll-card coll-card--featured" id="coll-card-frostholm" data-bg="img/collections/frostholm-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/2e69c18f-e70c-4d7e-a60c-d07f7f04cbbe/72da04d4-51e7-4571-a625-2eeb4b1fe45b.jpg" onclick="openCollection('frostholm')">
@@ -513,7 +522,7 @@ var PRODUCTS = [
   {id:'a5161656-4501-4f49-89eb-f87bdf98a69e',t:'Frostholm Glaciers Polygonal',p:79.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c6ebc88d-341f-4752-8c97-b409f77f82fc/355c1fc8-253d-4724-ac71-2259471185a1.jpg',vf:'PkkmyndfI2Y',vs:'68M48VDEaOA'},
   {id:'386fc789-f1d7-402f-89d4-a80913f2db2f',t:'Frostholm Glaciers Cartoon',p:99.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/3d681940-6d10-405a-a7ec-f6beb0cef3b5/6873e8a0-86f5-412f-a33e-1cd948dba9f6.jpg',vf:'PkkmyndfI2Y',vs:'z0CtDTxMvWE'},
   // ── 8K PACKS ──────────────────────────────────────────────────────────
-  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vs:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
+  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vf:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
   {id:'72f2e599-e00d-454e-a1c3-1227b12fe90e',t:'8K Island Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg',vs:'Az2pWjcJwZ0',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-island-landscape-pack-294443',pa:'https://www.artstation.com/marketplace/p/JNNk/8k-island-landscape-pack'},
   {id:'d1cc7e58-1282-4985-84de-722052e1f263',t:'8K Canyon Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Desert',th:'https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg',vs:'ZUwPlwBBY54',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-canyon-landscape-pack-297171',pa:'https://www.artstation.com/marketplace/p/7Gyd/8k-canyon-landscape-pack'},
   {id:'2d95efdd-74f4-40e2-8189-8402aec130c4',t:'8K Volcano Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Volcanic',th:'https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg',vs:'G833u3tenyE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-volcano-landscape-pack-300480',pa:'https://www.artstation.com/marketplace/p/n7k2V/8k-volcano-landscape-pack'},
@@ -1323,13 +1332,13 @@ var PRODUCT_RICH_DESC = {
     '<div class="rdesc-block">',
       '<div class="rdesc-label">Pairs Well With</div>',
       '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'2d95efdd-74f4-40e2-8189-8402aec130c4\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg" alt="8K Volcano Landscape Pack">',
-          '<span>8K Volcano Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'7177546c-582f-4833-86b2-0a09f92de594\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/29bda059-5c27-4bc7-97ba-33f7bb1c5d4e/f940571a-5fea-43fa-b034-9892e642f6af.jpg" alt="8K Zhangjiajie Landscape Pack">',
+          '<span>8K Zhangjiajie Landscape Pack</span>',
         '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
-          '<span>8K Karakoram Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'d5b011c9-2c16-4013-bc78-c11b69505942\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/b08c2551-ad3a-4726-b695-261e8accba97/83202882-1a1e-4637-b47e-6f06208fef95.jpg" alt="8K Dune Landscape Pack">',
+          '<span>8K Dune Landscape Pack</span>',
         '</div>',
       '</div>',
     '</div>',
@@ -1356,13 +1365,13 @@ var PRODUCT_RICH_DESC = {
     '<div class="rdesc-block">',
       '<div class="rdesc-label">Pairs Well With</div>',
       '<div class="rdesc-pairswith">',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'7e198e93-4c8e-463f-8585-77a7f5be6bc3\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/e00fed35-9e51-4b9c-971a-d260f064c01a/b5520b69-aeef-45d5-b126-b492d170a4e2.jpg" alt="8K Desolate Landscape Pack">',
+          '<span>8K Desolate Landscape Pack</span>',
+        '</div>',
         '<div class="rdesc-pair-card" onclick="openDrawerById(\'d1cc7e58-1282-4985-84de-722052e1f263\')">',
           '<img src="https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg" alt="8K Canyon Landscape Pack">',
           '<span>8K Canyon Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6f4c30ac-3fd7-4a9f-81bf-a34f1b78df60\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/6d54cbf8-2cd8-4181-bc45-148bb1e43661/c0ba2120-00d1-4ab9-bd88-9805fde0604e.jpg" alt="8K Garni Landscape Pack">',
-          '<span>8K Garni Landscape Pack</span>',
         '</div>',
       '</div>',
     '</div>',
@@ -1422,9 +1431,9 @@ var PRODUCT_RICH_DESC = {
     '<div class="rdesc-block">',
       '<div class="rdesc-label">Pairs Well With</div>',
       '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6d867688-80b8-4c45-9c83-ddddd52eafcf\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" alt="8K Alpine Landscape Pack">',
-          '<span>8K Alpine Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6baa964b-95dc-4043-ab4c-185624c36ba1\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/44ee62da-b7f2-4932-b8e3-bb06a8b5bff4/d3539ac9-3274-4a18-95c3-6d7b477734d7.jpg" alt="8K Nordic Landscape Pack">',
+          '<span>8K Nordic Landscape Pack</span>',
         '</div>',
         '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
           '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
@@ -1455,13 +1464,13 @@ var PRODUCT_RICH_DESC = {
     '<div class="rdesc-block">',
       '<div class="rdesc-label">Pairs Well With</div>',
       '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'85fe6436-38a3-475b-95d7-9ec0f4a57733\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg" alt="8K Arctic Landscape Pack">',
-          '<span>8K Arctic Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'fa24aee0-b5d1-4341-8983-bada3212ed1a\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/7183dd63-2c5e-4c9e-86ad-d6140ec113a8.jpg" alt="8K Hills Landscape Pack">',
+          '<span>8K Hills Landscape Pack</span>',
         '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
-          '<span>8K Karakoram Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'c862c4eb-f37a-4ed2-9846-5e1ae02e716f\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/b594fe20-e0ea-4fc8-855e-2fdcb6386b14/d03da4e3-51bb-4f4c-9e33-427368e97657.jpg" alt="8K Valley Landscape Pack">',
+          '<span>8K Valley Landscape Pack</span>',
         '</div>',
       '</div>',
     '</div>',
@@ -1521,13 +1530,13 @@ var PRODUCT_RICH_DESC = {
     '<div class="rdesc-block">',
       '<div class="rdesc-label">Pairs Well With</div>',
       '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'d1cc7e58-1282-4985-84de-722052e1f263\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg" alt="8K Canyon Landscape Pack">',
-          '<span>8K Canyon Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'964ab5d7-06e8-4a99-a27a-1a4e6ded09e6\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/bc4595d0-8035-41c6-b818-a1a285e7957b/8eaab037-7655-4bd6-8ef3-ebe86e4cb240.jpg" alt="8K Salar Landscape Pack">',
+          '<span>8K Salar Landscape Pack</span>',
         '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'2d95efdd-74f4-40e2-8189-8402aec130c4\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg" alt="8K Volcano Landscape Pack">',
-          '<span>8K Volcano Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3e2f982b-fd76-42c9-9435-b381a7cfd3e1\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/b62b081f-61da-433f-bd15-f2dd22fbe2ae/ec6629c8-8365-4b67-b2a0-fb1b98d64e74.jpg" alt="8K Savannah Landscape Pack">',
+          '<span>8K Savannah Landscape Pack</span>',
         '</div>',
       '</div>',
     '</div>',
@@ -1554,9 +1563,9 @@ var PRODUCT_RICH_DESC = {
     '<div class="rdesc-block">',
       '<div class="rdesc-label">Pairs Well With</div>',
       '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6d867688-80b8-4c45-9c83-ddddd52eafcf\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" alt="8K Alpine Landscape Pack">',
-          '<span>8K Alpine Landscape Pack</span>',
+        '<div class="rdesc-pair-card" onclick="openDrawerById(\'0529cee3-ed8f-46e0-9f01-1cd2923f8fda\')">',
+          '<img src="https://media.fab.com/image_previews/gallery_images/daf07ad7-78d8-4c83-82bb-f5ecbf238943/8658bec5-eb1f-4acd-a16e-f154124cc285.jpg" alt="8K Amazon Landscape Pack">',
+          '<span>8K Amazon Landscape Pack</span>',
         '</div>',
         '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
           '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
