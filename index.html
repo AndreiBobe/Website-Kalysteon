@@ -2,191 +2,520 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kalysteon — Environment Art</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kalysteon — Premium Environment Assets</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #010810; --surface: #051322; --surface2: #091B32;
-  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
-  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22);
-  --accent: #C9A84C;
-  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
-  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px;
-  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
-  --display: 'Bebas Neue', sans-serif;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-html, body { height: 100%; }
+
+:root {
+  --bg-deep: #01060F;
+  --gold: #D4AF37;
+  --gold-bright: #F5D76E;
+  --gold-glow: rgba(212, 175, 55, 0.7);
+  --gold-border: rgba(212, 175, 55, 0.5);
+  --gold-border-hover: rgba(245, 215, 110, 0.9);
+  --text-light: #F5F0E6;
+  --text-muted: #D0D9F0;
+  --text-dim: #9BB0D0;
+  --card-bg: rgba(8, 18, 30, 0.65);
+  --card-border: rgba(212, 175, 55, 0.4);
+  --card-border-hover: rgba(245, 215, 110, 0.8);
+  --testimonial-bg: rgba(8, 18, 30, 0.45);
+  --testimonial-border: rgba(212, 175, 55, 0.25);
+  --transition-smooth: cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
 body {
   background-color: #020A16;
-  background-image:
-    radial-gradient(ellipse at 20% 0%,   rgba(10,30,80,0.60) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 100%, rgba(6,20,55,0.50) 0%, transparent 50%);
-  color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased;
-  display: flex; flex-direction: column; min-height: 100vh;
+  background-image: radial-gradient(ellipse at 30% 20%, rgba(20,45,90,0.5) 0%, transparent 65%);
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* VIDEO BG */
-.bg-video { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-.bg-video video { width: 100%; height: 100%; object-fit: cover; opacity: 0.18; }
+.bg-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  filter: brightness(0.85) contrast(1.1);
+}
 .bg-video::after {
   content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, rgba(1,8,16,0.55) 0%, rgba(2,10,22,0.35) 60%, rgba(1,8,16,0.70) 100%);
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(1,6,15,0.8) 0%, rgba(2,10,22,0.55) 60%, rgba(1,6,15,0.85) 100%);
 }
 
-/* HEADER */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 header {
-  position: relative; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.5rem 2.5rem;
-  border-bottom: 1px solid rgba(201,168,76,0.20);
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2.5rem;
+  border-bottom: 1px solid rgba(212,175,55,0.25);
+  background: rgba(1,6,15,0.3);
+  backdrop-filter: blur(8px);
+  animation: fadeInDown 0.8s var(--transition-smooth) forwards;
 }
-.logo { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
-.logo span { color: var(--accent); }
-.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.28); border-radius: 20px; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.05); }
-.lang-btn { background: none; border: none; color: var(--text-dim); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; cursor: pointer; padding: 0.15rem 0.3rem; transition: color 0.15s; text-transform: uppercase; }
-.lang-btn.active { color: var(--accent); }
-.lang-sep { color: var(--text-dim); font-size: 0.6rem; }
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  text-decoration: none;
+}
+.logo span { color: var(--gold); }
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--gold-bright); }
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(212,175,55,0.5);
+  border-radius: 40px;
+  padding: 0.2rem 0.8rem;
+  background: rgba(0,0,0,0.3);
+}
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Inter', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  transition: color 0.15s;
+  text-transform: uppercase;
+}
+.lang-btn.active { color: var(--gold); }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
 
-/* MAIN */
 main {
-  position: relative; z-index: 10;
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 3rem 2rem 4rem;
-  gap: 3.5rem;
+  position: relative;
+  z-index: 15;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.8rem 3rem;
+  gap: 3rem;
 }
 
-/* HERO TEXT */
-.hero-text { text-align: center; }
+.hero-block {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpFade 0.7s 0.2s var(--transition-smooth) forwards;
+}
+.hero-logo { margin-bottom: 0.5rem; }
+.mountain-svg {
+  filter: drop-shadow(0 0 10px rgba(212,175,55,0.7));
+  transition: filter 0.3s;
+  width: 72px;
+  height: auto;
+}
 .eyebrow {
-  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.28em;
-  color: var(--accent); text-transform: uppercase;
-  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
-  margin-bottom: 1.1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0.5rem 0 0.8rem;
 }
-.eyebrow::before, .eyebrow::after {
-  content: ''; display: inline-block; width: 24px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold));
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), var(--gold-bright), var(--gold), transparent);
 }
-.eyebrow::after { background: linear-gradient(to left, transparent, var(--gold)); }
 .hero-title {
-  font-family: var(--display);
-  font-size: clamp(3.2rem, 9vw, 6.5rem);
-  letter-spacing: 0.05em; line-height: 0.9;
-  color: var(--text);
-  margin-bottom: 1rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.8rem, 10vw, 6.5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
 }
 .hero-title em {
-  background: linear-gradient(110deg,
-    #C9A84C 0%,
-    #C9A84C 35%,
-    #F2D777 44%,
-    #fffaee 50%,
-    #F2D777 56%,
-    #C9A84C 65%,
-    #C9A84C 100%
-  );
+  background: linear-gradient(115deg, #D4AF37 0%, #F5D76E 35%, #FFF2B5 50%, #F5D76E 65%, #D4AF37 100%);
   background-size: 250% auto;
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; font-style: normal;
-  animation: shimmer 4s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+  animation: shimmer 5s linear infinite;
 }
 @keyframes shimmer {
-  0%   { background-position: 200% center; }
+  0% { background-position: 200% center; }
   100% { background-position: -100% center; }
 }
 .hero-sub {
-  font-family: var(--mono); font-size: 0.8rem;
-  color: var(--text-muted); letter-spacing: 0.06em; line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
 }
 
-/* PARTICLES */
-#particle-canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-
-/* CHOICE CARDS */
-.choices { display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 780px; }
-
-.choice-card {
-  flex: 1; min-width: 280px; max-width: 360px;
+/* CARDS PRINCIPALES */
+.choices {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 0.5rem;
+}
+.glass-card {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+  max-width: 420px;
   text-decoration: none;
-  background: linear-gradient(145deg, rgba(9,27,50,0.80) 0%, rgba(5,19,34,0.90) 100%);
-  border: 1px solid var(--border-mid);
-  border-radius: var(--radius-lg);
-  padding: 2rem 2rem 1.75rem;
-  display: flex; flex-direction: column; gap: 1rem;
-  transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), border-color 0.28s;
-  position: relative; overflow: hidden;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 32px;
+  padding: 2rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.4s var(--transition-smooth), border-color 0.3s, box-shadow 0.3s;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 12px 28px -12px rgba(0,0,0,0.6);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpFade 0.7s 0.3s var(--transition-smooth) forwards;
 }
-/* top inner glow */
-.choice-card::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% -10%, rgba(201,168,76,0.10) 0%, transparent 65%);
-  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212,175,55,0.35) 0%, rgba(212,175,55,0) 70%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
 }
-/* mouse spotlight */
-.choice-card::after {
-  content: ''; position: absolute; inset: 0; border-radius: inherit;
-  background: radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(201,168,76,0.11) 0%, transparent 65%);
-  opacity: 0; transition: opacity 0.35s; pointer-events: none;
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(245,215,110,0.2) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
 }
-.choice-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(201,168,76,0.40);
-  animation: card-breathe 2.8s ease-in-out infinite;
+.glass-card:hover::before { opacity: 1; }
+.glass-card:hover::after { transform: translateX(100%); }
+.glass-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  border-color: var(--card-border-hover);
+  box-shadow: 0 30px 45px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.4), 0 0 25px rgba(212,175,55,0.3);
 }
-.choice-card:hover::before { opacity: 1; }
-.choice-card:hover::after  { opacity: 1; }
-
-@keyframes card-breathe {
-  0%,100% { box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 18px rgba(201,168,76,0.08); }
-  50%      { box-shadow: 0 20px 60px rgba(0,0,0,0.60), 0 0 38px rgba(201,168,76,0.18), 0 0 70px rgba(201,168,76,0.05); }
+.card-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.25rem;
+  transition: filter 0.3s;
+  position: relative;
+  z-index: 3;
 }
-
-.card-icon { font-size: 1.6rem; line-height: 1; }
-.card-label {
-  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--accent);
+.card-icon svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  transition: filter 0.3s;
+}
+.glass-card:hover .card-icon svg {
+  filter: drop-shadow(0 0 14px rgba(212,175,55,0.9));
 }
 .card-title {
-  font-family: var(--display); font-size: 2rem; letter-spacing: 0.06em;
-  color: var(--text); line-height: 1;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.3rem;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+  line-height: 1;
+  position: relative;
+  z-index: 3;
 }
 .card-desc {
-  font-family: var(--sans); font-size: 0.8rem;
-  color: var(--text-muted); line-height: 1.65;
-  flex: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0.5rem;
+  position: relative;
+  z-index: 3;
 }
 .card-cta {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-family: var(--mono); font-size: 0.62rem;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--gold-bright); margin-top: 0.25rem;
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--gold-bright);
+  margin-top: 0.5rem;
+  transition: opacity 0.2s;
+  text-decoration: none;
+  position: relative;
+  z-index: 3;
 }
-.card-cta::after { content: '→'; transition: transform 0.18s; }
-.choice-card:hover .card-cta::after { transform: translateX(4px); }
+.card-cta:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
 
-/* FOOTER */
+/* SECTION TÉMOIGNAGES : AUTO-SCROLL + DRAG + FONDU LATÉRAL */
+.testimonials-section {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpFade 0.7s 0.45s var(--transition-smooth) forwards;
+}
+.section-label {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+/* Conteneur avec fondu latéral (masque) */
+.testimonial-fade-mask {
+  position: relative;
+  width: 100%;
+}
+.testimonial-fade-mask::before,
+.testimonial-fade-mask::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 5;
+  pointer-events: none;
+}
+.testimonial-fade-mask::before {
+  left: 0;
+  background: linear-gradient(to right, #020A16, transparent);
+}
+.testimonial-fade-mask::after {
+  right: 0;
+  background: linear-gradient(to left, #020A16, transparent);
+}
+.testimonial-drag-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 0.5rem;
+  user-select: none;
+  scroll-behavior: smooth;
+}
+.testimonial-drag-container::-webkit-scrollbar {
+  display: none;
+}
+.testimonial-drag-container:active {
+  cursor: grabbing;
+}
+.testimonial-track {
+  display: inline-flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+/* Cartes témoignages plus discrètes, texte tronqué, survol = texte complet */
+.testimonial-card {
+  display: inline-block;
+  width: 300px;
+  background: var(--testimonial-bg);
+  backdrop-filter: blur(6px);
+  border: 0.5px solid var(--testimonial-border);
+  border-radius: 20px;
+  padding: 1rem 1.2rem;
+  white-space: normal;
+  text-align: left;
+  transition: transform 0.2s ease, border-color 0.2s, background 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.testimonial-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212,175,55,0.5);
+  background: rgba(12, 25, 40, 0.6);
+}
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.testimonial-stars {
+  color: var(--gold-bright);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+.testimonial-rating {
+  font-family: 'Inter', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--gold);
+}
+.testimonial-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+/* Au survol de la carte, on affiche tout le texte */
+.testimonial-card:hover .testimonial-text {
+  -webkit-line-clamp: unset;
+  display: block;
+  white-space: normal;
+}
+.testimonial-author {
+  font-family: 'Inter', monospace;
+  font-size: 0.6rem;
+  color: var(--gold-bright);
+  border-top: 0.5px solid rgba(212,175,55,0.2);
+  padding-top: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+}
+.author-name {
+  font-weight: 500;
+}
+.author-date {
+  color: var(--text-dim);
+  font-size: 0.55rem;
+}
+
 footer {
-  position: relative; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.25rem 2.5rem;
-  border-top: 1px solid var(--border-mid);
+  position: relative;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  border-top: 1px solid rgba(212,175,55,0.2);
+  background: rgba(1,6,15,0.2);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  animation: fadeInUp 0.6s 0.6s var(--transition-smooth) forwards;
 }
-.footer-copy { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); }
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-link { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
-.footer-link:hover { color: var(--accent); }
+.footer-copy {
+  font-family: 'Inter', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+.footer-links {
+  display: flex;
+  gap: 1.8rem;
+}
+.footer-link {
+  font-family: 'Inter', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover {
+  color: var(--gold);
+}
 
-@media (max-width: 600px) {
-  .choices { flex-direction: column; align-items: center; }
-  .choice-card { min-width: 0; width: 100%; max-width: 400px; }
-  header { padding: 1.25rem 1.5rem; }
-  footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+@keyframes slideUpFade {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 780px) {
+  header { padding: 1rem 1.5rem; }
+  .header-nav { gap: 1rem; }
+  .choices { gap: 1.2rem; }
+  .glass-card { padding: 1.5rem; }
+  .glass-card:hover { transform: translateY(-6px) scale(1.02); }
+  .eyebrow::before, .eyebrow::after { width: 30px; }
+  .testimonial-card { width: 260px; }
+}
+@media (max-width: 550px) {
+  .header-nav { display: none; }
+  .hero-title { font-size: 3rem; }
 }
 </style>
 </head>
@@ -201,10 +530,11 @@ footer {
 
 <header>
   <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
-  <nav class="header-nav" style="display:flex;align-items:center;gap:0.25rem;position:absolute;left:50%;transform:translateX(-50%)">
-    <a style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:20px;transition:all 0.18s" href="products.html" data-en="Products" data-fr="Produits">Products</a>
-    <a style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:20px;transition:all 0.18s" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
-    <a style="font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;padding:0.4rem 0.75rem;border-radius:20px;transition:all 0.18s" href="about.html" data-en="About" data-fr="À propos">About</a>
+  <nav class="header-nav">
+    <a class="nav-link" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+    <a class="nav-link" href="commission.html" data-en="Commissions" data-fr="Commissions">Commissions</a>
+    <a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a>
+    <a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a>
   </nav>
   <div class="lang-toggle">
     <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
@@ -214,33 +544,49 @@ footer {
 </header>
 
 <main>
-
-  <div class="hero-text">
-    <div class="eyebrow" data-en="Environment Art Studio" data-fr="Studio de création d'environnements">Environment Art Studio</div>
-    <h1 class="hero-title" data-en="KALYS<em>T</em>EON" data-fr="KALYS<em>T</em>EON">KALYS<em>T</em>EON</h1>
-    <p class="hero-sub" data-en="Terrain assets &amp; custom environment art for Unreal Engine 5 &amp; Unity" data-fr="Assets terrain &amp; art environnemental sur mesure pour Unreal Engine 5 &amp; Unity">Terrain assets &amp; custom environment art for Unreal Engine 5 &amp; Unity</p>
+  <div class="hero-block">
+    <div class="hero-logo">
+      <svg class="mountain-svg" width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 56 L40 32 L52 56 L44 56 L40 48 L36 56 L28 56Z" fill="#D4AF37" stroke="#F5D76E" stroke-width="0.8"/>
+        <path d="M18 58 L40 22 L62 58 L52 58 L40 40 L28 58 L18 58Z" fill="url(#mountainGrad)" stroke="#D4AF37" stroke-width="0.6"/>
+        <path d="M32 58 L40 46 L48 58 L44 58 L40 52 L36 58 L32 58Z" fill="#F5D76E" fill-opacity="0.7"/>
+        <defs>
+          <linearGradient id="mountainGrad" x1="20" y1="40" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#D4AF37"/>
+            <stop offset="1" stop-color="#F5D76E"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="eyebrow" data-en="ENVIRONMENT STUDIO" data-fr="STUDIO D'ENVIRONNEMENTS">ENVIRONMENT STUDIO</div>
+    <h1 class="hero-title">KALYS<em>T</em>EON</h1>
+    <p class="hero-sub" data-en="3D ASSETS · ENVIRONMENTS · COMMISSIONS" data-fr="ASSETS 3D · ENVIRONNEMENTS · COMMISSIONS">3D ASSETS · ENVIRONMENTS · COMMISSIONS</p>
   </div>
 
   <div class="choices">
-
-    <a class="choice-card" href="products.html">
-      <div class="card-icon">📦</div>
-      <div class="card-label" data-en="Asset Store" data-fr="Boutique">Asset Store</div>
-      <div class="card-title" data-en="PRODUCTS" data-fr="PRODUITS">PRODUCTS</div>
-      <p class="card-desc" data-en="Ready-to-use environment packs — landscapes, glaciers, icebergs and more. Available on Fab, Unity Asset Store and ArtStation." data-fr="Packs environnements prêts à l'emploi — paysages, glaciers, icebergs et plus. Disponibles sur Fab, Unity Asset Store et ArtStation.">Ready-to-use environment packs — landscapes, glaciers, icebergs and more. Available on Fab, Unity Asset Store and ArtStation.</p>
-      <div class="card-cta" data-en="Browse packs" data-fr="Voir les packs">Browse packs</div>
+    <a class="glass-card" href="products.html">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6H20V18H4V6Z" stroke="#D4AF37" stroke-width="1.5"/><path d="M8 4V8" stroke="#D4AF37" stroke-width="1.5"/><path d="M16 4V8" stroke="#D4AF37" stroke-width="1.5"/><path d="M12 10V16" stroke="#D4AF37" stroke-width="1.5"/><path d="M9 13H15" stroke="#D4AF37" stroke-width="1.5"/><rect x="2" y="2" width="20" height="20" rx="2" stroke="#D4AF37" stroke-width="1.2" fill="none"/></svg></div>
+      <div class="card-title" data-en="LIBRARY" data-fr="BIBLIOTHÈQUE">LIBRARY</div>
+      <p class="card-desc" data-en="Production-ready terrain assets for Unreal Engine 5 &amp; Unity" data-fr="Assets terrain prêts à l'emploi pour Unreal Engine 5 &amp; Unity">Production-ready terrain assets for Unreal Engine 5 &amp; Unity</p>
+      <div class="card-cta" data-en="BROWSE THE LIBRARY →" data-fr="PARCOURIR LA BIBLIOTHÈQUE →">BROWSE THE LIBRARY →</div>
     </a>
-
-    <a class="choice-card" href="commission.html">
-      <div class="card-icon">✦</div>
-      <div class="card-label" data-en="Custom Work" data-fr="Travail sur mesure">Custom Work</div>
+    <a class="glass-card" href="commission.html">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#D4AF37" stroke-width="1.5"/><path d="M2 17L12 22L22 17" stroke="#D4AF37" stroke-width="1.5"/><path d="M2 12L12 17L22 12" stroke="#D4AF37" stroke-width="1.5"/><circle cx="12" cy="12" r="2" stroke="#D4AF37" stroke-width="1.2" fill="none"/><path d="M7 9.5L7 14.5" stroke="#D4AF37" stroke-width="1.2"/><path d="M17 9.5L17 14.5" stroke="#D4AF37" stroke-width="1.2"/></svg></div>
       <div class="card-title" data-en="COMMISSION" data-fr="COMMISSION">COMMISSION</div>
-      <p class="card-desc" data-en="Custom environment art tailored to your project — terrain, biomes, hero assets and full scenes. Built for studios and independent developers." data-fr="Art environnemental sur mesure pour votre projet — terrain, biomes, assets héros et scènes complètes. Pour studios et développeurs indépendants.">Custom environment art tailored to your project — terrain, biomes, hero assets and full scenes. Built for studios and independent developers.</p>
-      <div class="card-cta" data-en="Request a commission" data-fr="Faire une demande">Request a commission</div>
+      <p class="card-desc" data-en="Custom environments, biomes, hero assets — tailored to your vision." data-fr="Environnements sur mesure, biomes, assets héros — adaptés à votre vision.">Custom environments, biomes, hero assets — tailored to your vision.</p>
+      <div class="card-cta" data-en="BRING YOUR VISION TO LIFE →" data-fr="RÉALISONS VOTRE UNIVERS →">BRING YOUR VISION TO LIFE →</div>
     </a>
-
   </div>
 
+  <!-- Témoignages : auto-scroll + fondu + texte complet au survol -->
+  <div class="testimonials-section">
+    <div class="section-label" data-en="WHAT MY CLIENTS SAY" data-fr="CE QUE MES CLIENTS DISENT">WHAT MY CLIENTS SAY</div>
+    <div class="testimonial-fade-mask">
+      <div class="testimonial-drag-container" id="testimonialDragContainer">
+        <div class="testimonial-track" id="testimonialTrack"></div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer>
@@ -253,72 +599,186 @@ footer {
 </footer>
 
 <script>
-/* ── LANG ── */
+// Langue
 function setLang(lang) {
   document.documentElement.lang = lang;
-  document.querySelectorAll('[data-en]').forEach(function(el) {
-    var txt = el.getAttribute('data-' + lang);
-    if (txt) el.innerHTML = txt;
+  document.querySelectorAll('[data-en]').forEach(el => {
+    let txt = el.getAttribute('data-' + lang);
+    if (txt !== null && !el.classList?.contains('hero-title')) el.innerText = txt;
   });
-  document.querySelectorAll('.lang-btn').forEach(function(b){
-    b.classList.toggle('active', b.id === 'lang-btn-' + lang);
-  });
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.id === 'lang-btn-' + lang));
 }
+document.addEventListener('DOMContentLoaded', () => setLang('en'));
 
-/* ── PARTICLES ── */
+// Particules dorées
 (function() {
-  var canvas = document.getElementById('particle-canvas');
-  var ctx = canvas.getContext('2d');
-  var pts = [];
-  var W, H;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [], w, h;
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
   window.addEventListener('resize', resize);
   resize();
-
-  for (var i = 0; i < 60; i++) {
-    pts.push({
-      x:  Math.random() * W,
-      y:  Math.random() * H,
-      r:  Math.random() * 1.1 + 0.3,
-      vx: (Math.random() - 0.5) * 0.22,
-      vy: (Math.random() - 0.5) * 0.22,
-      a:  Math.random() * 0.35 + 0.08,
-      da: (Math.random() > 0.5 ? 1 : -1) * 0.0025
-    });
-  }
-
-  function tick() {
-    ctx.clearRect(0, 0, W, H);
-    for (var i = 0; i < pts.length; i++) {
-      var p = pts[i];
-      p.x += p.vx; p.y += p.vy;
-      p.a += p.da;
-      if (p.a < 0.05) p.da =  Math.abs(p.da);
-      if (p.a > 0.42) p.da = -Math.abs(p.da);
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, 6.2832);
-      ctx.fillStyle = 'rgba(201,168,76,' + p.a.toFixed(3) + ')';
+  for (let i = 0; i < 80; i++) particles.push({
+    x: Math.random() * w, y: Math.random() * h, radius: Math.random() * 1.3 + 0.4,
+    vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18,
+    alpha: Math.random() * 0.45 + 0.15, alphaDir: (Math.random() > 0.5 ? 1 : -1) * 0.0025
+  });
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy; p.alpha += p.alphaDir;
+      if (p.alpha < 0.08) p.alphaDir = Math.abs(p.alphaDir);
+      if (p.alpha > 0.5) p.alphaDir = -Math.abs(p.alphaDir);
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha.toFixed(3)})`;
       ctx.fill();
     }
-    requestAnimationFrame(tick);
+    requestAnimationFrame(animate);
   }
-  tick();
+  animate();
 })();
 
-/* ── CARD MOUSE SPOTLIGHT ── */
-document.querySelectorAll('.choice-card').forEach(function(card) {
-  card.addEventListener('mousemove', function(e) {
-    var r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
-    card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+// Mouse tracking pour cartes principales
+document.querySelectorAll('.glass-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mouse-x', `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    card.style.setProperty('--mouse-y', `${((e.clientY - rect.top) / rect.height) * 100}%`);
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.setProperty('--mouse-x', '50%');
+    card.style.setProperty('--mouse-y', '50%');
   });
 });
+
+// Données des témoignages (textes originaux intégraux)
+const testimonialsRaw = [
+  { rating: 5, stars: "★★★★★", text: "Amazing and realistic. Looking forward to the rest of the series.", author: "EmpireLion4u", date: "Last year" },
+  { rating: 5, stars: "★★★★★", text: "Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.", author: "jonius12", date: "Last year" },
+  { rating: 4, stars: "★★★★☆", text: "I corrected my review, in UE5 it works perfectly - the developer helped quickly - the heightmaps are great! A full 4.27 release would be cool.", author: "hm-hesse", date: "3 years ago" },
+  { rating: 4, stars: "★★★★☆", text: "I learned a lot with your heightmaps! Thank you for your support, you answer all my questions.", author: "GildardHache", date: "4 years ago" },
+  { rating: 4, stars: "★★★★☆", text: "I had some issues at the start with the map. But after looking at it for a while I manage to get it working for now. -Updated!", author: "Lil Freeze4U", date: "4 years ago" },
+  { rating: 5, stars: "★★★★★", text: "These terrains are truly made for high tier performance and depth of details are amazing for any project. Thank you", author: "Amor2point0", date: "4 years ago" },
+  { rating: 4, stars: "★★★★☆", text: ">> Update: • Thank you for your quick Feedback, the PostProcessVolume advised fixed it partially, I've ended up changing the Exposure Compensation.• In regards to the collision it's a shame as stones and trees need to be removed from the grass layer to get some collision.• The Z,X,Y was in regards to GAEA (8K Tiled Output).", author: "PureYuki", date: "3 years ago" },
+  { rating: 5, stars: "★★★★★", text: "A really great pack with everything you need to make a good environment, the 8k textures are really realistic.", author: "NikausDraw", date: "Last year" },
+  { rating: 5, stars: "★★★★★", text: "You can tell this author puts a lot of meticulous energy and attention into assembling these kits. They match or surpass similar kits around the market in quality and go more than step beyond in providing a vast selection of landscapes to work with. Not just some random satelite heightmaps like most others but each map has key features and dynamic layouts to function for different gaming centric purposes one would be seeking such kits for which ive yet to see any other heightmap collection authors do so well even if they stay on theme they usually feel like a collected bunch of 'this is kinda cool and works' but these feel like 'wow 20 thoughtfully selected maps with various geographic considerations for the types of zones I'll need be that a network of interesting terrain with interconnected roads that create a network between sites leveled properly for building infrastructure, or a centrel geographic feature that I can use as the basis of this zone in a way it will feel cool and distinctly memeroable - a product of intent not a product of well lets mess around and see what we get' So I'm quite pleased ill be collecting the rest of the kits now without hesitation even if I only use the biomes once or not at all these are genuinely creme of the crop heightmaps with meticulous effort going into their compilations. Not only all that but being made available to us at half the cost of the discernably lacking in areas these arent while not surpassing in any others (why beat around it they're inferior) peers/competitors. Thats enough ranting but these just give me a sense that the artist does this work as passion not as labor and is spreading that in a way it can be accessible to anyone which is the essence of what I find so enamouring and inspiring with this field/pursuit/work so thanks mate.", author: "psychohacktive", date: "Last year" },
+  { rating: 5, stars: "★★★★★", text: "Very nice", author: "EmpireLion4u", date: "Last year" },
+  { rating: 5, stars: "★★★★★", text: "True Beauty", author: "Amor2point0", date: "4 years ago" },
+  { rating: 4, stars: "★★★★☆", text: "It's Okay, I had some issues at the start but now it works.", author: "Lil Freeze4U", date: "4 years ago" }
+];
+
+// Créer une carte témoignage
+function createTestimonialCard(t) {
+  const card = document.createElement('div');
+  card.className = 'testimonial-card';
+  card.innerHTML = `
+    <div class="testimonial-header">
+      <span class="testimonial-stars">${t.stars}</span>
+      <span class="testimonial-rating">${t.rating}/5</span>
+    </div>
+    <div class="testimonial-text">${t.text.replace(/"/g, '&quot;')}</div>
+    <div class="testimonial-author">
+      <span class="author-name">${t.author}</span>
+      <span class="author-date">${t.date}</span>
+    </div>
+  `;
+  return card;
+}
+
+// Construction du track avec duplication pour défilement infini
+const track = document.getElementById('testimonialTrack');
+function buildInfiniteTrack() {
+  track.innerHTML = '';
+  // Dupliquer deux fois pour un effet de boucle fluide
+  [...testimonialsRaw, ...testimonialsRaw].forEach(t => {
+    track.appendChild(createTestimonialCard(t));
+  });
+}
+buildInfiniteTrack();
+
+// AUTO-SCROLL + DRAG (avec reprise après inactivité)
+const container = document.getElementById('testimonialDragContainer');
+let autoScrollInterval = null;
+let isHovering = false;
+let isDragging = false;
+let autoScrollDelayTimer = null;
+
+function startAutoScroll() {
+  if (autoScrollInterval) clearInterval(autoScrollInterval);
+  autoScrollInterval = setInterval(() => {
+    if (!container || isHovering || isDragging) return;
+    // Défilement doux de 0.8px par frame (≈50px par seconde à 60fps)
+    container.scrollLeft += 0.8;
+    // Rebond infini : si on arrive trop près de la fin, on remet au début (car duplication)
+    const maxScroll = container.scrollWidth / 2;
+    if (container.scrollLeft >= maxScroll) {
+      container.scrollLeft = container.scrollLeft - maxScroll;
+    } else if (container.scrollLeft <= 0) {
+      container.scrollLeft = container.scrollLeft + maxScroll;
+    }
+  }, 16); // ~60fps
+}
+
+function stopAutoScroll() {
+  if (autoScrollInterval) {
+    clearInterval(autoScrollInterval);
+    autoScrollInterval = null;
+  }
+}
+
+function resetAutoScroll() {
+  stopAutoScroll();
+  if (autoScrollDelayTimer) clearTimeout(autoScrollDelayTimer);
+  autoScrollDelayTimer = setTimeout(() => {
+    if (!isHovering && !isDragging) startAutoScroll();
+  }, 2000);
+}
+
+// Événements pour la zone témoignages
+if (container) {
+  container.addEventListener('mouseenter', () => {
+    isHovering = true;
+    stopAutoScroll();
+  });
+  container.addEventListener('mouseleave', () => {
+    isHovering = false;
+    resetAutoScroll();
+  });
+  // Drag
+  let isDown = false, startX, scrollLeftStart;
+  container.addEventListener('mousedown', (e) => {
+    isDown = true;
+    isDragging = true;
+    stopAutoScroll();
+    container.style.cursor = 'grabbing';
+    startX = e.pageX - container.offsetLeft;
+    scrollLeftStart = container.scrollLeft;
+    e.preventDefault();
+  });
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      isDragging = false;
+      container.style.cursor = 'grab';
+      resetAutoScroll();
+    }
+  });
+  container.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    container.scrollLeft = scrollLeftStart - walk;
+  });
+  container.addEventListener('dragstart', (e) => e.preventDefault());
+  // Démarrer l'auto-scroll au chargement
+  startAutoScroll();
+}
+
+// Fondu latéral : déjà en place via CSS ::before/::after
 </script>
 </body>
 </html>
