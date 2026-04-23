@@ -44,7 +44,7 @@ body {
   overflow-x: hidden;
 }
 
-/* VIDEO DE FOND AVEC FONDU ET VIGNETTE */
+/* VIDEO DE FOND AVEC OVERLAY PLUS FORT */
 .bg-video {
   position: fixed;
   inset: 0;
@@ -70,13 +70,13 @@ body {
   transform: translate(-50%, -50%) scale(1.4);
   pointer-events: none;
 }
-/* Vignette marine floutée (radial gradient + blur) */
+/* Overlay plus sombre pour meilleure lisibilité du texte */
 .bg-video::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 35%, rgba(1,6,15,0.75) 85%);
-  backdrop-filter: blur(4px);
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(1,6,15,0.85) 90%);
+  backdrop-filter: blur(6px);
   z-index: 1;
   pointer-events: none;
 }
@@ -341,7 +341,7 @@ main {
   text-decoration: underline;
 }
 
-/* SECTION TÉMOIGNAGES */
+/* SECTION TÉMOIGNAGES - TRANSITION DE HAUTEUR FLUIDE ET FONDU LATéral */
 .testimonials-section {
   width: 100%;
   max-width: 1300px;
@@ -363,13 +363,14 @@ main {
   position: relative;
   width: 100%;
 }
+/* Élargissement et adoucissement du fondu latéral */
 .testimonial-fade-mask::before,
 .testimonial-fade-mask::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 60px;
+  width: 100px;
   z-index: 5;
   pointer-events: none;
 }
@@ -401,7 +402,7 @@ main {
 .testimonial-track {
   display: inline-flex;
   gap: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
 }
 .testimonial-card {
   display: inline-block;
@@ -415,6 +416,8 @@ main {
   text-align: left;
   transition: transform 0.2s ease, border-color 0.2s, background 0.2s;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  /* Pour la transition de hauteur fluide */
+  overflow: hidden;
 }
 .testimonial-card:hover {
   transform: translateY(-3px);
@@ -444,16 +447,13 @@ main {
   line-height: 1.4;
   color: var(--text-muted);
   margin-bottom: 0.6rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  transition: all 0.2s;
+  display: block;
+  max-height: 4.2em; /* 3 lignes approximativement */
+  overflow-y: hidden;
+  transition: max-height 0.35s ease-out;
 }
 .testimonial-card:hover .testimonial-text {
-  -webkit-line-clamp: unset;
-  display: block;
-  white-space: normal;
+  max-height: 25em; /* assez pour tout afficher */
 }
 .testimonial-author {
   font-family: 'Inter', monospace;
@@ -526,6 +526,10 @@ footer {
   .glass-card:hover { transform: translateY(-6px) scale(1.02); }
   .eyebrow::before, .eyebrow::after { width: 30px; }
   .testimonial-card { width: 260px; }
+  .testimonial-fade-mask::before,
+  .testimonial-fade-mask::after {
+    width: 60px;
+  }
 }
 @media (max-width: 550px) {
   .header-nav { display: none; }
@@ -582,42 +586,20 @@ footer {
   </div>
 
   <div class="choices">
-    <!-- Carte LIBRARY -->
     <a class="glass-card" href="products.html">
-      <div class="card-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6H20V18H4V6Z" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M8 4V8" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M16 4V8" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M12 10V16" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M9 13H15" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-          <rect x="2" y="2" width="20" height="20" rx="2" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
-        </svg>
-      </div>
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6H20V18H4V6Z" stroke="#D4AF37" stroke-width="1.5"/><path d="M8 4V8" stroke="#D4AF37" stroke-width="1.5"/><path d="M16 4V8" stroke="#D4AF37" stroke-width="1.5"/><path d="M12 10V16" stroke="#D4AF37" stroke-width="1.5"/><path d="M9 13H15" stroke="#D4AF37" stroke-width="1.5"/><rect x="2" y="2" width="20" height="20" rx="2" stroke="#D4AF37" stroke-width="1.2" fill="none"/></svg></div>
       <div class="card-title" data-en="LIBRARY" data-fr="BIBLIOTHÈQUE">LIBRARY</div>
       <p class="card-desc" data-en="Production-ready terrain assets for Unreal Engine 5 &amp; Unity" data-fr="Assets terrain prêts à l'emploi pour Unreal Engine 5 &amp; Unity">Production-ready terrain assets for Unreal Engine 5 &amp; Unity</p>
       <div class="card-cta" data-en="BROWSE THE LIBRARY →" data-fr="PARCOURIR LA BIBLIOTHÈQUE →">BROWSE THE LIBRARY →</div>
     </a>
-
-    <!-- Carte COMMISSION -->
     <a class="glass-card" href="commission.html">
-      <div class="card-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
-          <path d="M2 17L12 22L22 17" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M2 12L12 17L22 12" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="12" cy="12" r="2" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
-          <path d="M7 9.5L7 14.5" stroke="#D4AF37" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M17 9.5L17 14.5" stroke="#D4AF37" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#D4AF37" stroke-width="1.5"/><path d="M2 17L12 22L22 17" stroke="#D4AF37" stroke-width="1.5"/><path d="M2 12L12 17L22 12" stroke="#D4AF37" stroke-width="1.5"/><circle cx="12" cy="12" r="2" stroke="#D4AF37" stroke-width="1.2" fill="none"/><path d="M7 9.5L7 14.5" stroke="#D4AF37" stroke-width="1.2"/><path d="M17 9.5L17 14.5" stroke="#D4AF37" stroke-width="1.2"/></svg></div>
       <div class="card-title" data-en="COMMISSION" data-fr="COMMISSION">COMMISSION</div>
       <p class="card-desc" data-en="Custom environments, biomes, hero assets — tailored to your vision." data-fr="Environnements sur mesure, biomes, assets héros — adaptés à votre vision.">Custom environments, biomes, hero assets — tailored to your vision.</p>
       <div class="card-cta" data-en="BRING YOUR VISION TO LIFE →" data-fr="RÉALISONS VOTRE UNIVERS →">BRING YOUR VISION TO LIFE →</div>
     </a>
   </div>
 
-  <!-- Témoignages -->
   <div class="testimonials-section">
     <div class="section-label" data-en="WHAT MY CLIENTS SAY" data-fr="CE QUE MES CLIENTS DISENT">WHAT MY CLIENTS SAY</div>
     <div class="testimonial-fade-mask">
@@ -649,7 +631,7 @@ function setLang(lang) {
 }
 document.addEventListener('DOMContentLoaded', () => setLang('en'));
 
-// FONDU VIDÉO : on rend visible la vidéo après un court instant
+// FONDU VIDÉO
 window.addEventListener('load', function() {
   const videoWrapper = document.querySelector('.video-wrapper');
   if (videoWrapper) {
@@ -659,7 +641,7 @@ window.addEventListener('load', function() {
   }
 });
 
-// Particules dorées
+// PARTICULES DORÉES
 (function() {
   const canvas = document.getElementById('particle-canvas');
   if (!canvas) return;
@@ -703,7 +685,7 @@ document.querySelectorAll('.glass-card').forEach(card => {
   });
 });
 
-// Données des témoignages
+// DONNÉES TÉMOIGNAGES (intégrales)
 const testimonialsRaw = [
   { rating: 5, stars: "★★★★★", text: "Amazing and realistic. Looking forward to the rest of the series.", author: "EmpireLion4u", date: "Last year" },
   { rating: 5, stars: "★★★★★", text: "Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.", author: "jonius12", date: "Last year" },
@@ -736,86 +718,47 @@ function createTestimonialCard(t) {
   return card;
 }
 
-const track = document.getElementById('testimonialTrack');
-function buildInfiniteTrack() {
-  track.innerHTML = '';
-  [...testimonialsRaw, ...testimonialsRaw].forEach(t => {
-    track.appendChild(createTestimonialCard(t));
+// Construction du track (copie simple, pas de duplication pour éviter les bugs de défilement infini)
+const trackEl = document.getElementById('testimonialTrack');
+function buildTrack() {
+  trackEl.innerHTML = '';
+  testimonialsRaw.forEach(t => {
+    trackEl.appendChild(createTestimonialCard(t));
   });
 }
-buildInfiniteTrack();
+buildTrack();
 
-const container = document.getElementById('testimonialDragContainer');
-let autoScrollInterval = null;
-let isHovering = false;
-let isDragging = false;
-let autoScrollDelayTimer = null;
+// GESTION DU DRAG SCROLL (sans auto-scroll pour éviter les conflits)
+const dragContainer = document.getElementById('testimonialDragContainer');
+if (dragContainer) {
+  let isDown = false;
+  let startX;
+  let scrollLeftStart;
 
-function startAutoScroll() {
-  if (autoScrollInterval) clearInterval(autoScrollInterval);
-  autoScrollInterval = setInterval(() => {
-    if (!container || isHovering || isDragging) return;
-    container.scrollLeft += 0.8;
-    const maxScroll = container.scrollWidth / 2;
-    if (container.scrollLeft >= maxScroll) {
-      container.scrollLeft = container.scrollLeft - maxScroll;
-    } else if (container.scrollLeft <= 0) {
-      container.scrollLeft = container.scrollLeft + maxScroll;
-    }
-  }, 16);
-}
-
-function stopAutoScroll() {
-  if (autoScrollInterval) {
-    clearInterval(autoScrollInterval);
-    autoScrollInterval = null;
-  }
-}
-
-function resetAutoScroll() {
-  stopAutoScroll();
-  if (autoScrollDelayTimer) clearTimeout(autoScrollDelayTimer);
-  autoScrollDelayTimer = setTimeout(() => {
-    if (!isHovering && !isDragging) startAutoScroll();
-  }, 2000);
-}
-
-if (container) {
-  container.addEventListener('mouseenter', () => {
-    isHovering = true;
-    stopAutoScroll();
-  });
-  container.addEventListener('mouseleave', () => {
-    isHovering = false;
-    resetAutoScroll();
-  });
-  let isDown = false, startX, scrollLeftStart;
-  container.addEventListener('mousedown', (e) => {
+  dragContainer.addEventListener('mousedown', (e) => {
     isDown = true;
-    isDragging = true;
-    stopAutoScroll();
-    container.style.cursor = 'grabbing';
-    startX = e.pageX - container.offsetLeft;
-    scrollLeftStart = container.scrollLeft;
+    dragContainer.style.cursor = 'grabbing';
+    startX = e.pageX - dragContainer.offsetLeft;
+    scrollLeftStart = dragContainer.scrollLeft;
     e.preventDefault();
   });
-  window.addEventListener('mouseup', () => {
-    if (isDown) {
-      isDown = false;
-      isDragging = false;
-      container.style.cursor = 'grab';
-      resetAutoScroll();
-    }
+  dragContainer.addEventListener('mouseleave', () => {
+    isDown = false;
+    dragContainer.style.cursor = 'grab';
   });
-  container.addEventListener('mousemove', (e) => {
+  dragContainer.addEventListener('mouseup', () => {
+    isDown = false;
+    dragContainer.style.cursor = 'grab';
+  });
+  dragContainer.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
+    const x = e.pageX - dragContainer.offsetLeft;
     const walk = (x - startX) * 1.5;
-    container.scrollLeft = scrollLeftStart - walk;
+    dragContainer.scrollLeft = scrollLeftStart - walk;
   });
-  container.addEventListener('dragstart', (e) => e.preventDefault());
-  startAutoScroll();
+  dragContainer.addEventListener('dragstart', (e) => e.preventDefault());
+  // Pas d'auto-scroll pour éviter les bugs
 }
 </script>
 </body>
