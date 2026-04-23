@@ -44,7 +44,7 @@ body {
   overflow-x: hidden;
 }
 
-/* VIDEO DE FOND AVEC OVERLAY PLUS FORT */
+/* VIDEO DE FOND AVEC OVERLAY LÉGÈREMENT FLOU */
 .bg-video {
   position: fixed;
   inset: 0;
@@ -70,13 +70,13 @@ body {
   transform: translate(-50%, -50%) scale(1.4);
   pointer-events: none;
 }
-/* Overlay plus sombre pour meilleure lisibilité du texte */
+/* Overlay moins flou et moins opaque pour mieux voir la vidéo */
 .bg-video::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(1,6,15,0.85) 90%);
-  backdrop-filter: blur(6px);
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(1,6,15,0.75) 90%);
+  backdrop-filter: blur(2px);
   z-index: 1;
   pointer-events: none;
 }
@@ -225,7 +225,7 @@ main {
   margin-top: 0.2rem;
 }
 
-/* CARDS PRINCIPALES */
+/* CARDS PRINCIPALES - EFFET DE SURVOL RENFORCÉ */
 .choices {
   display: flex;
   gap: 2rem;
@@ -283,10 +283,11 @@ main {
 }
 .glass-card:hover::before { opacity: 1; }
 .glass-card:hover::after { transform: translateX(100%); }
+/* Effet de survol plus prononcé : scale + translation plus forte */
 .glass-card:hover {
-  transform: translateY(-10px) scale(1.03);
+  transform: translateY(-12px) scale(1.04);
   border-color: var(--card-border-hover);
-  box-shadow: 0 30px 45px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.4), 0 0 25px rgba(212,175,55,0.3);
+  box-shadow: 0 35px 50px -15px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,175,55,0.5), 0 0 30px rgba(212,175,55,0.35);
 }
 .card-icon {
   width: 48px;
@@ -341,7 +342,7 @@ main {
   text-decoration: underline;
 }
 
-/* SECTION TÉMOIGNAGES - TRANSITION DE HAUTEUR FLUIDE ET FONDU LATéral */
+/* SECTION TÉMOIGNAGES - FONDU LATÉRAL ADOUCI */
 .testimonials-section {
   width: 100%;
   max-width: 1300px;
@@ -362,26 +363,11 @@ main {
 .testimonial-fade-mask {
   position: relative;
   width: 100%;
+  /* Utilisation d'un mask pour un fondu plus progressif et moins brutal */
+  -webkit-mask: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
-/* Élargissement et adoucissement du fondu latéral */
-.testimonial-fade-mask::before,
-.testimonial-fade-mask::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100px;
-  z-index: 5;
-  pointer-events: none;
-}
-.testimonial-fade-mask::before {
-  left: 0;
-  background: linear-gradient(to right, #020A16, transparent);
-}
-.testimonial-fade-mask::after {
-  right: 0;
-  background: linear-gradient(to left, #020A16, transparent);
-}
+/* Suppression des pseudo-éléments ::before/::after précédents pour ne garder que le mask */
 .testimonial-drag-container {
   width: 100%;
   overflow-x: auto;
@@ -402,7 +388,7 @@ main {
 .testimonial-track {
   display: inline-flex;
   gap: 1rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 2rem;
 }
 .testimonial-card {
   display: inline-block;
@@ -416,7 +402,6 @@ main {
   text-align: left;
   transition: transform 0.2s ease, border-color 0.2s, background 0.2s;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  /* Pour la transition de hauteur fluide */
   overflow: hidden;
 }
 .testimonial-card:hover {
@@ -448,12 +433,12 @@ main {
   color: var(--text-muted);
   margin-bottom: 0.6rem;
   display: block;
-  max-height: 4.2em; /* 3 lignes approximativement */
+  max-height: 4.2em;
   overflow-y: hidden;
   transition: max-height 0.35s ease-out;
 }
 .testimonial-card:hover .testimonial-text {
-  max-height: 25em; /* assez pour tout afficher */
+  max-height: 25em;
 }
 .testimonial-author {
   font-family: 'Inter', monospace;
@@ -523,12 +508,12 @@ footer {
   .header-nav { gap: 1rem; }
   .choices { gap: 1.2rem; }
   .glass-card { padding: 1.5rem; }
-  .glass-card:hover { transform: translateY(-6px) scale(1.02); }
+  .glass-card:hover { transform: translateY(-8px) scale(1.03); }
   .eyebrow::before, .eyebrow::after { width: 30px; }
   .testimonial-card { width: 260px; }
-  .testimonial-fade-mask::before,
-  .testimonial-fade-mask::after {
-    width: 60px;
+  .testimonial-fade-mask {
+    -webkit-mask: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 }
 @media (max-width: 550px) {
@@ -685,7 +670,7 @@ document.querySelectorAll('.glass-card').forEach(card => {
   });
 });
 
-// DONNÉES TÉMOIGNAGES (intégrales)
+// DONNÉES TÉMOIGNAGES
 const testimonialsRaw = [
   { rating: 5, stars: "★★★★★", text: "Amazing and realistic. Looking forward to the rest of the series.", author: "EmpireLion4u", date: "Last year" },
   { rating: 5, stars: "★★★★★", text: "Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.", author: "jonius12", date: "Last year" },
@@ -718,7 +703,6 @@ function createTestimonialCard(t) {
   return card;
 }
 
-// Construction du track (copie simple, pas de duplication pour éviter les bugs de défilement infini)
 const trackEl = document.getElementById('testimonialTrack');
 function buildTrack() {
   trackEl.innerHTML = '';
@@ -728,7 +712,7 @@ function buildTrack() {
 }
 buildTrack();
 
-// GESTION DU DRAG SCROLL (sans auto-scroll pour éviter les conflits)
+// GESTION DU DRAG SCROLL (sans auto-scroll)
 const dragContainer = document.getElementById('testimonialDragContainer');
 if (dragContainer) {
   let isDown = false;
@@ -758,7 +742,6 @@ if (dragContainer) {
     dragContainer.scrollLeft = scrollLeftStart - walk;
   });
   dragContainer.addEventListener('dragstart', (e) => e.preventDefault());
-  // Pas d'auto-scroll pour éviter les bugs
 }
 </script>
 </body>
