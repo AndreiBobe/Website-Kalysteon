@@ -44,18 +44,23 @@ body {
   overflow-x: hidden;
 }
 
+/* VIDEO DE FOND (YOUTUBE) */
 .bg-video {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
 }
-.bg-video video {
+.bg-video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
+  transform: translate(-50%, -50%);
   object-fit: cover;
-  opacity: 0.18;
-  filter: brightness(0.85) contrast(1.1);
+  pointer-events: none;
 }
 .bg-video::after {
   content: '';
@@ -387,7 +392,7 @@ main {
   gap: 1rem;
   padding: 0.5rem 1rem;
 }
-/* Cartes témoignages plus discrètes, texte tronqué, survol = texte complet */
+/* Cartes témoignages */
 .testimonial-card {
   display: inline-block;
   width: 300px;
@@ -435,7 +440,6 @@ main {
   overflow: hidden;
   transition: all 0.2s;
 }
-/* Au survol de la carte, on affiche tout le texte */
 .testimonial-card:hover .testimonial-text {
   -webkit-line-clamp: unset;
   display: block;
@@ -523,9 +527,12 @@ footer {
 
 <canvas id="particle-canvas"></canvas>
 <div class="bg-video">
-  <video autoplay muted loop playsinline>
-    <source src="img/hero-reel.mp4" type="video/mp4">
-  </video>
+  <!-- Vidéo YouTube en fond (muet, boucle, sans contrôles) -->
+  <iframe src="https://www.youtube.com/embed/DBV3C_E1NxE?autoplay=1&mute=1&loop=1&playlist=DBV3C_E1NxE&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&enablejsapi=1" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen>
+  </iframe>
 </div>
 
 <header>
@@ -578,7 +585,6 @@ footer {
     </a>
   </div>
 
-  <!-- Témoignages : auto-scroll + fondu + texte complet au survol -->
   <div class="testimonials-section">
     <div class="section-label" data-en="WHAT MY CLIENTS SAY" data-fr="CE QUE MES CLIENTS DISENT">WHAT MY CLIENTS SAY</div>
     <div class="testimonial-fade-mask">
@@ -654,7 +660,7 @@ document.querySelectorAll('.glass-card').forEach(card => {
   });
 });
 
-// Données des témoignages (textes originaux intégraux)
+// Données des témoignages
 const testimonialsRaw = [
   { rating: 5, stars: "★★★★★", text: "Amazing and realistic. Looking forward to the rest of the series.", author: "EmpireLion4u", date: "Last year" },
   { rating: 5, stars: "★★★★★", text: "Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.", author: "jonius12", date: "Last year" },
@@ -670,7 +676,6 @@ const testimonialsRaw = [
   { rating: 4, stars: "★★★★☆", text: "It's Okay, I had some issues at the start but now it works.", author: "Lil Freeze4U", date: "4 years ago" }
 ];
 
-// Créer une carte témoignage
 function createTestimonialCard(t) {
   const card = document.createElement('div');
   card.className = 'testimonial-card';
@@ -688,18 +693,15 @@ function createTestimonialCard(t) {
   return card;
 }
 
-// Construction du track avec duplication pour défilement infini
 const track = document.getElementById('testimonialTrack');
 function buildInfiniteTrack() {
   track.innerHTML = '';
-  // Dupliquer deux fois pour un effet de boucle fluide
   [...testimonialsRaw, ...testimonialsRaw].forEach(t => {
     track.appendChild(createTestimonialCard(t));
   });
 }
 buildInfiniteTrack();
 
-// AUTO-SCROLL + DRAG (avec reprise après inactivité)
 const container = document.getElementById('testimonialDragContainer');
 let autoScrollInterval = null;
 let isHovering = false;
@@ -710,16 +712,14 @@ function startAutoScroll() {
   if (autoScrollInterval) clearInterval(autoScrollInterval);
   autoScrollInterval = setInterval(() => {
     if (!container || isHovering || isDragging) return;
-    // Défilement doux de 0.8px par frame (≈50px par seconde à 60fps)
     container.scrollLeft += 0.8;
-    // Rebond infini : si on arrive trop près de la fin, on remet au début (car duplication)
     const maxScroll = container.scrollWidth / 2;
     if (container.scrollLeft >= maxScroll) {
       container.scrollLeft = container.scrollLeft - maxScroll;
     } else if (container.scrollLeft <= 0) {
       container.scrollLeft = container.scrollLeft + maxScroll;
     }
-  }, 16); // ~60fps
+  }, 16);
 }
 
 function stopAutoScroll() {
@@ -737,7 +737,6 @@ function resetAutoScroll() {
   }, 2000);
 }
 
-// Événements pour la zone témoignages
 if (container) {
   container.addEventListener('mouseenter', () => {
     isHovering = true;
@@ -747,7 +746,6 @@ if (container) {
     isHovering = false;
     resetAutoScroll();
   });
-  // Drag
   let isDown = false, startX, scrollLeftStart;
   container.addEventListener('mousedown', (e) => {
     isDown = true;
@@ -774,11 +772,8 @@ if (container) {
     container.scrollLeft = scrollLeftStart - walk;
   });
   container.addEventListener('dragstart', (e) => e.preventDefault());
-  // Démarrer l'auto-scroll au chargement
   startAutoScroll();
 }
-
-// Fondu latéral : déjà en place via CSS ::before/::after
 </script>
 </body>
 </html>
