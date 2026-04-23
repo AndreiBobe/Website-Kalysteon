@@ -2,167 +2,676 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kalysteon — About</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kalysteon — Identity / Studio</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  --bg: #010810; --surface: #051322; --surface2: #091B32; --surface3: #0E2240;
-  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
-  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22);
-  --accent: #C9A84C;
-  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
-  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px; --radius-xs: 6px;
-  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
-  --display: 'Bebas Neue', sans-serif;
+  --bg-deep: #01060F;
+  --gold: #D4AF37;
+  --gold-bright: #F5D76E;
+  --gold-glow: rgba(212, 175, 55, 0.6);
+  --gold-border: rgba(212, 175, 55, 0.4);
+  --gold-border-hover: rgba(245, 215, 110, 0.8);
+  --text-light: #F5F0E6;
+  --text-muted: #D0D9F0;
+  --text-dim: #9BB0D0;
+  --card-bg: rgba(8, 18, 30, 0.65);
+  --card-bg-hover: rgba(15, 28, 45, 0.85);
+  --card-border: rgba(212, 175, 55, 0.3);
+  --transition-smooth: cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  --radius-card: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
 }
-html { scroll-behavior: smooth; }
+
 body {
   background-color: #020A16;
-  background-image:
-    radial-gradient(ellipse at 20% 0%,   rgba(10,30,80,0.55) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 100%, rgba(6,20,55,0.45) 0%, transparent 50%);
-  color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6;
+  background-image: radial-gradient(ellipse at 30% 20%, rgba(20,45,90,0.5) 0%, transparent 65%);
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* ── HEADER ── */
-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
-.logo { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
-.logo span { color: var(--accent); }
-.header-right { display: flex; align-items: center; gap: 1.5rem; }
-.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.28); border-radius: 20px; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.05); }
-.lang-btn { background: none; border: none; color: var(--text-dim); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; cursor: pointer; padding: 0.15rem 0.3rem; transition: color 0.15s; text-transform: uppercase; }
-.lang-btn.active { color: var(--accent); }
-.lang-sep { color: var(--text-dim); font-size: 0.6rem; }
-.header-nav { display: flex; align-items: center; gap: 0.25rem; position: absolute; left: 50%; transform: translateX(-50%); }
-.nav-link { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 20px; transition: all 0.18s; }
-.nav-link:hover { color: var(--text); background: rgba(201,168,76,0.07); }
-.nav-link.active { color: var(--gold-bright); background: rgba(201,168,76,0.10); }
-@media (max-width: 768px) { .header-nav { display: none; } }
+/* PARTICULES DORÉES */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
 
-/* ── WRAP ── */
-.wrap { max-width: 1000px; margin: 0 auto; padding: 0 2.5rem; }
+/* HEADER */
+header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2.5rem;
+  border-bottom: 1px solid rgba(212,175,55,0.25);
+  background: rgba(1,6,15,0.3);
+  backdrop-filter: blur(8px);
+  animation: fadeInDown 0.8s var(--transition-smooth) forwards;
+}
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  text-decoration: none;
+}
+.logo span { color: var(--gold); }
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-link:hover, .nav-link.active { color: var(--gold-bright); }
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(212,175,55,0.5);
+  border-radius: 40px;
+  padding: 0.2rem 0.8rem;
+  background: rgba(0,0,0,0.3);
+}
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Inter', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  transition: color 0.15s;
+  text-transform: uppercase;
+}
+.lang-btn.active { color: var(--gold); }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
 
-/* ── SECTION LABEL ── */
-.sec-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
-.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border-mid); }
+/* ANIMATIONS GLOBALES */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUpFade {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-/* ── HERO ── */
-.about-hero { padding: 5rem 2.5rem 4rem; border-bottom: 1px solid var(--border-mid); background: linear-gradient(180deg, rgba(10,28,65,0.25) 0%, transparent 100%); }
-.hero-flex { display: flex; align-items: center; justify-content: space-between; gap: 3rem; }
-@media (max-width: 600px) { .hero-flex { flex-direction: column-reverse; align-items: flex-start; gap: 1.5rem; } }
+/* SECTIONS : fade-in on scroll */
+section, .about-hero, .name-lore-section, .contact-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--transition-smooth), transform 0.7s var(--transition-smooth);
+}
+section.visible, .about-hero.visible, .name-lore-section.visible, .contact-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* SECTION LABEL */
+.sec-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold-border), transparent);
+}
+
+/* HERO */
+.about-hero {
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--gold-border);
+  background: linear-gradient(180deg, rgba(10,28,65,0.2) 0%, transparent 100%);
+}
+.hero-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+@media (max-width: 600px) {
+  .hero-flex { flex-direction: column-reverse; align-items: flex-start; gap: 1.5rem; }
+}
 .hero-content { flex: 1; }
-.hero-eyebrow { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.28em; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; }
-.hero-name { font-family: var(--display); font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: 0.04em; line-height: 0.9; color: var(--text); margin-bottom: 0.9rem; }
-.hero-name em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
-.hero-role { font-family: var(--mono); font-size: 0.82rem; color: var(--text-muted); letter-spacing: 0.1em; }
-.hero-avatar { width: 140px; height: 140px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; background: var(--surface2); display: flex; align-items: center; justify-content: center; position: relative; }
-.hero-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.avatar-initials { font-family: var(--display); font-size: 2.2rem; letter-spacing: 0.1em; color: var(--text-dim); }
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+  color: var(--text-light);
+  margin-bottom: 0.9rem;
+}
+.hero-name em {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+}
+.hero-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+.hero-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
+  border: 2px solid var(--gold-border);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 10px 25px -8px rgba(0,0,0,0.4);
+}
+.hero-avatar:hover {
+  transform: scale(1.02);
+  border-color: var(--gold);
+  box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5), 0 0 0 2px rgba(212,175,55,0.3);
+}
+.hero-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar-initials {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
 
-/* ── BIO ── */
-.bio-section { padding: 4rem 0; border-bottom: 1px solid var(--border-mid); }
-.bio-grid { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; align-items: start; }
-@media (max-width: 768px) { .bio-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
-.bio-text p { font-family: var(--sans); font-size: 0.9rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 1.1rem; }
-.bio-text p:last-child { margin-bottom: 0; }
-.bio-text p strong { color: var(--text); font-weight: 500; }
-.bio-text .quote { font-family: var(--mono); font-size: 0.82rem; color: rgba(201,168,76,0.75); font-style: italic; line-height: 1.7; padding-left: 1rem; border-left: 2px solid rgba(201,168,76,0.30); margin-top: 1.5rem; }
+/* BIO SECTION */
+.bio-section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--gold-border);
+}
+.bio-grid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 3rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .bio-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+.bio-text p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+.bio-text .lettrine {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.6rem;
+  color: var(--gold-bright);
+  text-shadow: 0 0 8px var(--gold-glow);
+}
+.bio-text strong { color: var(--text-light); font-weight: 500; }
+.bio-text .quote {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: rgba(212,175,55,0.8);
+  font-style: italic;
+  padding-left: 1rem;
+  border-left: 2px solid var(--gold-border);
+  margin-top: 1.5rem;
+}
+.stats-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.stat-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.2rem;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-border-hover);
+}
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+}
 
-.stats-col { display: flex; flex-direction: column; gap: 0.6rem; }
-.stat-card { background: rgba(9,27,50,0.6); border: 1px solid var(--border-mid); border-radius: var(--radius-md); padding: 1.1rem 1.25rem; }
-.stat-num { font-family: var(--display); font-size: 2.4rem; letter-spacing: 0.04em; line-height: 1; background: linear-gradient(135deg, #C9A84C, #F2D777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.stat-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.2rem; }
-
-/* ── NAME LORE ── */
-.name-lore-section { padding: 3.5rem 0; border-bottom: 1px solid var(--border-mid); }
-.name-lore-inner { max-width: 560px; }
-.name-lore-name { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: 0.18em; color: var(--text); margin-bottom: 0.75rem; line-height: 1; }
-.name-lore-name em { font-style: normal; color: var(--accent); }
-.name-lore-roots { display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.25rem; }
-.name-lore-root-word { font-family: var(--display); font-size: 0.9rem; letter-spacing: 0.16em; color: var(--accent); opacity: 0.7; }
-.name-lore-root-sep { font-family: var(--mono); font-size: 0.55rem; color: var(--text-dim); }
-.name-lore-body { font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim); line-height: 1.9; }
-.name-lore-body p { margin-bottom: 0.65rem; }
+/* NAME LORE */
+.name-lore-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--gold-border);
+}
+.name-lore-inner {
+  max-width: 560px;
+}
+.name-lore-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  letter-spacing: 0.18em;
+  color: var(--text-light);
+  margin-bottom: 0.75rem;
+}
+.name-lore-name em { font-style: normal; color: var(--gold); }
+.name-lore-roots {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+.name-lore-root-word {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  color: var(--gold-bright);
+  opacity: 0.7;
+}
+.name-lore-root-sep {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--text-dim);
+}
+.name-lore-body {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.9;
+}
+.name-lore-body p { margin-bottom: 0.7rem; }
 .name-lore-body p:last-child { margin-bottom: 0; color: var(--text-muted); font-style: italic; }
-.name-lore-body strong { color: var(--accent); font-weight: 500; }
+.name-lore-body strong { color: var(--gold); font-weight: 500; }
 
-/* ── STACK ── */
-.stack-section { padding: 4rem 0; border-bottom: 1px solid var(--border-mid); }
-.stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+/* TECH STACK */
+.stack-section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--gold-border);
+}
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
 @media (max-width: 900px) { .stack-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .stack-grid { grid-template-columns: 1fr; } }
-
-.tool-card { background: rgba(9,27,50,0.55); border: 1px solid var(--border-mid); border-radius: var(--radius-md); padding: 1.1rem 1.1rem 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; text-decoration: none; color: inherit; cursor: pointer; }
-.tool-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--tool-color, var(--gold-dark)); opacity: 0.6; transition: opacity 0.2s; }
-.tool-card:hover { border-color: var(--border); background: rgba(14,34,64,0.70); }
+.tool-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(212,175,55,0.15), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.tool-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-border-hover);
+  background: var(--card-bg-hover);
+  box-shadow: 0 12px 20px -10px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,175,55,0.2);
+}
 .tool-card:hover::before { opacity: 1; }
-.tool-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
-.tool-icon img { width: 28px; height: 28px; object-fit: contain; filter: brightness(0.85); transition: filter 0.2s; }
-.tool-card:hover .tool-icon img { filter: brightness(1); }
-.tool-name { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--text); font-weight: 500; }
-.tool-role { font-family: var(--sans); font-size: 0.72rem; color: var(--text-dim); line-height: 1.4; }
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  margin-bottom: 0.3rem;
+}
+.tool-icon img, .tool-icon svg {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+  transition: filter 0.2s;
+}
+.tool-card:hover .tool-icon img,
+.tool-card:hover .tool-icon svg {
+  filter: drop-shadow(0 0 4px var(--gold));
+}
+.tool-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+.tool-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
 
-/* ── SOCIALS ── */
-.connect-section { padding: 4rem 0; border-bottom: 1px solid var(--border-mid); }
-.socials-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+/* SOCIALS */
+.connect-section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--gold-border);
+}
+.socials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
 @media (max-width: 900px) { .socials-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .socials-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .socials-grid { grid-template-columns: 1fr; } }
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem;
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+.social-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-border-hover);
+  background: var(--card-bg-hover);
+}
+.social-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.social-icon img, .social-icon svg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.social-card:hover .social-icon img,
+.social-card:hover .social-icon svg { opacity: 1; filter: drop-shadow(0 0 2px var(--gold)); }
+.social-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.social-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.social-handle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-.social-card { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; background: rgba(9,27,50,0.55); border: 1px solid var(--border-mid); border-radius: var(--radius-md); padding: 0.85rem 1rem; transition: all 0.2s; }
-.social-card:hover { border-color: var(--border); background: rgba(14,34,64,0.70); transform: translateY(-2px); }
-.social-icon { width: 22px; height: 22px; flex-shrink: 0; }
-.social-icon img { width: 22px; height: 22px; object-fit: contain; opacity: 0.7; transition: opacity 0.2s; }
-.social-card:hover .social-icon img { opacity: 1; }
-.social-info { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
-.social-name { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); }
-.social-handle { font-family: var(--mono); font-size: 0.58rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-/* ── CONTACT ── */
-.contact-section { padding: 4rem 0; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+/* CONTACT avec newsletter intégrée à droite */
+.contact-section {
+  padding: 4rem 0;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
 @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-md);
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.contact-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-border-hover);
+}
+.contact-card-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.contact-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+}
+.contact-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.btn-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--gold-bright);
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--gold-border);
+  border-radius: 40px;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+.btn-contact:hover {
+  background: rgba(212,175,55,0.1);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
 
-.contact-card { background: rgba(9,27,50,0.55); border: 1px solid var(--border-mid); border-radius: var(--radius-lg); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
-.contact-card-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); }
-.contact-card-title { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.05em; color: var(--text); }
-.contact-card-desc { font-family: var(--sans); font-size: 0.8rem; color: var(--text-muted); line-height: 1.65; flex: 1; }
-.btn-contact { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--gold-bright); padding: 0.65rem 1.25rem; border: 1px solid var(--border); border-radius: var(--radius-sm); transition: all 0.18s; align-self: flex-start; }
-.btn-contact:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
-.newsletter-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); border: 1px dashed var(--border-mid); border-radius: 20px; padding: 0.3rem 0.8rem; align-self: flex-start; }
+/* Formulaire newsletter dans la carte contact */
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+}
+.newsletter-input {
+  flex: 1;
+  min-width: 180px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--gold-border);
+  border-radius: 60px;
+  padding: 0.7rem 1rem;
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.newsletter-input:focus {
+  border-color: var(--gold);
+}
+.newsletter-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  border: none;
+  border-radius: 60px;
+  padding: 0.7rem 1.2rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #010810;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.2s;
+}
+.newsletter-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.05);
+}
+.newsletter-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  margin-top: 0.8rem;
+}
 
-/* ── FOOTER ── */
-footer { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-top: 1px solid var(--border-mid); }
-.footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); }
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-link { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
-.footer-link:hover { color: var(--accent); }
+/* FOOTER */
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2.5rem;
+  border-top: 1px solid var(--gold-border);
+  background: rgba(1,6,15,0.2);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s 0.3s, transform 0.6s 0.3s;
+}
+footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.footer-copy {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+.footer-links {
+  display: flex;
+  gap: 1.8rem;
+}
+.footer-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .wrap { padding: 0 1.5rem; }
+  header { padding: 1rem 1.5rem; }
+  .header-nav { gap: 1rem; }
+  .hero-avatar { width: 120px; height: 120px; }
+}
+@media (max-width: 550px) {
+  .header-nav { display: none; }
+}
 </style>
 </head>
 <body>
 
+<canvas id="particle-canvas"></canvas>
+
 <header>
   <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
   <nav class="header-nav">
-    <a class="nav-link" href="products.html"   data-en="Products"   data-fr="Produits">Products</a>
+    <a class="nav-link" href="products.html" data-en="Products" data-fr="Produits">Products</a>
     <a class="nav-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
-    <a class="nav-link active" href="about.html" data-en="About"    data-fr="À propos">About</a>
+    <a class="nav-link active" href="about.html" data-en="Identity" data-fr="Identité">Identity</a>
   </nav>
-  <div class="header-right">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
-      <span class="lang-sep">|</span>
-      <button class="lang-btn" id="lang-btn-fr" onclick="setLang('fr')">FR</button>
-    </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" id="lang-btn-fr" onclick="setLang('fr')">FR</button>
   </div>
 </header>
 
-<!-- ── HERO ── -->
-<div class="about-hero">
+<!-- HERO -->
+<div class="about-hero" id="hero">
   <div class="wrap">
     <div class="hero-flex">
       <div class="hero-content">
@@ -178,233 +687,105 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   </div>
 </div>
 
-<!-- ── BIO ── -->
-<section class="bio-section">
+<!-- BIO -->
+<section class="bio-section" id="bio">
   <div class="wrap">
-    <div class="sec-label" data-en="About me" data-fr="À propos">About me</div>
+    <div class="sec-label" data-en="Narrative" data-fr="Récit">Narrative</div>
     <div class="bio-grid">
-
       <div class="bio-text">
-        <p data-en="I'm a self-taught environment artist who's spent over a decade obsessing over terrain, atmosphere, and the kind of digital landscapes that make you stop and look twice. It started as a personal curiosity: tweaking game settings, modding levels, breaking things just to understand how they worked." data-fr="Je suis un artiste environnement autodidacte qui a passé plus d'une décennie à perfectionner terrains, atmosphères et paysages numériques. Tout a commencé par une curiosité personnelle : tweaker des réglages de jeux, modder des niveaux, casser des choses juste pour comprendre comment elles fonctionnaient.">I'm a self-taught environment artist who's spent over a decade obsessing over terrain, atmosphere, and the kind of digital landscapes that make you stop and look twice. It started as a personal curiosity: tweaking game settings, modding levels, breaking things just to understand how they worked.</p>
-        <p data-en="That curiosity grew into a craft, and the craft grew into <strong>Kalysteon</strong>, a catalogue of production-ready environment packs built for developers who care about quality. Six years of selling assets on Fab, Unity Asset Store and ArtStation. Every pack is the result of accumulated time, workflows refined through obsession, and details no one asked for but everyone notices." data-fr="Cette curiosité est devenue un métier, et le métier est devenu <strong>Kalysteon</strong>, un catalogue de packs environnements prêts pour la production, conçus pour des développeurs qui tiennent à la qualité. Six ans de vente sur Fab, Unity Asset Store et ArtStation. Chaque pack est le résultat du temps accumulé, de workflows affinés par l'obsession.">That curiosity grew into a craft, and the craft grew into <strong>Kalysteon</strong>, a catalogue of production-ready environment packs built for developers who care about quality. Six years of selling assets on Fab, Unity Asset Store and ArtStation. Every pack is the result of accumulated time, workflows refined through obsession, and details no one asked for but everyone notices.</p>
-        <p data-en="I focus on world building, the art of making a space feel real, inhabited, and worth exploring. Not just pretty renders, but environments that hold up in motion, under dynamic lighting, at any scale." data-fr="Je me concentre sur le world building, l'art de rendre un espace réel, habité, et digne d'être exploré. Pas seulement de jolis rendus, mais des environnements qui tiennent la route en mouvement, sous un éclairage dynamique, à toutes les échelles.">I focus on world building, the art of making a space feel real, inhabited, and worth exploring. Not just pretty renders, but environments that hold up in motion, under dynamic lighting, at any scale.</p>
-        <p class="quote" data-en="Not a studio. Just someone who cares deeply about the craft." data-fr="Pas un studio. Juste quelqu'un qui tient vraiment au métier.">"Not a studio. Just someone who cares deeply about the craft."</p>
+        <p><span class="lettrine">I</span> <span data-en="'m a self-taught environment artist who's spent over a decade obsessing over terrain, atmosphere, and the kind of digital landscapes that make you stop and look twice. It started as a personal curiosity: tweaking game settings, modding levels, breaking things just to understand how they worked." data-fr="'m a self-taught environment artist who's spent over a decade obsessing over terrain, atmosphere, and the kind of digital landscapes that make you stop and look twice. It started as a personal curiosity: tweaking game settings, modding levels, breaking things just to understand how they worked."></span></p>
+        <p data-en="That curiosity grew into a craft, and the craft grew into <strong>Kalysteon</strong>, a catalogue of production-ready environment packs built for developers who care about quality. Six years of selling assets on Fab, Unity Asset Store and ArtStation. Every pack is the result of accumulated time, workflows refined through obsession, and details no one asked for but everyone notices." data-fr="That curiosity grew into a craft, and the craft grew into <strong>Kalysteon</strong>, a catalogue of production-ready environment packs built for developers who care about quality. Six years of selling assets on Fab, Unity Asset Store and ArtStation. Every pack is the result of accumulated time, workflows refined through obsession, and details no one asked for but everyone notices.">That curiosity grew into a craft, and the craft grew into <strong>Kalysteon</strong>, a catalogue of production-ready environment packs built for developers who care about quality. Six years of selling assets on Fab, Unity Asset Store and ArtStation. Every pack is the result of accumulated time, workflows refined through obsession, and details no one asked for but everyone notices.</p>
+        <p data-en="I focus on world building, the art of making a space feel real, inhabited, and worth exploring. Not just pretty renders, but environments that hold up in motion, under dynamic lighting, at any scale." data-fr="I focus on world building, the art of making a space feel real, inhabited, and worth exploring. Not just pretty renders, but environments that hold up in motion, under dynamic lighting, at any scale.">I focus on world building, the art of making a space feel real, inhabited, and worth exploring. Not just pretty renders, but environments that hold up in motion, under dynamic lighting, at any scale.</p>
+        <p class="quote" data-en="Not a studio. Just someone who cares deeply about the craft." data-fr="Not a studio. Just someone who cares deeply about the craft.">"Not a studio. Just someone who cares deeply about the craft."</p>
       </div>
-
       <div class="stats-col">
-        <div class="stat-card">
-          <div class="stat-num">10+</div>
-          <div class="stat-label" data-en="Years in 3D" data-fr="Ans en 3D">Years in 3D</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">6</div>
-          <div class="stat-label" data-en="Years selling assets" data-fr="Ans de vente d'assets">Years selling assets</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">42+</div>
-          <div class="stat-label" data-en="Packs released" data-fr="Packs publiés">Packs released</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">3</div>
-          <div class="stat-label" data-en="Marketplaces" data-fr="Marketplaces">Marketplaces</div>
-        </div>
+        <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label" data-en="Years in 3D" data-fr="Ans en 3D">Years in 3D</div></div>
+        <div class="stat-card"><div class="stat-num">6</div><div class="stat-label" data-en="Years selling assets" data-fr="Ans de vente d'assets">Years selling assets</div></div>
+        <div class="stat-card"><div class="stat-num">42+</div><div class="stat-label" data-en="Packs released" data-fr="Packs publiés">Packs released</div></div>
+        <div class="stat-card"><div class="stat-num">3</div><div class="stat-label" data-en="Marketplaces" data-fr="Marketplaces">Marketplaces</div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ── NAME LORE ── -->
-<section class="name-lore-section">
+<!-- NAME LORE -->
+<section class="name-lore-section" id="namelore">
   <div class="wrap">
-    <div class="sec-label" data-en="The name" data-fr="Le nom">The name</div>
+    <div class="sec-label" data-en="Etymology" data-fr="Étymologie">Etymology</div>
     <div class="name-lore-inner">
       <div class="name-lore-name">KALYS<em>T</em>EON</div>
-      <div class="name-lore-roots">
-        <span class="name-lore-root-word">Kalos</span>
-        <span class="name-lore-root-sep">+</span>
-        <span class="name-lore-root-word">Eon</span>
-      </div>
+      <div class="name-lore-roots"><span class="name-lore-root-word">Kalos</span><span class="name-lore-root-sep">+</span><span class="name-lore-root-word">Eon</span></div>
       <div class="name-lore-body">
-        <p data-en="&lt;strong&gt;Kalos&lt;/strong&gt; (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone." data-fr="&lt;strong&gt;Kalos&lt;/strong&gt; (καλός) : grec pour beau. Également à l'origine de la callisthénie, kalos et sthenos, le beau et la force, l'art de maîtriser la forme par le seul corps."><strong>Kalos</strong> (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone.</p>
-        <p data-en="&lt;strong&gt;Eon&lt;/strong&gt;: an era, a geological age. The span of time that actually shapes a place." data-fr="&lt;strong&gt;Eon&lt;/strong&gt; : une ère, un âge géologique. Le temps qu'il faut pour qu'un paysage existe vraiment."><strong>Eon</strong>: an era, a geological age. The span of time that actually shapes a place.</p>
-        <p data-en="That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along." data-fr="C'est comme ça que Kalysteon m'est venu. Le T était déjà là dans callisthénie, entre kalos et sthenos. Je l'ai gardé comme pont naturel vers eon. Rien de forcé, il était dans la racine depuis le début.">That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along.</p>
+        <p data-en="&lt;strong&gt;Kalos&lt;/strong&gt; (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone." data-fr="&lt;strong&gt;Kalos&lt;/strong&gt; (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone."><strong>Kalos</strong> (καλός): Greek for beautiful. Also the root of calisthenics, kalos and sthenos, beauty and strength, the art of mastering form through the body alone.</p>
+        <p data-en="&lt;strong&gt;Eon&lt;/strong&gt;: an era, a geological age. The span of time that actually shapes a place." data-fr="&lt;strong&gt;Eon&lt;/strong&gt;: an era, a geological age. The span of time that actually shapes a place."><strong>Eon</strong>: an era, a geological age. The span of time that actually shapes a place.</p>
+        <p data-en="That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along." data-fr="That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along.">That's how Kalysteon came to me. The T was already there in calisthenics, sitting between kalos and sthenos. I kept it as a natural bridge into eon. Nothing forced, it was in the root all along.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── STACK ── -->
-<section class="stack-section">
+<!-- TECH STACK -->
+<section class="stack-section" id="stack">
   <div class="wrap">
-    <div class="sec-label" data-en="Tools & software" data-fr="Outils & logiciels">Tools & software</div>
+    <div class="sec-label" data-en="Toolchain" data-fr="Chaîne technique">Toolchain</div>
     <div class="stack-grid">
-
-      <a class="tool-card" href="https://www.unrealengine.com" target="_blank" rel="noopener" style="--tool-color:#0078D7">
-        <div class="tool-icon"><img src="https://cdn.simpleicons.org/unrealengine/ffffff" alt="Unreal Engine"></div>
-        <div class="tool-name">Unreal Engine 5</div>
-        <div class="tool-role" data-en="Primary scene assembly, lighting & final render" data-fr="Assemblage de scènes, éclairage & rendu final">Primary scene assembly, lighting & final render</div>
-      </a>
-
-      <a class="tool-card" href="https://unity.com" target="_blank" rel="noopener" style="--tool-color:#CCCCCC">
-        <div class="tool-icon"><img src="https://cdn.simpleicons.org/unity/ffffff" alt="Unity"></div>
-        <div class="tool-name">Unity</div>
-        <div class="tool-role" data-en="Cross-engine asset validation & publishing" data-fr="Validation cross-engine & publication">Cross-engine asset validation & publishing</div>
-      </a>
-
-      <a class="tool-card" href="https://www.sidefx.com" target="_blank" rel="noopener" style="--tool-color:#FF4713">
-        <div class="tool-icon"><img src="https://cdn.simpleicons.org/houdini/FF4713" alt="Houdini"></div>
-        <div class="tool-name">Houdini</div>
-        <div class="tool-role" data-en="Procedural terrain generation & destruction FX" data-fr="Génération procédurale de terrains & FX">Procedural terrain generation & destruction FX</div>
-      </a>
-
-      <a class="tool-card" href="https://quadspinner.com" target="_blank" rel="noopener" style="--tool-color:#7DB356">
-        <div class="tool-icon"><img src="img/logo-gaea2.png" alt="Gaea 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="5" fill="rgba(125,179,86,0.15)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="11" fill="#7DB356">G2</text></svg>
-        </div>
-        <div class="tool-name">Gaea 2</div>
-        <div class="tool-role" data-en="Heightmap sculpting & terrain erosion simulation" data-fr="Sculpture de heightmaps & simulation d'érosion">Heightmap sculpting & terrain erosion simulation</div>
-      </a>
-
-      <a class="tool-card" href="https://www.adobe.com/products/substance3d-painter.html" target="_blank" rel="noopener" style="--tool-color:#FF9A00">
-        <div class="tool-icon"><img src="img/logo-substance-painter.png" alt="Substance Painter" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <svg width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="5" fill="rgba(255,154,0,0.15)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="9" fill="#FF9A00">SP</text></svg>
-        </div>
-        <div class="tool-name">Substance Painter</div>
-        <div class="tool-role" data-en="PBR texture painting & material authoring" data-fr="Peinture de textures PBR & création de matériaux">PBR texture painting & material authoring</div>
-      </a>
-
-      <a class="tool-card" href="https://www.adobe.com/products/substance3d-designer.html" target="_blank" rel="noopener" style="--tool-color:#E05A00">
-        <div class="tool-icon"><img src="img/logo-substance-designer.png" alt="Substance Designer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <svg width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="5" fill="rgba(224,90,0,0.15)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="9" fill="#E05A00">SD</text></svg>
-        </div>
-        <div class="tool-name">Substance Designer</div>
-        <div class="tool-role" data-en="Procedural material creation & tileable textures" data-fr="Création de matériaux procéduraux & textures tileable">Procedural material creation & tileable textures</div>
-      </a>
-
-      <a class="tool-card" href="https://www.adobe.com/products/substance3d-sampler.html" target="_blank" rel="noopener" style="--tool-color:#FFB300">
-        <div class="tool-icon"><img src="img/logo-substance-sampler.png" alt="Substance Sampler" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <svg width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="5" fill="rgba(255,179,0,0.15)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="9" fill="#FFB300">SS</text></svg>
-        </div>
-        <div class="tool-name">Substance Sampler</div>
-        <div class="tool-role" data-en="Real-world surface capture & material scanning" data-fr="Capture de surfaces réelles & scan de matériaux">Real-world surface capture & material scanning</div>
-      </a>
-
-      <a class="tool-card" href="https://marmoset.co/toolbag/" target="_blank" rel="noopener" style="--tool-color:#5B9BD5">
-        <div class="tool-icon"><img src="img/logo-marmoset.png" alt="Marmoset Toolbag" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="5" fill="rgba(91,155,213,0.15)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="9" fill="#5B9BD5">MT</text></svg>
-        </div>
-        <div class="tool-name">Marmoset Toolbag</div>
-        <div class="tool-role" data-en="High-quality real-time renders & portfolio shots" data-fr="Rendus temps réel haute qualité & visuels portfolio">High-quality real-time renders & portfolio shots</div>
-      </a>
-
+      <a class="tool-card" href="https://www.unrealengine.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-unreal.png" alt="Unreal Engine" onerror="this.src='https://cdn.simpleicons.org/unrealengine/ffffff'"></div><div class="tool-name">Unreal Engine 5</div><div class="tool-role">Primary scene assembly & lighting</div></a>
+      <a class="tool-card" href="https://unity.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-unity.png" alt="Unity" onerror="this.src='https://cdn.simpleicons.org/unity/ffffff'"></div><div class="tool-name">Unity</div><div class="tool-role">Cross-engine asset validation</div></a>
+      <a class="tool-card" href="https://www.sidefx.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-houdini.png" alt="Houdini" onerror="this.src='https://cdn.simpleicons.org/houdini/FF4713'"></div><div class="tool-name">Houdini</div><div class="tool-role">Procedural terrain & FX</div></a>
+      <a class="tool-card" href="https://quadspinner.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-gaea2.png" alt="Gaea 2" onerror="this.style.display='none'; this.nextElementSibling?.style.setProperty('display','flex')"><svg style="display:none" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="6" fill="rgba(125,179,86,0.2)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="11" fill="#7DB356">G2</text></svg></div><div class="tool-name">Gaea 2</div><div class="tool-role">Heightmap sculpting & erosion</div></a>
+      <a class="tool-card" href="https://www.adobe.com/products/substance3d-painter.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-painter.png" alt="Substance Painter" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3dpainter/FF9A00'"></div><div class="tool-name">Substance Painter</div><div class="tool-role">PBR texture painting</div></a>
+      <a class="tool-card" href="https://www.adobe.com/products/substance3d-designer.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-designer.png" alt="Substance Designer" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3ddesigner/E05A00'"></div><div class="tool-name">Substance Designer</div><div class="tool-role">Procedural materials</div></a>
+      <a class="tool-card" href="https://www.adobe.com/products/substance3d-sampler.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-sampler.png" alt="Substance Sampler" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3dsampler/FFB300'"></div><div class="tool-name">Substance Sampler</div><div class="tool-role">Material scanning</div></a>
+      <a class="tool-card" href="https://marmoset.co/toolbag/" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-marmoset.png" alt="Marmoset Toolbag" onerror="this.src='https://cdn.simpleicons.org/marmoset/5B9BD5'"></div><div class="tool-name">Marmoset Toolbag</div><div class="tool-role">High-quality real-time renders</div></a>
     </div>
   </div>
 </section>
 
-<!-- ── CONNECT ── -->
-<section class="connect-section">
+<!-- SOCIALS -->
+<section class="connect-section" id="socials">
   <div class="wrap">
-    <div class="sec-label" data-en="Find me online" data-fr="Me retrouver en ligne">Find me online</div>
+    <div class="sec-label" data-en="Digital presence" data-fr="Présence digitale">Digital presence</div>
     <div class="socials-grid">
-
-      <a class="social-card" href="https://www.artstation.com/andreibobe" target="_blank" rel="noopener">
-        <div class="social-icon"><img src="https://cdn.simpleicons.org/artstation/C9A84C" alt="ArtStation"></div>
-        <div class="social-info">
-          <span class="social-name">ArtStation</span>
-          <span class="social-handle">@andreibobe</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.youtube.com/@Kalysteon" target="_blank" rel="noopener">
-        <div class="social-icon"><img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube"></div>
-        <div class="social-info">
-          <span class="social-name">YouTube</span>
-          <span class="social-handle">@Kalysteon</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.instagram.com/kalysteon/" target="_blank" rel="noopener">
-        <div class="social-icon"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram"></div>
-        <div class="social-info">
-          <span class="social-name">Instagram</span>
-          <span class="social-handle">@kalysteon</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.tiktok.com/@kalysteon" target="_blank" rel="noopener">
-        <div class="social-icon"><img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok"></div>
-        <div class="social-info">
-          <span class="social-name">TikTok</span>
-          <span class="social-handle">@kalysteon</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.linkedin.com/in/andreibobe/" target="_blank" rel="noopener">
-        <div class="social-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </div>
-        <div class="social-info">
-          <span class="social-name">LinkedIn</span>
-          <span class="social-handle">Andrei Bobe</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://x.com/Kalysteon" target="_blank" rel="noopener">
-        <div class="social-icon"><img src="https://cdn.simpleicons.org/x/ffffff" alt="X"></div>
-        <div class="social-info">
-          <span class="social-name">X / Twitter</span>
-          <span class="social-handle">@Kalysteon</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.facebook.com/profile.php?id=61563883627493" target="_blank" rel="noopener">
-        <div class="social-icon"><img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook"></div>
-        <div class="social-info">
-          <span class="social-name">Facebook</span>
-          <span class="social-handle">Kalysteon</span>
-        </div>
-      </a>
-
-      <a class="social-card" href="https://www.fab.com/sellers/Kalysteon" target="_blank" rel="noopener">
-        <div class="social-icon">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="4" fill="rgba(0,180,160,0.15)"/><text x="11" y="15" text-anchor="middle" font-family="monospace" font-weight="700" font-size="9" fill="#00B4A0">FAB</text></svg>
-        </div>
-        <div class="social-info">
-          <span class="social-name">Fab</span>
-          <span class="social-handle">Kalysteon</span>
-        </div>
-      </a>
-
+      <a class="social-card" href="https://www.artstation.com/andreibobe" target="_blank" rel="noopener"><div class="social-icon"><img src="https://cdn.simpleicons.org/artstation/C9A84C" alt="ArtStation"></div><div class="social-info"><span class="social-name">ArtStation</span><span class="social-handle">@andreibobe</span></div></a>
+      <a class="social-card" href="https://www.youtube.com/@Kalysteon" target="_blank" rel="noopener"><div class="social-icon"><img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube"></div><div class="social-info"><span class="social-name">YouTube</span><span class="social-handle">@Kalysteon</span></div></a>
+      <a class="social-card" href="https://www.instagram.com/kalysteon/" target="_blank" rel="noopener"><div class="social-icon"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram"></div><div class="social-info"><span class="social-name">Instagram</span><span class="social-handle">@kalysteon</span></div></a>
+      <a class="social-card" href="https://www.tiktok.com/@kalysteon" target="_blank" rel="noopener"><div class="social-icon"><img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok"></div><div class="social-info"><span class="social-name">TikTok</span><span class="social-handle">@kalysteon</span></div></a>
+      <a class="social-card" href="https://www.linkedin.com/in/andreibobe/" target="_blank" rel="noopener"><div class="social-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><div class="social-info"><span class="social-name">LinkedIn</span><span class="social-handle">Andrei Bobe</span></div></a>
+      <a class="social-card" href="https://x.com/Kalysteon" target="_blank" rel="noopener"><div class="social-icon"><img src="https://cdn.simpleicons.org/x/ffffff" alt="X"></div><div class="social-info"><span class="social-name">X / Twitter</span><span class="social-handle">@Kalysteon</span></div></a>
+      <a class="social-card" href="https://www.facebook.com/profile.php?id=61563883627493" target="_blank" rel="noopener"><div class="social-icon"><img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook"></div><div class="social-info"><span class="social-name">Facebook</span><span class="social-handle">Kalysteon</span></div></a>
+      <a class="social-card" href="https://www.fab.com/sellers/Kalysteon" target="_blank" rel="noopener"><div class="social-icon"><svg width="22" height="22" viewBox="0 0 22 22"><rect width="22" height="22" rx="4" fill="rgba(0,180,160,0.15)"/><text x="11" y="15" text-anchor="middle" font-family="monospace" font-weight="700" font-size="9" fill="#00B4A0">FAB</text></svg></div><div class="social-info"><span class="social-name">Fab</span><span class="social-handle">Kalysteon</span></div></a>
     </div>
   </div>
 </section>
 
-<!-- ── CONTACT ── -->
-<section class="contact-section">
+<!-- CONTACT avec newsletter intégrée à droite -->
+<section class="contact-section" id="contact">
   <div class="wrap">
-    <div class="sec-label" data-en="Get in touch" data-fr="Me contacter">Get in touch</div>
+    <div class="sec-label" data-en="Reach out" data-fr="Contactez-moi">Reach out</div>
     <div class="contact-grid">
-
+      <!-- Carte gauche : contact direct -->
       <div class="contact-card">
         <div class="contact-card-label" data-en="Direct contact" data-fr="Contact direct">Direct contact</div>
         <div class="contact-card-title" data-en="HAVE A PROJECT?" data-fr="UN PROJET ?">HAVE A PROJECT?</div>
         <p class="contact-card-desc" data-en="Commission inquiries, collaboration proposals, licensing questions or anything else. If it's environment art related, I'm interested." data-fr="Demandes de commission, propositions de collaboration, questions de licence ou autre chose. Si c'est lié à l'art environnemental, je suis preneur.">Commission inquiries, collaboration proposals, licensing questions or anything else. If it's environment art related, I'm interested.</p>
         <a class="btn-contact" href="mailto:contact@kalysteon.com">contact@kalysteon.com ↗</a>
       </div>
-
+      <!-- Carte droite : newsletter (identique au style de gauche) -->
       <div class="contact-card">
-        <div class="contact-card-label" data-en="Stay updated" data-fr="Rester informé">Stay updated</div>
+        <div class="contact-card-label" data-en="Stay updated" data-fr="Restez informé">Stay updated</div>
         <div class="contact-card-title" data-en="NEWSLETTER" data-fr="NEWSLETTER">NEWSLETTER</div>
-        <p class="contact-card-desc" data-en="New pack releases, behind-the-scenes breakdowns, workflow tips and occasional discounts. No spam, ever." data-fr="Nouvelles sorties, making-of, conseils workflow et remises occasionnelles. Aucun spam, jamais.">New pack releases, behind-the-scenes breakdowns, workflow tips and occasional discounts. No spam, ever.</p>
-        <div class="newsletter-badge">⏳ <span data-en="Coming soon" data-fr="Bientôt disponible">Coming soon</span></div>
+        <p class="contact-card-desc" data-en="New pack releases, behind‑the‑scenes breakdowns, workflow tips and exclusive discounts. No spam, ever." data-fr="Nouveautés, making‑of, conseils workflow et réductions exclusives. Aucun spam.">New pack releases, behind‑the‑scenes breakdowns, workflow tips and exclusive discounts. No spam, ever.</p>
+        <form class="newsletter-form" action="#" method="post">
+          <input type="email" class="newsletter-input" placeholder="your@email.com" required>
+          <button type="submit" class="newsletter-btn" data-en="Subscribe" data-fr="S'abonner">Subscribe</button>
+        </form>
+        <div class="newsletter-note" data-en="We respect your inbox. Unsubscribe anytime." data-fr="Nous respectons votre boîte mail. Désabonnez-vous à tout moment.">We respect your inbox. Unsubscribe anytime.</div>
       </div>
-
     </div>
   </div>
 </section>
 
-<footer>
+<footer id="footer">
   <span class="footer-copy">© 2026 Kalysteon — Andrei Bobe</span>
   <div class="footer-links">
     <a class="footer-link" href="https://www.fab.com/sellers/Kalysteon" target="_blank">Fab</a>
@@ -414,16 +795,63 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 </footer>
 
 <script>
+// Langue (EN par défaut)
 function setLang(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-en]').forEach(function(el) {
     var txt = el.getAttribute('data-' + lang);
     if (txt) el.innerHTML = txt;
   });
-  document.querySelectorAll('.lang-btn').forEach(function(b){
-    b.classList.toggle('active', b.id === 'lang-btn-' + lang);
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.id === 'lang-btn-' + lang);
   });
 }
+setLang('en');
+
+// PARTICULES DORÉES
+(function() {
+  var canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [], w, h;
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  for (var i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.3 + 0.4,
+      vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18,
+      a: Math.random() * 0.45 + 0.15, da: (Math.random() > 0.5 ? 1 : -1) * 0.0025
+    });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (var p of particles) {
+      p.x += p.vx; p.y += p.vy; p.a += p.da;
+      if (p.a < 0.08) p.da = Math.abs(p.da);
+      if (p.a > 0.5) p.da = -Math.abs(p.da);
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(212, 175, 55, ' + p.a.toFixed(3) + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// INTERSECTION OBSERVER
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+document.querySelectorAll('.about-hero, section, footer').forEach(el => observer.observe(el));
+document.getElementById('hero')?.classList.add('visible');
 </script>
 </body>
 </html>
