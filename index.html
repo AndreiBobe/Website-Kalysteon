@@ -44,13 +44,14 @@ body {
   overflow-x: hidden;
 }
 
-/* VIDEO DE FOND (YOUTUBE) PLEIN ÉCRAN - ZOOM PLUS FORT */
+/* VIDEO DE FOND (YOUTUBE) AVEC FONDU */
 .bg-video {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  /* Le conteneur lui-même reste opaque, on applique le fondu sur l'iframe */
 }
 .bg-video iframe {
   position: absolute;
@@ -60,8 +61,14 @@ body {
   min-height: 100%;
   width: auto;
   height: auto;
-  transform: translate(-50%, -50%) scale(1.4); /* zoom plus important */
+  transform: translate(-50%, -50%) scale(1.4);
   pointer-events: none;
+  opacity: 0;
+  animation: videoFadeIn 2.5s ease-out 0.3s forwards;
+}
+@keyframes videoFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 .bg-video::after {
   content: '';
@@ -506,6 +513,10 @@ footer {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes videoFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 @media (max-width: 780px) {
   header { padding: 1rem 1.5rem; }
@@ -526,8 +537,8 @@ footer {
 
 <canvas id="particle-canvas"></canvas>
 <div class="bg-video">
-  <!-- Vidéo YouTube en fond, zoomée, démarrage à 60 secondes -->
-  <iframe src="https://www.youtube.com/embed/DBV3C_E1NxE?autoplay=1&mute=1&loop=1&playlist=DBV3C_E1NxE&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&enablejsapi=1&start=60" 
+  <!-- Nouvelle vidéo YouTube : Frosthölm Glaciers Showcase, démarrage à 1:51 (111 secondes) -->
+  <iframe src="https://www.youtube.com/embed/PkkmyndfI2Y?autoplay=1&mute=1&loop=1&playlist=PkkmyndfI2Y&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&enablejsapi=1&start=111" 
           frameborder="0" 
           allow="autoplay; encrypted-media" 
           allowfullscreen>
