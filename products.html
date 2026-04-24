@@ -6,8 +6,11 @@
 <title>Kalysteon — Environment Packs</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
+@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes rotateBorder { to { --angle: 360deg; } }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg: #010810; --surface: #051322; --surface2: #091B32; --surface3: #0E2240;
@@ -30,17 +33,17 @@ body {
 }
 
 /* HEADER */
-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
-.logo { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
+.logo { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text); text-decoration: none; }
 .logo span { color: var(--accent); }
 .header-right { display: flex; align-items: center; gap: 1.5rem; }
-.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.28); border-radius: 20px; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.05); }
-.lang-btn { background: none; border: none; color: var(--text-dim); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; cursor: pointer; padding: 0.15rem 0.3rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
 .lang-btn.active { color: var(--accent); }
-.lang-sep { color: var(--text-dim); font-size: 0.6rem; }
-.header-nav { display: flex; align-items: center; gap: 0.25rem; position: absolute; left: 50%; transform: translateX(-50%); }
-.nav-link { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 20px; transition: all 0.18s; }
-.nav-link:hover { color: var(--text); background: rgba(201,168,76,0.07); }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
+.header-nav { display: flex; align-items: center; gap: 0.5rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.02em; color: var(--text-muted); text-decoration: none; padding: 0.4rem 0.75rem; border-radius: 20px; transition: color 0.2s, background 0.2s; }
+.nav-link:hover { color: var(--gold-bright); background: rgba(201,168,76,0.08); }
 .nav-link.active { color: var(--gold-bright); background: rgba(201,168,76,0.10); }
 @media (max-width: 768px) { .header-nav { display: none; } }
 
@@ -74,43 +77,51 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .filter-pill.active[data-filter="cartoon"]   { color: #A87AF0; background: rgba(168,122,240,0.09); border-color: rgba(168,122,240,0.4); }
 .filter-pill.active[data-filter="retro"]     { color: #F0D060; background: rgba(240,208,96,0.09); border-color: rgba(240,208,96,0.4); }
 
-/* COLLECTION PICKER */
 /* SLOGAN */
-.coll-slogan { font-family: var(--display); font-size: clamp(0.95rem, 1.6vw, 1.3rem); letter-spacing: 0.16em; text-align: center; padding: 1.5rem 0 0.1rem; background: linear-gradient(90deg, #C9A84C 0%, #F2D777 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.coll-slogan { font-family: var(--display); font-size: clamp(0.95rem, 1.6vw, 1.3rem); letter-spacing: 0.16em; text-align: center; padding: 1.5rem 0 1.5rem; background: linear-gradient(90deg, #C9A84C 0%, #F2D777 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-.coll-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.25rem 0 1rem; max-width: 1060px; margin: 0 auto; }
-.coll-card { position: relative; border-radius: 18px; overflow: hidden; cursor: pointer; border: 1px solid transparent; background: var(--surface2) center/cover no-repeat; transition: transform 0.28s, border-color 0.28s, box-shadow 0.28s; }
-.coll-card--featured { grid-column: 1 / -1; min-height: 295px; }
-#coll-card-frostholm { background-position: center 18%; }
-#coll-card-8k, #coll-card-arctic { aspect-ratio: 1 / 1; }
-.coll-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,8,20,0.97) 0%, rgba(4,12,28,0.60) 38%, rgba(4,10,22,0.08) 100%); }
+/* FEATURED COLLECTION */
+.featured-collection { position: relative; border-radius: 32px; overflow: hidden; cursor: pointer; transition: transform 0.35s, box-shadow 0.35s; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5); margin-bottom: 1.5rem; }
+.featured-collection:hover { transform: translateY(-6px); box-shadow: 0 30px 50px -15px rgba(0,0,0,0.6); }
+.featured-bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transition: transform 0.5s; }
+.featured-collection:hover .featured-bg { transform: scale(1.03); }
+.featured-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(1,8,16,0.88) 0%, rgba(5,19,34,0.75) 50%, rgba(1,8,16,0.92) 100%); z-index: 1; }
+.featured-content { position: relative; z-index: 2; padding: 3rem; display: flex; flex-direction: column; gap: 0.9rem; max-width: 62%; }
+.featured-badge { display: inline-block; background: linear-gradient(135deg, var(--gold-dark), var(--gold-bright)); color: #010810; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; padding: 0.25rem 0.8rem; border-radius: 30px; width: fit-content; text-transform: uppercase; font-weight: 700; }
+.featured-title { font-family: var(--display); font-size: clamp(2.8rem, 5vw, 4rem); letter-spacing: 0.04em; color: var(--text); line-height: 1; }
+.featured-sub { font-family: var(--mono); font-size: 0.75rem; color: var(--gold-bright); letter-spacing: 0.12em; text-transform: uppercase; }
+.featured-desc { font-family: var(--sans); font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; max-width: 480px; }
+.featured-tech { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.tech-chip { font-family: var(--mono); font-size: 0.65rem; background: rgba(201,168,76,0.12); border: 1px solid var(--border); padding: 0.25rem 0.7rem; border-radius: 40px; color: var(--gold-bright); }
+.featured-stats { display: flex; gap: 1.5rem; }
+.stat-chip { font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); }
+.stat-chip strong { color: var(--gold-bright); font-weight: 600; }
+.featured-cta { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-bright); border-bottom: 1px solid currentColor; width: fit-content; padding-bottom: 0.2rem; transition: gap 0.2s; }
+.featured-collection:hover .featured-cta { gap: 0.8rem; }
 
-/* ── Frostholm : warm gold glow ── */
-.coll-card--featured { border-color: rgba(201,168,76,0.55); box-shadow: 0 0 0 1px rgba(201,168,76,0.22), 0 0 28px rgba(201,168,76,0.45), 0 0 70px rgba(201,168,76,0.20), 0 10px 38px rgba(0,0,0,0.65); }
-.coll-card--featured:hover { transform: translateY(-7px) scale(1.016); border-color: rgba(230,195,100,0.85); box-shadow: 0 0 0 1px rgba(230,195,100,0.40), 0 0 45px rgba(201,168,76,0.65), 0 0 100px rgba(201,168,76,0.32), 0 22px 60px rgba(0,0,0,0.75); }
-.coll-card--featured .coll-card-overlay { background: linear-gradient(to top, rgba(14,8,2,0.97) 0%, rgba(20,13,3,0.58) 40%, rgba(8,10,20,0.05) 100%); }
-.coll-card--featured .coll-card-name { background: linear-gradient(90deg, #e8d08a 0%, var(--gold-bright) 50%, #c9a84c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-/* Flagship badge */
-.coll-flagship-badge { position: absolute; top: 1.1rem; right: 1.1rem; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.07)); border: 1px solid rgba(201,168,76,0.55); color: var(--gold); padding: 0.25rem 0.65rem; border-radius: 20px; backdrop-filter: blur(4px); }
+/* COLLECTIONS GRID (2 cartes) */
+.collections-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+.collection-card { position: relative; border-radius: 28px; overflow: hidden; cursor: pointer; background-size: cover; background-position: center; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4); }
+.collection-card:hover { transform: translateY(-5px); box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5); }
+.collection-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,6,15,0.92) 0%, rgba(1,6,15,0.52) 60%, rgba(0,0,0,0.18) 100%); z-index: 1; }
+.collection-content { position: relative; z-index: 2; padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end; min-height: 280px; }
+.collection-title { font-family: var(--display); font-size: 2rem; letter-spacing: 0.04em; color: white; line-height: 1; }
+.collection-desc { font-family: var(--mono); font-size: 0.7rem; color: rgba(255,255,255,0.68); margin: 0.5rem 0; max-width: 82%; line-height: 1.55; }
+.collection-pack-count { font-family: var(--mono); font-size: 0.68rem; color: var(--gold-bright); letter-spacing: 0.1em; margin: 0.5rem 0 0; }
+.collection-cta { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--gold-bright); text-transform: uppercase; margin-top: 0.5rem; display: inline-flex; align-items: center; gap: 0.3rem; transition: gap 0.2s; }
+.collection-card:hover .collection-cta { gap: 0.6rem; }
 
-/* ── 8K Terrain : spectral multi-biome glow ── */
-#coll-card-8k { border-color: rgba(255,145,55,0.45); box-shadow: 0 0 22px rgba(255,90,30,0.30), 0 0 45px rgba(55,175,255,0.22), 0 0 70px rgba(70,220,130,0.16), 0 10px 38px rgba(0,0,0,0.65); }
-#coll-card-8k:hover { transform: translateY(-7px) scale(1.016); border-color: rgba(255,175,80,0.75); box-shadow: 0 0 35px rgba(255,90,30,0.50), 0 0 65px rgba(55,175,255,0.38), 0 0 95px rgba(70,220,130,0.28), 0 22px 60px rgba(0,0,0,0.75); }
-
-/* ── Arctic Landscapes : sky blue silver glow ── */
-#coll-card-arctic { border-color: rgba(100,190,255,0.50); box-shadow: 0 0 0 1px rgba(100,190,255,0.18), 0 0 28px rgba(100,190,255,0.40), 0 0 70px rgba(160,215,255,0.20), 0 10px 38px rgba(0,0,0,0.65); }
-#coll-card-arctic:hover { transform: translateY(-7px) scale(1.016); border-color: rgba(140,210,255,0.85); box-shadow: 0 0 0 1px rgba(140,210,255,0.38), 0 0 45px rgba(100,190,255,0.60), 0 0 100px rgba(160,215,255,0.32), 0 22px 60px rgba(0,0,0,0.75); }
-#coll-card-arctic .coll-card-overlay { background: linear-gradient(to top, rgba(2,8,22,0.97) 0%, rgba(4,14,32,0.60) 38%, rgba(4,12,24,0.06) 100%); }
-#coll-card-arctic .coll-card-count { color: rgba(140,210,255,0.90); }
-#coll-card-arctic .coll-card-cta { color: rgba(140,210,255,0.85); border-bottom-color: rgba(100,190,255,0.35); }
-/* Body & text */
-.coll-card-body { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.8rem 2rem; }
-.coll-card-count { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.4rem; opacity: 0.85; }
-.coll-card-name { font-family: var(--display); font-size: 2.6rem; font-weight: 900; letter-spacing: -0.01em; color: #fff; line-height: 1; margin-bottom: 0.55rem; text-transform: uppercase; }
-.coll-card-sub { font-family: var(--mono); font-size: 0.58rem; color: rgba(255,255,255,0.42); letter-spacing: 0.09em; margin-bottom: 1.2rem; line-height: 1.65; }
-.coll-card-cta { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-bright); border-bottom: 1px solid rgba(201,168,76,0.4); display: inline-block; padding-bottom: 0.15rem; transition: color 0.15s, border-color 0.15s; }
-.coll-card:hover .coll-card-cta { color: #fff; border-color: rgba(255,255,255,0.45); }
-@media (max-width: 768px) { .coll-picker { grid-template-columns: 1fr; gap: 1rem; } .coll-card--featured { min-height: 260px; } #coll-card-8k, #coll-card-arctic { aspect-ratio: unset; min-height: 240px; } .coll-card-name { font-size: 2rem; } }
+/* COMING SOON */
+.coming-soon-section { border-top: 1px solid var(--border-mid); padding-top: 3rem; margin-bottom: 2rem; }
+.soon-heading { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text); text-align: center; margin-bottom: 1.5rem; }
+.soon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.soon-card { background: rgba(9,27,50,0.55); backdrop-filter: blur(8px); border: 1px solid var(--border-mid); border-radius: 28px; padding: 2rem; transition: transform 0.2s, border-color 0.2s; }
+.soon-card:hover { transform: translateY(-4px); border-color: var(--border); }
+.soon-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
+.soon-title { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.04em; color: var(--text); line-height: 1.1; }
+.soon-desc { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); margin: 0.8rem 0; line-height: 1.6; }
+.soon-badge { display: inline-block; background: rgba(201,168,76,0.12); border: 1px solid var(--border); font-family: var(--mono); font-size: 0.6rem; padding: 0.2rem 0.7rem; border-radius: 30px; color: var(--gold-bright); margin-top: 0.5rem; }
+@media (max-width: 768px) { .featured-content { max-width: 100%; padding: 1.5rem; } .collections-grid { grid-template-columns: 1fr; } .soon-grid { grid-template-columns: 1fr; } }
 
 /* BACK BUTTON */
 .coll-back { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; background: none; border: 1px solid var(--border-mid); color: var(--text-muted); padding: 0.5rem 1.1rem; border-radius: var(--radius-xs); cursor: pointer; margin-bottom: 1.6rem; transition: color 0.15s, border-color 0.15s, background 0.15s; display: inline-block; }
@@ -318,6 +329,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     <a class="nav-link active" href="products.html" data-en="Products" data-fr="Produits">Products</a>
     <a class="nav-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
     <a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a>
+    <a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a>
   </nav>
   <div class="header-right">
     <div class="lang-toggle">
@@ -343,35 +355,72 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   <div class="coll-slogan" data-en="Choose the sight of your world." data-fr="Choisissez le visage de votre monde.">Choose the sight of your world.</div>
 
   <!-- ══ COLLECTION PICKER ══ -->
-  <div class="coll-picker" id="coll-picker">
-    <div class="coll-card coll-card--featured" id="coll-card-frostholm" data-bg="img/collections/frostholm-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/2e69c18f-e70c-4d7e-a60c-d07f7f04cbbe/72da04d4-51e7-4571-a625-2eeb4b1fe45b.jpg" onclick="openCollection('frostholm')">
-      <div class="coll-flagship-badge">★ Flagship</div>
-      <div class="coll-card-overlay"></div>
-      <div class="coll-card-body">
-        <div class="coll-card-count">16 packs</div>
-        <div class="coll-card-name">Frosth&#246;lm</div>
-        <div class="coll-card-sub" data-en="A complete glacial fantasy universe spanning four biomes and four art styles. Everything you need to craft your frozen world." data-fr="Un univers glacial fantastique couvrant quatre biomes et quatre styles artistiques. Tout ce qu'il vous faut pour construire votre monde gelé.">A complete glacial fantasy universe spanning four biomes and four art styles. Everything you need to craft your frozen world.</div>
-        <div class="coll-card-cta" data-en="Explore ↗" data-fr="Explorer ↗">Explore ↗</div>
+  <div id="coll-picker">
+
+    <!-- Carte signature : Frostholm -->
+    <div class="featured-collection" id="coll-card-frostholm" data-bg="img/collections/frostholm-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/2e69c18f-e70c-4d7e-a60c-d07f7f04cbbe/72da04d4-51e7-4571-a625-2eeb4b1fe45b.jpg" onclick="openCollection('frostholm')">
+      <div class="featured-bg"></div>
+      <div class="featured-overlay"></div>
+      <div class="featured-content">
+        <div class="featured-badge">★ Flagship Edition</div>
+        <div class="featured-title">FROSTH&#214;LM</div>
+        <div class="featured-sub">NORTH WILDERNESS · VOL. 1</div>
+        <div class="featured-desc" data-en="A complete glacial fantasy universe spanning four biomes and four art styles. 16 packs, 4K textures, Nanite-ready for Unreal 5 & Unity HDRP." data-fr="Un univers glacial fantastique couvrant quatre biomes et quatre styles artistiques. 16 packs, textures 4K, Nanite-ready pour Unreal 5 & Unity HDRP.">A complete glacial fantasy universe spanning four biomes and four art styles. 16 packs, 4K textures, Nanite-ready for Unreal 5 &amp; Unity HDRP.</div>
+        <div class="featured-tech">
+          <span class="tech-chip">UNREAL 5</span>
+          <span class="tech-chip">UNITY HDRP</span>
+          <span class="tech-chip">NANITE READY</span>
+        </div>
+        <div class="featured-stats">
+          <span class="stat-chip"><strong>4K TEXTURES</strong></span>
+          <span class="stat-chip"><strong>16 PACKS</strong></span>
+          <span class="stat-chip"><strong>4 BIOMES</strong></span>
+        </div>
+        <div class="featured-cta" data-en="Explore collection →" data-fr="Explorer la collection →">Explore collection →</div>
       </div>
     </div>
-    <div class="coll-card" id="coll-card-8k" data-bg="img/collections/8k-terrain-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" onclick="openCollection('8k')">
-      <div class="coll-card-overlay"></div>
-      <div class="coll-card-body">
-        <div class="coll-card-count">21 packs</div>
-        <div class="coll-card-name">8K Terrain</div>
-        <div class="coll-card-sub" data-en="Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like there is a terrain for it." data-fr="Vingt et un environnements 8K chacun construit autour d'un biome distinct. Quel que soit votre univers il y a un terrain pour ça.">Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like there is a terrain for it.</div>
-        <div class="coll-card-cta" data-en="Explore ↗" data-fr="Explorer ↗">Explore ↗</div>
+
+    <!-- Grille des deux autres collections -->
+    <div class="collections-grid">
+      <div class="collection-card" id="coll-card-8k" data-bg="img/collections/8k-terrain-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg" onclick="openCollection('8k')">
+        <div class="collection-overlay"></div>
+        <div class="collection-content">
+          <div class="collection-title">8K TERRAIN</div>
+          <div class="collection-desc" data-en="Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like, there is a terrain for it." data-fr="Vingt et un environnements 8K chacun construit autour d'un biome distinct. Quel que soit votre univers, il y a un terrain pour ça.">Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like, there is a terrain for it.</div>
+          <div class="collection-pack-count">21 PACKS · €34.99+</div>
+          <div class="collection-cta" data-en="Discover →" data-fr="Découvrir →">Discover →</div>
+        </div>
+      </div>
+      <div class="collection-card" id="coll-card-arctic" data-bg="img/collections/arctic-landscapes-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg" onclick="openCollection('arctic')">
+        <div class="collection-overlay"></div>
+        <div class="collection-content">
+          <div class="collection-title">ARCTIC LANDSCAPES</div>
+          <div class="collection-desc" data-en="The original Arctic landscape fully rebuilt for modern engines — five art directions optimized for UE5 and Unity." data-fr="Le paysage Arctique original entièrement reconstruit — cinq directions artistiques optimisées pour UE5 et Unity.">The original Arctic landscape fully rebuilt for modern engines — five art directions optimized for UE5 and Unity.</div>
+          <div class="collection-pack-count">5 PACKS · €29.99+</div>
+          <div class="collection-cta" data-en="Discover →" data-fr="Découvrir →">Discover →</div>
+        </div>
       </div>
     </div>
-    <div class="coll-card" id="coll-card-arctic" data-bg="img/collections/arctic-landscapes-collection.jpg" data-bg-fallback="https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg" onclick="openCollection('arctic')">
-      <div class="coll-card-overlay"></div>
-      <div class="coll-card-body">
-        <div class="coll-card-count">5 packs</div>
-        <div class="coll-card-name">Arctic Landscapes</div>
-        <div class="coll-card-sub" data-en="The original Arctic landscape fully rebuilt for modern engines and now available in five distinct art directions optimized for UE5 and Unity." data-fr="Le paysage Arctique original entièrement reconstruit pour les moteurs modernes et désormais disponible en cinq directions artistiques optimisées pour UE5 et Unity.">The original Arctic landscape fully rebuilt for modern engines and now available in five distinct art directions optimized for UE5 and Unity.</div>
-        <div class="coll-card-cta" data-en="Explore ↗" data-fr="Explorer ↗">Explore ↗</div>
+
+    <!-- Section Prochainement -->
+    <div class="coming-soon-section">
+      <div class="soon-heading" data-en="COMING SOON" data-fr="PROCHAINEMENT">COMING SOON</div>
+      <div class="soon-grid">
+        <div class="soon-card">
+          <div class="soon-label" data-en="Procedural tools" data-fr="Outils procéduraux">Procedural tools</div>
+          <div class="soon-title" data-en="GENERATORS" data-fr="GÉNÉRATEURS">GENERATORS</div>
+          <div class="soon-desc" data-en="Houdini &amp; Blender tools for custom terrain and biome generation. Create infinite variations with node-based workflows." data-fr="Outils Houdini &amp; Blender pour la génération de terrains et de biomes sur mesure. Créez des variations infinies avec des workflows nodaux.">Houdini &amp; Blender tools for custom terrain and biome generation. Create infinite variations with node-based workflows.</div>
+          <div class="soon-badge" data-en="2 categories" data-fr="2 catégories">2 categories</div>
+        </div>
+        <div class="soon-card">
+          <div class="soon-label" data-en="Technical assets" data-fr="Actifs techniques">Technical assets</div>
+          <div class="soon-title" data-en="TECH KITS" data-fr="KITS TECHNIQUES">TECH KITS</div>
+          <div class="soon-desc" data-en="Optimized shaders, bluescreen systems and pipeline tools for Unreal Engine 5. Boost your production workflow." data-fr="Shaders optimisés, systèmes de bluescreen et outils de pipeline pour Unreal Engine 5. Boostez votre workflow de production.">Optimized shaders, bluescreen systems and pipeline tools for Unreal Engine 5. Boost your production workflow.</div>
+          <div class="soon-badge" data-en="Unreal 5 only" data-fr="Unreal 5 uniquement">Unreal 5 only</div>
+        </div>
       </div>
     </div>
+
   </div>
 
   <!-- ══ STORE INNER (hidden until collection selected) ══ -->
@@ -1008,10 +1057,13 @@ var _filter = 'all';
     if (!bg) return;
     // Try local image; if it fails (404), fall back to CDN URL
     var img = new Image();
-    img.onload = function() { card.style.backgroundImage = 'url(' + bg + ')'; };
+    img.onload = function() {
+      var t = card.querySelector('.featured-bg') || card;
+      t.style.backgroundImage = 'url(' + bg + ')';
+    };
     img.onerror = function() {
       var src = fallback || (PRODUCTS.find(function(p){ return p.col === col; }) || {}).th;
-      if (src) card.style.backgroundImage = 'url(' + src + ')';
+      if (src) { var t = card.querySelector('.featured-bg') || card; t.style.backgroundImage = 'url(' + src + ')'; }
     };
     img.src = bg;
   });

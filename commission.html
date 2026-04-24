@@ -6,7 +6,7 @@
 <title>Kalysteon</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -30,20 +30,20 @@ body {
 }
 
 /* HEADER */
-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
-.logo { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.12em; color: var(--text); text-decoration: none; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
+.logo { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text); text-decoration: none; }
 .logo span { color: var(--accent); }
 .header-right { display: flex; align-items: center; gap: 1.5rem; }
 .header-tag { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
-.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.28); border-radius: 20px; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.05); }
-.lang-btn { background: none; border: none; color: var(--text-dim); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; cursor: pointer; padding: 0.15rem 0.3rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
 .lang-btn.active { color: var(--accent); }
-.lang-sep { color: var(--text-dim); font-size: 0.6rem; }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
 
 /* NAV */
-.header-nav { display: flex; align-items: center; gap: 0.25rem; position: absolute; left: 50%; transform: translateX(-50%); }
-.nav-link { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 20px; transition: all 0.18s; cursor: pointer; background: none; border: none; }
-.nav-link:hover { color: var(--text); background: rgba(201,168,76,0.07); }
+.header-nav { display: flex; align-items: center; gap: 0.5rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.02em; color: var(--text-muted); text-decoration: none; padding: 0.4rem 0.75rem; border-radius: 20px; transition: color 0.2s, background 0.2s; cursor: pointer; background: none; border: none; }
+.nav-link:hover { color: var(--gold-bright); background: rgba(201,168,76,0.08); }
 .nav-dropdown { position: relative; }
 .nav-dropdown-btn { display: flex; align-items: center; gap: 0.35rem; }
 .nav-dropdown-btn::after { content: '▾'; font-size: 0.55rem; opacity: 0.6; }
@@ -415,6 +415,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
     <a class="nav-link" href="products.html" data-en="Products" data-fr="Produits">Products</a>
     <a class="nav-link active" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
     <a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a>
+    <a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a>
   </nav>
 
   <div class="header-right">

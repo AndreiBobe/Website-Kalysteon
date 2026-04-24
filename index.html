@@ -24,10 +24,10 @@
   --text-light: #F5F0E6;
   --text-muted: #D0D9F0;
   --text-dim: #9BB0D0;
-  --card-bg: rgba(8, 18, 30, 0.65);
+  --card-bg: rgba(5, 14, 40, 0.65);
   --card-border: rgba(212, 175, 55, 0.4);
   --card-border-hover: rgba(245, 215, 110, 0.8);
-  --testimonial-bg: rgba(8, 18, 30, 0.45);
+  --testimonial-bg: rgba(5, 14, 40, 0.45);
   --testimonial-border: rgba(212, 175, 55, 0.25);
   --transition-smooth: cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
@@ -89,15 +89,17 @@ body {
 }
 
 header {
-  position: relative;
-  z-index: 20;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.4rem 2.5rem;
-  border-bottom: 1px solid rgba(212,175,55,0.25);
-  background: rgba(1,6,15,0.3);
-  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(212,175,55,0.45);
+  background: linear-gradient(135deg, rgba(2,8,20,0.97) 0%, rgba(6,18,50,0.97) 40%, rgba(10,28,65,0.97) 65%, rgba(2,8,20,0.97) 100%);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 30px rgba(212,175,55,0.07), 0 4px 20px rgba(0,0,0,0.5);
   animation: fadeInDown 0.8s var(--transition-smooth) forwards;
 }
 .logo {
@@ -111,7 +113,10 @@ header {
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 1.8rem;
+  gap: 0.5rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .nav-link {
   font-family: 'Inter', sans-serif;
@@ -120,9 +125,11 @@ header {
   letter-spacing: 0.02em;
   color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
 }
-.nav-link:hover { color: var(--gold-bright); }
+.nav-link:hover { color: var(--gold-bright); background: rgba(212,175,55,0.08); }
 .lang-toggle {
   display: flex;
   align-items: center;
@@ -539,7 +546,7 @@ footer {
   <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
   <nav class="header-nav">
     <a class="nav-link" href="products.html" data-en="Products" data-fr="Produits">Products</a>
-    <a class="nav-link" href="commission.html" data-en="Commissions" data-fr="Commissions">Commissions</a>
+    <a class="nav-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
     <a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a>
     <a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a>
   </nav>
@@ -706,18 +713,37 @@ function createTestimonialCard(t) {
 const trackEl = document.getElementById('testimonialTrack');
 function buildTrack() {
   trackEl.innerHTML = '';
-  testimonialsRaw.forEach(t => {
-    trackEl.appendChild(createTestimonialCard(t));
-  });
+  testimonialsRaw.forEach(t => trackEl.appendChild(createTestimonialCard(t)));
+  // Duplicate for seamless infinite loop
+  testimonialsRaw.forEach(t => trackEl.appendChild(createTestimonialCard(t)));
 }
 buildTrack();
 
-// GESTION DU DRAG SCROLL (sans auto-scroll)
+// AUTO-SCROLL + DRAG
 const dragContainer = document.getElementById('testimonialDragContainer');
 if (dragContainer) {
   let isDown = false;
-  let startX;
-  let scrollLeftStart;
+  let isPaused = false;
+  let startX, scrollLeftStart;
+  const speed = 0.6; // px per frame
+
+  function getHalfWidth() {
+    return trackEl.scrollWidth / 2;
+  }
+
+  function autoScroll() {
+    if (!isDown && !isPaused) {
+      dragContainer.scrollLeft += speed;
+      if (dragContainer.scrollLeft >= getHalfWidth()) {
+        dragContainer.scrollLeft -= getHalfWidth();
+      }
+    }
+    requestAnimationFrame(autoScroll);
+  }
+  requestAnimationFrame(autoScroll);
+
+  dragContainer.addEventListener('mouseenter', () => { isPaused = true; });
+  dragContainer.addEventListener('mouseleave', () => { isPaused = false; isDown = false; dragContainer.style.cursor = 'grab'; });
 
   dragContainer.addEventListener('mousedown', (e) => {
     isDown = true;
@@ -726,22 +752,29 @@ if (dragContainer) {
     scrollLeftStart = dragContainer.scrollLeft;
     e.preventDefault();
   });
-  dragContainer.addEventListener('mouseleave', () => {
-    isDown = false;
-    dragContainer.style.cursor = 'grab';
-  });
-  dragContainer.addEventListener('mouseup', () => {
-    isDown = false;
-    dragContainer.style.cursor = 'grab';
-  });
+  dragContainer.addEventListener('mouseup', () => { isDown = false; dragContainer.style.cursor = 'grab'; });
   dragContainer.addEventListener('mousemove', (e) => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - dragContainer.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    dragContainer.scrollLeft = scrollLeftStart - walk;
+    dragContainer.scrollLeft = scrollLeftStart - (x - startX) * 1.5;
   });
   dragContainer.addEventListener('dragstart', (e) => e.preventDefault());
+
+  // Touch support
+  let touchStartX, touchScrollLeft;
+  dragContainer.addEventListener('touchstart', (e) => {
+    isPaused = true;
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = dragContainer.scrollLeft;
+  }, { passive: true });
+  dragContainer.addEventListener('touchend', () => { isPaused = false; });
+  dragContainer.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX;
+    dragContainer.scrollLeft = touchScrollLeft - (x - touchStartX) * 1.5;
+    if (dragContainer.scrollLeft >= getHalfWidth()) dragContainer.scrollLeft -= getHalfWidth();
+    if (dragContainer.scrollLeft < 0) dragContainer.scrollLeft += getHalfWidth();
+  }, { passive: true });
 }
 </script>
 </body>
