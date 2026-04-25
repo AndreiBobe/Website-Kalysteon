@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kalysteon</title>
-<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
-<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,6 +16,7 @@
   --accent: #C9A84C; --accent-bright: #F2D777;
   --accent-dim: rgba(201,168,76,0.09); --accent-glow: rgba(201,168,76,0.18);
   --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
+  --jade: #1DC97A; --jade-bright: #2FEDA0; --jade-dark: #0A8C48;
   --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px; --radius-xs: 6px;
   --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
   --display: 'Bebas Neue', sans-serif; --form-w: 780px; --panel-w: 270px;
@@ -71,10 +72,12 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .hero-sub { font-family: var(--mono); font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; max-width: 520px; }
 .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
 .tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-muted); border: 1px solid var(--border); padding: 0.3rem 0.65rem; border-radius: 2px; text-transform: uppercase; }
-.commission-status { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 2rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid rgba(46,204,113,0.35); border-radius: 20px; padding: 0.4rem 1rem; background: rgba(46,204,113,0.07); color: #5AE89A; }
-.commission-status .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.commission-status.open .status-dot { background: #2ECC71; animation: pulse 2s infinite; }
-.commission-status.closed { border-color: rgba(150,150,150,0.25); background: rgba(100,100,100,0.07); color: var(--text-dim); }
+.commission-status { display: inline-flex; align-items: center; gap: 0.65rem; margin-bottom: 1.25rem; margin-top: 0.25rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; background: none; border: none; padding: 0; border-radius: 0; }
+.commission-status .status-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.commission-status.open { color: var(--gold); }
+.commission-status.open .status-dot { background: var(--gold); animation: pulseGold 2.5s ease-in-out infinite; }
+@keyframes pulseGold { 0%,100%{opacity:1;box-shadow:0 0 0 0px rgba(201,168,76,0.5)} 50%{opacity:0.7;box-shadow:0 0 0 4px rgba(201,168,76,0)} }
+.commission-status.closed { color: var(--text-dim); }
 .commission-status.closed .status-dot { background: var(--text-dim); animation: none; }
 
 /* SECTION LABEL */
@@ -350,18 +353,22 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
 .about-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--text-dim); border: 1px solid var(--border-mid); padding: 0.25rem 0.6rem; border-radius: 20px; text-transform: uppercase; }
 
-/* FAQ */
-.faq-title { font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text); margin-bottom: 1.5rem; }
-.faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
-.faq-item { border: 1px solid var(--border-mid); border-radius: var(--radius-sm); overflow: hidden; transition: border-color 0.2s; }
-.faq-item.open { border-color: rgba(201,168,76,0.40); }
-.faq-question { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; cursor: pointer; background: linear-gradient(145deg, #0C1C36 0%, #061220 100%); transition: background 0.2s; user-select: none; }
-.faq-question:hover { background: linear-gradient(145deg, #112545 0%, #0A1C32 100%); }
-.faq-question-text { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--text); line-height: 1.4; }
-.faq-chevron { font-size: 0.75rem; color: var(--accent); flex-shrink: 0; margin-left: 1rem; transition: transform 0.25s; }
-.faq-item.open .faq-chevron { transform: rotate(180deg); }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; padding: 0 1.25rem; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); line-height: 1.85; }
-.faq-item.open .faq-answer { max-height: 400px; padding: 0.85rem 1.25rem 1.1rem; }
+/* FAQ — centered & clean */
+#about { padding: 4rem 2.5rem 4rem; max-width: none; margin: 0; }
+.about-faq-only { max-width: 780px; margin: 0 auto; }
+.faq-title { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: 0.1em; color: var(--text); margin-bottom: 2.5rem; }
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item { border: none; border-top: 1px solid rgba(201,168,76,0.10); border-radius: 0; overflow: hidden; transition: border-color 0.2s; background: transparent; }
+.faq-item:last-child { border-bottom: 1px solid rgba(201,168,76,0.10); }
+.faq-item.open { border-color: rgba(201,168,76,0.10); }
+.faq-question { display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 0; cursor: pointer; background: transparent; transition: none; user-select: none; }
+.faq-question:hover .faq-question-text { color: var(--text); }
+.faq-question-text { font-family: var(--sans); font-size: 0.92rem; letter-spacing: 0.01em; color: var(--text-muted); line-height: 1.4; transition: color 0.2s; }
+.faq-item.open .faq-question-text { color: var(--text); }
+.faq-chevron { font-size: 0.7rem; color: var(--gold); flex-shrink: 0; margin-left: 1rem; transition: transform 0.25s; opacity: 0.6; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); opacity: 1; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; padding: 0; font-family: var(--sans); font-size: 0.88rem; color: var(--text-muted); line-height: 1.85; }
+.faq-item.open .faq-answer { max-height: 400px; padding: 0 0 1.5rem; }
 
 /* ABOUT DIVIDER */
 .about-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.30), transparent); margin: 0 2.5rem 4rem; }
@@ -386,9 +393,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .svc-cta { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s; margin-top: auto; }
 .svc-card:hover .svc-cta, .svc-card.active .svc-cta { color: var(--accent); }
 .svc-cta::after { content: ' →'; }
-/* SERVICE CONTENT */
-.svc-content { height: 0; overflow: hidden; transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1); }
-@media (max-width: 768px) { .svc-gateway { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .hero-presets { grid-template-columns: repeat(2,1fr); } }
 
 @media (max-width: 1120px) { .info-panel { display: none; } }
 @media (max-width: 900px)  { .presets { grid-template-columns: repeat(2,1fr); } .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
@@ -402,6 +407,229 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
   .asset-grid { grid-template-columns: 1fr; }
   .recap-grid { grid-template-columns: 1fr; }
   footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; }
+}
+
+/* ─── HERO SPLIT ─────────────────────────────── */
+.hero-outer--split { min-height: 78vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+.hero-split-left { display: flex; flex-direction: column; justify-content: center; padding: 4.5rem 3.5rem 4rem 2.5rem; position: relative; z-index: 2; background: linear-gradient(to right, rgba(1,8,16,1) 0%, rgba(1,8,16,0.96) 100%); }
+.hero-split-right { position: relative; overflow: hidden; }
+.hero-split-right .hero-video-bg { position: absolute; inset: 0; }
+.hero-split-right .hero-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.hero-split-right .hero-video-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(1,8,16,1) 0%, transparent 40%); }
+.hero-accent-bar-split { position: absolute; left: 0; top: 10%; bottom: 10%; width: 2px; background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent); opacity: 0.45; pointer-events: none; }
+
+/* ─── SERVICE DUEL ───────────────────────────── */
+.svc-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 2rem 1.5rem 2.5rem; border-top: 1px solid var(--border-mid); }
+.svc-duel-card {
+  position: relative; overflow: hidden;
+  padding: 3.5rem 3.5rem 4rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: background 0.5s ease;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201,168,76,0.14);
+}
+/* Terrain schematic: inline SVG handled in HTML */
+.svc-duel-card--terrain {
+  border-color: rgba(29,201,122,0.16);
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(5,40,18,0.88) 0%, transparent 55%) no-repeat,
+    radial-gradient(ellipse at 10% 100%, rgba(2,22,10,0.55) 0%, transparent 45%) no-repeat,
+    linear-gradient(175deg, #030F08 0%, #010A04 100%);
+}
+/* Hero assets schematic: inline SVG handled in HTML */
+.svc-duel-card--hero {
+  border-color: rgba(155,120,220,0.18);
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(35,15,75,0.85) 0%, transparent 55%) no-repeat,
+    radial-gradient(ellipse at 90% 100%, rgba(20,8,50,0.50) 0%, transparent 45%) no-repeat,
+    linear-gradient(175deg, #08041A 0%, #030212 100%);
+}
+.svc-duel-card--terrain:hover { border-color: rgba(29,201,122,0.35); }
+.svc-duel-card--hero:hover    { border-color: rgba(155,120,220,0.35); }
+/* Top accent */
+.svc-duel-card--terrain::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(to right, transparent, rgba(29,201,122,0.75) 30%, rgba(29,201,122,0.75) 70%, transparent); border-radius: 50%; }
+.svc-duel-card--hero::before    { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(to right, transparent, rgba(155,120,220,0.7) 30%, rgba(155,120,220,0.7) 70%, transparent); border-radius: 50%; }
+/* Bottom fade — covers the schematic lower portion so content is readable */
+.svc-duel-card--terrain::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 62%; background: linear-gradient(to top, rgba(1,8,3,1) 0%, rgba(1,8,3,0.88) 40%, transparent 100%); pointer-events: none; width: auto; top: auto; transform: none; transition: none; }
+.svc-duel-card--hero::after    { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 62%; background: linear-gradient(to top, rgba(3,2,12,1) 0%, rgba(3,2,12,0.88) 40%, transparent 100%); pointer-events: none; width: auto; top: auto; transform: none; transition: none; }
+/* Content */
+.svc-duel-content { position: relative; z-index: 2; }
+.svc-duel-eyebrow { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.65rem; }
+.svc-duel-card--terrain .svc-duel-eyebrow { color: rgba(29,201,122,0.60); }
+.svc-duel-card--terrain .svc-duel-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--jade); opacity: 0.7; }
+.svc-duel-card--hero    .svc-duel-eyebrow { color: rgba(155,120,220,0.55); flex-direction: row-reverse; }
+.svc-duel-card--hero    .svc-duel-eyebrow::before { content: ''; width: 22px; height: 1px; background: rgba(155,120,220,0.7); }
+.svc-duel-title { font-family: var(--display); font-size: clamp(5rem, 7.5vw, 9rem); letter-spacing: 0.02em; line-height: 0.86; color: var(--text); margin-bottom: 1.4rem; }
+.svc-duel-card--terrain .svc-duel-title em { color: var(--jade); font-style: normal; }
+.svc-duel-card--hero    .svc-duel-title em { color: #C4B0E8; font-style: normal; }
+.svc-duel-card--hero    .svc-duel-title { text-align: right; }
+.svc-duel-desc { font-family: var(--sans); font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; max-width: 360px; margin-bottom: 1.8rem; }
+.svc-duel-card--hero .svc-duel-desc { text-align: right; margin-left: auto; }
+.svc-duel-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem; }
+.svc-duel-card--hero .svc-duel-tags { justify-content: flex-end; }
+.svc-duel-tag { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 2px; }
+.svc-duel-card--terrain .svc-duel-tag { color: rgba(29,201,122,0.70); border: 1px solid rgba(29,201,122,0.20); background: rgba(29,201,122,0.06); }
+.svc-duel-card--hero    .svc-duel-tag { color: rgba(155,120,220,0.65); border: 1px solid rgba(155,120,220,0.18); background: rgba(155,120,220,0.05); }
+.btn-duel-terrain { font-family: var(--display); font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--jade); color: #010810; padding: 0.9rem 2.2rem; border: none; border-radius: var(--radius-xs); cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.25s, box-shadow 0.25s; align-self: flex-start; box-shadow: 0 0 22px rgba(29,201,122,0.40), 0 4px 14px rgba(0,0,0,0.55); font-weight: 700; }
+.btn-duel-terrain:hover { background: var(--jade-bright); transform: translateX(6px); box-shadow: 0 0 38px rgba(29,201,122,0.60), 0 6px 18px rgba(0,0,0,0.55); }
+.btn-duel-hero { font-family: var(--display); font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(155,120,220,0.12); color: #D0BEF0; padding: 0.9rem 2.2rem; border: 1px solid rgba(155,120,220,0.42); border-radius: var(--radius-xs); cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.25s; align-self: flex-end; box-shadow: 0 0 20px rgba(155,120,220,0.28), 0 4px 14px rgba(0,0,0,0.55); font-weight: 700; }
+.btn-duel-hero:hover { background: rgba(155,120,220,0.24); border-color: rgba(155,120,220,0.70); transform: translateX(-6px); box-shadow: 0 0 38px rgba(155,120,220,0.48), 0 6px 18px rgba(0,0,0,0.55); }
+
+/* ─── INLINE SCHEMATICS ──────────────────────── */
+.svc-duel-schematic { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.svc-duel-schematic svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.schematic-scan { position: absolute; inset: 0; }
+.schematic-scan::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0;
+  width: 38%;
+  background: linear-gradient(to right, transparent 0%, rgba(29,201,122,0.07) 35%, rgba(29,201,122,0.12) 50%, rgba(29,201,122,0.07) 65%, transparent 100%);
+  animation: scanPass 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.svc-duel-card--hero .schematic-scan::after {
+  background: linear-gradient(to right, transparent 0%, rgba(155,120,220,0.07) 35%, rgba(155,120,220,0.13) 50%, rgba(155,120,220,0.07) 65%, transparent 100%);
+  animation-delay: 2.5s;
+}
+@keyframes scanPass { 0% { left: -38%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 108%; opacity: 0; } }
+
+/* ─── PROCESS SECTION (full) ─────────────────── */
+.process-section { padding: 3.5rem 1.5rem 4rem; border-top: 1px solid var(--border-mid); }
+.process-section-hdr { text-align: center; margin-bottom: 2.8rem; }
+.process-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+.process-hdr-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: 0.1em; color: var(--text); line-height: 1; }
+.process-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.process-card {
+  background:
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) top 0 left 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) top 0 left 0 / 1px 10px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) top 0 right 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) top 0 right 0 / 1px 10px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) bottom 0 left 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) bottom 0 left 0 / 1px 10px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) bottom 0 right 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.28), rgba(201,168,76,0.28)) bottom 0 right 0 / 1px 10px no-repeat,
+    linear-gradient(145deg, #070F20 0%, #050C18 60%, #030A14 100%);
+  border: 1px solid rgba(201,168,76,0.10);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 1.75rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.process-card::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.55) 50%, transparent); border-radius: 50%; }
+.process-card-num { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.25em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 1.4rem; }
+.process-card-name { font-family: var(--display); font-size: 2.4rem; letter-spacing: 0.06em; color: var(--text); line-height: 1; margin-bottom: 0.9rem; }
+.process-card-desc { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); line-height: 1.75; }
+.process-connector { display: flex; align-items: center; justify-content: center; color: var(--gold-dark); opacity: 0.35; font-size: 0.6rem; padding-top: 1.2rem; }
+@media (max-width: 900px) { .process-cards { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 540px) { .process-cards { grid-template-columns: 1fr; } }
+
+/* ─── SERVICE TABS (compact selector) ────────── */
+.svc-tabs-hdr { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border-mid); }
+.svc-tab { background: transparent; border: none; border-right: 1px solid var(--border-mid); padding: 1.1rem 2.5rem; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
+.svc-tab:last-child { border-right: none; }
+.svc-tab:hover { background: rgba(201,168,76,0.025); }
+.svc-tab.active { background: rgba(201,168,76,0.04); }
+.svc-tab-inner { display: flex; align-items: center; gap: 1rem; }
+.svc-tab-num { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.2em; color: var(--text-dim); text-transform: uppercase; }
+.svc-tab.active .svc-tab-num { color: var(--gold); }
+.svc-tab-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+.svc-tab.active .svc-tab-label { color: var(--gold-bright); }
+.svc-tab-desc { display: none; }
+.svc-tab-arrow { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); opacity: 0; transition: opacity 0.2s; flex-shrink: 0; }
+.svc-tab.active .svc-tab-arrow { opacity: 0.7; }
+
+/* ─── TAB PANELS ─────────────────────────────── */
+.svc-tab-panel { display: none; }
+.svc-tab-panel.active { display: block; }
+
+/* ─── BUTTONS ────────────────────────────────── */
+.btn-svc-primary { font-family: var(--display); font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold); color: #000; padding: 0.75rem 1.5rem; border: none; border-radius: var(--radius-xs); cursor: pointer; text-decoration: none; transition: background 0.2s; display: inline-block; }
+.btn-svc-primary:hover { background: var(--gold-bright); }
+.btn-svc-ghost { font-family: var(--display); font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; color: var(--text); padding: 0.75rem 1.5rem; border: 1px solid var(--border-mid); border-radius: var(--radius-xs); cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+.btn-svc-ghost:hover { border-color: rgba(201,168,76,0.5); color: var(--gold-bright); }
+.svc-cta-row-new { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+
+/* ─── PROCESS STRIP ──────────────────────────── */
+.process-strip { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; padding: 1.8rem 2.5rem; border-top: 1px solid var(--border-mid); border-bottom: 1px solid var(--border-mid); }
+.ps-step { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.ps-step-num { font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase; }
+.ps-step-name { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+.ps-sep { font-family: var(--mono); font-size: 0.5rem; color: var(--gold-dark); opacity: 0.3; padding: 0 2.2rem; }
+
+/* ─── FOOTER CTA ─────────────────────────────── */
+.footer-cta-new { border-top: 1px solid var(--border-mid); padding: 4.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 3rem; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); }
+.fcta-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem; }
+.fcta-title { font-family: var(--display); font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: 0.04em; line-height: 0.9; color: var(--text); }
+.fcta-title em { font-style: normal; color: var(--gold); }
+.fcta-actions { display: flex; gap: 0.75rem; flex-shrink: 0; }
+
+/* ─── SCROLL FADE ────────────────────────────── */
+.fade-in-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fade-in-up.visible { opacity: 1; transform: none; }
+
+/* ─── PRESET CARDS — BLUEPRINT ───────────────── */
+.preset-card {
+  background:
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 1px 10px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 1px 10px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 1px 10px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 10px 1px no-repeat,
+    linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 1px 10px no-repeat,
+    repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px),
+    repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px),
+    linear-gradient(145deg, #070F20 0%, #050C18 60%, #030A14 100%);
+  border-color: rgba(201,168,76,0.12); border-radius: var(--radius-md); padding: 2.2rem 1.75rem 1.75rem;
+}
+.preset-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(201,168,76,0.05) 50%, rgba(201,168,76,0.09) 52%, rgba(201,168,76,0.05) 54%, transparent 70%);
+  background-size: 300% 100%; background-position: 200% 0; transition: background-position 0.55s ease;
+  border-radius: var(--radius-md); pointer-events: none;
+  width: auto; height: auto; left: auto; bottom: auto; top: auto; right: auto; transform: none;
+}
+.preset-card:hover::after, .preset-card.active::after { background-position: -100% 0; width: auto; }
+.preset-card[data-preset="terrain-s"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='xMidYMax slice'%3E%3Cpolyline points='60,90 100,55 130,70 160,40 190,60 220,50 260,80' fill='none' stroke='rgba(201,168,76,0.06)' stroke-width='1.5'/%3E%3C/svg%3E"), linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 1px 10px no-repeat, repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px), linear-gradient(145deg, #070F20 0%, #050C18 60%, #030A14 100%); }
+.preset-card[data-preset="terrain-m"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='xMidYMax slice'%3E%3Cpolyline points='20,95 55,60 80,75 110,35 145,55 175,25 210,50 240,40 270,65 300,55' fill='none' stroke='rgba(201,168,76,0.08)' stroke-width='1.5'/%3E%3C/svg%3E"), linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 1px 10px no-repeat, repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px), linear-gradient(145deg, #0A1428 0%, #060E1C 60%, #040C18 100%); }
+.preset-card[data-preset="terrain-l"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='xMidYMax slice'%3E%3Cpolyline points='0,100 30,70 55,80 80,45 110,65 135,20 165,48 190,30 220,55 250,35 280,58 300,48' fill='none' stroke='rgba(201,168,76,0.09)' stroke-width='1.5'/%3E%3C/svg%3E"), linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) top 0 right 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(201,168,76,0.3), rgba(201,168,76,0.3)) bottom 0 right 0 / 1px 10px no-repeat, repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(201,168,76,0.022) 30px), linear-gradient(145deg, #070F20 0%, #050C18 60%, #030A14 100%); }
+.preset-card[data-preset="terrain-xl"] { border-color: rgba(180,150,240,0.25); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='xMidYMax slice'%3E%3Cpolyline points='0,105 20,80 40,90 65,50 90,70 115,15 145,42 170,22 200,48 225,28 255,52 280,38 300,45' fill='none' stroke='rgba(155,120,220,0.1)' stroke-width='1.5'/%3E%3C/svg%3E"), linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) top 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) top 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) top 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) top 0 right 0 / 1px 10px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) bottom 0 left 0 / 10px 1px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) bottom 0 left 0 / 1px 10px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) bottom 0 right 0 / 10px 1px no-repeat, linear-gradient(rgba(155,120,220,0.35), rgba(155,120,220,0.35)) bottom 0 right 0 / 1px 10px no-repeat, repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(155,120,220,0.025) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(155,120,220,0.025) 30px), linear-gradient(145deg, #0D0A1E 0%, #09071A 60%, #060515 100%); }
+.preset-card[data-preset="terrain-xl"] .preset-id { color: rgba(155,120,220,0.7); }
+.preset-card[data-preset="terrain-xl"] .preset-id::after { color: #9A85BE !important; }
+.preset-card[data-preset="terrain-xl"] .preset-price { background: linear-gradient(135deg, #9A85BE, #C4B0E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.preset-card[data-preset="terrain-xl"] .preset-cta { color: rgba(155,120,220,0.7); }
+.preset-card[data-preset="terrain-xl"]:hover { border-color: rgba(155,120,220,0.50); box-shadow: 0 12px 50px rgba(0,0,0,0.70), 0 0 35px rgba(120,90,200,0.12), inset 0 1px 0 rgba(155,120,220,0.18); }
+.preset-card[data-preset="terrain-xl"]:hover .preset-cta { color: #C4B0E8; }
+.preset-card[data-preset="terrain-xl"].active { border-color: rgba(155,120,220,0.65); box-shadow: 0 10px 40px rgba(0,0,0,0.70), 0 0 40px rgba(120,90,200,0.16); }
+.preset-cta { margin-top: 1.25rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.16em; color: var(--text-dim); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s, gap 0.2s; }
+.preset-cta::after { content: '→'; font-size: 0.7rem; transition: transform 0.2s; }
+.preset-card:hover .preset-cta { color: var(--gold); gap: 0.8rem; }
+.preset-card:hover .preset-cta::after { transform: translateX(2px); }
+.preset-price { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-top: auto; padding-top: 1rem; background: none; -webkit-text-fill-color: var(--text-dim); }
+.preset-price-note { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); margin-top: 0.15rem; opacity: 0.6; }
+.preset-card:hover .preset-price { color: var(--gold-dark); -webkit-text-fill-color: var(--gold-dark); }
+
+@media (max-width: 900px) {
+  .hero-outer--split { grid-template-columns: 1fr; }
+  .hero-split-right { min-height: 220px; }
+  .svc-duel { grid-template-columns: 1fr; min-height: unset; padding: 1rem 1rem 1.5rem; }
+  .svc-duel-card { min-height: 52vh; }
+  .svc-duel-card--hero .svc-duel-title { text-align: left; }
+  .svc-duel-card--hero .svc-duel-desc { text-align: left; margin-left: 0; }
+  .svc-duel-card--hero .svc-duel-tags { justify-content: flex-start; }
+  .svc-duel-card--hero .svc-duel-eyebrow { flex-direction: row; }
+  .btn-duel-hero { align-self: flex-start; }
+  .svc-tabs-hdr { grid-template-columns: 1fr; }
+  .svc-tab { border-right: none; border-bottom: 1px solid var(--border-mid); }
+  .footer-cta-new { flex-direction: column; align-items: flex-start; }
+  .presets { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 600px) {
+  .presets { grid-template-columns: 1fr; margin: 0 1rem; }
+  .hero-presets { grid-template-columns: 1fr; }
+  .ps-sep { padding: 0 1rem; }
+  .svc-duel-title { font-size: clamp(4rem, 14vw, 6rem); }
 }
 
 </style>
@@ -433,63 +661,182 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<div class="hero-outer">
-  <div class="hero-video-bg">
-    <!-- Place your looping reel at img/hero-reel.mp4 — recommended: 1920×1080, MP4 H.264, < 8MB -->
-    <video autoplay muted loop playsinline>
-      <source src="img/hero-reel.mp4" type="video/mp4">
-    </video>
-  </div>
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow" data-en="Technical Environment Artist" data-fr="Artiste Environnement Technique">Technical Environment Artist</div>
-    <h1 data-en="TERRAIN<br><em>BUILT</em><br>FOR YOU" data-fr="TERRAIN<br><em>CONÇU</em><br>POUR VOUS">TERRAIN<br><em>BUILT</em><br>FOR YOU</h1>
-    <p class="hero-sub" data-en="Every terrain is built from scratch, sculpted in Gaea 2, procedurally detailed in Houdini, and delivered production-ready in your engine. Full control over size, style, technical setup and scope." data-fr="Chaque terrain est construit de zéro, sculpté dans Gaea 2, détaillé procéduralement dans Houdini, livré prêt pour votre pipeline. Contrôle total sur la taille, le style, la configuration technique et le périmètre.">Every terrain is built from scratch, sculpted in Gaea 2, procedurally detailed in Houdini, and delivered production-ready in your engine. Full control over size, style, technical setup and scope.</p>
-    <div class="commission-status" id="commission-status">
-      <!-- To toggle: set COMMISSION_OPEN = true/false in the <script> section below -->
+<div class="hero-outer hero-outer--split">
+  <div class="hero-split-left">
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-en="Technical Environment Artist" data-fr="Artiste Environnement Technique">Technical Environment Artist</div>
+      <div class="commission-status" id="commission-status"><!-- toggled by JS --></div>
+      <h1 data-en="TERRAIN<br><em>BUILT</em><br>FOR YOU" data-fr="TERRAIN<br><em>CONÇU</em><br>POUR VOUS">TERRAIN<br><em>BUILT</em><br>FOR YOU</h1>
+      <p class="hero-sub" data-en="Every terrain is built from scratch — sculpted in Gaea 2, detailed in Houdini, delivered <strong>production-ready in your engine</strong>. Full control over size, style and technical scope." data-fr="Chaque terrain est construit de zéro — sculpté dans Gaea 2, détaillé dans Houdini, livré <strong>prêt pour votre moteur</strong>. Contrôle total sur taille, style et périmètre technique.">Every terrain is built from scratch — sculpted in Gaea 2, detailed in Houdini, delivered <strong>production-ready in your engine</strong>. Full control over size, style and technical scope.</p>
+      <div class="tech-stack">
+        <span class="tag">Unreal Engine 5</span>
+        <span class="tag">Unity</span>
+        <span class="tag">Gaea 2</span>
+        <span class="tag">Houdini</span>
+      </div>
+      <div class="svc-cta-row-new" style="margin-top:2rem;">
+        <a href="#services" class="btn-svc-primary" data-en="Choose Your Service" data-fr="Choisir votre service">Choose Your Service</a>
+        <a href="#process" class="btn-svc-ghost" data-en="How It Works" data-fr="Comment ça marche">How It Works</a>
+      </div>
     </div>
   </div>
+  <div class="hero-split-right">
+    <div class="hero-video-bg">
+      <!-- Place your looping reel at img/hero-reel.mp4 — recommended: 1920×1080, MP4 H.264, < 8MB -->
+      <video autoplay muted loop playsinline>
+        <source src="img/hero-reel.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SERVICE DUEL ══ -->
+<section class="svc-duel fade-in-up" id="services">
+
+  <!-- 01 · CUSTOM TERRAIN -->
+  <div class="svc-duel-card svc-duel-card--terrain">
+    <!-- Inline schematic: perspective terrain blueprint -->
+    <div class="svc-duel-schematic">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="t-grid-sm" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M30 0L0 0 0 30" fill="none" stroke="rgba(29,201,122,0.055)" stroke-width="0.5"/>
+          </pattern>
+          <pattern id="t-grid-lg" width="90" height="90" patternUnits="userSpaceOnUse">
+            <path d="M90 0L0 0 0 90" fill="none" stroke="rgba(29,201,122,0.09)" stroke-width="0.8"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="400" fill="url(#t-grid-sm)"/>
+        <rect width="600" height="400" fill="url(#t-grid-lg)"/>
+        <!-- Perspective lines from vanishing point -->
+        <g stroke="rgba(29,201,122,0.16)" stroke-width="0.8">
+          <line x1="300" y1="38" x2="0" y2="400"/>
+          <line x1="300" y1="38" x2="75" y2="400"/>
+          <line x1="300" y1="38" x2="150" y2="400"/>
+          <line x1="300" y1="38" x2="225" y2="400"/>
+          <line x1="300" y1="38" x2="375" y2="400"/>
+          <line x1="300" y1="38" x2="450" y2="400"/>
+          <line x1="300" y1="38" x2="525" y2="400"/>
+          <line x1="300" y1="38" x2="600" y2="400"/>
+        </g>
+        <!-- Horizontal parallels -->
+        <g stroke="rgba(29,201,122,0.13)" stroke-width="0.7">
+          <line x1="244" y1="88" x2="356" y2="88"/>
+          <line x1="183" y1="153" x2="417" y2="153"/>
+          <line x1="104" y1="244" x2="496" y2="244"/>
+        </g>
+        <!-- Terrain profile -->
+        <polyline points="0,355 40,278 92,296 143,208 202,230 252,142 292,163 332,104 380,148 427,183 476,198 522,213 572,223 600,214" stroke="rgba(29,201,122,0.55)" stroke-width="2.2" stroke-linejoin="round"/>
+        <!-- Ground baseline -->
+        <line x1="0" y1="386" x2="600" y2="386" stroke="rgba(29,201,122,0.18)" stroke-width="0.9"/>
+        <!-- Scale bracket -->
+        <g stroke="rgba(29,201,122,0.25)" stroke-width="0.9">
+          <line x1="28" y1="381" x2="28" y2="393"/>
+          <line x1="28" y1="388" x2="572" y2="388"/>
+          <line x1="572" y1="381" x2="572" y2="393"/>
+          <line x1="28" y1="381" x2="128" y2="381"/>
+          <line x1="128" y1="381" x2="128" y2="388"/>
+          <line x1="128" y1="381" x2="228" y2="381"/>
+          <line x1="228" y1="381" x2="228" y2="388"/>
+        </g>
+        <!-- Vanishing point dot -->
+        <circle cx="300" cy="38" r="2.8" fill="rgba(29,201,122,0.50)"/>
+        <!-- Horizon dashed line -->
+        <line x1="0" y1="38" x2="600" y2="38" stroke="rgba(29,201,122,0.09)" stroke-width="0.5" stroke-dasharray="8,6"/>
+      </svg>
+      <div class="schematic-scan"></div>
+    </div>
+    <div class="svc-duel-content">
+      <div class="svc-duel-eyebrow" data-en="01 / Custom Terrain" data-fr="01 / Terrain sur-mesure">01 / Custom Terrain</div>
+      <h2 class="svc-duel-title">CUSTOM<br><em>TERRAIN</em></h2>
+      <p class="svc-duel-desc" data-en="Every terrain built from scratch — sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine. Indie levels to AAA open worlds." data-fr="Chaque terrain construit de zéro — sculpté dans Gaea 2, détaillé dans Houdini, livré prêt pour votre moteur. Du niveau indie à l'open world AAA.">Every terrain built from scratch — sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine. Indie levels to AAA open worlds.</p>
+      <div class="svc-duel-tags">
+        <span class="svc-duel-tag" data-en="4 Scale Presets" data-fr="4 Presets d'échelle">4 Scale Presets</span>
+        <span class="svc-duel-tag">UE5 · Unity · Raw</span>
+        <span class="svc-duel-tag" data-en="Vegetation Included" data-fr="Végétation incluse">Vegetation Included</span>
+        <span class="svc-duel-tag" data-en="From 1,799 €" data-fr="À partir de 1 799 €">From 1,799 €</span>
+      </div>
+      <a href="#configure" class="btn-duel-terrain" onclick="switchTab('terrain')" data-en="Configure Your Terrain →" data-fr="Configurer votre terrain →">Configure Your Terrain →</a>
+
+    </div>
+  </div>
+
+  <!-- 02 · HERO ASSETS -->
+  <div class="svc-duel-card svc-duel-card--hero">
+    <!-- Inline schematic: 3D monolith wireframe blueprint (re-centered) -->
+    <div class="svc-duel-schematic">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="h-grid-sm" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M30 0L0 0 0 30" fill="none" stroke="rgba(155,120,220,0.055)" stroke-width="0.5"/>
+          </pattern>
+          <pattern id="h-grid-lg" width="90" height="90" patternUnits="userSpaceOnUse">
+            <path d="M90 0L0 0 0 90" fill="none" stroke="rgba(155,120,220,0.09)" stroke-width="0.8"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="400" fill="url(#h-grid-sm)"/>
+        <rect width="600" height="400" fill="url(#h-grid-lg)"/>
+        <!-- Front face -->
+        <polygon points="160,362 390,362 397,128 157,123" stroke="rgba(155,120,220,0.38)" stroke-width="1.6"/>
+        <!-- Top face -->
+        <polygon points="157,123 397,128 445,60 105,55" stroke="rgba(155,120,220,0.32)" stroke-width="1.6"/>
+        <!-- Right face -->
+        <polygon points="390,362 445,292 445,60 397,128" stroke="rgba(155,120,220,0.30)" stroke-width="1.6"/>
+        <!-- Hidden edges (dashed) -->
+        <line x1="160" y1="362" x2="105" y2="292" stroke="rgba(155,120,220,0.14)" stroke-width="0.9" stroke-dasharray="5,5"/>
+        <line x1="105" y1="292" x2="105" y2="55" stroke="rgba(155,120,220,0.14)" stroke-width="0.9" stroke-dasharray="5,5"/>
+        <line x1="105" y1="292" x2="445" y2="292" stroke="rgba(155,120,220,0.14)" stroke-width="0.9" stroke-dasharray="5,5"/>
+        <!-- Internal mesh lines -->
+        <g stroke="rgba(155,120,220,0.15)" stroke-width="0.8">
+          <line x1="160" y1="362" x2="397" y2="128"/>
+          <line x1="390" y1="362" x2="157" y2="123"/>
+          <line x1="158" y1="243" x2="394" y2="246"/>
+          <line x1="278" y1="362" x2="277" y2="123"/>
+        </g>
+        <!-- Vertex dots top (bright) -->
+        <g fill="rgba(155,120,220,0.62)">
+          <circle cx="157" cy="123" r="3"/>
+          <circle cx="397" cy="128" r="3"/>
+          <circle cx="445" cy="60" r="3"/>
+          <circle cx="105" cy="55" r="3"/>
+        </g>
+        <!-- Vertex dots bottom -->
+        <g fill="rgba(155,120,220,0.40)">
+          <circle cx="160" cy="362" r="3"/>
+          <circle cx="390" cy="362" r="3"/>
+          <circle cx="445" cy="292" r="3"/>
+          <circle cx="105" cy="292" r="3"/>
+        </g>
+        <!-- Base line -->
+        <line x1="20" y1="378" x2="572" y2="378" stroke="rgba(155,120,220,0.14)" stroke-width="0.8"/>
+        <!-- Scale bracket (front face width) -->
+        <g stroke="rgba(155,120,220,0.30)" stroke-width="0.9">
+          <line x1="160" y1="372" x2="160" y2="382"/>
+          <line x1="160" y1="378" x2="390" y2="378"/>
+          <line x1="390" y1="372" x2="390" y2="382"/>
+        </g>
+      </svg>
+      <div class="schematic-scan"></div>
+    </div>
+    <div class="svc-duel-content" style="display:flex;flex-direction:column;align-items:flex-end;">
+      <div class="svc-duel-eyebrow" data-en="02 / Hero Assets" data-fr="02 / Hero Assets">02 / Hero Assets</div>
+      <h2 class="svc-duel-title">HERO<br><em>ASSETS</em></h2>
+      <p class="svc-duel-desc" data-en="Landmark-scale, ultra-detailed assets for cinematic worlds. Terrain, vegetation, structures, climate FX — each scoped individually on a discovery call." data-fr="Assets ultra-détaillés à l'échelle d'un monument pour des univers cinématographiques. Terrain, végétation, structures, FX — chacun cadré lors d'un appel découverte.">Landmark-scale, ultra-detailed assets for cinematic worlds. Terrain, vegetation, structures, climate FX — each scoped individually on a discovery call.</p>
+      <div class="svc-duel-tags">
+        <span class="svc-duel-tag" data-en="Any Engine" data-fr="Tous moteurs">Any Engine</span>
+        <span class="svc-duel-tag" data-en="Any Scale" data-fr="Toute échelle">Any Scale</span>
+        <span class="svc-duel-tag" data-en="Unlimited Revisions" data-fr="Révisions illimitées">Unlimited Revisions</span>
+        <span class="svc-duel-tag" data-en="On Request" data-fr="Sur devis">On Request</span>
+      </div>
+      <a href="#configure" class="btn-duel-hero" onclick="switchTab('hero')" data-en="Configure Your Asset →" data-fr="Configurer votre asset →">Configure Your Asset →</a>
+    </div>
+  </div>
+
 </section>
-</div>
 
-<div id="commission"></div>
-<div class="section-label" data-en="Select a service to get started" data-fr="Sélectionnez un service pour commencer">Select a service to get started</div>
+<div id="configure"></div>
 
-<div class="svc-gateway">
-  <div class="svc-card" id="svc-terrain" onclick="selectService('terrain')">
-    <div class="svc-num">01 / Service</div>
-    <div class="svc-title">CUSTOM TERRAIN</div>
-    <div class="svc-desc" data-en="Fully crafted terrain from scratch. Indie game levels to AAA open worlds, sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine." data-fr="Terrain entièrement réalisé sur mesure. Du niveau indie à l'open world AAA, sculpté dans Gaea 2, détaillé dans Houdini, livré prêt à l'emploi dans votre moteur.">Fully crafted terrain from scratch. Indie game levels to AAA open worlds, sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine.</div>
-    <div class="svc-tags">
-      <span class="svc-tag">4 scale presets</span>
-      <span class="svc-tag">UE5 · Unity · RAW</span>
-      <span class="svc-tag">2 – 12 weeks</span>
-    </div>
-    <div class="svc-price">1 799 € – Sur devis</div>
-    <div class="svc-price-note">excl. VAT · all options</div>
-    <div class="svc-cta" data-en="Explore presets" data-fr="Explorer les presets">Explore presets</div>
-  </div>
-  <div class="svc-card" id="svc-hero" onclick="selectService('hero')">
-    <div class="svc-num">02 / Service</div>
-    <div class="svc-title">HERO ASSETS</div>
-    <div class="svc-desc" data-en="Landmark-scale, ultra-detailed assets built for cinematic worlds: terrain, vegetation, structures, climate FX." data-fr="Assets à l'échelle d'un monument pour des univers cinématographiques : terrain, végétation, structures, FX climatiques.">Landmark-scale, ultra-detailed assets built for cinematic worlds: terrain, vegetation, structures, climate FX.</div>
-    <div class="svc-tags">
-      <span class="svc-tag">4 asset types</span>
-      <span class="svc-tag">Any engine</span>
-      <span class="svc-tag">Timeline on call</span>
-    </div>
-    <div class="svc-price">On request</div>
-    <div class="svc-price-note">quote after scoping call</div>
-    <div class="svc-cta" data-en="Explore assets" data-fr="Explorer les assets">Explore assets</div>
-  </div>
-</div>
-
-<div class="svc-content" id="svc-content-terrain">
-
-<div class="sec-divider">
-  <div class="sec-divider-top"><span class="sec-divider-label" data-en="Custom Terrain" data-fr="Terrain sur-mesure">Custom Terrain</span><span class="sec-divider-line"></span></div>
-  <div class="sec-divider-sub" data-en="Commission a fully crafted terrain, from indie game levels to AAA open worlds. Choose a scale preset below, configure your options and get a precise quote within 48h." data-fr="Commandez un terrain entièrement réalisé sur mesure, du niveau indie à l'open world AAA. Choisissez un preset ci-dessous, configurez vos options et recevez un devis précis sous 48h.">Commission a fully crafted terrain, from indie game levels to AAA open worlds. Choose a scale preset below, configure your options and get a precise quote within 48h.</div>
-</div>
+<div class="svc-tab-panel active" id="svc-content-terrain">
 
 <div class="presets" id="presets">
 
@@ -497,69 +844,70 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
   <div class="preset-card" data-preset="terrain-s" data-label="Terrain S" onclick="selectPreset(this)">
     <div class="preset-id">01 / Terrain</div>
     <div class="preset-title">TERRAIN S</div>
-    <div class="preset-target" data-en="Indie devs | solo projects" data-fr="Devs indie | projets solo">Indie devs | solo projects</div>
-    <div class="preset-desc" data-en="Game level | small prototype | game jam" data-fr="Niveau de jeu | prototype | game jam">Game level | small prototype | game jam</div>
+    <div class="preset-target" data-en="Indie devs | Solo projects" data-fr="Devs indie | Projets solo">Indie devs | Solo projects</div>
+    <div class="preset-desc" data-en="Game level · small prototype · game jam" data-fr="Niveau de jeu · prototype · game jam">Game level · small prototype · game jam</div>
     <ul class="preset-specs">
       <li>256m² – 2km²</li>
-      <li>Textures 2K global</li>
-      <li>Standard ~3 semaines</li>
+      <li>Textures 2K</li>
+      <li>~3 weeks standard</li>
       <li>2 revision rounds</li>
     </ul>
-    <div class="preset-price">1.799 – 4.499 €</div>
-    <div class="preset-price-note">excl. VAT · toutes options</div>
-    <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
+    <div class="preset-price" data-en="Starting at 1,799 €" data-fr="À partir de 1 799 €">Starting at 1,799 €</div>
+    <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
+    <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
 
   <!-- M -->
   <div class="preset-card" data-preset="terrain-m" data-label="Terrain M" onclick="selectPreset(this)">
-    <div class="preset-popular-badge">★ Best value</div>
+    <div class="preset-popular-badge">◆ Recommended</div>
     <div class="preset-id">02 / Terrain</div>
     <div class="preset-title">TERRAIN M</div>
-    <div class="preset-target" data-en="Indie studios | small teams" data-fr="Studios indie | petites équipes">Indie studios | small teams</div>
-    <div class="preset-desc" data-en="Open level | arch viz | serious game" data-fr="Niveau ouvert | arch viz | serious game">Open level | arch viz | serious game</div>
+    <div class="preset-target" data-en="Indie studios | Small teams" data-fr="Studios indie | Petites équipes">Indie studios | Small teams</div>
+    <div class="preset-desc" data-en="Open level · arch-viz · serious game" data-fr="Niveau ouvert · arch-viz · serious game">Open level · arch-viz · serious game</div>
     <ul class="preset-specs">
       <li>2km² – 8km²</li>
-      <li>Textures 4K global</li>
-      <li>Standard ~6 semaines</li>
+      <li>Textures 4K</li>
+      <li>~6 weeks standard</li>
       <li>2 revision rounds</li>
     </ul>
-    <div class="preset-price">2.999 – 8.499 €</div>
-    <div class="preset-price-note">excl. VAT · toutes options</div>
-    <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
+    <div class="preset-price" data-en="Starting at 2,999 €" data-fr="À partir de 2 999 €">Starting at 2,999 €</div>
+    <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
+    <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
 
   <!-- L -->
   <div class="preset-card" data-preset="terrain-l" data-label="Terrain L" onclick="selectPreset(this)">
     <div class="preset-id">03 / Terrain</div>
     <div class="preset-title">TERRAIN L</div>
-    <div class="preset-target" data-en="AA studios | mid-size teams" data-fr="Studios AA | équipes intermédiaires">AA studios | mid-size teams</div>
-    <div class="preset-desc" data-en="Open world | driving sim | flight sim" data-fr="Monde ouvert | sim conduite | sim vol">Open world | driving sim | flight sim</div>
+    <div class="preset-target" data-en="AA Studios | Mid-size teams" data-fr="Studios AA | Équipes intermédiaires">AA Studios | Mid-size teams</div>
+    <div class="preset-desc" data-en="Open world · driving sim · flight sim" data-fr="Monde ouvert · sim conduite · sim vol">Open world · driving sim · flight sim</div>
     <ul class="preset-specs">
       <li>8km² – 32km² (tiled)</li>
-      <li>Textures 4–8K global</li>
-      <li>Standard ~10 semaines</li>
+      <li>Textures 4–8K</li>
+      <li>~10 weeks standard</li>
       <li>3 revision rounds</li>
     </ul>
-    <div class="preset-price">5.499 – 17.999 €</div>
-    <div class="preset-price-note">excl. VAT · toutes options</div>
-    <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
+    <div class="preset-price" data-en="Starting at 5,499 €" data-fr="À partir de 5 499 €">Starting at 5,499 €</div>
+    <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
+    <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
 
-  <!-- XL -->
+  <!-- XL — ELITE -->
   <div class="preset-card" data-preset="terrain-xl" data-label="Terrain XL" onclick="selectPreset(this)">
+    <div class="preset-popular-badge" style="background:linear-gradient(135deg,rgba(90,65,150,0.9),rgba(155,120,220,0.9));color:#EEE8D6;">★ Elite</div>
     <div class="preset-id">04 / Terrain</div>
     <div class="preset-title">TERRAIN XL</div>
-    <div class="preset-target" data-en="Large studios | special productions" data-fr="Grands studios | productions spéciales">Large studios | special productions</div>
-    <div class="preset-desc" data-en="Massive open world | film | ultra-scale" data-fr="Monde massif | film | ultra-échelle">Massive open world | film | ultra-scale</div>
+    <div class="preset-target" data-en="AAA Studios | Special productions" data-fr="Studios AAA | Productions spéciales">AAA Studios | Special productions</div>
+    <div class="preset-desc" data-en="Massive open world · cinematic · ultra-scale" data-fr="Monde massif · cinématique · ultra-échelle">Massive open world · cinematic · ultra-scale</div>
     <ul class="preset-specs">
-      <li>32km²+, any scale (tiled)</li>
-      <li>Textures 8K+ global</li>
-      <li>Scope on call</li>
+      <li>32km²+ any scale (tiled)</li>
+      <li>Textures 8K+</li>
+      <li>Scope defined on call</li>
       <li>Unlimited revisions</li>
     </ul>
-    <div class="preset-price">Sur devis</div>
-    <div class="preset-price-note">excl. VAT · scope on call</div>
-    <div class="preset-cta" data-en="Request a quote" data-fr="Demander un devis">Request a quote</div>
+    <div class="preset-price" data-en="Custom Quote" data-fr="Sur devis">Custom Quote</div>
+    <div class="preset-price-note" data-en="Technical audit before proposal" data-fr="Audit technique avant devis">Technical audit before proposal</div>
+    <div class="preset-cta" data-en="Request elite quote" data-fr="Demander un devis elite">Request elite quote</div>
   </div>
 
 </div>
@@ -605,11 +953,11 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               <div class="form-section-title" data-en="Engine" data-fr="Moteur">Engine</div>
               <div class="radio-group">
                 <input type="radio" name="engine" id="eng-ue5" value="Unreal Engine 5" checked>
-                <label for="eng-ue5" data-fname="Unreal Engine 5" data-fdesc="Full integration — World Partition, RVT, HLOD, Nanite support. Delivered as a ready-to-open UE5 project with all terrain assets configured." data-fimg="img/engine-ue5.jpg">UE5</label>
+                <label for="eng-ue5" data-fname="Unreal Engine 5" data-fdesc="Full integration — World Partition, RVT, HLOD, Nanite support. Delivered as a ready-to-open UE5 project with all terrain assets configured." data-fimg="img/engine-ue5.webp">UE5</label>
                 <input type="radio" name="engine" id="eng-unity" value="Unity">
-                <label for="eng-unity" data-fname="Unity" data-fdesc="Full integration — Unity Terrain system, material layers, LOD setup. Delivered as a Unity project ready for your pipeline." data-fimg="img/engine-unity.jpg">Unity</label>
+                <label for="eng-unity" data-fname="Unity" data-fdesc="Full integration — Unity Terrain system, material layers, LOD setup. Delivered as a Unity project ready for your pipeline." data-fimg="img/engine-unity.webp">Unity</label>
                 <input type="radio" name="engine" id="eng-raw" value="RAW">
-                <label for="eng-raw" data-fname="RAW — Source Files" data-fdesc="No engine integration. You receive heightmaps (EXR/PNG), splat maps, tiled textures. Import into any engine or pipeline." data-fimg="img/engine-raw.jpg">RAW</label>
+                <label for="eng-raw" data-fname="RAW — Source Files" data-fdesc="No engine integration. You receive heightmaps (EXR/PNG), splat maps, tiled textures. Import into any engine or pipeline." data-fimg="img/engine-raw.webp">RAW</label>
               </div>
             </div>
 
@@ -628,15 +976,15 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               <div class="form-section-title" data-en="Graphic Style" data-fr="Style graphique">Graphic Style</div>
               <div class="style-group">
                 <input type="radio" name="graphic_style" id="sty-realistic" value="Realistic" checked>
-                <label for="sty-realistic" data-fname="Realistic" data-fdesc="High-fidelity surfaces matching real-world environments — photoscanned-quality textures, accurate PBR materials, natural weathering and geological detail." data-fimg="img/style-realistic.jpg"><img src="img/style-icon-realistic.png" alt="" class="style-icon">Realistic</label>
+                <label for="sty-realistic" data-fname="Realistic" data-fdesc="High-fidelity surfaces matching real-world environments — photoscanned-quality textures, accurate PBR materials, natural weathering and geological detail." data-fimg="img/style-realistic.webp"><img src="img/style-icon-realistic.webp" alt="" class="style-icon">Realistic</label>
                 <input type="radio" name="graphic_style" id="sty-stylized" value="Stylized">
-                <label for="sty-stylized" data-fname="Stylized" data-fdesc="Strong artistic identity with deliberate forms — graphic silhouettes, expressive color grading, coherent visual language across the entire environment." data-fimg="img/style-stylized.jpg"><img src="img/style-icon-stylized.png" alt="" class="style-icon">Stylized</label>
+                <label for="sty-stylized" data-fname="Stylized" data-fdesc="Strong artistic identity with deliberate forms — graphic silhouettes, expressive color grading, coherent visual language across the entire environment." data-fimg="img/style-stylized.webp"><img src="img/style-icon-stylized.webp" alt="" class="style-icon">Stylized</label>
                 <input type="radio" name="graphic_style" id="sty-polygonal" value="Polygonal">
-                <label for="sty-polygonal" data-fname="Polygonal" data-fdesc="Low-poly / geometric — faceted surfaces, minimal textures. Optimized for performance or minimalist visual direction." data-fimg="img/style-polygonal.jpg"><img src="img/style-icon-polygonal.png" alt="" class="style-icon">Polygonal</label>
+                <label for="sty-polygonal" data-fname="Polygonal" data-fdesc="Low-poly / geometric — faceted surfaces, minimal textures. Optimized for performance or minimalist visual direction." data-fimg="img/style-polygonal.webp"><img src="img/style-icon-polygonal.webp" alt="" class="style-icon">Polygonal</label>
                 <input type="radio" name="graphic_style" id="sty-cartoon" value="Cartoon">
-                <label for="sty-cartoon" data-fname="Cartoon" data-fdesc="Bold, colorful, exaggerated forms — thick outlines, toon shading. Works with both UE5 and Unity stylized pipelines." data-fimg="img/style-cartoon.jpg"><img src="img/style-icon-cartoon.png" alt="" class="style-icon">Cartoon</label>
+                <label for="sty-cartoon" data-fname="Cartoon" data-fdesc="Bold, colorful, exaggerated forms — thick outlines, toon shading. Works with both UE5 and Unity stylized pipelines." data-fimg="img/style-cartoon.webp"><img src="img/style-icon-cartoon.webp" alt="" class="style-icon">Cartoon</label>
                 <input type="radio" name="graphic_style" id="sty-retro" value="Retro">
-                <label for="sty-retro" data-fname="Retro" data-fdesc="Nostalgic rendering — simplified shading, limited palette, low-res textures adapted to modern real-time workflows." data-fimg="img/style-retro.jpg"><img src="img/style-icon-retro.png" alt="" class="style-icon">Retro</label>
+                <label for="sty-retro" data-fname="Retro" data-fdesc="Nostalgic rendering — simplified shading, limited palette, low-res textures adapted to modern real-time workflows." data-fimg="img/style-retro.webp"><img src="img/style-icon-retro.webp" alt="" class="style-icon">Retro</label>
               </div>
             </div>
 
@@ -666,17 +1014,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
                 <div class="form-section-title" data-en="Technical Features" data-fr="Fonctionnalités techniques">Technical Features <span class="engine-note">UE5 only</span></div>
                 <div class="yn-table">
                   <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                  <div class="yn-row" id="row-rvt" data-fname="Runtime Virtual Texture (RVT)" data-fdesc="Blends terrain materials with actors placed on top — objects receive terrain color and cast contact shadows seamlessly." data-fimg="img/feat-rvt.jpg">
+                  <div class="yn-row" id="row-rvt" data-fname="Runtime Virtual Texture (RVT)" data-fdesc="Blends terrain materials with actors placed on top — objects receive terrain color and cast contact shadows seamlessly." data-fimg="img/feat-rvt.webp">
                     <span class="yn-name f-hover">RVT</span>
                     <div class="yn-cell"><input type="radio" name="rvt" id="rvt-y" value="yes" checked><label for="rvt-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="rvt" id="rvt-n" value="no"><label for="rvt-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-hlod" data-fname="HLOD — Hierarchical LOD" data-fdesc="Groups distant geometry into simplified proxy meshes — essential for open world performance." data-fimg="img/feat-hlod.jpg">
+                  <div class="yn-row" id="row-hlod" data-fname="HLOD — Hierarchical LOD" data-fdesc="Groups distant geometry into simplified proxy meshes — essential for open world performance." data-fimg="img/feat-hlod.webp">
                     <span class="yn-name f-hover">HLOD</span>
                     <div class="yn-cell"><input type="radio" name="hlod" id="hlod-y" value="yes" checked><label for="hlod-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="hlod" id="hlod-n" value="no"><label for="hlod-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-wp" data-fname="World Partition" data-fdesc="Splits the world into streaming cells. Required for tiled terrains above ~4km². Enables seamless open world streaming in UE5." data-fimg="img/feat-wp.jpg">
+                  <div class="yn-row" id="row-wp" data-fname="World Partition" data-fdesc="Splits the world into streaming cells. Required for tiled terrains above ~4km². Enables seamless open world streaming in UE5." data-fimg="img/feat-wp.webp">
                     <span class="yn-name f-hover">World Partition</span>
                     <div class="yn-cell"><input type="radio" name="wp" id="wp-y" value="yes" checked><label for="wp-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="wp" id="wp-n" value="no"><label for="wp-n"></label></div>
@@ -687,17 +1035,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
                 <div class="form-section-title" data-en="Terrain Materials" data-fr="Matériaux terrain">Terrain Materials</div>
                 <div class="yn-table">
                   <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                  <div class="yn-row" id="row-disp" data-fname="Material Displacement" data-fdesc="Tessellates the terrain mesh using height data — rock edges and ground relief become physically accurate 3D geometry." data-fimg="img/feat-displacement.jpg">
+                  <div class="yn-row" id="row-disp" data-fname="Material Displacement" data-fdesc="Tessellates the terrain mesh using height data — rock edges and ground relief become physically accurate 3D geometry." data-fimg="img/feat-displacement.webp">
                     <span class="yn-name f-hover">Displacement</span>
                     <div class="yn-cell"><input type="radio" name="displacement" id="disp-y" value="yes" checked><label for="disp-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="displacement" id="disp-n" value="no"><label for="disp-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-mt" data-fname="Material Transitions" data-fdesc="Smooth blending between terrain layers — no hard seams between grass and rock, sand and soil." data-fimg="img/feat-transitions.jpg">
+                  <div class="yn-row" id="row-mt" data-fname="Material Transitions" data-fdesc="Smooth blending between terrain layers — no hard seams between grass and rock, sand and soil." data-fimg="img/feat-transitions.webp">
                     <span class="yn-name f-hover">Mat. Transitions</span>
                     <div class="yn-cell"><input type="radio" name="mat_transition" id="mt-y" value="yes" checked><label for="mt-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="mat_transition" id="mt-n" value="no"><label for="mt-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-pt" data-fname="Paintable Terrain" data-fdesc="Layer masks editable in-engine after delivery — repaint material zones directly in UE5 or Unity without touching source files." data-fimg="img/feat-paintable.jpg">
+                  <div class="yn-row" id="row-pt" data-fname="Paintable Terrain" data-fdesc="Layer masks editable in-engine after delivery — repaint material zones directly in UE5 or Unity without touching source files." data-fimg="img/feat-paintable.webp">
                     <span class="yn-name f-hover">Paintable Terrain</span>
                     <div class="yn-cell"><input type="radio" name="paintable" id="pt-y" value="yes" checked><label for="pt-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="paintable" id="pt-n" value="no"><label for="pt-n"></label></div>
@@ -711,17 +1059,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               <div class="form-section-title" data-en="Terrain Complexity" data-fr="Complexité du terrain">Terrain Complexity</div>
               <div class="yn-table">
                 <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                <div class="yn-row" data-fname="Specific Map" data-fdesc="You provide a reference layout — concept art, top-down sketch, or geographical data. Sculpting follows your defined geography." data-fimg="img/feat-specificmap.jpg">
+                <div class="yn-row" data-fname="Specific Map" data-fdesc="You provide a reference layout — concept art, top-down sketch, or geographical data. Sculpting follows your defined geography." data-fimg="img/feat-specificmap.webp">
                   <span class="yn-name f-hover">Specific Map (you have a layout)</span>
                   <div class="yn-cell"><input type="radio" name="specific_map" id="sm-y" value="yes"><label for="sm-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="specific_map" id="sm-n" value="no" checked><label for="sm-n"></label></div>
                 </div>
-                <div class="yn-row" data-fname="Multiple Biomes" data-fdesc="Several distinct ecological zones — desert, forest, tundra, wetland. Each biome requires its own material set and transition work." data-fimg="img/feat-biomes.jpg">
+                <div class="yn-row" data-fname="Multiple Biomes" data-fdesc="Several distinct ecological zones — desert, forest, tundra, wetland. Each biome requires its own material set and transition work." data-fimg="img/feat-biomes.webp">
                   <span class="yn-name f-hover">Multiple Biomes</span>
                   <div class="yn-cell"><input type="radio" name="biomes" id="bio-y" value="yes"><label for="bio-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="biomes" id="bio-n" value="no" checked><label for="bio-n"></label></div>
                 </div>
-                <div class="yn-row" data-fname="Lake / River / Sea" data-fdesc="Water bodies integrated into the terrain — shoreline sculpting, water shader setup, river flow, foam and caustics." data-fimg="img/feat-water.jpg">
+                <div class="yn-row" data-fname="Lake / River / Sea" data-fdesc="Water bodies integrated into the terrain — shoreline sculpting, water shader setup, river flow, foam and caustics." data-fimg="img/feat-water.webp">
                   <span class="yn-name f-hover">Lake / River / Sea</span>
                   <div class="yn-cell"><input type="radio" name="water" id="wat-y" value="yes"><label for="wat-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="water" id="wat-n" value="no" checked><label for="wat-n"></label></div>
@@ -734,25 +1082,25 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               <div class="form-section-title" data-en="Assets &amp; FX" data-fr="Assets &amp; FX">Assets &amp; FX</div>
               <div class="asset-grid">
                 <input type="radio" name="assets" id="ast-terrain" value="Terrain only" checked>
-                <label for="ast-terrain" class="asset-card" data-fname="Terrain Only" data-fdesc="Pure terrain mesh and materials. No assets, no FX. Ideal when your team handles props and atmosphere in-house." data-fimg="img/asset-terrain.jpg">
+                <label for="ast-terrain" class="asset-card" data-fname="Terrain Only" data-fdesc="Pure terrain mesh and materials. No assets, no FX. Ideal when your team handles props and atmosphere in-house." data-fimg="img/asset-terrain.webp">
                   <div class="asset-card-title">TERRAIN ONLY</div>
                   <div class="asset-card-tags">(mesh · materials)</div>
                   <div class="asset-card-desc">Pure terrain, no extras. Your team handles the rest.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-assets" value="Terrain + Assets">
-                <label for="ast-assets" class="asset-card" data-fname="Terrain + Assets" data-fdesc="Terrain with procedurally scattered assets — rocks, foliage, ground props. Placement driven by terrain data for believable density." data-fimg="img/asset-assets.jpg">
+                <label for="ast-assets" class="asset-card" data-fname="Terrain + Assets" data-fdesc="Terrain with procedurally scattered assets — rocks, foliage, ground props. Placement driven by terrain data for believable density." data-fimg="img/asset-assets.webp">
                   <div class="asset-card-title">TERRAIN + ASSETS</div>
                   <div class="asset-card-tags">(rocks · foliage · props)</div>
                   <div class="asset-card-desc">Procedurally scattered assets, driven by terrain data.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-fx" value="Terrain + FX">
-                <label for="ast-fx" class="asset-card" data-fname="Terrain + FX" data-fdesc="Terrain with atmospheric FX — wind, mist layers, waterfall particles, volumetric atmosphere. Focused on visual mood." data-fimg="img/asset-fx.jpg">
+                <label for="ast-fx" class="asset-card" data-fname="Terrain + FX" data-fdesc="Terrain with atmospheric FX — wind, mist layers, waterfall particles, volumetric atmosphere. Focused on visual mood." data-fimg="img/asset-fx.webp">
                   <div class="asset-card-title">TERRAIN + FX</div>
                   <div class="asset-card-tags">(wind · mist · atmosphere)</div>
                   <div class="asset-card-desc">Atmospheric effects for mood and visual depth.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-full" value="Full Environment">
-                <label for="ast-full" class="asset-card" data-fname="Full Environment" data-fdesc="Complete scene — terrain, assets, FX, skybox and water shaders integrated. Ready to drop into production." data-fimg="img/asset-full.jpg">
+                <label for="ast-full" class="asset-card" data-fname="Full Environment" data-fdesc="Complete scene — terrain, assets, FX, skybox and water shaders integrated. Ready to drop into production." data-fimg="img/asset-full.webp">
                   <div class="asset-card-title">FULL ENVIRONMENT</div>
                   <div class="asset-card-tags">(assets · FX · skybox · water)</div>
                   <div class="asset-card-desc">Complete production scene, ready to use as-is.</div>
@@ -932,13 +1280,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
 </div><!-- /svc-content-terrain -->
 
-<div class="svc-content" id="svc-content-hero">
-
-<!-- ══ HERO ASSETS ══ -->
-<div class="sec-divider">
-  <div class="sec-divider-top"><span class="sec-divider-label" data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span><span class="sec-divider-line"></span></div>
-  <div class="sec-divider-sub" data-en="Landmark-scale, ultra-detailed assets built for cinematic worlds: terrain, vegetation, structures, climate FX. Each type opens its own scoping brief." data-fr="Assets à l'échelle d'un monument, ultra-détaillés pour des univers cinématographiques : terrain, végétation, structures, FX climatiques. Chaque type ouvre son propre brief de cadrage.">Landmark-scale, ultra-detailed assets built for cinematic worlds: terrain, vegetation, structures, climate FX. Each type opens its own scoping brief.</div>
-</div>
+<div class="svc-tab-panel" id="svc-content-hero">
 
 <div class="hero-assets-section">
 
@@ -1025,7 +1367,40 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
 </div><!-- /svc-content-hero -->
 
-<div class="about-divider"></div>
+<!-- ══ PROCESS SECTION ══ -->
+<section class="process-section fade-in-up" id="process">
+  <div class="process-section-hdr">
+    <div class="process-eyebrow" data-en="How It Works" data-fr="Comment ça marche">How It Works</div>
+    <div class="process-hdr-title" data-en="THE PROCESS" data-fr="LE PROCESSUS">THE PROCESS</div>
+  </div>
+  <div class="process-cards">
+
+    <div class="process-card fade-in-up">
+      <div class="process-card-num">01 / BRIEF</div>
+      <div class="process-card-name">BRIEF</div>
+      <div class="process-card-desc" data-en="You send your project brief — engine, world size, art direction, references. I reply within 48h with a precise scope and quote." data-fr="Vous envoyez votre brief — moteur, taille, direction artistique, références. Je réponds sous 48h avec un périmètre et un devis précis.">You send your project brief — engine, world size, art direction, references. I reply within 48h with a precise scope and quote.</div>
+    </div>
+
+    <div class="process-card fade-in-up">
+      <div class="process-card-num">02 / SCULPT</div>
+      <div class="process-card-name">SCULPT</div>
+      <div class="process-card-desc" data-en="Terrain sculpted from scratch in Gaea 2, following your layout and references. A shape review checkpoint before moving to detailing." data-fr="Terrain sculpté de zéro dans Gaea 2, en suivant votre layout et vos références. Un point de validation de la forme avant le détaillage.">Terrain sculpted from scratch in Gaea 2, following your layout and references. A shape review checkpoint before moving to detailing.</div>
+    </div>
+
+    <div class="process-card fade-in-up">
+      <div class="process-card-num">03 / DETAIL</div>
+      <div class="process-card-name">DETAIL</div>
+      <div class="process-card-desc" data-en="Houdini procedural detailing — surface textures, materials, scatter systems, FX. Revision rounds until everything is locked and approved." data-fr="Détaillage procédural Houdini — textures, matériaux, scatter, FX. Rounds de révision jusqu'à validation complète.">Houdini procedural detailing — surface textures, materials, scatter systems, FX. Revision rounds until everything is locked and approved.</div>
+    </div>
+
+    <div class="process-card fade-in-up">
+      <div class="process-card-num">04 / DELIVERY</div>
+      <div class="process-card-name">DELIVERY</div>
+      <div class="process-card-desc" data-en="Production-ready delivery in your engine — World Partition, LODs, RVT, documentation. Drop it in and it works." data-fr="Livraison prête pour la production dans votre moteur — World Partition, LODs, RVT, documentation. Intégrez et c'est prêt.">Production-ready delivery in your engine — World Partition, LODs, RVT, documentation. Drop it in and it works.</div>
+    </div>
+
+  </div>
+</section>
 
 <section id="about">
   <div class="about-faq-only">
@@ -1088,6 +1463,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
 <div class="divider"></div>
 
+<!-- ══ FOOTER CTA ══ -->
+<div class="footer-cta-new fade-in-up">
+  <div>
+    <div class="fcta-eyebrow" data-en="Ready to start?" data-fr="Prêt à démarrer ?">Ready to start?</div>
+    <h2 class="fcta-title">LET'S BUILD<br><em>YOUR WORLD</em></h2>
+  </div>
+  <div class="fcta-actions">
+    <a href="#configure" class="btn-svc-primary" style="font-size:1rem;padding:0.9rem 2rem;" data-en="Get a Quote" data-fr="Obtenir un devis">Get a Quote</a>
+    <a href="contact.html" class="btn-svc-ghost" style="font-size:1rem;padding:0.9rem 2rem;" data-en="Contact Us" data-fr="Nous contacter">Contact Us</a>
+  </div>
+</div>
 
 <footer>
   <div class="footer-copy">© 2026 Kalysteon · <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a></div>
@@ -1102,10 +1488,10 @@ var COMMISSION_OPEN = true;
   if (!el) return;
   if (COMMISSION_OPEN) {
     el.className = 'commission-status open';
-    el.innerHTML = '<span class="status-dot"></span><span data-en="Open for commissions" data-fr="Commissions ouvertes">Open for commissions</span>';
+    el.innerHTML = '<span class="status-dot"></span><span data-en="STATUS — Select Projects Open" data-fr="STATUT — Projets sélectifs ouverts">STATUS — Select Projects Open</span>';
   } else {
     el.className = 'commission-status closed';
-    el.innerHTML = '<span class="status-dot"></span><span data-en="Commissions closed" data-fr="Commissions fermées">Commissions closed</span>';
+    el.innerHTML = '<span class="status-dot"></span><span data-en="STATUS — Currently Unavailable" data-fr="STATUT — Indisponible actuellement">STATUS — Currently Unavailable</span>';
   }
 })();
 
@@ -1234,21 +1620,13 @@ function svcOpen(el) {
     el.removeEventListener('transitionend', done);
   });
 }
-function selectService(type) {
-  document.querySelectorAll('.svc-card').forEach(function(c){ c.classList.remove('active'); });
-  document.getElementById('svc-' + type).classList.add('active');
-  var target = document.getElementById('svc-content-' + type);
-  document.querySelectorAll('.svc-content').forEach(function(c){
-    if (c !== target) {
-      c.style.transition = 'none';
-      c.style.height = '0px';
-      c.classList.remove('open');
-    }
-  });
-  if (!target.classList.contains('open')) svcOpen(target);
+function switchTab(type) {
+  document.querySelectorAll('.svc-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  var panel = document.getElementById('svc-content-' + type);
+  if (panel) panel.classList.add('active');
   closeForm();
-  setTimeout(function(){ document.querySelector('.svc-gateway').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
 }
+function selectService(type) { switchTab(type); }
 
 /* ═══ PRESET SELECT ═══ */
 function selectPreset(card) {
@@ -1802,6 +2180,16 @@ function toggleFaq(btn) {
   // Open clicked if it was closed
   if (!isOpen) item.classList.add('open');
 }
+
+/* ═══ SCROLL FADE-IN ═══ */
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in-up').forEach(function(el) { obs.observe(el); });
+})();
 </script>
 </body>
 </html>
