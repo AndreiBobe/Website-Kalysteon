@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kalysteon — Client Reviews</title>
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-deep: #01060F;
+  --gold: #D4AF37;
+  --gold-bright: #F5D76E;
+  --gold-glow: rgba(212,175,55,0.6);
+  --gold-border: rgba(212,175,55,0.4);
+  --text-light: #F5F0E6;
+  --text-muted: #D0D9F0;
+  --text-dim: #9BB0D0;
+  --card-bg: rgba(5,14,40,0.55);
+  --transition-smooth: cubic-bezier(0.2,0.9,0.4,1.1);
+  --radius-card: 20px;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+body {
+  background-color: #020A16;
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(20,45,90,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 85%, rgba(10,30,70,0.35) 0%, transparent 55%);
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2.5rem;
+  border-bottom: 1px solid rgba(212,175,55,0.45);
+  background: linear-gradient(135deg, rgba(2,8,20,0.97) 0%, rgba(6,18,50,0.97) 40%, rgba(10,28,65,0.97) 65%, rgba(2,8,20,0.97) 100%);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 30px rgba(212,175,55,0.07), 0 4px 20px rgba(0,0,0,0.5);
+  animation: fadeInDown 0.8s var(--transition-smooth) forwards;
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text-light); text-decoration: none; }
+.logo span { color: var(--gold); }
+
+/* NAV PILLS */
+.header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-pill { position: relative; display: flex; align-items: center; }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.45rem 0.9rem; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.025); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
+.nav-link:hover, .nav-pill:hover > .nav-link { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); box-shadow: 0 0 14px rgba(201,168,76,0.18), inset 0 0 10px rgba(201,168,76,0.07); transform: scale(1.05); }
+.nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.08); }
+.nav-dropdown-trigger::after { content: ' ▾'; font-size: 0.5rem; opacity: 0.65; }
+.nav-dd-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(6,14,32,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(201,168,76,0.28); border-radius: 16px; padding: 0.5rem; min-width: 210px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 0 24px rgba(201,168,76,0.06); }
+.nav-dd-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
+.nav-pill:hover .nav-dd-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.nav-dd-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.85rem; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+.nav-dd-item:hover { color: var(--gold-bright); background: rgba(201,168,76,0.09); }
+.nav-dd-icon { font-size: 0.9rem; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-dd-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 0.3rem 0.5rem; }
+.nav-dd-reviews { color: rgba(212,175,55,0.85); }
+.nav-dd-reviews:hover { color: var(--gold-bright); background: rgba(201,168,76,0.12); }
+
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(212,175,55,0.5); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', monospace; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-btn.active { color: var(--gold); }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
+
+/* ANIMATIONS */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUpFade { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes goldShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes starPulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(212,175,55,0.5); }
+  50% { text-shadow: 0 0 20px rgba(245,215,110,0.9), 0 0 40px rgba(212,175,55,0.4); }
+}
+
+/* MAIN */
+main { position: relative; z-index: 10; flex: 1; }
+
+/* HERO HEADER */
+.reviews-hero {
+  padding: 5rem 2.5rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(212,175,55,0.18);
+}
+.reviews-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(30,60,130,0.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.reviews-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  animation: slideUpFade 0.7s 0.1s var(--transition-smooth) backwards;
+}
+.reviews-eyebrow::before,
+.reviews-eyebrow::after {
+  content: '✦';
+  font-size: 0.5rem;
+  opacity: 0.7;
+}
+.reviews-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+  background: linear-gradient(135deg, var(--text-light) 20%, var(--gold) 50%, var(--gold-bright) 60%, var(--text-light) 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: slideUpFade 0.7s 0.2s var(--transition-smooth) backwards, goldShimmer 6s 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+.reviews-title-fr {
+  display: none;
+}
+.reviews-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+  animation: slideUpFade 0.7s 0.32s var(--transition-smooth) backwards;
+}
+
+/* STATS BAR */
+.reviews-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1.4rem 2.5rem;
+  animation: slideUpFade 0.7s 0.42s var(--transition-smooth) backwards;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.stat-sep {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, rgba(212,175,55,0.35), transparent);
+}
+.stat-stars {
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  animation: starPulse 3s ease-in-out infinite;
+  margin-bottom: 0.25rem;
+}
+
+/* MASONRY GRID */
+.reviews-section {
+  padding: 3.5rem 2.5rem 5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.reviews-grid {
+  columns: 3;
+  column-gap: 1.4rem;
+}
+@media (max-width: 1000px) { .reviews-grid { columns: 2; } }
+@media (max-width: 620px)  { .reviews-grid { columns: 1; } }
+
+/* REVIEW CARD */
+.rv-card {
+  break-inside: avoid;
+  margin-bottom: 1.4rem;
+  background: var(--card-bg);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: var(--radius-card);
+  padding: 1.5rem 1.6rem;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  /* entrance animation staggered via JS */
+  opacity: 0;
+  transform: translateY(30px);
+}
+.rv-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s var(--transition-smooth), transform 0.6s var(--transition-smooth),
+              border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.rv-card:hover {
+  border-color: rgba(212,175,55,0.42);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.08);
+  transform: translateY(-4px);
+}
+
+/* Mouse-tracking radial glow */
+.rv-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--mouse-x) var(--mouse-y),
+    rgba(212,175,55,0.10) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.rv-card:hover::before { opacity: 1; }
+
+/* Card content above glow */
+.rv-card > * { position: relative; z-index: 1; }
+
+/* CARD HEADER */
+.rv-card-hdr {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0.75rem;
+}
+.rv-stars {
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  transition: text-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+.rv-card:hover .rv-stars {
+  text-shadow: 0 0 12px rgba(245,215,110,0.8), 0 0 24px rgba(212,175,55,0.4);
+}
+.rv-badge {
+  font-family: var(--mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.7rem;
+  border-radius: 20px;
+  border: 1px solid;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rv-badge--frost {
+  color: rgba(130,200,255,0.9);
+  border-color: rgba(130,200,255,0.30);
+  background: rgba(130,200,255,0.07);
+}
+.rv-badge--8k {
+  color: rgba(180,230,140,0.9);
+  border-color: rgba(180,230,140,0.30);
+  background: rgba(180,230,140,0.07);
+}
+.rv-badge--arctic {
+  color: rgba(160,195,255,0.9);
+  border-color: rgba(160,195,255,0.30);
+  background: rgba(160,195,255,0.07);
+}
+
+/* CARD TEXT */
+.rv-text {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+  font-weight: 400;
+}
+.rv-text--long {
+  /* Cap long reviews with a fade */
+  max-height: 220px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+
+/* CARD FOOTER */
+.rv-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(212,175,55,0.10);
+}
+.rv-author {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  font-weight: 500;
+}
+.rv-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.rv-date {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+.rv-rating-chip {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(212,175,55,0.7);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 10px;
+  padding: 0.15rem 0.5rem;
+}
+
+/* FOOTER */
+footer {
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(212,175,55,0.2);
+  padding: 2.5rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.1em; color: var(--text-dim); }
+.footer-brand span { color: var(--gold); }
+.footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-dim); }
+.footer-links { display: flex; gap: 1.2rem; }
+.footer-link { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.footer-link:hover { color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 780px) { header { padding: 1rem 1.5rem; } .reviews-hero { padding: 3.5rem 1.5rem 3rem; } .reviews-section { padding: 2.5rem 1.5rem 4rem; } }
+@media (max-width: 550px) { .header-nav { display: none; } .reviews-stats { gap: 1.2rem; } .stat-sep { display: none; } }
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<header>
+  <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
+  <nav class="header-nav">
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger active" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="products.html#coll-card-frostholm" data-en="Frosthölm Collection" data-fr="Collection Frosthölm"><span class="nav-dd-icon">❄</span>Frosthölm Collection</a>
+        <a class="nav-dd-item" href="products.html#coll-card-8k" data-en="8K Terrain Packs" data-fr="Packs Terrain 8K"><span class="nav-dd-icon">⛰</span>8K Terrain Packs</a>
+        <a class="nav-dd-item" href="products.html#coll-card-arctic" data-en="Arctic Landscapes" data-fr="Paysages Arctiques"><span class="nav-dd-icon">🏔</span>Arctic Landscapes</a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item nav-dd-reviews" href="reviews.html" data-en="Client Reviews" data-fr="Avis Clients"><span class="nav-dd-icon">★</span>Client Reviews</a>
+      </div>
+    </div>
+    <div class="nav-pill"><a class="nav-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a></div>
+    <div class="nav-pill"><a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a></div>
+    <div class="nav-pill"><a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a></div>
+  </nav>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" data-lang="fr">FR</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="reviews-hero">
+    <div class="reviews-eyebrow" data-en="Verified Buyers · Fab Marketplace" data-fr="Acheteurs Vérifiés · Fab Marketplace">Verified Buyers · Fab Marketplace</div>
+    <h1 class="reviews-title" data-en="WHAT MY CLIENTS SAY" data-fr="CE QUE MES CLIENTS DISENT">WHAT MY CLIENTS SAY</h1>
+    <p class="reviews-subtitle" data-en="Honest feedback from creators who use Kalysteon assets in real-world projects — Unreal Engine, game dev, arch-viz." data-fr="Retours honnêtes de créateurs utilisant les assets Kalysteon dans leurs projets — Unreal Engine, jeux vidéo, archiviz.">
+      Honest feedback from creators who use Kalysteon assets in real-world projects — Unreal Engine, game dev, arch-viz.
+    </p>
+
+    <!-- STATS -->
+    <div class="reviews-stats">
+      <div class="stat-item">
+        <div class="stat-stars">★★★★★</div>
+        <div class="stat-label" data-en="Average Score" data-fr="Note Moyenne">Average Score</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <div class="stat-value">4.7</div>
+        <div class="stat-label" data-en="out of 5" data-fr="sur 5">out of 5</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <div class="stat-value">12</div>
+        <div class="stat-label" data-en="Reviews" data-fr="Avis">Reviews</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <div class="stat-value">58%</div>
+        <div class="stat-label" data-en="5-star" data-fr="5 étoiles">5-star</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MASONRY CARDS -->
+  <section class="reviews-section">
+    <div class="reviews-grid" id="reviews-grid">
+      <!-- Injected by JS -->
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">KALYS<span>T</span>EON</div>
+  <div class="footer-copy" data-en="© 2024 Kalysteon — All rights reserved" data-fr="© 2024 Kalysteon — Tous droits réservés">© 2024 Kalysteon — All rights reserved</div>
+  <div class="footer-links">
+    <a class="footer-link" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+    <a class="footer-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+    <a class="footer-link" href="about.html" data-en="About" data-fr="À propos">About</a>
+    <a class="footer-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   PARTICLE CANVAS (same as other pages)
+============================================================ */
+(function() {
+  var canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for (var i = 0; i < 55; i++) {
+    particles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.4+0.3, vx: (Math.random()-0.5)*0.18, vy: (Math.random()-0.5)*0.18, a: Math.random()*0.45+0.05 });
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(function(p) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(212,175,55,' + p.a + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ============================================================
+   REVIEWS DATA
+============================================================ */
+var REVIEWS = [
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'Amazing and realistic. Looking forward to the rest of the series.',
+    author: 'EmpireLion4u', date: 'Last year', badge: 'frost', badgeLabel: '❄ Frosthölm'
+  },
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.',
+    author: 'jonius12', date: 'Last year', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  },
+  {
+    rating: 4, stars: '★★★★☆',
+    text: 'I corrected my review, in UE5 it works perfectly — the developer helped quickly. The heightmaps are great! A full 4.27 release would be cool.',
+    author: 'hm-hesse', date: '3 years ago', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  },
+  {
+    rating: 4, stars: '★★★★☆',
+    text: 'I learned a lot with your heightmaps! Thank you for your support, you answer all my questions.',
+    author: 'GildardHache', date: '4 years ago', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  },
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'These terrains are truly made for high tier performance and depth of details are amazing for any project. Thank you.',
+    author: 'Amor2point0', date: '4 years ago', badge: 'arctic', badgeLabel: '🏔 Arctic'
+  },
+  {
+    rating: 4, stars: '★★★★☆',
+    text: 'I had some issues at the start with the map. But after looking at it for a while I managed to get it working. — Updated!',
+    author: 'Lil Freeze4U', date: '4 years ago', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  },
+  {
+    rating: 4, stars: '★★★★☆',
+    text: 'Update: Thank you for your quick feedback — the PostProcessVolume advice fixed it partially, I\'ve ended up changing the Exposure Compensation. In regards to the collision it\'s a shame as stones and trees need to be removed from the grass layer. The Z,X,Y was in regards to GAEA (8K Tiled Output).',
+    author: 'PureYuki', date: '3 years ago', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  },
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'A really great pack with everything you need to make a good environment. The 8K textures are really realistic.',
+    author: 'NikausDraw', date: 'Last year', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  },
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'You can tell this author puts a lot of meticulous energy into assembling these kits. They match or surpass similar kits in quality and go more than one step beyond — providing a vast selection of landscapes to work with. Not just random satellite heightmaps but each map has key features and dynamic layouts for different gaming needs. These feel thoughtfully selected: interconnected roads, geographic features, zones leveled for building infrastructure. Creme of the crop heightmaps made with passion, accessible to anyone. Thanks mate.',
+    author: 'psychohacktive', date: 'Last year', badge: '8k', badgeLabel: '⛰ 8K Terrain', long: true
+  },
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'Very nice.',
+    author: 'EmpireLion4u', date: 'Last year', badge: 'frost', badgeLabel: '❄ Frosthölm'
+  },
+  {
+    rating: 5, stars: '★★★★★',
+    text: 'True Beauty.',
+    author: 'Amor2point0', date: '4 years ago', badge: 'arctic', badgeLabel: '🏔 Arctic'
+  },
+  {
+    rating: 4, stars: '★★★★☆',
+    text: 'It\'s okay. I had some issues at the start but now it works.',
+    author: 'Lil Freeze4U', date: '4 years ago', badge: '8k', badgeLabel: '⛰ 8K Terrain'
+  }
+];
+
+/* ============================================================
+   BUILD CARDS
+============================================================ */
+function buildReviews() {
+  var grid = document.getElementById('reviews-grid');
+  REVIEWS.forEach(function(r, i) {
+    var card = document.createElement('div');
+    card.className = 'rv-card';
+    card.style.transitionDelay = (i * 0.06) + 's';
+
+    var badgeClass = 'rv-badge rv-badge--' + r.badge;
+    var textClass = r.long ? 'rv-text rv-text--long' : 'rv-text';
+
+    card.innerHTML =
+      '<div class="rv-card-hdr">' +
+        '<span class="rv-stars">' + r.stars + '</span>' +
+        '<span class="' + badgeClass + '">' + r.badgeLabel + '</span>' +
+      '</div>' +
+      '<div class="' + textClass + '">' + r.text + '</div>' +
+      '<div class="rv-footer">' +
+        '<span class="rv-author">' + r.author + '</span>' +
+        '<div class="rv-meta">' +
+          '<span class="rv-date">' + r.date + '</span>' +
+          '<span class="rv-rating-chip">' + r.rating + '/5</span>' +
+        '</div>' +
+      '</div>';
+
+    /* Mouse tracking */
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
+      var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+      card.style.setProperty('--mouse-x', x);
+      card.style.setProperty('--mouse-y', y);
+    });
+
+    grid.appendChild(card);
+  });
+}
+buildReviews();
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+var revCards = document.querySelectorAll('.rv-card');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+revCards.forEach(function(c) { observer.observe(c); });
+
+/* ============================================================
+   LANGUAGE TOGGLE
+============================================================ */
+var currentLang = 'en';
+function applyLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-en]').forEach(function(el) {
+    var val = lang === 'fr' ? el.getAttribute('data-fr') : el.getAttribute('data-en');
+    if (val) el.textContent = val;
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+}
+document.querySelectorAll('.lang-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { applyLang(btn.getAttribute('data-lang')); });
+});
+</script>
+</body>
+</html>
