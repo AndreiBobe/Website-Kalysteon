@@ -368,91 +368,49 @@ main {
 }
 .choice-card:hover .choice-cta { gap: 0.6rem; }
 
-/* ── PRODUCTS — warm gold, Frostholm bg ── */
-.choice-products {
-  border: 1px solid rgba(201,168,76,0.38);
-  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,168,76,0.06) inset;
-}
-.choice-products:hover {
-  border-color: rgba(201,168,76,0.65);
-  box-shadow: 0 28px 55px -12px rgba(0,0,0,0.75), 0 0 40px rgba(201,168,76,0.18);
-}
-.choice-products .choice-bg {
-  background-image: url('img/collections/frostholm-collection.webp');
-  background-position: center 20%;
-}
-.choice-products .choice-overlay {
-  background: linear-gradient(180deg,
-    rgba(1,6,15,0.15) 0%,
-    rgba(1,6,15,0.30) 35%,
-    rgba(1,6,15,0.82) 70%,
-    rgba(1,6,15,0.96) 100%);
-}
-.choice-products .choice-tag {
-  background: rgba(201,168,76,0.15);
-  border: 1px solid rgba(201,168,76,0.35);
-  color: #F2D777;
-}
-.choice-products .choice-stat {
-  background: rgba(201,168,76,0.10);
-  border-color: rgba(201,168,76,0.28);
-  color: rgba(242,215,119,0.85);
-}
-.choice-products .choice-cta { color: #F2D777; }
-
-/* ── COMMISSION — deep blue/indigo, geometric bg ── */
+/* ── BOTH CARDS — unified dark-blue + gold schematic ── */
+.choice-products,
 .choice-commission {
-  border: 1px solid rgba(100,140,240,0.32);
-  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.65), 0 0 0 1px rgba(80,120,220,0.05) inset;
+  background: linear-gradient(145deg, #0C1E3C 0%, #071626 55%, #030E1F 100%);
+  border: 1px solid rgba(201,168,76,0.28);
+  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,168,76,0.05) inset;
 }
+.choice-products:hover,
 .choice-commission:hover {
-  border-color: rgba(130,170,255,0.55);
-  box-shadow: 0 28px 55px -12px rgba(0,0,0,0.75), 0 0 40px rgba(80,120,220,0.20);
+  border-color: rgba(201,168,76,0.60);
+  box-shadow: 0 28px 55px -12px rgba(0,0,0,0.75), 0 0 44px rgba(201,168,76,0.16);
 }
-.choice-commission .choice-bg {
-  background: radial-gradient(ellipse at 30% 20%, rgba(40,20,100,0.90) 0%, rgba(4,12,35,0.98) 60%),
-              radial-gradient(ellipse at 80% 80%, rgba(10,40,120,0.70) 0%, transparent 55%);
-}
-/* Geometric SVG pattern overlay for Commission */
-.choice-commission .choice-geo {
+
+/* Blueprint schematic decorative SVG */
+.choice-schematic {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #5DCDFF;
+  opacity: 0.20;
   z-index: 1;
-  opacity: 0.12;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(100,140,255,0.4) 0px, rgba(100,140,255,0.4) 1px, transparent 1px, transparent 40px),
-    repeating-linear-gradient(-45deg, rgba(100,140,255,0.25) 0px, rgba(100,140,255,0.25) 1px, transparent 1px, transparent 60px);
-  transition: opacity 0.35s;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 0 1.5px rgba(93,205,255,0.55)) drop-shadow(0 0 4px rgba(93,205,255,0.22));
 }
-.choice-commission:hover .choice-geo { opacity: 0.20; }
-/* Corner brackets */
-.choice-commission .choice-corner {
-  position: absolute;
-  z-index: 2;
-}
-.choice-commission .choice-corner--tl { top: 1.1rem; left: 1.1rem; }
-.choice-commission .choice-corner--br { bottom: 1.1rem; right: 1.1rem; }
-.choice-commission .choice-corner svg { width: 22px; height: 22px; opacity: 0.45; }
-.choice-commission .choice-overlay {
-  background: linear-gradient(180deg,
-    transparent 0%,
-    rgba(4,10,30,0.45) 40%,
-    rgba(4,10,30,0.88) 75%,
-    rgba(4,10,30,0.98) 100%);
-  z-index: 2;
-}
-.choice-commission .choice-body { z-index: 5; }
+.choice-card:hover .choice-schematic { opacity: 0.30; }
+
+/* Unified gold tags, stats, CTAs */
+.choice-products .choice-tag,
 .choice-commission .choice-tag {
-  background: rgba(80,120,240,0.15);
-  border: 1px solid rgba(100,150,255,0.32);
-  color: rgba(160,195,255,0.90);
+  background: rgba(201,168,76,0.11);
+  border: 1px solid rgba(201,168,76,0.30);
+  color: #F2D777;
 }
+.choice-products .choice-stat,
 .choice-commission .choice-stat {
-  background: rgba(80,120,240,0.10);
-  border-color: rgba(100,150,255,0.25);
-  color: rgba(160,195,255,0.80);
+  background: rgba(201,168,76,0.08);
+  border-color: rgba(201,168,76,0.24);
+  color: rgba(242,215,119,0.80);
 }
-.choice-commission .choice-cta { color: rgba(160,195,255,0.92); }
+.choice-products .choice-cta,
+.choice-commission .choice-cta { color: #F2D777; }
 
 /* SECTION TÉMOIGNAGES - FONDU LATÉRAL ADOUCI */
 .testimonials-section {
@@ -695,8 +653,89 @@ footer {
 
     <!-- ── PRODUCTS portal ── -->
     <a class="choice-card choice-products" href="products.html" style="animation-delay:0.25s">
-      <div class="choice-bg"></div>
-      <div class="choice-overlay"></div>
+      <!-- BLUEPRINT: Topographic Survey + Cross-Section -->
+      <svg class="choice-schematic" viewBox="0 0 520 380" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <pattern id="g-fine" width="26" height="26" patternUnits="userSpaceOnUse">
+            <path d="M26 0L0 0 0 26" fill="none" stroke="currentColor" stroke-width="0.28"/>
+          </pattern>
+          <pattern id="g-coarse" width="104" height="104" patternUnits="userSpaceOnUse">
+            <path d="M104 0L0 0 0 104" fill="none" stroke="currentColor" stroke-width="0.7"/>
+          </pattern>
+          <filter id="bp-glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect width="520" height="380" fill="url(#g-fine)" opacity="0.42"/>
+        <rect width="520" height="380" fill="url(#g-coarse)" opacity="0.58"/>
+        <!-- Border ticks -->
+        <g stroke="currentColor" stroke-width="0.9">
+          <line x1="104" y1="0" x2="104" y2="9"/><line x1="208" y1="0" x2="208" y2="9"/><line x1="312" y1="0" x2="312" y2="9"/><line x1="416" y1="0" x2="416" y2="9"/>
+          <line x1="104" y1="380" x2="104" y2="371"/><line x1="208" y1="380" x2="208" y2="371"/><line x1="312" y1="380" x2="312" y2="371"/><line x1="416" y1="380" x2="416" y2="371"/>
+          <line x1="0" y1="76" x2="9" y2="76"/><line x1="0" y1="152" x2="9" y2="152"/><line x1="0" y1="228" x2="9" y2="228"/><line x1="0" y1="304" x2="9" y2="304"/>
+          <line x1="520" y1="76" x2="511" y2="76"/><line x1="520" y1="152" x2="511" y2="152"/><line x1="520" y1="228" x2="511" y2="228"/><line x1="520" y1="304" x2="511" y2="304"/>
+        </g>
+        <!-- MAIN TOPOGRAPHIC CLUSTER — 8 contour levels, peak ~(374,150) -->
+        <path d="M206,62 C238,36 298,22 368,32 C438,42 492,90 506,150 C520,210 500,266 458,284 C416,302 364,293 326,273 C288,253 263,220 255,188 C247,156 257,128 249,106 C241,84 220,72 206,62Z" stroke="currentColor" stroke-width="0.85" fill="none" filter="url(#bp-glow)"/>
+        <path d="M226,79 C256,57 312,45 374,57 C436,69 480,110 492,162 C504,214 484,261 447,276 C410,291 362,283 327,265 C292,247 270,216 265,183 C260,150 268,124 261,104 C254,84 238,91 226,79Z" stroke="currentColor" stroke-width="0.85" fill="none"/>
+        <path d="M247,96 C273,76 322,67 380,79 C438,91 475,128 482,174 C489,220 469,257 435,271 C401,285 358,276 327,259 C296,242 278,213 274,182 C270,151 278,127 273,109 C268,91 257,104 247,96Z" stroke="currentColor" stroke-width="0.9" fill="none" filter="url(#bp-glow)"/>
+        <path d="M268,114 C290,96 332,89 384,101 C436,113 467,146 469,186 C471,226 452,253 422,264 C392,275 355,267 328,253 C301,239 286,212 283,183 C280,154 289,132 285,114 C281,100 275,120 268,114Z" stroke="currentColor" stroke-width="0.9" fill="none"/>
+        <path d="M290,133 C308,117 344,111 388,123 C432,135 456,164 455,197 C454,230 435,251 408,261 C381,271 350,263 328,250 C306,237 293,212 292,184 C291,156 300,138 296,124 C293,116 291,138 290,133Z" stroke="currentColor" stroke-width="1.0" fill="none" filter="url(#bp-glow)"/>
+        <path d="M312,152 C326,137 354,133 390,145 C426,157 447,182 443,210 C439,238 418,252 394,258 C370,264 341,256 324,243 C307,230 300,208 302,185 C304,162 312,152 312,152Z" stroke="currentColor" stroke-width="1.0" fill="none"/>
+        <path d="M334,170 C344,157 365,155 393,167 C421,179 436,202 430,224 C424,246 405,256 382,257 C359,258 337,247 324,234 C311,221 310,201 317,185 C324,169 332,176 334,170Z" stroke="currentColor" stroke-width="1.1" fill="none" filter="url(#bp-glow)"/>
+        <path d="M355,187 C363,176 378,176 395,187 C412,198 418,217 411,232 C404,247 387,252 371,249 C355,246 341,235 337,220 C333,205 341,193 355,187Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+        <!-- Summit crosshair -->
+        <line x1="375" y1="207" x2="375" y2="189" stroke="currentColor" stroke-width="1.4" filter="url(#bp-glow)"/>
+        <line x1="366" y1="198" x2="384" y2="198" stroke="currentColor" stroke-width="1.4" filter="url(#bp-glow)"/>
+        <circle cx="375" cy="198" r="2.8" fill="currentColor" filter="url(#bp-glow)"/>
+        <!-- SECONDARY PEAK (NW) -->
+        <path d="M108,64 C134,46 172,50 196,72 C220,94 222,128 204,148 C186,168 154,170 130,152 C106,134 98,102 108,82 C112,74 108,64 108,64Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M122,77 C144,62 172,67 190,85 C208,103 207,130 191,145 C175,160 149,160 133,147 C117,134 113,108 120,92 C124,84 122,77 122,77Z" stroke="currentColor" stroke-width="0.8" fill="none" filter="url(#bp-glow)"/>
+        <path d="M136,91 C153,78 172,82 184,98 C196,114 194,135 181,146 C168,157 147,156 136,144 C125,132 123,112 130,100 C133,94 136,91 136,91Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <circle cx="159" cy="118" r="2.2" fill="currentColor"/>
+        <!-- Ridge spur between peaks (dashed) -->
+        <path d="M196,118 C216,122 238,122 260,116" stroke="currentColor" stroke-width="0.7" stroke-dasharray="3,4" opacity="0.7"/>
+        <!-- CROSS-SECTION A-A' CUT LINE -->
+        <line x1="18" y1="198" x2="502" y2="198" stroke="currentColor" stroke-width="0.7" stroke-dasharray="9,7"/>
+        <path d="M24,192 L18,198 L24,204" fill="none" stroke="currentColor" stroke-width="1.1"/>
+        <path d="M496,192 L502,198 L496,204" fill="none" stroke="currentColor" stroke-width="1.1"/>
+        <text x="10" y="195" font-family="monospace" font-size="8" fill="currentColor" opacity="0.80" text-anchor="middle">A</text>
+        <text x="510" y="195" font-family="monospace" font-size="8" fill="currentColor" opacity="0.80" text-anchor="middle">A'</text>
+        <!-- ELEVATION PROFILE (cross-section diagram) -->
+        <line x1="20" y1="350" x2="500" y2="350" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="20" y1="295" x2="20" y2="352" stroke="currentColor" stroke-width="0.8"/>
+        <path d="M20,350 C55,350 75,347 92,341 C109,335 118,327 130,323 C142,319 150,323 164,327 C178,331 186,333 202,328 C218,323 227,311 240,296 C253,281 260,265 272,249 C284,233 291,225 304,229 C317,233 323,247 338,255 C353,263 364,271 380,272 C396,273 408,267 422,275 C436,283 446,298 462,310 C478,322 490,338 500,346 L500,350 Z" stroke="currentColor" stroke-width="1.0" fill="currentColor" fill-opacity="0.07"/>
+        <!-- Profile Y-axis ticks -->
+        <line x1="16" y1="312" x2="24" y2="312" stroke="currentColor" stroke-width="0.7"/>
+        <line x1="16" y1="272" x2="24" y2="272" stroke="currentColor" stroke-width="0.7"/>
+        <line x1="16" y1="232" x2="24" y2="232" stroke="currentColor" stroke-width="0.7"/>
+        <text x="14" y="315" font-family="monospace" font-size="6" fill="currentColor" opacity="0.58" text-anchor="end">500</text>
+        <text x="14" y="275" font-family="monospace" font-size="6" fill="currentColor" opacity="0.58" text-anchor="end">1500</text>
+        <text x="14" y="235" font-family="monospace" font-size="6" fill="currentColor" opacity="0.58" text-anchor="end">2500</text>
+        <!-- Section markers -->
+        <path d="M26,344 L20,350 L26,356" fill="none" stroke="currentColor" stroke-width="0.9"/>
+        <path d="M494,344 L500,350 L494,356" fill="none" stroke="currentColor" stroke-width="0.9"/>
+        <!-- ANNOTATIONS -->
+        <text x="383" y="186" font-family="monospace" font-size="7.5" fill="currentColor" opacity="0.75">▲ 2847m</text>
+        <text x="152" y="62" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.60">1240m</text>
+        <!-- North arrow -->
+        <line x1="34" y1="42" x2="34" y2="20" stroke="currentColor" stroke-width="1.3" filter="url(#bp-glow)"/>
+        <path d="M29,31 L34,20 L39,31 L34,27 Z" fill="currentColor"/>
+        <text x="34" y="52" font-family="monospace" font-size="8.5" fill="currentColor" opacity="0.75" text-anchor="middle">N</text>
+        <!-- Scale bar -->
+        <line x1="62" y1="362" x2="202" y2="362" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="62" y1="357" x2="62" y2="367" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="132" y1="357" x2="132" y2="367" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="202" y1="357" x2="202" y2="367" stroke="currentColor" stroke-width="0.9"/>
+        <text x="59" y="375" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.65">0</text>
+        <text x="126" y="375" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.65">1km</text>
+        <text x="194" y="375" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.65">2km</text>
+        <!-- Grid coord labels -->
+        <text x="104" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">520E</text>
+        <text x="208" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">540E</text>
+        <text x="312" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">560E</text>
+        <text x="416" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">580E</text>
+        <text x="11" y="79" font-family="monospace" font-size="6" fill="currentColor" opacity="0.48">48N</text>
+        <text x="11" y="155" font-family="monospace" font-size="6" fill="currentColor" opacity="0.48">47N</text>
+      </svg>
       <div class="choice-body">
         <div class="choice-tag" data-en="Asset Store" data-fr="Boutique Assets">Asset Store</div>
         <div class="choice-title" data-en="PRODUCTS" data-fr="PRODUITS">PRODUCTS</div>
@@ -712,16 +751,103 @@ footer {
 
     <!-- ── COMMISSION portal ── -->
     <a class="choice-card choice-commission" href="commission.html" style="animation-delay:0.42s">
-      <div class="choice-bg"></div>
-      <div class="choice-geo"></div>
-      <!-- Corner brackets -->
-      <div class="choice-corner choice-corner--tl">
-        <svg viewBox="0 0 22 22" fill="none"><path d="M2 20 L2 2 L20 2" stroke="rgba(120,160,255,0.7)" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </div>
-      <div class="choice-corner choice-corner--br">
-        <svg viewBox="0 0 22 22" fill="none"><path d="M2 2 L20 2 L20 20" stroke="rgba(120,160,255,0.7)" stroke-width="1.4" stroke-linecap="round" transform="rotate(180 11 11)"/></svg>
-      </div>
-      <div class="choice-overlay"></div>
+      <!-- BLUEPRINT: Architectural Site Plan -->
+      <svg class="choice-schematic" viewBox="0 0 520 380" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <pattern id="g-fine-a" width="26" height="26" patternUnits="userSpaceOnUse">
+            <path d="M26 0L0 0 0 26" fill="none" stroke="currentColor" stroke-width="0.28"/>
+          </pattern>
+          <pattern id="g-coarse-a" width="104" height="104" patternUnits="userSpaceOnUse">
+            <path d="M104 0L0 0 0 104" fill="none" stroke="currentColor" stroke-width="0.7"/>
+          </pattern>
+          <filter id="arch-glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect width="520" height="380" fill="url(#g-fine-a)" opacity="0.42"/>
+        <rect width="520" height="380" fill="url(#g-coarse-a)" opacity="0.58"/>
+        <!-- Border ticks -->
+        <g stroke="currentColor" stroke-width="0.9">
+          <line x1="104" y1="0" x2="104" y2="9"/><line x1="208" y1="0" x2="208" y2="9"/><line x1="312" y1="0" x2="312" y2="9"/><line x1="416" y1="0" x2="416" y2="9"/>
+          <line x1="0" y1="76" x2="9" y2="76"/><line x1="0" y1="152" x2="9" y2="152"/><line x1="0" y1="228" x2="9" y2="228"/><line x1="0" y1="304" x2="9" y2="304"/>
+        </g>
+        <!-- MAIN BUILDING FOOTPRINT -->
+        <rect x="248" y="34" width="244" height="158" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.04" filter="url(#arch-glow)"/>
+        <!-- Room partitions -->
+        <line x1="328" y1="34" x2="328" y2="192" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="414" y1="34" x2="414" y2="192" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="248" y1="100" x2="492" y2="100" stroke="currentColor" stroke-width="0.9"/>
+        <!-- Window symbols (thick segments on exterior) -->
+        <line x1="268" y1="34" x2="310" y2="34" stroke="currentColor" stroke-width="2.8"/>
+        <line x1="342" y1="34" x2="404" y2="34" stroke="currentColor" stroke-width="2.8"/>
+        <line x1="432" y1="34" x2="482" y2="34" stroke="currentColor" stroke-width="2.8"/>
+        <line x1="492" y1="50" x2="492" y2="92" stroke="currentColor" stroke-width="2.8"/>
+        <line x1="492" y1="112" x2="492" y2="174" stroke="currentColor" stroke-width="2.8"/>
+        <!-- Door arc Room 1 -->
+        <line x1="327" y1="60" x2="347" y2="60" stroke="currentColor" stroke-width="0.9"/>
+        <path d="M327,60 A20,20 0 0,1 347,80" stroke="currentColor" stroke-width="0.9" fill="none"/>
+        <!-- Door arc Room 3 -->
+        <line x1="327" y1="150" x2="327" y2="170" stroke="currentColor" stroke-width="0.9"/>
+        <path d="M327,150 A20,20 0 0,0 347,150" stroke="currentColor" stroke-width="0.9" fill="none"/>
+        <!-- SECONDARY STRUCTURE -->
+        <rect x="340" y="220" width="152" height="102" stroke="currentColor" stroke-width="1.2" fill="currentColor" fill-opacity="0.03"/>
+        <line x1="340" y1="271" x2="492" y2="271" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="416" y1="220" x2="416" y2="322" stroke="currentColor" stroke-width="0.8"/>
+        <!-- Covered walkway (dashed rect) -->
+        <rect x="384" y="192" width="56" height="28" stroke="currentColor" stroke-width="0.7" stroke-dasharray="4,3" fill="none"/>
+        <!-- PATH / ROAD -->
+        <path d="M0,228 C50,228 92,226 132,222 C172,218 204,212 232,207 C248,204 248,198 248,192" stroke="currentColor" stroke-width="10" stroke-opacity="0.10" fill="none"/>
+        <path d="M0,228 C50,228 92,226 132,222 C172,218 204,212 232,207 C248,204 248,198 248,192" stroke="currentColor" stroke-width="1.0" fill="none" stroke-dasharray="13,8"/>
+        <!-- TREES (survey symbol: circle + orthogonal cross) -->
+        <g filter="url(#arch-glow)">
+          <circle cx="136" cy="78" r="24" stroke="currentColor" stroke-width="0.9"/>
+          <line x1="136" y1="54" x2="136" y2="102" stroke="currentColor" stroke-width="0.65" opacity="0.70"/>
+          <line x1="112" y1="78" x2="160" y2="78" stroke="currentColor" stroke-width="0.65" opacity="0.70"/>
+        </g>
+        <circle cx="76" cy="152" r="20" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="76" y1="132" x2="76" y2="172" stroke="currentColor" stroke-width="0.65" opacity="0.65"/>
+        <line x1="56" y1="152" x2="96" y2="152" stroke="currentColor" stroke-width="0.65" opacity="0.65"/>
+        <circle cx="190" cy="260" r="16" stroke="currentColor" stroke-width="0.85"/>
+        <line x1="190" y1="244" x2="190" y2="276" stroke="currentColor" stroke-width="0.6" opacity="0.60"/>
+        <line x1="174" y1="260" x2="206" y2="260" stroke="currentColor" stroke-width="0.6" opacity="0.60"/>
+        <circle cx="108" cy="296" r="22" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="108" y1="274" x2="108" y2="318" stroke="currentColor" stroke-width="0.65" opacity="0.65"/>
+        <line x1="86" y1="296" x2="130" y2="296" stroke="currentColor" stroke-width="0.65" opacity="0.65"/>
+        <circle cx="260" cy="210" r="13" stroke="currentColor" stroke-width="0.75"/>
+        <line x1="260" y1="197" x2="260" y2="223" stroke="currentColor" stroke-width="0.55" opacity="0.55"/>
+        <line x1="247" y1="210" x2="273" y2="210" stroke="currentColor" stroke-width="0.55" opacity="0.55"/>
+        <!-- DIMENSION LINES -->
+        <line x1="248" y1="20" x2="492" y2="20" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="248" y1="14" x2="248" y2="26" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="492" y1="14" x2="492" y2="26" stroke="currentColor" stroke-width="0.8"/>
+        <text x="370" y="16" font-family="monospace" font-size="7" fill="currentColor" opacity="0.75" text-anchor="middle">24.4 m</text>
+        <line x1="506" y1="34" x2="506" y2="192" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="501" y1="34" x2="511" y2="34" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="501" y1="192" x2="511" y2="192" stroke="currentColor" stroke-width="0.8"/>
+        <text x="518" y="116" font-family="monospace" font-size="7" fill="currentColor" opacity="0.75" text-anchor="middle" transform="rotate(90,518,116)">15.8 m</text>
+        <!-- DETAIL CALLOUT -->
+        <circle cx="328" cy="62" r="16" stroke="currentColor" stroke-width="0.9" stroke-dasharray="3,3" filter="url(#arch-glow)"/>
+        <line x1="344" y1="54" x2="372" y2="30" stroke="currentColor" stroke-width="0.7"/>
+        <text x="374" y="27" font-family="monospace" font-size="7" fill="currentColor" opacity="0.70">DET.01</text>
+        <!-- NORTH ARROW -->
+        <line x1="32" y1="346" x2="32" y2="324" stroke="currentColor" stroke-width="1.4" filter="url(#arch-glow)"/>
+        <path d="M27,336 L32,324 L37,336 L32,332 Z" fill="currentColor"/>
+        <text x="32" y="357" font-family="monospace" font-size="9" fill="currentColor" opacity="0.75" text-anchor="middle">N</text>
+        <!-- SCALE BAR -->
+        <line x1="60" y1="366" x2="180" y2="366" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="60" y1="362" x2="60" y2="370" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="120" y1="362" x2="120" y2="370" stroke="currentColor" stroke-width="0.9"/>
+        <line x1="180" y1="362" x2="180" y2="370" stroke="currentColor" stroke-width="0.9"/>
+        <text x="57" y="378" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.65">0</text>
+        <text x="113" y="378" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.65">10m</text>
+        <text x="172" y="378" font-family="monospace" font-size="6.5" fill="currentColor" opacity="0.65">20m</text>
+        <!-- GRID LABELS -->
+        <text x="104" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">A1</text>
+        <text x="208" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">B1</text>
+        <text x="312" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">C1</text>
+        <text x="416" y="12" font-family="monospace" font-size="6" fill="currentColor" opacity="0.50" text-anchor="middle">D1</text>
+        <text x="11" y="79" font-family="monospace" font-size="6" fill="currentColor" opacity="0.48">A</text>
+        <text x="11" y="155" font-family="monospace" font-size="6" fill="currentColor" opacity="0.48">B</text>
+        <text x="11" y="231" font-family="monospace" font-size="6" fill="currentColor" opacity="0.48">C</text>
+      </svg>
       <div class="choice-body">
         <div class="choice-tag" data-en="Bespoke Production" data-fr="Production Sur-Mesure">Bespoke Production</div>
         <div class="choice-title" data-en="COMMISSION" data-fr="COMMISSION">COMMISSION</div>
