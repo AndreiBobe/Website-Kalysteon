@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -133,7 +133,7 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .featured-collection:hover::before { opacity: 1; animation-play-state: running; }
 .featured-bg { position: absolute; inset: 0; background-size: cover; background-position: center 25%; z-index: 0; transition: transform 0.5s; }
 .featured-collection:hover .featured-bg { transform: scale(1.03); }
-.featured-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(1,8,16,0.88) 0%, rgba(5,19,34,0.75) 50%, rgba(1,8,16,0.92) 100%); z-index: 1; }
+.featured-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(1,8,16,0.92) 0%, rgba(1,8,16,0.65) 42%, rgba(1,8,16,0.12) 100%), linear-gradient(to top, rgba(1,8,16,0.48) 0%, transparent 42%); z-index: 1; }
 .featured-content { position: relative; z-index: 2; padding: 3rem; display: flex; flex-direction: column; gap: 0.9rem; max-width: 62%; }
 .featured-badge { display: inline-block; background: linear-gradient(135deg, var(--gold-dark), var(--gold-bright)); color: #010810; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; padding: 0.25rem 0.8rem; border-radius: 30px; width: fit-content; text-transform: uppercase; font-weight: 700; }
 .featured-title { font-family: var(--display); font-size: clamp(2.8rem, 5vw, 4rem); letter-spacing: 0.04em; color: var(--text); line-height: 1; }
@@ -162,7 +162,7 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .collection-card:hover { transform: translateY(-5px); box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5); }
 .collection-card::before { content: ''; position: absolute; inset: 0; border-radius: 28px; padding: 1px; background: conic-gradient(from var(--angle), transparent 25%, #C9A84C 45%, #F2D777 50%, #C9A84C 55%, transparent 75%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; z-index: 3; pointer-events: none; animation: rotateBorder 2.5s linear infinite paused; transition: opacity 0.3s; }
 .collection-card:hover::before { opacity: 1; animation-play-state: running; }
-.collection-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,6,15,0.92) 0%, rgba(1,6,15,0.52) 60%, rgba(0,0,0,0.18) 100%); z-index: 1; }
+.collection-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,6,15,0.90) 0%, rgba(1,6,15,0.36) 52%, rgba(0,0,0,0.04) 100%); z-index: 1; }
 .collection-content { position: relative; z-index: 2; padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end; min-height: 280px; }
 .collection-title { font-family: var(--display); font-size: 2rem; letter-spacing: 0.04em; color: white; line-height: 1; }
 .collection-desc { font-family: var(--mono); font-size: 0.7rem; color: rgba(255,255,255,0.68); margin: 0.5rem 0; max-width: 82%; line-height: 1.55; }
@@ -477,9 +477,14 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 .footer-links { display: flex; gap: 1.5rem; }
 .footer-link { font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
 .footer-link:hover { color: var(--accent); }
+
+/* ── PARTICLE CANVAS ── */
+#ptx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.page-banner, .store-section, .coming-soon-section, footer { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
+<canvas id="ptx"></canvas>
 
 <header>
   <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
@@ -494,7 +499,16 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html" data-en="Client Reviews" data-fr="Avis Clients"><span class="nav-dd-icon">★</span>Client Reviews</a>
       </div>
     </div>
-    <div class="nav-pill"><a class="nav-link" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a></div>
+        <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="commission.html#tab-terrain" data-en="Custom Terrain" data-fr="Terrain Custom"><span class="nav-dd-icon">⛰</span>Custom Terrain</a>
+        <a class="nav-dd-item" href="commission.html#tab-hero" data-en="Hero Assets" data-fr="Hero Assets"><span class="nav-dd-icon">◆</span>Hero Assets</a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="commission.html#process" data-en="How It Works" data-fr="Comment ca marche"><span class="nav-dd-icon">↺</span>How It Works</a>
+        <a class="nav-dd-item" href="commission.html#about" data-en="FAQ" data-fr="FAQ"><span class="nav-dd-icon">?</span>FAQ</a>
+      </div>
+    </div>
     <div class="nav-pill"><a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a></div>
     <div class="nav-pill"><a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a></div>
   </nav>
@@ -1352,10 +1366,12 @@ function openCollection(col) {
       });
     });
     switchCollection(col);
+    if (typeof setParticleMode === 'function') setParticleMode(col === 'frostholm' ? 'snow' : 'gold');
   }, 160);
 }
 
 function backToCollections() {
+  if (typeof setParticleMode === 'function') setParticleMode('gold');
   var inner = document.getElementById('store-inner');
   var picker = document.getElementById('coll-picker');
   inner.style.transition = 'opacity 0.18s, transform 0.18s';
@@ -2474,6 +2490,99 @@ document.querySelectorAll('.nav-dd-item').forEach(function(link) {
     });
   }
 });
+
+/* ── Background Particle System ────────────────────────────────────── */
+(function () {
+  var cvs = document.getElementById('ptx');
+  if (!cvs) return;
+  var ctx = cvs.getContext('2d');
+  var W, H, frame = 0;
+  var mode = 'gold';
+  var pts = [];
+  var N = 54;
+
+  function resize() {
+    W = cvs.width = window.innerWidth;
+    H = cvs.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function mkGold(atRandom) {
+    return {
+      t: 'g',
+      x: rnd(0, W),
+      y: atRandom ? rnd(0, H) : H + rnd(0, 30),
+      r: rnd(0.6, 1.9),
+      vx: rnd(-0.10, 0.10), vy: rnd(-0.18, -0.44),
+      ba: rnd(0.12, 0.48), oa: rnd(0.06, 0.16),
+      f: rnd(0.010, 0.026), ph: rnd(0, 6.28)
+    };
+  }
+
+  function mkSnow(atRandom) {
+    return {
+      t: 's',
+      x: rnd(0, W),
+      y: atRandom ? rnd(0, H) : rnd(-40, -5),
+      r: rnd(1.0, 2.7),
+      vx: rnd(-0.07, 0.07), vy: rnd(0.26, 0.72),
+      a: rnd(0.28, 0.65),
+      sw: rnd(0.07, 0.22), sf: rnd(0.009, 0.020), ph: rnd(0, 6.28)
+    };
+  }
+
+  for (var i = 0; i < N; i++) pts.push(mkGold(true));
+
+  window.setParticleMode = function (m) {
+    if (mode === m) return;
+    mode = m;
+    pts.forEach(function (p) {
+      p._die = frame + Math.floor(rnd(4, 110));
+    });
+  };
+
+  function tick() {
+    requestAnimationFrame(tick);
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+
+      if (p._die !== undefined && frame >= p._die) {
+        pts[i] = mode === 'snow' ? mkSnow(false) : mkGold(false);
+        p = pts[i];
+      }
+
+      if (p.t === 'g') {
+        p.ph += p.f;
+        p.x  += p.vx;
+        p.y  += p.vy;
+        if (p.y < -6) { pts[i] = mkGold(false); continue; }
+        var a = Math.max(0, Math.min(1, p.ba + Math.sin(p.ph) * p.oa));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        ctx.fillStyle = 'rgba(201,168,76,' + a.toFixed(2) + ')';
+        ctx.fill();
+      } else {
+        p.ph += p.sf;
+        p.x  += p.vx + Math.sin(p.ph) * p.sw;
+        p.y  += p.vy;
+        if (p.y > H + 8) { pts[i] = mkSnow(false); continue; }
+        if (p.x < -8) p.x = W + 8;
+        if (p.x > W + 8) p.x = -8;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        ctx.fillStyle = 'rgba(215,238,255,' + p.a.toFixed(2) + ')';
+        ctx.fill();
+      }
+    }
+  }
+  tick();
+})();
 </script>
 <div id="rdesc-type-tooltip" class="rdesc-type-tooltip"><img id="rdesc-type-tooltip-img" src="" alt=""></div>
 </body>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -123,11 +123,11 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .preset-card[data-preset="terrain-l"]  { border-color: rgba(200,212,222,0.30); box-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 0 70px rgba(110,150,190,0.06), inset 0 1px 0 rgba(200,212,222,0.08); }
 .preset-card[data-preset="terrain-xl"] { box-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 0 70px rgba(10,100,45,0.07), inset 0 1px 0 rgba(29,201,122,0.11); }
 
-/* Terrain M — featured */
+/* Terrain M · featured */
 .preset-card[data-preset="terrain-m"] { border-color: rgba(201,168,76,0.50); box-shadow: 0 6px 28px rgba(0,0,0,0.60), 0 0 28px rgba(201,168,76,0.10), inset 0 0 70px rgba(140,100,20,0.06), inset 0 1px 0 rgba(201,168,76,0.20); }
 .preset-card[data-preset="terrain-m"]:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.70), 0 0 40px rgba(201,168,76,0.18), inset 0 0 70px rgba(140,100,20,0.08), inset 0 1px 0 rgba(201,168,76,0.28); }
 
-/* Per-tier hover glow — inset tint preserved */
+/* Per-tier hover glow · inset tint preserved */
 .preset-card[data-preset="terrain-s"]:hover  { border-color: rgba(100,180,240,0.55); box-shadow: 0 10px 36px rgba(0,0,0,0.65), 0 0 28px rgba(100,180,240,0.10), inset 0 0 70px rgba(20,80,200,0.07), inset 0 1px 0 rgba(100,180,240,0.18); }
 .preset-card[data-preset="terrain-l"]:hover  { border-color: rgba(200,212,222,0.50); box-shadow: 0 10px 36px rgba(0,0,0,0.65), 0 0 24px rgba(200,212,222,0.09), inset 0 0 70px rgba(110,150,190,0.07), inset 0 1px 0 rgba(200,212,222,0.16); }
 
@@ -136,6 +136,7 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .preset-card[data-preset="terrain-l"]:hover  .preset-cta { color: #C0CCDA; }
 
 .preset-popular-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(135deg, #8B6914, #F2D777); color: #020A16; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.18em; padding: 0.2rem 0.55rem; border-radius: 20px; text-transform: uppercase; font-weight: 700; box-shadow: 0 2px 10px rgba(201,168,76,0.35); }
+.preset-badge--specialist { position: absolute; top: 12px; right: 12px; background: linear-gradient(135deg, #5B2FA0, #C0A0F0); color: #0A0418; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.18em; padding: 0.2rem 0.55rem; border-radius: 20px; text-transform: uppercase; font-weight: 700; box-shadow: 0 2px 10px rgba(157,107,224,0.45); }
 
 /* Tier rarity dots */
 .preset-card[data-preset="terrain-s"]  .preset-id::after { content: '●'; color: #64B4F0; margin-left: 0.5rem; font-size: 0.55rem; }
@@ -260,6 +261,7 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .excl-info { flex: 1; }
 .excl-label { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--text); margin-bottom: 0.3rem; }
 .excl-desc { font-family: var(--mono); font-size: 0.67rem; color: var(--text-muted); line-height: 1.55; }
+.excl-portfolio-note { font-family: var(--mono); font-size: 0.60rem; color: rgba(201,168,76,0.55); margin-top: 0.45rem; letter-spacing: 0.03em; }
 .toggle-wrap { display: flex; align-items: center; cursor: pointer; flex-shrink: 0; margin-top: 0.15rem; }
 .toggle-wrap input[type="checkbox"] { display: none; }
 .toggle-track { width: 42px; height: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; position: relative; transition: background 0.2s, border-color 0.2s; display: block; }
@@ -315,8 +317,31 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .xl-banner-title { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.6rem; }
 .xl-banner-desc { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); line-height: 1.8; }
 .form-wrap.preset-xl .xl-hide { display: none; }
-/* S preset — hide complexity section (irrelevant at indie scale) */
+/* S preset · hide complexity section (irrelevant at indie scale) */
 .form-wrap.preset-s .preset-s-hide { display: none; }
+/* Hero vs Terrain section toggling */
+.form-wrap.preset-hero .terrain-only { display: none; }
+.form-wrap:not(.preset-hero) .hero-only { display: none; }
+.form-wrap.preset-hero .hero-no-retro { display: none; }
+.form-wrap.preset-hero .style-group { display: grid; grid-template-columns: repeat(2, 1fr); }
+.form-wrap.preset-hero .style-group label { padding: 0.65rem 1.1rem; font-size: 0.76rem; }
+/* Object Scale visual selector */
+.scale-compare-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+.scale-compare-grid input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.scale-compare-card { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; border: 1px solid rgba(201,168,76,0.18); border-radius: var(--radius-xs); padding: 0.7rem 0.25rem 0.55rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; color: rgba(201,168,76,0.40); background: transparent; }
+.scale-compare-card:hover { border-color: rgba(201,168,76,0.40); color: rgba(201,168,76,0.72); background: rgba(201,168,76,0.03); }
+.scale-compare-grid input[type="radio"]:checked + .scale-compare-card { border-color: rgba(201,168,76,0.62); color: var(--gold); background: rgba(201,168,76,0.07); }
+.scale-compare-svg { width: 100%; max-width: 52px; height: auto; overflow: hidden; display: block; }
+.scale-compare-name { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase; color: inherit; margin-top: 0.25rem; }
+.scale-compare-dim  { font-family: var(--mono); font-size: 0.49rem; color: var(--text-dim); }
+@media (max-width: 480px) { .scale-compare-grid { grid-template-columns: repeat(2, 1fr); } }
+/* Hero viz single-slide panel */
+.hero-viz-stage { position: relative; width: 100%; height: 170px; }
+.hero-viz-slide { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 0.5rem; opacity: 0; transform: scale(0.94) translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; }
+.hero-viz-slide.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+.hero-viz-svg { width: auto; height: 140px; overflow: hidden; display: block; }
+.hero-viz-lbl { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-top: 0.4rem; }
+.hero-viz-dim { opacity: 0.45; margin-left: 0.3em; }
 
 /* INFO PANEL */
 .info-panel { flex: 0 0 var(--panel-w); width: var(--panel-w); position: sticky; top: 90px; align-self: flex-start; display: flex; flex-direction: column; border: 1px solid rgba(201,168,76,0.28); border-radius: var(--radius-md); box-shadow: 0 12px 50px rgba(0,0,0,0.65), 0 0 30px rgba(201,168,76,0.04), inset 0 1px 0 rgba(201,168,76,0.14); background: linear-gradient(160deg, #0C1E3C 0%, #061322 60%, #030D1C 100%); overflow: hidden; }
@@ -347,13 +372,16 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .viz-legend-text { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); }
 .viz-legend-text.active { color: var(--accent); }
 .panel-idle { padding: 0.75rem 1rem; font-family: var(--mono); font-size: 0.63rem; color: var(--text-dim); line-height: 1.7; text-align: center; }
-.panel-state { transition: opacity 0.2s; }
-.panel-state.hidden { opacity: 0; pointer-events: none; height: 0; overflow: hidden; }
+.panel-state { transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.2,0.9,0.4,1.1); }
+.panel-state.hidden { opacity: 0; pointer-events: none; height: 0; overflow: hidden; transform: translateY(7px) scale(0.98); }
+.panel-state:not(.hidden) { transform: translateY(0) scale(1); }
 .panel-price { border-top: 1px solid var(--border); padding: 1rem; }
 .panel-price-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
 .panel-price-label::before { content: ''; display: inline-block; width: 8px; height: 1px; background: var(--accent); flex-shrink: 0; }
-.panel-price-amount { font-family: var(--display); font-size: 1.9rem; letter-spacing: 0.06em; background: linear-gradient(135deg, #C9A84C 0%, #F2D777 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.4rem; text-shadow: none; }
+.panel-price-amount { font-family: var(--display); font-size: 1.9rem; letter-spacing: 0.06em; background: linear-gradient(135deg, #C9A84C 0%, #F2D777 50%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.4rem; text-shadow: none; transition: opacity 0.18s ease; }
 .panel-price-amount.muted { background: none; -webkit-text-fill-color: var(--text-dim); color: var(--text-dim); font-size: 1.3rem; }
+@keyframes priceIn { 0% { opacity:0; transform:translateY(5px); } 100% { opacity:1; transform:translateY(0); } }
+.panel-price-amount.price-updated { animation: priceIn 0.32s cubic-bezier(0.2,0.9,0.4,1.1) both; }
 .panel-price-breakdown { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); line-height: 1.85; }
 .panel-price-breakdown .hi { color: rgba(201,168,76,0.80); }
 .panel-price-disclaimer { font-family: var(--mono); font-size: 0.57rem; color: var(--text-dim); margin-top: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.5rem; line-height: 1.55; opacity: 0.7; }
@@ -378,7 +406,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .f-hover { cursor: help; }
 .f-hover:hover { color: var(--text); }
 
-/* SECTION DIVIDER — unified intro block (Custom Terrain / Hero Assets) */
+/* SECTION DIVIDER · unified intro block (Custom Terrain / Hero Assets) */
 .sec-divider { max-width: 1160px; margin: 3rem auto 1.6rem; padding: 0 2rem; }
 .sec-divider-top { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 0.75rem; }
 .sec-divider-label { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
@@ -405,8 +433,42 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .hero-preset--soon { opacity: 0.38; pointer-events: none; filter: grayscale(0.4); }
 .hero-soon-badge { position: absolute; top: 10px; right: 10px; font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.16em; text-transform: uppercase; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.28); color: var(--gold); padding: 0.18rem 0.5rem; border-radius: 20px; z-index: 2; }
 
-/* Accent line for hero preset */
-.preset-card[data-preset="hero-landscape"]::before { background: linear-gradient(to right, transparent, rgba(80,200,160,0.80), transparent); }
+/* ── HERO ASSET PRESETS · individual colour identities ── */
+/* Accent top lines */
+.preset-card[data-preset="hero-landscape"]::before  { background: linear-gradient(to right, transparent, rgba(201,168,76,0.90),  transparent); }
+.preset-card[data-preset="hero-vegetation"]::before { background: linear-gradient(to right, transparent, rgba(212,135,58,0.82),  transparent); }
+.preset-card[data-preset="hero-structure"]::before  { background: linear-gradient(to right, transparent, rgba(200,216,228,0.85), transparent); }
+.preset-card[data-preset="hero-climate"]::before    { background: linear-gradient(to right, transparent, rgba(157,107,224,0.82), transparent); }
+/* Default border & inset glow */
+.preset-card[data-preset="hero-landscape"]  { border-color: rgba(201,168,76,0.50);  box-shadow: 0 6px 28px rgba(0,0,0,0.60), 0 0 28px rgba(201,168,76,0.10),  inset 0 0 70px rgba(140,100,20,0.06),  inset 0 1px 0 rgba(201,168,76,0.20); }
+.preset-card[data-preset="hero-vegetation"] { border-color: rgba(212,135,58,0.38);  box-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 0 70px rgba(180,90,20,0.06),  inset 0 1px 0 rgba(212,135,58,0.12); }
+.preset-card[data-preset="hero-structure"]  { border-color: rgba(184,202,216,0.30); box-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 0 70px rgba(110,150,190,0.06), inset 0 1px 0 rgba(184,202,216,0.08); }
+.preset-card[data-preset="hero-climate"]    { border-color: rgba(157,107,224,0.35); box-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 0 70px rgba(100,50,200,0.07),  inset 0 1px 0 rgba(157,107,224,0.10); }
+/* Hover border & glow */
+.preset-card[data-preset="hero-landscape"]:hover  { border-color: rgba(201,168,76,0.65);  box-shadow: 0 12px 40px rgba(0,0,0,0.70), 0 0 40px rgba(201,168,76,0.18),  inset 0 0 70px rgba(140,100,20,0.08),  inset 0 1px 0 rgba(201,168,76,0.28); }
+.preset-card[data-preset="hero-vegetation"]:hover { border-color: rgba(212,135,58,0.58);  box-shadow: 0 10px 36px rgba(0,0,0,0.65), 0 0 28px rgba(212,135,58,0.14),  inset 0 0 70px rgba(180,90,20,0.08),  inset 0 1px 0 rgba(212,135,58,0.20); }
+.preset-card[data-preset="hero-structure"]:hover  { border-color: rgba(184,202,216,0.50); box-shadow: 0 10px 36px rgba(0,0,0,0.65), 0 0 24px rgba(184,202,216,0.10), inset 0 0 70px rgba(110,150,190,0.07), inset 0 1px 0 rgba(184,202,216,0.18); }
+.preset-card[data-preset="hero-climate"]:hover    { border-color: rgba(157,107,224,0.58); box-shadow: 0 10px 36px rgba(0,0,0,0.65), 0 0 32px rgba(157,107,224,0.16), inset 0 0 70px rgba(100,50,200,0.09),  inset 0 1px 0 rgba(157,107,224,0.20); }
+/* Hover scanner sweep */
+.preset-card[data-preset="hero-landscape"]:hover::after  { background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.12)  50%, transparent); }
+.preset-card[data-preset="hero-vegetation"]:hover::after { background: linear-gradient(to bottom, transparent, rgba(212,135,58,0.12)  50%, transparent); }
+.preset-card[data-preset="hero-structure"]:hover::after  { background: linear-gradient(to bottom, transparent, rgba(184,202,216,0.10) 50%, transparent); }
+.preset-card[data-preset="hero-climate"]:hover::after    { background: linear-gradient(to bottom, transparent, rgba(157,107,224,0.12) 50%, transparent); }
+/* Spec bullet dots */
+.preset-card[data-preset="hero-landscape"]  .preset-specs li::before { background-color: rgba(201,168,76,0.90); }
+.preset-card[data-preset="hero-vegetation"] .preset-specs li::before { background-color: rgba(212,135,58,0.90); }
+.preset-card[data-preset="hero-structure"]  .preset-specs li::before { background-color: rgba(184,202,216,0.85); }
+.preset-card[data-preset="hero-climate"]    .preset-specs li::before { background-color: rgba(157,107,224,0.90); }
+/* CTA colour on hover */
+.preset-card[data-preset="hero-landscape"]:hover  .preset-cta { color: #F2D777; }
+.preset-card[data-preset="hero-vegetation"]:hover .preset-cta { color: #E8A060; }
+.preset-card[data-preset="hero-structure"]:hover  .preset-cta { color: #C0CCDA; }
+.preset-card[data-preset="hero-climate"]:hover    .preset-cta { color: #C0A0F0; }
+/* ID badge markers */
+.preset-card[data-preset="hero-landscape"]  .preset-id::after { content: '◆'; color: #C9A84C; margin-left: 0.5rem; font-size: 0.55rem; }
+.preset-card[data-preset="hero-vegetation"] .preset-id::after { content: '●'; color: #D4873A; margin-left: 0.5rem; font-size: 0.55rem; }
+.preset-card[data-preset="hero-structure"]  .preset-id::after { content: '▲'; color: #B8C8D8; margin-left: 0.5rem; font-size: 0.55rem; }
+.preset-card[data-preset="hero-climate"]    .preset-id::after { content: '★'; color: #9D6BE0; margin-left: 0.5rem; font-size: 0.55rem; }
 
 /* ABOUT SECTION */
 #about { padding: 5rem 2.5rem 4rem; max-width: 1100px; margin: 0 auto; }
@@ -421,7 +483,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
 .about-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--text-dim); border: 1px solid var(--border-mid); padding: 0.25rem 0.6rem; border-radius: 20px; text-transform: uppercase; }
 
-/* FAQ — centered & clean */
+/* FAQ · centered & clean */
 #about { padding: 4rem 2.5rem 4rem; max-width: none; margin: 0; }
 .about-faq-only { max-width: 780px; margin: 0 auto; }
 .faq-title { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: 0.1em; color: var(--text); margin-bottom: 2.5rem; }
@@ -516,7 +578,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 /* Top accent */
 .svc-duel-card--terrain::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(to right, transparent, rgba(29,201,122,0.75) 30%, rgba(29,201,122,0.75) 70%, transparent); border-radius: 50%; }
 .svc-duel-card--hero::before    { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(to right, transparent, rgba(155,120,220,0.7) 30%, rgba(155,120,220,0.7) 70%, transparent); border-radius: 50%; }
-/* Bottom fade — covers the schematic lower portion so content is readable */
+/* Bottom fade · covers the schematic lower portion so content is readable */
 .svc-duel-card--terrain::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 62%; background: linear-gradient(to top, rgba(1,8,3,1) 0%, rgba(1,8,3,0.88) 40%, transparent 100%); pointer-events: none; width: auto; top: auto; transform: none; transition: none; }
 .svc-duel-card--hero::after    { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 62%; background: linear-gradient(to top, rgba(3,2,12,1) 0%, rgba(3,2,12,0.88) 40%, transparent 100%); pointer-events: none; width: auto; top: auto; transform: none; transition: none; }
 /* Content */
@@ -541,6 +603,8 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .btn-duel-terrain:hover { background: var(--jade-bright); transform: translateX(6px); box-shadow: 0 0 38px rgba(29,201,122,0.60), 0 6px 18px rgba(0,0,0,0.55); }
 .btn-duel-hero { font-family: var(--display); font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(155,120,220,0.12); color: #D0BEF0; padding: 0.9rem 2.2rem; border: 1px solid rgba(155,120,220,0.42); border-radius: var(--radius-xs); cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.25s; align-self: flex-end; box-shadow: 0 0 20px rgba(155,120,220,0.28), 0 4px 14px rgba(0,0,0,0.55); font-weight: 700; }
 .btn-duel-hero:hover { background: rgba(155,120,220,0.24); border-color: rgba(155,120,220,0.70); transform: translateX(-6px); box-shadow: 0 0 38px rgba(155,120,220,0.48), 0 6px 18px rgba(0,0,0,0.55); }
+.btn-duel-example { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; display: block; margin-top: 0.6rem; opacity: 0.65; transition: opacity 0.2s, color 0.2s; }
+.btn-duel-example:hover { color: var(--gold); opacity: 1; }
 
 /* ─── INLINE SCHEMATICS ──────────────────────── */
 .svc-duel-schematic { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
@@ -559,57 +623,61 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 }
 @keyframes scanPass { 0% { left: -38%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 108%; opacity: 0; } }
 
-/* ─── PROCESS SECTION — Timeline ────────────── */
-.process-section { margin-top: 2.5rem; padding: 4rem 2rem 5rem; border-top: 1px solid var(--border-mid); }
-.process-section-hdr { text-align: center; margin-bottom: 3.5rem; }
+/* ─── PROCESS SECTION · Timeline ────────────── */
+.process-section { margin-top: 2.5rem; padding: 5rem 2.5rem 6rem; border-top: 1px solid var(--border-mid); }
+.process-section-hdr { text-align: center; margin-bottom: 4.5rem; }
 .process-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
-.process-hdr-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: 0.1em; color: var(--text); line-height: 1; margin-bottom: 0.8rem; }
+.process-hdr-title { font-family: var(--display); font-size: clamp(3.5rem, 7vw, 6.5rem); letter-spacing: 0.1em; color: var(--text); line-height: 1; margin-bottom: 0.8rem; }
 .process-hdr-sub { font-family: var(--mono); font-size: 0.64rem; color: var(--text-muted); line-height: 1.7; max-width: 500px; margin: 0 auto; }
+.process-type-toggle { display: flex; gap: 0.45rem; justify-content: center; margin-top: 1.4rem; }
+.process-type-btn { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 2rem; border: 1px solid var(--border-mid); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+.process-type-btn.active { color: var(--gold); border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.07); }
+.process-type-btn:hover:not(.active) { color: var(--text); border-color: var(--border-hi); }
 
 /* Timeline wrapper */
-.process-timeline { max-width: 1160px; margin: 0 auto; position: relative; }
+.process-timeline { max-width: 1480px; margin: 0 auto; position: relative; }
 .process-track-line { position: absolute; top: 26px; left: 12.5%; right: 12.5%; height: 1px; z-index: 0; background: repeating-linear-gradient(to right, rgba(201,168,76,0.50) 0px, rgba(201,168,76,0.50) 7px, transparent 7px, transparent 16px); -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); }
 
-.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; position: relative; z-index: 1; }
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 1; }
 .process-step { display: flex; flex-direction: column; align-items: center; }
 
 /* Node */
-.process-node { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #081B38, #0C2245); border: 1px solid rgba(201,168,76,0.40); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; flex-shrink: 0; margin-bottom: 1.2rem; box-shadow: 0 0 0 5px #020D1F; transition: border-color 0.28s, box-shadow 0.28s; }
+.process-node { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #081B38, #0C2245); border: 1px solid rgba(201,168,76,0.40); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; flex-shrink: 0; margin-bottom: 1.5rem; box-shadow: 0 0 0 6px #020D1F; transition: border-color 0.28s, box-shadow 0.28s; }
 .process-step:hover .process-node { border-color: rgba(201,168,76,0.75); box-shadow: 0 0 0 5px #020D1F, 0 0 18px rgba(201,168,76,0.20); }
 .process-step--client .process-node { border-color: rgba(91,164,245,0.48); background: linear-gradient(135deg, #071525, #0A1E3C); }
 .process-step--client:hover .process-node { border-color: rgba(91,164,245,0.80); box-shadow: 0 0 0 5px #020D1F, 0 0 18px rgba(91,164,245,0.20); }
-.process-node-num { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; color: var(--gold); }
+.process-node-num { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.12em; color: var(--gold); }
 .process-step--client .process-node-num { color: #6DB8F8; }
 
 /* Role badge */
-.process-role { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.13rem 0.6rem; border-radius: 20px; width: fit-content; margin-bottom: 0.45rem; }
+.process-role { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.18rem 0.75rem; border-radius: 20px; width: fit-content; margin-bottom: 0.55rem; }
 .process-role--you { background: rgba(91,164,245,0.09); border: 1px solid rgba(91,164,245,0.28); color: rgba(91,164,245,0.88); }
 .process-role--studio { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.20); color: rgba(201,168,76,0.70); }
 
 /* Card */
-.process-card { background: rgba(9,27,50,0.55); border: 1px solid var(--border-mid); border-radius: var(--radius-md); padding: 1rem; width: 100%; display: flex; flex-direction: column; gap: 0.42rem; position: relative; overflow: hidden; transition: border-color 0.25s; }
+.process-card { background: rgba(9,27,50,0.55); border: 1px solid var(--border-mid); border-radius: var(--radius-md); padding: 1.5rem; width: 100%; display: flex; flex-direction: column; gap: 0.6rem; position: relative; overflow: hidden; transition: border-color 0.25s; }
 .process-step:hover .process-card { border-color: rgba(201,168,76,0.30); }
 .process-step--client .process-card { border-color: rgba(91,164,245,0.16); }
 .process-step--client:hover .process-card { border-color: rgba(91,164,245,0.34); }
 .process-card::before { content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.42), transparent); }
 .process-step--client .process-card::before { background: linear-gradient(to right, transparent, rgba(91,164,245,0.40), transparent); }
-.process-card-name { font-family: var(--display); font-size: 1.6rem; letter-spacing: 0.08em; color: var(--text); line-height: 1; }
-.process-card-desc { font-family: var(--mono); font-size: 0.63rem; color: var(--text-muted); line-height: 1.70; }
+.process-card-name { font-family: var(--display); font-size: 2.2rem; letter-spacing: 0.08em; color: var(--text); line-height: 1; }
+.process-card-desc { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); line-height: 1.72; }
 
-/* ✓ Checkpoint (client approves — used on SCULPT) */
+/* ✓ Checkpoint (client approves · used on SCULPT) */
 .process-checkpoint { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.20); border-left: 2px solid rgba(201,168,76,0.55); border-radius: var(--radius-xs); padding: 0.5rem 0.65rem; display: flex; gap: 0.45rem; margin-top: 0.3rem; }
 .process-checkpoint-icon { flex-shrink: 0; color: var(--gold); font-size: 0.62rem; line-height: 1; margin-top: 0.12rem; }
-.process-checkpoint-text { font-family: var(--mono); font-size: 0.57rem; color: rgba(201,168,76,0.72); line-height: 1.55; }
+.process-checkpoint-text { font-family: var(--mono); font-size: 0.65rem; color: rgba(201,168,76,0.72); line-height: 1.55; }
 .process-checkpoint-text strong { color: var(--gold); display: block; font-weight: 500; margin-bottom: 0.1rem; }
 
-/* ↺ Revision loop (client feedback — used on DETAIL) */
+/* ↺ Revision loop (client feedback · used on DETAIL) */
 .process-revloop { background: rgba(91,164,245,0.05); border: 1px solid rgba(91,164,245,0.18); border-left: 2px solid rgba(91,164,245,0.52); border-radius: var(--radius-xs); padding: 0.5rem 0.65rem; display: flex; gap: 0.45rem; margin-top: 0.3rem; }
 .process-revloop-icon { flex-shrink: 0; color: #6DB8F8; font-size: 0.8rem; line-height: 1; margin-top: 0.05rem; }
-.process-revloop-text { font-family: var(--mono); font-size: 0.57rem; color: rgba(91,164,245,0.70); line-height: 1.55; }
+.process-revloop-text { font-family: var(--mono); font-size: 0.65rem; color: rgba(91,164,245,0.70); line-height: 1.55; }
 .process-revloop-text strong { color: #7ABCF8; display: block; font-weight: 500; margin-bottom: 0.1rem; }
 
 /* Duration chip */
-.process-duration { font-family: var(--mono); font-size: 0.49rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 0.35rem; padding-top: 0.55rem; margin-top: auto; border-top: 1px solid rgba(201,168,76,0.08); }
+.process-duration { font-family: var(--mono); font-size: 0.60rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 0.35rem; padding-top: 0.65rem; margin-top: auto; border-top: 1px solid rgba(201,168,76,0.08); }
 
 @media (max-width: 900px) { .process-steps { grid-template-columns: repeat(2,1fr); } .process-track-line { display: none; } }
 @media (max-width: 540px) { .process-steps { grid-template-columns: 1fr; } }
@@ -715,12 +783,13 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 #configure { scroll-margin-top: 80px; }
 #services { scroll-margin-top: 100px; }
 #process  { scroll-margin-top: 100px; }
+#about    { scroll-margin-top: 100px; }
 
 /* ─── SCROLL FADE ────────────────────────────── */
 .fade-in-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .fade-in-up.visible { opacity: 1; transform: none; }
 
-/* ─── PRESET CARDS — BLUEPRINT ───────────────── */
+/* ─── PRESET CARDS · BLUEPRINT ───────────────── */
 .preset-card {
   background:
     linear-gradient(rgba(201,168,76,0.35), rgba(201,168,76,0.35)) top 0 left 0 / 14px 1px no-repeat,
@@ -815,6 +884,12 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
   .svc-duel-title { font-size: clamp(4rem, 14vw, 6rem); }
 }
 
+/* ── PAGE ENTRANCE ── */
+@keyframes pgSlideDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pgSlideUp   { from { opacity:0; transform:translateY(28px);  } to { opacity:1; transform:translateY(0); } }
+header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; }
+.hero-split-left { animation: pgSlideUp 0.8s 0.12s cubic-bezier(0.2,0.9,0.4,1.1) both; }
+
 </style>
 </head>
 <body>
@@ -833,7 +908,16 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html" data-en="Client Reviews" data-fr="Avis Clients"><span class="nav-dd-icon">★</span>Client Reviews</a>
       </div>
     </div>
-    <div class="nav-pill"><a class="nav-link active" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a></div>
+    <div class="nav-pill">
+      <a class="nav-link active nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="#configure" onclick="switchTab('terrain')" data-en="Custom Terrain" data-fr="Terrain Custom"><span class="nav-dd-icon">⛰</span>Custom Terrain</a>
+        <a class="nav-dd-item" href="#configure" onclick="switchTab('hero')" data-en="Hero Assets" data-fr="Hero Assets"><span class="nav-dd-icon">◆</span>Hero Assets</a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="commission.html#process" data-en="How It Works" data-fr="Comment ça marche"><span class="nav-dd-icon">↺</span>How It Works</a>
+        <a class="nav-dd-item" href="commission.html#about" data-en="FAQ" data-fr="FAQ"><span class="nav-dd-icon">?</span>FAQ</a>
+      </div>
+    </div>
     <div class="nav-pill"><a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a></div>
     <div class="nav-pill"><a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a></div>
   </nav>
@@ -933,7 +1017,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
     <div class="svc-duel-content">
       <div class="svc-duel-eyebrow" data-en="01 / Custom Terrain" data-fr="01 / Terrain sur-mesure">01 / Custom Terrain</div>
       <h2 class="svc-duel-title">CUSTOM<br><em>TERRAIN</em></h2>
-      <p class="svc-duel-desc" data-en="Every terrain built from scratch — sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine. Indie levels to AAA open worlds." data-fr="Chaque terrain construit de zéro — sculpté dans Gaea 2, détaillé dans Houdini, livré prêt pour votre moteur. Du niveau indie à l'open world AAA.">Every terrain built from scratch — sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine. Indie levels to AAA open worlds.</p>
+      <p class="svc-duel-desc" data-en="Every terrain built from scratch · sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine. Indie levels to AAA open worlds." data-fr="Chaque terrain construit de zéro · sculpté dans Gaea 2, détaillé dans Houdini, livré prêt pour votre moteur. Du niveau indie à l'open world AAA.">Every terrain built from scratch · sculpted in Gaea 2, detailed in Houdini, delivered production-ready in your engine. Indie levels to AAA open worlds.</p>
       <div class="svc-duel-tags">
         <span class="svc-duel-tag" data-en="4 Scale Presets" data-fr="4 Presets d'échelle">4 Scale Presets</span>
         <span class="svc-duel-tag">UE5 · Unity · Raw</span>
@@ -941,6 +1025,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
         <span class="svc-duel-tag" data-en="From 1,799 €" data-fr="À partir de 1 799 €">From 1,799 €</span>
       </div>
       <a href="#configure" class="btn-duel-terrain" onclick="switchTab('terrain')" data-en="Configure Your Terrain →" data-fr="Configurer votre terrain →">Configure Your Terrain →</a>
+      <a href="products.html#coll-card-8k" class="btn-duel-example" data-en="↗ See a real example" data-fr="↗ Voir un exemple réel">↗ See a real example</a>
 
     </div>
   </div>
@@ -1005,7 +1090,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
     <div class="svc-duel-content" style="display:flex;flex-direction:column;align-items:flex-end;">
       <div class="svc-duel-eyebrow" data-en="02 / Hero Assets" data-fr="02 / Hero Assets">02 / Hero Assets</div>
       <h2 class="svc-duel-title">HERO<br><em>ASSETS</em></h2>
-      <p class="svc-duel-desc" data-en="Landmark-scale, ultra-detailed assets for cinematic worlds. Terrain, vegetation, structures, climate FX — each scoped individually on a discovery call." data-fr="Assets ultra-détaillés à l'échelle d'un monument pour des univers cinématographiques. Terrain, végétation, structures, FX — chacun cadré lors d'un appel découverte.">Landmark-scale, ultra-detailed assets for cinematic worlds. Terrain, vegetation, structures, climate FX — each scoped individually on a discovery call.</p>
+      <p class="svc-duel-desc" data-en="Landmark-scale, ultra-detailed assets for cinematic worlds. Terrain, vegetation, structures, climate FX · each scoped individually on a discovery call." data-fr="Assets ultra-détaillés à l'échelle d'un monument pour des univers cinématographiques. Terrain, végétation, structures, FX · chacun cadré lors d'un appel découverte.">Landmark-scale, ultra-detailed assets for cinematic worlds. Terrain, vegetation, structures, climate FX · each scoped individually on a discovery call.</p>
       <div class="svc-duel-tags">
         <span class="svc-duel-tag" data-en="Any Engine" data-fr="Tous moteurs">Any Engine</span>
         <span class="svc-duel-tag" data-en="Any Scale" data-fr="Toute échelle">Any Scale</span>
@@ -1013,6 +1098,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
         <span class="svc-duel-tag" data-en="On Request" data-fr="Sur devis">On Request</span>
       </div>
       <a href="#configure" class="btn-duel-hero" onclick="switchTab('hero')" data-en="Configure Your Asset →" data-fr="Configurer votre asset →">Configure Your Asset →</a>
+      <a href="products.html#coll-card-frostholm" class="btn-duel-example" style="text-align:right;" data-en="↗ See a real example" data-fr="↗ Voir un exemple réel">↗ See a real example</a>
     </div>
   </div>
 
@@ -1086,7 +1172,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
 
-  <!-- XL — ELITE -->
+  <!-- XL · ELITE -->
   <div class="preset-card" data-preset="terrain-xl" data-label="Terrain XL" onclick="selectPreset(this)">
     <div class="preset-popular-badge" style="background:linear-gradient(135deg,rgba(8,80,40,0.95),rgba(29,201,122,0.90));color:#010810;">★ Elite</div>
     <div class="preset-id">04 / Terrain</div>
@@ -1147,16 +1233,16 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               <div class="form-section-title" data-en="Engine" data-fr="Moteur">Engine</div>
               <div class="radio-group">
                 <input type="radio" name="engine" id="eng-ue5" value="Unreal Engine 5" checked>
-                <label for="eng-ue5" data-fname="Unreal Engine 5" data-fdesc="Full integration — World Partition, RVT, HLOD, Nanite support. Delivered as a ready-to-open UE5 project with all terrain assets configured." data-fimg="img/engine-ue5.webp">UE5</label>
+                <label for="eng-ue5" data-fname="Unreal Engine 5" data-fdesc="Full integration · World Partition, RVT, HLOD, Nanite support. Delivered as a ready-to-open UE5 project with all terrain assets configured." data-fimg="img/engine-ue5.webp">UE5</label>
                 <input type="radio" name="engine" id="eng-unity" value="Unity">
-                <label for="eng-unity" data-fname="Unity" data-fdesc="Full integration — Unity Terrain system, material layers, LOD setup. Delivered as a Unity project ready for your pipeline." data-fimg="img/engine-unity.webp">Unity</label>
+                <label for="eng-unity" data-fname="Unity" data-fdesc="Full integration · Unity Terrain system, material layers, LOD setup. Delivered as a Unity project ready for your pipeline." data-fimg="img/engine-unity.webp">Unity</label>
                 <input type="radio" name="engine" id="eng-raw" value="RAW">
-                <label for="eng-raw" data-fname="RAW — Source Files" data-fdesc="No engine integration. You receive heightmaps (EXR/PNG), splat maps, tiled textures. Import into any engine or pipeline." data-fimg="img/engine-raw.webp">RAW</label>
+                <label for="eng-raw" data-fname="RAW · Source Files" data-fdesc="No engine integration. You receive heightmaps (EXR/PNG), splat maps, tiled textures. Import into any engine or pipeline." data-fimg="img/engine-raw.webp">RAW</label>
               </div>
             </div>
 
             <!-- TERRAIN SIZE -->
-            <div class="form-section xl-hide">
+            <div class="form-section xl-hide terrain-only">
               <div class="form-section-title" data-en="Terrain Size" data-fr="Taille du terrain">Terrain Size</div>
               <div class="field">
                 <select name="terrain_size" id="terrain-size-select">
@@ -1165,20 +1251,117 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               </div>
             </div>
 
+            <!-- OBJECT SCALE (hero-only) -->
+            <div class="form-section hero-only">
+              <div class="form-section-title" data-en="Object Scale" data-fr="Échelle de l'objet">Object Scale</div>
+              <div class="scale-compare-grid">
+
+                <!-- PROP: human full size (~30px), tiny rock at feet -->
+                <input type="radio" name="object_scale" id="scale-prop" value="Prop" checked>
+                <label for="scale-prop" class="scale-compare-card" data-fname="Prop Scale" data-fdesc="Detail-sized object · rocks, stumps, root clusters, small formations. Max dimension typically under 2m. Ideal for environmental dressing." data-fimg="" data-hero-panel="scale">
+                  <svg class="scale-compare-svg" viewBox="0 0 60 72" fill="currentColor">
+                    <defs>
+                      <pattern id="hatch-prop" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                      </pattern>
+                    </defs>
+                    <line x1="0" y1="67" x2="60" y2="67" stroke="currentColor" stroke-width="0.5" opacity="0.22" fill="none"/>
+                    <!-- human full size: ~30px tall, head at y=37, feet at y=67 -->
+                    <circle cx="46" cy="37" r="3.8" opacity="0.55"/>
+                    <rect x="43" y="41" width="6" height="12" rx="1.5" opacity="0.55"/>
+                    <rect x="43" y="53" width="2.5" height="14" rx="0.8" opacity="0.55"/>
+                    <rect x="46.5" y="53" width="2.5" height="14" rx="0.8" opacity="0.55"/>
+                    <!-- prop: small rock cluster, hatched, sits at human feet -->
+                    <path d="M8,67 C8,61 11,57 15,59 C17,55 21,57 23,59 C24.5,56 28,58 28,67 Z" fill="url(#hatch-prop)" stroke="currentColor" stroke-width="0.7"/>
+                  </svg>
+                  <div class="scale-compare-name">Prop</div>
+                  <div class="scale-compare-dim">≤ 2 m</div>
+                </label>
+
+                <!-- CHARACTER: human ~22px, boulder same height -->
+                <input type="radio" name="object_scale" id="scale-char" value="Character">
+                <label for="scale-char" class="scale-compare-card" data-fname="Character Scale" data-fdesc="Human-sized formation · boulders, dense shrubs, stumps. Roughly 2–5 m. Standard LOD setup." data-fimg="" data-hero-panel="scale">
+                  <svg class="scale-compare-svg" viewBox="0 0 60 72" fill="currentColor">
+                    <defs>
+                      <pattern id="hatch-char" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                      </pattern>
+                    </defs>
+                    <line x1="0" y1="67" x2="60" y2="67" stroke="currentColor" stroke-width="0.5" opacity="0.22" fill="none"/>
+                    <!-- human shrunken: ~22px, head at y=45, feet at y=67 -->
+                    <circle cx="47" cy="45" r="3" opacity="0.55"/>
+                    <rect x="44.5" y="48" width="5" height="10" rx="1.2" opacity="0.55"/>
+                    <rect x="44.5" y="58" width="2" height="9" rx="0.7" opacity="0.55"/>
+                    <rect x="47.5" y="58" width="2" height="9" rx="0.7" opacity="0.55"/>
+                    <!-- boulder same height as human, hatched -->
+                    <path d="M5,67 C5,53 9,45 18,45 C27,45 31,53 31,67 Z" fill="url(#hatch-char)" stroke="currentColor" stroke-width="0.7"/>
+                  </svg>
+                  <div class="scale-compare-name">Character</div>
+                  <div class="scale-compare-dim">2 – 5 m</div>
+                </label>
+
+                <!-- STRUCTURE: human tiny ~8px, tall cliff exits top -->
+                <input type="radio" name="object_scale" id="scale-struct" value="Structure">
+                <label for="scale-struct" class="scale-compare-card" data-fname="Structure Scale" data-fdesc="Building-sized formation · cliff sections, icebergs, large trees. 5–20 m range. Full LOD chain required." data-fimg="" data-hero-panel="scale">
+                  <svg class="scale-compare-svg" viewBox="0 0 60 72" fill="currentColor">
+                    <defs>
+                      <pattern id="hatch-struct" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                      </pattern>
+                    </defs>
+                    <line x1="0" y1="67" x2="60" y2="67" stroke="currentColor" stroke-width="0.5" opacity="0.22" fill="none"/>
+                    <!-- human tiny: ~8px, head at y=59, feet at y=67 -->
+                    <circle cx="49" cy="59" r="1.6" opacity="0.55"/>
+                    <rect x="47.5" y="61" width="3" height="4" rx="0.7" opacity="0.55"/>
+                    <rect x="47.5" y="65" width="1.2" height="2" rx="0.4" opacity="0.55"/>
+                    <rect x="49.7" y="65" width="1.2" height="2" rx="0.4" opacity="0.55"/>
+                    <!-- tall cliff: fills from top edge to ground, hatched -->
+                    <path d="M4,1 L4,67 L24,67 L24,1 Z" fill="url(#hatch-struct)" stroke="currentColor" stroke-width="0.7"/>
+                    <!-- ledge detail line -->
+                    <path d="M4,22 Q14,17 24,22" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+                  </svg>
+                  <div class="scale-compare-name">Structure</div>
+                  <div class="scale-compare-dim">5 – 20 m</div>
+                </label>
+
+                <!-- LANDMARK: human = 2px pixel, massive mountain fills + crops -->
+                <input type="radio" name="object_scale" id="scale-land" value="Landmark">
+                <label for="scale-land" class="scale-compare-card" data-fname="Landmark Scale" data-fdesc="Mountain, massive iceberg, giant tree · 20 m and beyond. World-Space UVs and full LOD optimisation required." data-fimg="" data-hero-panel="scale">
+                  <svg class="scale-compare-svg" viewBox="0 0 60 72" fill="currentColor">
+                    <defs>
+                      <pattern id="hatch-land" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                      </pattern>
+                    </defs>
+                    <line x1="0" y1="67" x2="60" y2="67" stroke="currentColor" stroke-width="0.5" opacity="0.22" fill="none"/>
+                    <!-- massive mountain: right base at x=55, leaves room for human -->
+                    <path d="M1,67 L29,3 L55,67 Z" fill="url(#hatch-land)" stroke="currentColor" stroke-width="0.7"/>
+                    <!-- snow cap near peak -->
+                    <path d="M23,12 L29,3 L35,12 Z" fill="currentColor" opacity="0.15"/>
+                    <!-- human = pixel: outside the mountain, far right -->
+                    <rect x="57" y="65" width="1.5" height="2" opacity="0.5"/>
+                  </svg>
+                  <div class="scale-compare-name">Landmark</div>
+                  <div class="scale-compare-dim">20 m+</div>
+                </label>
+
+              </div>
+            </div>
+
             <!-- GRAPHIC STYLE -->
             <div class="form-section xl-hide">
               <div class="form-section-title" data-en="Graphic Style" data-fr="Style graphique">Graphic Style</div>
               <div class="style-group">
                 <input type="radio" name="graphic_style" id="sty-realistic" value="Realistic" checked>
-                <label for="sty-realistic" data-fname="Realistic" data-fdesc="High-fidelity surfaces matching real-world environments — photoscanned-quality textures, accurate PBR materials, natural weathering and geological detail." data-fimg="img/style-realistic.webp"><img src="img/style-icon-realistic.png" alt="" class="style-icon">Realistic</label>
+                <label for="sty-realistic" data-fname="Realistic" data-fdesc="High-fidelity surfaces matching real-world environments · photoscanned-quality textures, accurate PBR materials, natural weathering and geological detail." data-fimg="img/style-realistic.webp" data-fimg-hero="img/style-hero-realistic.webp"><img src="img/style-icon-realistic.png" alt="" class="style-icon">Realistic</label>
                 <input type="radio" name="graphic_style" id="sty-stylized" value="Stylized">
-                <label for="sty-stylized" data-fname="Stylized" data-fdesc="Strong artistic identity with deliberate forms — graphic silhouettes, expressive color grading, coherent visual language across the entire environment." data-fimg="img/style-stylized.webp"><img src="img/style-icon-stylized.png" alt="" class="style-icon">Stylized</label>
+                <label for="sty-stylized" data-fname="Stylized" data-fdesc="Strong artistic identity with deliberate forms · graphic silhouettes, expressive color grading, coherent visual language across the entire environment." data-fimg="img/style-stylized.webp" data-fimg-hero="img/style-hero-stylized.webp"><img src="img/style-icon-stylized.png" alt="" class="style-icon">Stylized</label>
                 <input type="radio" name="graphic_style" id="sty-polygonal" value="Polygonal">
-                <label for="sty-polygonal" data-fname="Polygonal" data-fdesc="Low-poly / geometric — faceted surfaces, minimal textures. Optimized for performance or minimalist visual direction." data-fimg="img/style-polygonal.webp"><img src="img/style-icon-polygonal.png" alt="" class="style-icon">Polygonal</label>
+                <label for="sty-polygonal" data-fname="Polygonal" data-fdesc="Low-poly / geometric · faceted surfaces, minimal textures. Optimized for performance or minimalist visual direction." data-fimg="img/style-polygonal.webp" data-fimg-hero="img/style-hero-polygonal.webp"><img src="img/style-icon-polygonal.png" alt="" class="style-icon">Polygonal</label>
                 <input type="radio" name="graphic_style" id="sty-cartoon" value="Cartoon">
-                <label for="sty-cartoon" data-fname="Cartoon" data-fdesc="Bold, colorful, exaggerated forms — thick outlines, toon shading. Works with both UE5 and Unity stylized pipelines." data-fimg="img/style-cartoon.webp"><img src="img/style-icon-cartoon.png" alt="" class="style-icon">Cartoon</label>
-                <input type="radio" name="graphic_style" id="sty-retro" value="Retro">
-                <label for="sty-retro" data-fname="Retro" data-fdesc="Nostalgic rendering — simplified shading, limited palette, low-res textures adapted to modern real-time workflows." data-fimg="img/style-retro.webp"><img src="img/style-icon-retro.png" alt="" class="style-icon">Retro</label>
+                <label for="sty-cartoon" data-fname="Cartoon" data-fdesc="Bold, colorful, exaggerated forms · thick outlines, toon shading. Works with both UE5 and Unity stylized pipelines." data-fimg="img/style-cartoon.webp" data-fimg-hero="img/style-hero-cartoon.webp"><img src="img/style-icon-cartoon.png" alt="" class="style-icon">Cartoon</label>
+                <input type="radio" name="graphic_style" id="sty-retro" value="Retro" class="hero-no-retro">
+                <label for="sty-retro" class="hero-no-retro" data-fname="Retro" data-fdesc="Nostalgic rendering · simplified shading, limited palette, low-res textures adapted to modern real-time workflows." data-fimg="img/style-retro.webp" data-fimg-hero="img/style-hero-retro.webp"><img src="img/style-icon-retro.png" alt="" class="style-icon">Retro</label>
               </div>
             </div>
 
@@ -1203,17 +1386,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
             </div>
 
             <!-- TECHNICAL + MATERIALS -->
-            <div class="form-row-tables xl-hide">
+            <div class="form-row-tables xl-hide terrain-only">
               <div>
                 <div class="form-section-title" data-en="Technical Features" data-fr="Fonctionnalités techniques">Technical Features <span class="engine-note">UE5 only</span></div>
                 <div class="yn-table">
                   <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                  <div class="yn-row" id="row-rvt" data-fname="Runtime Virtual Texture (RVT)" data-fdesc="Blends terrain materials with actors placed on top — objects receive terrain color and cast contact shadows seamlessly." data-fimg="img/feat-rvt.webp">
+                  <div class="yn-row" id="row-rvt" data-fname="Runtime Virtual Texture (RVT)" data-fdesc="Blends terrain materials with actors placed on top · objects receive terrain color and cast contact shadows seamlessly." data-fimg="img/feat-rvt.webp">
                     <span class="yn-name f-hover">RVT</span>
                     <div class="yn-cell"><input type="radio" name="rvt" id="rvt-y" value="yes" checked><label for="rvt-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="rvt" id="rvt-n" value="no"><label for="rvt-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-hlod" data-fname="HLOD — Hierarchical LOD" data-fdesc="Groups distant geometry into simplified proxy meshes — essential for open world performance." data-fimg="img/feat-hlod.webp">
+                  <div class="yn-row" id="row-hlod" data-fname="HLOD · Hierarchical LOD" data-fdesc="Groups distant geometry into simplified proxy meshes · essential for open world performance." data-fimg="img/feat-hlod.webp">
                     <span class="yn-name f-hover">HLOD</span>
                     <div class="yn-cell"><input type="radio" name="hlod" id="hlod-y" value="yes" checked><label for="hlod-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="hlod" id="hlod-n" value="no"><label for="hlod-n"></label></div>
@@ -1229,17 +1412,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
                 <div class="form-section-title" data-en="Terrain Materials" data-fr="Matériaux terrain">Terrain Materials</div>
                 <div class="yn-table">
                   <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                  <div class="yn-row" id="row-disp" data-fname="Material Displacement" data-fdesc="Tessellates the terrain mesh using height data — rock edges and ground relief become physically accurate 3D geometry." data-fimg="img/feat-displacement.webp">
+                  <div class="yn-row" id="row-disp" data-fname="Material Displacement" data-fdesc="Tessellates the terrain mesh using height data · rock edges and ground relief become physically accurate 3D geometry." data-fimg="img/feat-displacement.webp">
                     <span class="yn-name f-hover">Displacement</span>
                     <div class="yn-cell"><input type="radio" name="displacement" id="disp-y" value="yes" checked><label for="disp-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="displacement" id="disp-n" value="no"><label for="disp-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-mt" data-fname="Material Transitions" data-fdesc="Smooth blending between terrain layers — no hard seams between grass and rock, sand and soil." data-fimg="img/feat-transitions.webp">
+                  <div class="yn-row" id="row-mt" data-fname="Material Transitions" data-fdesc="Smooth blending between terrain layers · no hard seams between grass and rock, sand and soil." data-fimg="img/feat-transitions.webp">
                     <span class="yn-name f-hover">Mat. Transitions</span>
                     <div class="yn-cell"><input type="radio" name="mat_transition" id="mt-y" value="yes" checked><label for="mt-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="mat_transition" id="mt-n" value="no"><label for="mt-n"></label></div>
                   </div>
-                  <div class="yn-row" id="row-pt" data-fname="Paintable Terrain" data-fdesc="Layer masks editable in-engine after delivery — repaint material zones directly in UE5 or Unity without touching source files." data-fimg="img/feat-paintable.webp">
+                  <div class="yn-row" id="row-pt" data-fname="Paintable Terrain" data-fdesc="Layer masks editable in-engine after delivery · repaint material zones directly in UE5 or Unity without touching source files." data-fimg="img/feat-paintable.webp">
                     <span class="yn-name f-hover">Paintable Terrain</span>
                     <div class="yn-cell"><input type="radio" name="paintable" id="pt-y" value="yes" checked><label for="pt-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="paintable" id="pt-n" value="no"><label for="pt-n"></label></div>
@@ -1248,22 +1431,68 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               </div>
             </div>
 
+            <!-- TECHNICAL FEATURES + MESH MATERIAL (hero-only) -->
+            <div class="form-row-tables hero-only">
+              <div>
+                <div class="form-section-title" data-en="Technical Features" data-fr="Fonctionnalités techniques">Technical Features <span class="engine-note">UE5 rec.</span></div>
+                <div class="yn-table">
+                  <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
+                  <div class="yn-row" data-fname="Closed Base" data-fdesc="The underside of the mesh is sealed and sculpted · the asset works as a self-contained floating island. Required for objects displayed in isolation or mid-air." data-fimg="img/feat-closedbase.webp">
+                    <span class="yn-name f-hover">Closed Base</span>
+                    <div class="yn-cell"><input type="radio" name="closed_base" id="cb-y" value="yes"><label for="cb-y"></label></div>
+                    <div class="yn-cell"><input type="radio" name="closed_base" id="cb-n" value="no" checked><label for="cb-n"></label></div>
+                  </div>
+                  <div class="yn-row" data-fname="Displacement" data-fdesc="Surface geometry is physically pushed by height data · micro cracks, overhangs, and grain become real 3D detail. Requires tessellation in-engine." data-fimg="img/feat-herodisp.webp">
+                    <span class="yn-name f-hover">Displacement</span>
+                    <div class="yn-cell"><input type="radio" name="h_displacement" id="hd-y" value="yes"><label for="hd-y"></label></div>
+                    <div class="yn-cell"><input type="radio" name="h_displacement" id="hd-n" value="no" checked><label for="hd-n"></label></div>
+                  </div>
+                  <div class="yn-row" data-fname="Complex Collision" data-fdesc="Per-polygon collision mesh · accurate physics and interaction for close-proximity gameplay. Simple (box/capsule) is used otherwise for better performance." data-fimg="img/feat-collision.webp">
+                    <span class="yn-name f-hover">Complex Collision</span>
+                    <div class="yn-cell"><input type="radio" name="h_collision" id="hcol-y" value="yes" checked><label for="hcol-y"></label></div>
+                    <div class="yn-cell"><input type="radio" name="h_collision" id="hcol-n" value="no"><label for="hcol-n"></label></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="form-section-title" data-en="Mesh Material" data-fr="Matériau mesh">Mesh Material</div>
+                <div class="yn-table">
+                  <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
+                  <div class="yn-row" data-fname="Vertex Colors" data-fdesc="RGB channels painted directly on the mesh · each channel independently masks a texture layer, giving you full in-engine control over material blending without touching source files." data-fimg="img/feat-vertexcolors.webp">
+                    <span class="yn-name f-hover">Vertex Colors</span>
+                    <div class="yn-cell"><input type="radio" name="vertex_colors" id="vc-y" value="yes" checked><label for="vc-y"></label></div>
+                    <div class="yn-cell"><input type="radio" name="vertex_colors" id="vc-n" value="no"><label for="vc-n"></label></div>
+                  </div>
+                  <div class="yn-row" data-fname="Parametric Material" data-fdesc="Exposed sliders inside the material · adjust snow cover, wetness, tint, and roughness directly in-engine after delivery. No source file access needed." data-fimg="img/feat-parametricmat.webp">
+                    <span class="yn-name f-hover">Parametric Mat.</span>
+                    <div class="yn-cell"><input type="radio" name="parametric_mat" id="pm-y" value="yes" checked><label for="pm-y"></label></div>
+                    <div class="yn-cell"><input type="radio" name="parametric_mat" id="pm-n" value="no"><label for="pm-n"></label></div>
+                  </div>
+                  <div class="yn-row" data-fname="World-Space UVs" data-fdesc="Textures are projected from world coordinates, not the mesh surface · zero stretching regardless of scale or orientation. Strongly recommended for Landmark-scale assets." data-fimg="img/feat-worldspaceuv.webp">
+                    <span class="yn-name f-hover">World-Space UVs</span>
+                    <div class="yn-cell"><input type="radio" name="worldspace_uvs" id="wu-y" value="yes" checked><label for="wu-y"></label></div>
+                    <div class="yn-cell"><input type="radio" name="worldspace_uvs" id="wu-n" value="no"><label for="wu-n"></label></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- TERRAIN COMPLEXITY -->
-            <div class="form-section xl-hide preset-s-hide">
+            <div class="form-section xl-hide preset-s-hide terrain-only">
               <div class="form-section-title" data-en="Terrain Complexity" data-fr="Complexité du terrain">Terrain Complexity</div>
               <div class="yn-table">
                 <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                <div class="yn-row" data-fname="Specific Map" data-fdesc="You provide a reference layout — concept art, top-down sketch, or geographical data. Sculpting follows your defined geography." data-fimg="img/feat-specificmap.webp">
+                <div class="yn-row" data-fname="Specific Map" data-fdesc="You provide a reference layout · concept art, top-down sketch, or geographical data. Sculpting follows your defined geography." data-fimg="img/feat-specificmap.webp">
                   <span class="yn-name f-hover">Specific Map (you have a layout)</span>
                   <div class="yn-cell"><input type="radio" name="specific_map" id="sm-y" value="yes"><label for="sm-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="specific_map" id="sm-n" value="no" checked><label for="sm-n"></label></div>
                 </div>
-                <div class="yn-row" data-fname="Multiple Biomes" data-fdesc="Several distinct ecological zones — desert, forest, tundra, wetland. Each biome requires its own material set and transition work." data-fimg="img/feat-biomes.webp">
+                <div class="yn-row" data-fname="Multiple Biomes" data-fdesc="Several distinct ecological zones · desert, forest, tundra, wetland. Each biome requires its own material set and transition work." data-fimg="img/feat-biomes.webp">
                   <span class="yn-name f-hover">Multiple Biomes</span>
                   <div class="yn-cell"><input type="radio" name="biomes" id="bio-y" value="yes"><label for="bio-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="biomes" id="bio-n" value="no" checked><label for="bio-n"></label></div>
                 </div>
-                <div class="yn-row" data-fname="Lake / River / Sea" data-fdesc="Water bodies integrated into the terrain — shoreline sculpting, water shader setup, river flow, foam and caustics." data-fimg="img/feat-water.webp">
+                <div class="yn-row" data-fname="Lake / River / Sea" data-fdesc="Water bodies integrated into the terrain · shoreline sculpting, water shader setup, river flow, foam and caustics." data-fimg="img/feat-water.webp">
                   <span class="yn-name f-hover">Lake / River / Sea</span>
                   <div class="yn-cell"><input type="radio" name="water" id="wat-y" value="yes"><label for="wat-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="water" id="wat-n" value="no" checked><label for="wat-n"></label></div>
@@ -1271,8 +1500,31 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               </div>
             </div>
 
+            <!-- MESH COMPLEXITY (hero-only) -->
+            <div class="form-section hero-only">
+              <div class="form-section-title" data-en="Mesh Complexity" data-fr="Complexité du mesh">Mesh Complexity</div>
+              <div class="yn-table">
+                <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
+                <div class="yn-row" data-fname="Reference Layout" data-fdesc="You provide concept art, sketches, or orthographic references. Sculpting follows your defined silhouette, proportions, and landmark features." data-fimg="img/feat-reflayout.webp">
+                  <span class="yn-name f-hover">Reference Layout</span>
+                  <div class="yn-cell"><input type="radio" name="h_ref_layout" id="rl-y" value="yes"><label for="rl-y"></label></div>
+                  <div class="yn-cell"><input type="radio" name="h_ref_layout" id="rl-n" value="no" checked><label for="rl-n"></label></div>
+                </div>
+                <div class="yn-row" data-fname="Multi-Material Zones" data-fdesc="Distinct material regions across the mesh · e.g. snow cap, bare rock face, mossy base. Each zone requires its own texture set and blending work." data-fimg="img/feat-multimatzones.webp">
+                  <span class="yn-name f-hover">Multi-Mat. Zones</span>
+                  <div class="yn-cell"><input type="radio" name="h_multi_mat" id="mm-y" value="yes" checked><label for="mm-y"></label></div>
+                  <div class="yn-cell"><input type="radio" name="h_multi_mat" id="mm-n" value="no"><label for="mm-n"></label></div>
+                </div>
+                <div class="yn-row" data-fname="Modular Parts" data-fdesc="The hero mesh is split into interlocking sub-meshes · reassemble and recombine freely in-engine for layout variation without extra sculpting." data-fimg="img/feat-modularparts.webp">
+                  <span class="yn-name f-hover">Modular Parts</span>
+                  <div class="yn-cell"><input type="radio" name="h_modular" id="hm-y" value="yes"><label for="hm-y"></label></div>
+                  <div class="yn-cell"><input type="radio" name="h_modular" id="hm-n" value="no" checked><label for="hm-n"></label></div>
+                </div>
+              </div>
+            </div>
+
             <!-- ASSETS & FX -->
-            <div class="form-section xl-hide">
+            <div class="form-section xl-hide terrain-only">
               <div class="form-section-title" data-en="Assets &amp; FX" data-fr="Assets &amp; FX">Assets &amp; FX</div>
               <div class="asset-grid">
                 <input type="radio" name="assets" id="ast-terrain" value="Terrain only" checked>
@@ -1282,25 +1534,25 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
                   <div class="asset-card-desc">Pure terrain, no extras. Your team handles the rest.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-assets" value="Terrain + Assets">
-                <label for="ast-assets" class="asset-card" data-fname="Terrain + Assets" data-fdesc="Terrain with procedurally scattered assets — rocks, foliage, ground props. Placement driven by terrain data for believable density." data-fimg="img/asset-assets.webp">
+                <label for="ast-assets" class="asset-card" data-fname="Terrain + Assets" data-fdesc="Terrain with procedurally scattered assets · rocks, foliage, ground props. Placement driven by terrain data for believable density." data-fimg="img/asset-assets.webp">
                   <div class="asset-card-title">TERRAIN + ASSETS</div>
                   <div class="asset-card-tags">(rocks · foliage · props)</div>
                   <div class="asset-card-desc">Procedurally scattered assets, driven by terrain data.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-fx" value="Terrain + FX">
-                <label for="ast-fx" class="asset-card" data-fname="Terrain + FX" data-fdesc="Terrain with atmospheric FX — wind, mist layers, waterfall particles, volumetric atmosphere. Focused on visual mood." data-fimg="img/asset-fx.webp">
+                <label for="ast-fx" class="asset-card" data-fname="Terrain + FX" data-fdesc="Terrain with atmospheric FX · wind, mist layers, waterfall particles, volumetric atmosphere. Focused on visual mood." data-fimg="img/asset-fx.webp">
                   <div class="asset-card-title">TERRAIN + FX</div>
                   <div class="asset-card-tags">(wind · mist · atmosphere)</div>
                   <div class="asset-card-desc">Atmospheric effects for mood and visual depth.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-full" value="Full Environment">
-                <label for="ast-full" class="asset-card" data-fname="Full Environment" data-fdesc="Complete scene — terrain, assets, FX, skybox and water shaders integrated. Ready to drop into production." data-fimg="img/asset-full.webp">
+                <label for="ast-full" class="asset-card" data-fname="Full Environment" data-fdesc="Complete scene · terrain, assets, FX, skybox and water shaders integrated. Ready to drop into production." data-fimg="img/asset-full.webp">
                   <div class="asset-card-title">FULL ENVIRONMENT</div>
                   <div class="asset-card-tags">(assets · FX · skybox · water)</div>
                   <div class="asset-card-desc">Complete production scene, ready to use as-is.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-discuss" value="To discuss">
-                <label for="ast-discuss" class="asset-card asset-discuss" data-fname="To Discuss" data-fdesc="Not sure what you need? Describe your project below — I'll define the scope and pricing with you." data-fimg="">
+                <label for="ast-discuss" class="asset-card asset-discuss" data-fname="To Discuss" data-fdesc="Not sure what you need? Describe your project below · I'll define the scope and pricing with you." data-fimg="img/asset-todiscuss.webp">
                   <div class="asset-card-title">TO DISCUSS</div>
                   <div class="asset-card-tags">(custom scope)</div>
                   <div class="asset-card-desc">Not sure yet? Describe your needs and I'll define the scope with you.</div>
@@ -1314,12 +1566,55 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               </div>
             </div>
 
+            <!-- DELIVERABLE SCOPE (hero-only) -->
+            <div class="form-section hero-only">
+              <div class="form-section-title" data-en="Deliverable Scope" data-fr="Périmètre du livrable">Deliverable Scope</div>
+              <div class="asset-grid">
+                <input type="radio" name="h_scope" id="sc-mesh" value="Mesh Only" checked>
+                <label for="sc-mesh" class="asset-card" data-fname="Mesh Only" data-fdesc="The hero mesh and its full material setup. No extras · your pipeline handles placement and atmosphere." data-fimg="img/scope-meshonly.webp">
+                  <div class="asset-card-title">MESH ONLY</div>
+                  <div class="asset-card-tags">(mesh · materials)</div>
+                  <div class="asset-card-desc">Base hero asset, fully textured. Your team handles the rest.</div>
+                </label>
+                <input type="radio" name="h_scope" id="sc-props" value="Mesh + Props">
+                <label for="sc-props" class="asset-card" data-fname="Mesh + Props" data-fdesc="Hero mesh plus a matching prop kit · rocks, debris, surface elements sharing the same visual language. Built to surround or complement the hero in-scene." data-fimg="img/scope-meshprops.webp">
+                  <div class="asset-card-title">MESH + PROPS</div>
+                  <div class="asset-card-tags">(debris · rocks · kit)</div>
+                  <div class="asset-card-desc">Complementary prop kit · same visual language as the hero.</div>
+                </label>
+                <input type="radio" name="h_scope" id="sc-fx" value="Mesh + FX">
+                <label for="sc-fx" class="asset-card" data-fname="Mesh + FX" data-fdesc="Hero mesh with integrated FX emitters · waterfalls, dust, mist, embers, particle systems. Ideal for a floating island, a volcano, a glacial formation." data-fimg="img/scope-meshfx.webp">
+                  <div class="asset-card-title">MESH + FX</div>
+                  <div class="asset-card-tags">(particles · atmosphere)</div>
+                  <div class="asset-card-desc">Integrated FX emitters · waterfalls, mist, particles.</div>
+                </label>
+                <input type="radio" name="h_scope" id="sc-full" value="Full Kit">
+                <label for="sc-full" class="asset-card" data-fname="Full Kit" data-fdesc="Complete deliverable · hero mesh, complementary props, and FX emitters. Everything in one cohesive production-ready package." data-fimg="img/scope-fullkit.webp">
+                  <div class="asset-card-title">FULL KIT</div>
+                  <div class="asset-card-tags">(mesh · props · FX)</div>
+                  <div class="asset-card-desc">Hero + props + FX. Ready to drop into production.</div>
+                </label>
+                <input type="radio" name="h_scope" id="sc-discuss" value="To Discuss">
+                <label for="sc-discuss" class="asset-card asset-discuss" data-fname="To Discuss" data-fdesc="Not sure what you need? Describe your project below · I'll define the scope with you." data-fimg="img/asset-todiscuss.webp">
+                  <div class="asset-card-title">TO DISCUSS</div>
+                  <div class="asset-card-tags">(custom scope)</div>
+                  <div class="asset-card-desc">Not sure yet? Describe your needs below.</div>
+                </label>
+              </div>
+              <div id="h-scope-note" style="display:none">
+                <div class="field" style="margin-top:.75rem;">
+                  <label data-en="Scope details" data-fr="Détails du périmètre">Scope details</label>
+                  <textarea name="h_scope_details" placeholder="Describe props needed, FX types, particle counts, or any specific requirements."></textarea>
+                </div>
+              </div>
+            </div>
+
             <!-- DELIVERY -->
             <div class="form-section xl-hide">
               <div class="form-section-title" data-en="Delivery Timeline" data-fr="Délai de livraison">Delivery Timeline</div>
               <div class="field">
                 <select name="delivery" id="delivery-select">
-                  <option value="Standard">Standard — select a preset first</option>
+                  <option value="Standard">Standard · select a preset first</option>
                 </select>
               </div>
               <div class="field-note" data-en="Express and Rush slots subject to availability." data-fr="Les créneaux Express et Rush sont soumis à disponibilité.">Express and Rush slots subject to availability.</div>
@@ -1330,28 +1625,29 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               <div class="form-section-title" data-en="Exclusivity" data-fr="Exclusivité">Exclusivity</div>
               <div class="excl-row active" id="excl-row">
                 <div class="excl-info">
-                  <div class="excl-label" data-en="Full commercial exclusivity" data-fr="Exclusivité commerciale totale">Full commercial exclusivity</div>
-                  <div class="excl-desc" data-en="This terrain will never be sold, licensed, or reused for any other client. You hold exclusive ownership of the final deliverable." data-fr="Ce terrain ne sera jamais vendu, licencié ou réutilisé pour un autre client. Vous détenez la propriété exclusive du livrable final.">This terrain will never be sold, licensed, or reused for any other client. You hold exclusive ownership of the final deliverable.</div>
+                  <div class="excl-label" data-en="Sole Rights" data-fr="Droits exclusifs">Sole Rights</div>
+                  <div class="excl-desc" data-en="Kalysteon permanently waives any right to display or reference this project · no portfolio entry, no social posts, no case study, no promotional use of any kind. Your work stays 100% private." data-fr="Kalysteon renonce définitivement à tout droit de présenter ou référencer ce projet · aucun portfolio, aucun post, aucune étude de cas, aucune utilisation promotionnelle. Votre travail reste 100% confidentiel.">Kalysteon permanently waives any right to display or reference this project · no portfolio entry, no social posts, no case study, no promotional use of any kind. Your work stays 100% private.</div>
+                  <div class="excl-portfolio-note" data-en="↳ This prevents the studio from showing this work anywhere — ever." data-fr="↳ Le studio ne pourra jamais montrer ce travail, nulle part.">↳ This prevents the studio from showing this work anywhere — ever.</div>
                 </div>
                 <label class="toggle-wrap">
                   <input type="checkbox" name="exclusivity" id="excl-toggle" value="yes" checked>
                   <span class="toggle-track"><span class="toggle-thumb"></span></span>
                 </label>
               </div>
-              <div class="excl-note on" id="excl-note">Full exclusivity included in your price estimate.</div>
+              <div class="excl-note on" id="excl-note">Sole Rights included in your price estimate.</div>
 
               <!-- COMMERCIAL LICENSE -->
-              <div class="excl-row excl-row--sub" id="coml-row">
+              <div class="excl-row excl-row--sub active" id="coml-row">
                 <div class="excl-info">
-                  <div class="excl-label" data-en="Commercial license" data-fr="Licence commerciale">Commercial license</div>
-                  <div class="excl-desc" data-en="Grants the right to ship this asset inside a sold commercial product — game, film, or application. Kalysteon retains authorship; raw asset sub-licensing is excluded." data-fr="Autorise l'intégration de cet asset dans un produit commercial vendu — jeu, film, application. Kalysteon conserve la paternité ; la sous-licence de l'asset brut n'est pas incluse.">Grants the right to ship this asset inside a sold commercial product — game, film, or application. Kalysteon retains authorship; raw asset sub-licensing is excluded.</div>
+                  <div class="excl-label" data-en="Ship License" data-fr="Licence commerciale">Ship License</div>
+                  <div class="excl-desc" data-en="Authorises you to include and ship this asset in a commercial product · game, film, or application. Kalysteon retains authorship; raw asset sub-licensing is excluded." data-fr="Vous autorise à inclure et distribuer cet asset dans un produit commercial · jeu, film, application. Kalysteon conserve la paternité ; la sous-licence de l'asset brut est exclue.">Authorises you to include and ship this asset in a commercial product · game, film, or application. Kalysteon retains authorship; raw asset sub-licensing is excluded.</div>
                 </div>
                 <label class="toggle-wrap">
-                  <input type="checkbox" name="com_license" id="coml-toggle" value="yes">
+                  <input type="checkbox" name="com_license" id="coml-toggle" value="yes" checked>
                   <span class="toggle-track"><span class="toggle-thumb"></span></span>
                 </label>
               </div>
-              <div class="excl-note off" id="coml-note" data-en="Personal / internal use only — no commercial shipping." data-fr="Usage personnel / interne uniquement — pas de commercialisation.">Personal / internal use only — no commercial shipping.</div>
+              <div class="excl-note on" id="coml-note">Ship License included · ×1.5 rate.</div>
             </div>
 
             <!-- CONTACT & CONTEXT -->
@@ -1366,7 +1662,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
                 <input type="email" name="email" id="field-email" placeholder="you@studio.com" required>
               </div>
               <div class="field" style="margin-bottom:1rem;">
-                <label data-en="Reference files — Drive / WeTransfer link (optional)" data-fr="Fichiers de référence — lien Drive / WeTransfer (optionnel)">Reference files — Drive / WeTransfer link (optional)</label>
+                <label data-en="Reference files · Drive / WeTransfer link (optional)" data-fr="Fichiers de référence · lien Drive / WeTransfer (optionnel)">Reference files · Drive / WeTransfer link (optional)</label>
                 <input type="url" name="references" id="field-references" placeholder="https://drive.google.com/…">
                 <div class="drive-hint" data-en="Max 10 MB if using direct upload. For larger references, paste a shared Drive or WeTransfer link." data-fr="Max 10 Mo si upload direct. Pour des références plus lourdes, collez un lien Drive ou WeTransfer partagé.">Max 10 MB if using direct upload. For larger references, paste a shared Drive or WeTransfer link.</div>
               </div>
@@ -1376,8 +1672,8 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
               </div>
             </div>
 
-            <button type="button" class="submit-btn" id="submit-btn" onclick="showRecap()">Send Brief →</button>
-            <div class="form-note" id="form-note" data-en="No commitment. I reply with a precise quote within 48h." data-fr="Sans engagement. Je réponds avec un devis précis sous 48h.">No commitment. I reply with a precise quote within 48h.</div>
+            <button type="button" class="submit-btn" id="submit-btn" onclick="showRecap()" data-en="Submit for Review →" data-fr="Soumettre pour examen →">Submit for Review →</button>
+            <div class="form-note" id="form-note" data-en="I will review your brief and get back to you with a finalized quote within 48h. No commitment." data-fr="Je lirai votre brief et vous répondrai avec un devis finalisé sous 48h. Sans engagement.">I will review your brief and get back to you with a finalized quote within 48h. No commitment.</div>
           </div>
 
           <!-- STEP 2: RECAP -->
@@ -1412,32 +1708,135 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
       </div>
 
       <div id="panel-viz" class="panel-state">
-        <div class="viz-wrap">
-          <div class="viz-title" data-en="Size reference" data-fr="Référence de taille">Size reference</div>
-          <svg class="viz-svg" viewBox="0 0 200 200">
-            <defs>
-              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="200" height="200" fill="url(#grid)"/>
-            <rect class="viz-sq" id="vsq-xl" x="5" y="5" width="190" height="190"/>
-            <text class="viz-label" id="vlbl-xl" x="8" y="16">XL · 32km²+</text>
-            <rect class="viz-sq" id="vsq-l" x="28" y="28" width="144" height="144"/>
-            <text class="viz-label" id="vlbl-l" x="31" y="39">L · 8–32km²</text>
-            <rect class="viz-sq" id="vsq-m" x="60" y="60" width="80" height="80"/>
-            <text class="viz-label" id="vlbl-m" x="63" y="71">M · 2–8km²</text>
-            <rect class="viz-sq" id="vsq-s" x="86" y="86" width="28" height="28"/>
-            <text class="viz-label" id="vlbl-s" x="89" y="97">S</text>
-            <rect class="viz-highlight" id="viz-highlight" x="86" y="86" width="28" height="28" opacity="0"/>
-          </svg>
+
+        <!-- TERRAIN VIZ -->
+        <div id="panel-viz-terrain">
+          <div class="viz-wrap">
+            <div class="viz-title" data-en="Size reference" data-fr="Référence de taille">Size reference</div>
+            <svg class="viz-svg" viewBox="0 0 200 200">
+              <defs>
+                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="200" height="200" fill="url(#grid)"/>
+              <rect class="viz-sq" id="vsq-xl" x="5" y="5" width="190" height="190"/>
+              <text class="viz-label" id="vlbl-xl" x="8" y="16">XL · 32km²+</text>
+              <rect class="viz-sq" id="vsq-l" x="28" y="28" width="144" height="144"/>
+              <text class="viz-label" id="vlbl-l" x="31" y="39">L · 8–32km²</text>
+              <rect class="viz-sq" id="vsq-m" x="60" y="60" width="80" height="80"/>
+              <text class="viz-label" id="vlbl-m" x="63" y="71">M · 2–8km²</text>
+              <rect class="viz-sq" id="vsq-s" x="86" y="86" width="28" height="28"/>
+              <text class="viz-label" id="vlbl-s" x="89" y="97">S</text>
+              <rect class="viz-highlight" id="viz-highlight" x="86" y="86" width="28" height="28" opacity="0"/>
+            </svg>
+          </div>
+          <div class="viz-legend">
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-xl"></div><span class="viz-legend-text" id="vlegtext-xl">XL · 32km²+</span></div>
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-l"></div><span class="viz-legend-text" id="vlegtext-l">L · 8 to 32km²</span></div>
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-m"></div><span class="viz-legend-text" id="vlegtext-m">M · 2 to 8km²</span></div>
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-s"></div><span class="viz-legend-text" id="vlegtext-s">S · 256m² to 2km²</span></div>
+          </div>
         </div>
-        <div class="viz-legend">
-          <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-xl"></div><span class="viz-legend-text" id="vlegtext-xl">XL — 32km²+</span></div>
-          <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-l"></div><span class="viz-legend-text" id="vlegtext-l">L — 8 to 32km²</span></div>
-          <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-m"></div><span class="viz-legend-text" id="vlegtext-m">M — 2 to 8km²</span></div>
-          <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-s"></div><span class="viz-legend-text" id="vlegtext-s">S — 256m² to 2km²</span></div>
+
+        <!-- HERO / ASSET SCALE VIZ -->
+        <div id="panel-viz-hero" style="display:none">
+          <div class="viz-wrap">
+            <div class="viz-title">Asset Scale</div>
+            <!-- Single-slide animated preview, one scale shown at a time -->
+            <div class="hero-viz-stage">
+
+              <!-- PROP slide -->
+              <div class="hero-viz-slide active" id="hviz-slide-prop">
+                <svg class="hero-viz-svg" viewBox="0 0 120 144" fill="currentColor">
+                  <defs>
+                    <pattern id="phatch-prop" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+                    </pattern>
+                  </defs>
+                  <line x1="0" y1="134" x2="120" y2="134" stroke="rgba(201,168,76,0.18)" stroke-width="0.8"/>
+                  <!-- human full size ~60px, head at y=74, feet at y=134 -->
+                  <circle cx="92" cy="74" r="7.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="86" y="82" width="12" height="25" rx="3" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="86" y="107" width="5" height="27" rx="1.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="93" y="107" width="5" height="27" rx="1.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <!-- prop: small rock cluster, hatched -->
+                  <path d="M16,134 C16,122 22,114 30,118 C34,110 42,114 46,118 C49,112 56,116 56,134 Z" fill="url(#phatch-prop)" stroke="var(--gold,#C9A84C)" stroke-width="1"/>
+                </svg>
+                <div class="hero-viz-lbl">Prop<span class="hero-viz-dim">≤ 2 m</span></div>
+              </div>
+
+              <!-- CHARACTER slide -->
+              <div class="hero-viz-slide" id="hviz-slide-char">
+                <svg class="hero-viz-svg" viewBox="0 0 120 144" fill="currentColor">
+                  <defs>
+                    <pattern id="phatch-char" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+                    </pattern>
+                  </defs>
+                  <line x1="0" y1="134" x2="120" y2="134" stroke="rgba(201,168,76,0.18)" stroke-width="0.8"/>
+                  <!-- human shrunken ~44px, head at y=90, feet y=134 -->
+                  <circle cx="94" cy="90" r="6" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="89" y="96" width="10" height="20" rx="2.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="89" y="116" width="4" height="18" rx="1.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="95" y="116" width="4" height="18" rx="1.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <!-- boulder same height as human (~44px), hatched -->
+                  <path d="M10,134 C10,108 18,90 36,90 C54,90 62,108 62,134 Z" fill="url(#phatch-char)" stroke="var(--gold,#C9A84C)" stroke-width="1"/>
+                </svg>
+                <div class="hero-viz-lbl">Character<span class="hero-viz-dim">2 – 5 m</span></div>
+              </div>
+
+              <!-- STRUCTURE slide -->
+              <div class="hero-viz-slide" id="hviz-slide-struct">
+                <svg class="hero-viz-svg" viewBox="0 0 120 144" fill="currentColor">
+                  <defs>
+                    <pattern id="phatch-struct" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+                    </pattern>
+                  </defs>
+                  <line x1="0" y1="134" x2="120" y2="134" stroke="rgba(201,168,76,0.18)" stroke-width="0.8"/>
+                  <!-- human tiny ~16px, head at y=118, feet y=134 -->
+                  <circle cx="98" cy="118" r="3" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="95.5" y="121" width="5" height="8" rx="1.5" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="95.5" y="129" width="2" height="5" rx="0.8" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <rect x="99" y="129" width="2" height="5" rx="0.8" fill="var(--gold,#C9A84C)" opacity="0.55"/>
+                  <!-- cliff: full height, 40px wide, hatched -->
+                  <path d="M8,2 L8,134 L48,134 L48,2 Z" fill="url(#phatch-struct)" stroke="var(--gold,#C9A84C)" stroke-width="1"/>
+                  <!-- ledge detail -->
+                  <path d="M8,44 Q28,34 48,44" fill="none" stroke="var(--gold,#C9A84C)" stroke-width="0.8" opacity="0.3"/>
+                </svg>
+                <div class="hero-viz-lbl">Structure<span class="hero-viz-dim">5 – 20 m</span></div>
+              </div>
+
+              <!-- LANDMARK slide -->
+              <div class="hero-viz-slide" id="hviz-slide-land">
+                <svg class="hero-viz-svg" viewBox="0 0 120 144" fill="currentColor">
+                  <defs>
+                    <pattern id="phatch-land" patternUnits="userSpaceOnUse" width="5" height="5" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+                    </pattern>
+                  </defs>
+                  <line x1="0" y1="134" x2="120" y2="134" stroke="rgba(201,168,76,0.18)" stroke-width="0.8"/>
+                  <!-- massive mountain: right base at x=110, leaves room for human -->
+                  <path d="M2,134 L60,4 L110,134 Z" fill="url(#phatch-land)" stroke="var(--gold,#C9A84C)" stroke-width="1"/>
+                  <!-- snow cap near peak -->
+                  <path d="M48,24 L60,4 L72,24 Z" fill="var(--gold,#C9A84C)" opacity="0.15"/>
+                  <!-- human = pixel: outside the mountain, far right -->
+                  <rect x="114" y="130" width="3" height="4" fill="var(--gold,#C9A84C)" opacity="0.5"/>
+                </svg>
+                <div class="hero-viz-lbl">Landmark<span class="hero-viz-dim">20 m+</span></div>
+              </div>
+
+            </div><!-- /hero-viz-stage -->
+          </div>
+          <div class="viz-legend">
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-prop"></div><span class="viz-legend-text" id="vlegtext-prop">Prop · ≤ 2 m</span></div>
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-char"></div><span class="viz-legend-text" id="vlegtext-char">Character · 2 – 5 m</span></div>
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-struct"></div><span class="viz-legend-text" id="vlegtext-struct">Structure · 5 – 20 m</span></div>
+            <div class="viz-legend-row"><div class="viz-legend-sq" id="vlegsq-land"></div><span class="viz-legend-text" id="vlegtext-land">Landmark · 20 m+</span></div>
+          </div>
         </div>
+
         <div class="panel-idle" data-en="Hover any feature&#10;for details &amp; preview." data-fr="Survolez une option&#10;pour détails &amp; aperçu.">Hover any feature<br>for details &amp; preview.</div>
       </div>
 
@@ -1487,13 +1886,13 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
   <div class="hero-presets">
 
-    <!-- 01 · Terrain (available) -->
+    <!-- 01 · Vegetation / Foliage -->
     <div class="hero-preset-card">
-      <div class="preset-card" data-preset="hero-landscape" data-label="Hero Landscape" onclick="selectPreset(this)">
+      <div class="preset-card" data-preset="hero-vegetation" data-label="Hero Vegetation" onclick="selectPreset(this)">
         <div class="preset-id">01 / Hero</div>
-        <div class="preset-title">TERRAIN</div>
-        <div class="preset-target" data-en="Hero landscape asset" data-fr="Asset paysage héroïque">Hero landscape asset</div>
-        <div class="preset-desc" data-en="Giant terrain or singular landmark — scope defined on call." data-fr="Terrain géant ou paysage singulier — périmètre défini à l'appel.">Giant terrain or singular landmark — scope defined on call.</div>
+        <div class="preset-title">VEGETATION</div>
+        <div class="preset-target" data-en="Foliage &amp; biome assets" data-fr="Foliage &amp; assets de biome">Foliage &amp; biome assets</div>
+        <div class="preset-desc" data-en="Hero trees, dense undergrowth, procedural biome systems." data-fr="Arbres héroïques, sous-bois denses, systèmes de biome procéduraux.">Hero trees, dense undergrowth, procedural biome systems.</div>
         <ul class="preset-specs">
           <li>Any scale</li>
           <li>Ultra-detailed</li>
@@ -1506,13 +1905,14 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
       </div>
     </div>
 
-    <!-- 02 · Vegetation / Foliage -->
+    <!-- 02 · Landscape (flagship) -->
     <div class="hero-preset-card">
-      <div class="preset-card" data-preset="hero-vegetation" data-label="Hero Vegetation" onclick="selectPreset(this)">
+      <div class="preset-card" data-preset="hero-landscape" data-label="Hero Landscape" onclick="selectPreset(this)">
+        <div class="preset-popular-badge">◆ Signature</div>
         <div class="preset-id">02 / Hero</div>
-        <div class="preset-title">VEGETATION</div>
-        <div class="preset-target" data-en="Foliage &amp; biome assets" data-fr="Foliage &amp; assets de biome">Foliage &amp; biome assets</div>
-        <div class="preset-desc" data-en="Hero trees, dense undergrowth, procedural biome systems." data-fr="Arbres héroïques, sous-bois denses, systèmes de biome procéduraux.">Hero trees, dense undergrowth, procedural biome systems.</div>
+        <div class="preset-title">LANDSCAPE</div>
+        <div class="preset-target" data-en="Hero landscape asset" data-fr="Asset paysage héroïque">Hero landscape asset</div>
+        <div class="preset-desc" data-en="Giant terrain or singular landmark · scope defined on call." data-fr="Terrain géant ou paysage singulier · périmètre défini à l'appel.">Giant terrain or singular landmark · scope defined on call.</div>
         <ul class="preset-specs">
           <li>Any scale</li>
           <li>Ultra-detailed</li>
@@ -1531,7 +1931,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
         <div class="preset-id">03 / Hero</div>
         <div class="preset-title">STRUCTURE</div>
         <div class="preset-target" data-en="Buildings, villages &amp; castles" data-fr="Bâtiments, villages &amp; châteaux">Buildings, villages &amp; castles</div>
-        <div class="preset-desc" data-en="Modular or monolithic architecture — house to fortress scale." data-fr="Architecture modulaire ou monolithique — de la maison à la forteresse.">Modular or monolithic architecture — house to fortress scale.</div>
+        <div class="preset-desc" data-en="Modular or monolithic architecture · house to fortress scale." data-fr="Architecture modulaire ou monolithique · de la maison à la forteresse.">Modular or monolithic architecture · house to fortress scale.</div>
         <ul class="preset-specs">
           <li>Any scale</li>
           <li>Ultra-detailed</li>
@@ -1546,11 +1946,12 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
     <!-- 04 · Climate FX -->
     <div class="hero-preset-card">
-      <div class="preset-card" data-preset="hero-climate" data-label="Hero Climate FX" onclick="selectPreset(this)">
+      <div class="preset-card" data-preset="hero-climate" data-label="Hero Atmospherics" onclick="selectPreset(this)">
+        <div class="preset-badge--specialist">★ Specialist</div>
         <div class="preset-id">04 / Hero</div>
-        <div class="preset-title">CLIMATE FX</div>
-        <div class="preset-target" data-en="Waterfalls, fire &amp; weather" data-fr="Cascades, feu &amp; météo">Waterfalls, fire &amp; weather</div>
-        <div class="preset-desc" data-en="Cinematic climate and environmental FX — waterfalls, storms, embers." data-fr="FX climatiques et environnementaux cinématographiques — cascades, tempêtes, braises.">Cinematic climate and environmental FX — waterfalls, storms, embers.</div>
+        <div class="preset-title">ATMOSPHERICS</div>
+        <div class="preset-target" data-en="Waterfalls, mist &amp; weather" data-fr="Cascades, brume &amp; météo">Waterfalls, mist &amp; weather</div>
+        <div class="preset-desc" data-en="Cinematic atmosphere · waterfalls, storms, mist &amp; embers." data-fr="Atmosphère cinématographique · cascades, tempêtes, brume &amp; braises.">Cinematic atmosphere · waterfalls, storms, mist &amp; embers.</div>
         <ul class="preset-specs">
           <li>Any scale</li>
           <li>Ultra-detailed</li>
@@ -1573,7 +1974,11 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
   <div class="process-section-hdr">
     <div class="process-eyebrow" data-en="How It Works" data-fr="Comment ça marche">How It Works</div>
     <div class="process-hdr-title" data-en="THE PROCESS" data-fr="LE PROCESSUS">THE PROCESS</div>
-    <p class="process-hdr-sub" data-en="Four stages, two client checkpoints — you stay in control from first brief to final delivery." data-fr="Quatre étapes, deux points de validation — vous gardez le contrôle du brief à la livraison finale.">Four stages, two client checkpoints — you stay in control from first brief to final delivery.</p>
+    <p class="process-hdr-sub" data-en="Four stages, two client checkpoints · you stay in control from first brief to final delivery." data-fr="Quatre étapes, deux points de validation · vous gardez le contrôle du brief à la livraison finale.">Four stages, two client checkpoints · you stay in control from first brief to final delivery.</p>
+    <div class="process-type-toggle">
+      <button class="process-type-btn active" data-process-type="terrain" data-en="Custom Terrain" data-fr="Terrain sur-mesure">Custom Terrain</button>
+      <button class="process-type-btn" data-process-type="hero" data-en="Hero Asset" data-fr="Hero Asset">Hero Asset</button>
+    </div>
   </div>
 
   <div class="process-timeline">
@@ -1582,28 +1987,28 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 
     <div class="process-steps">
 
-      <!-- 01 — BRIEF / Client initiates -->
+      <!-- 01 · BRIEF / Client initiates -->
       <div class="process-step process-step--client">
         <div class="process-node"><span class="process-node-num">01</span></div>
         <div class="process-card">
           <div class="process-role process-role--you" data-en="You" data-fr="Vous">You</div>
           <div class="process-card-name" data-en="BRIEF" data-fr="BRIEF">BRIEF</div>
-          <div class="process-card-desc" data-en="Share your project — engine, world size, art direction, references. I reply within 48h with a scoped quote." data-fr="Partagez votre projet — moteur, taille, direction artistique, références. Je réponds sous 48h avec un devis détaillé.">Share your project — engine, world size, art direction, references. I reply within 48h with a scoped quote.</div>
+          <div class="process-card-desc" data-en="Share your project · engine, world size, art direction, references. I reply within 48h with a scoped quote." data-fr="Partagez votre projet · moteur, taille, direction artistique, références. Je réponds sous 48h avec un devis détaillé.">Share your project · engine, world size, art direction, references. I reply within 48h with a scoped quote.</div>
           <div class="process-duration" data-en="→ 48h reply &amp; quote" data-fr="→ Réponse sous 48h">→ 48h reply &amp; quote</div>
         </div>
       </div>
 
-      <!-- 02 — SCULPT / Studio + shape checkpoint -->
+      <!-- 02 · SCULPT / Studio + shape checkpoint -->
       <div class="process-step">
         <div class="process-node"><span class="process-node-num">02</span></div>
         <div class="process-card">
           <div class="process-role process-role--studio" data-en="Studio" data-fr="Studio">Studio</div>
           <div class="process-card-name" data-en="SCULPT" data-fr="SCULPT">SCULPT</div>
-          <div class="process-card-desc" data-en="Terrain sculpted from scratch in Gaea 2 — macro forms, ridges, valleys — following your layout and references." data-fr="Terrain sculpté de zéro dans Gaea 2 — formes macro, crêtes, vallées — en suivant votre layout et vos références.">Terrain sculpted from scratch in Gaea 2 — macro forms, ridges, valleys — following your layout and references.</div>
+          <div class="process-card-desc" data-en="Terrain sculpted from scratch in Gaea 2 · macro forms, ridges, valleys · following your layout and references." data-fr="Terrain sculpté de zéro dans Gaea 2 · formes macro, crêtes, vallées · en suivant votre layout et vos références." data-terrain-en="Terrain sculpted from scratch in Gaea 2 · macro forms, ridges, valleys · following your layout and references." data-terrain-fr="Terrain sculpté de zéro dans Gaea 2 · formes macro, crêtes, vallées · en suivant votre layout et vos références." data-hero-en="High-poly mesh sculpted in ZBrush · primary forms, proportions, surface detail · following your silhouette and orthographic references." data-hero-fr="Mesh haute résolution sculpté dans ZBrush · formes primaires, proportions, détail de surface · suivant vos références silhouette et orthographiques.">Terrain sculpted from scratch in Gaea 2 · macro forms, ridges, valleys · following your layout and references.</div>
           <div class="process-checkpoint">
             <span class="process-checkpoint-icon">✓</span>
             <div class="process-checkpoint-text">
-              <strong data-en="Shape review — your approval" data-fr="Validation de forme — votre accord">Shape review — your approval</strong>
+              <strong data-en="Shape review · your approval" data-fr="Validation de forme · votre accord">Shape review · your approval</strong>
               <span data-en="You approve the macro form before detail work begins. Adjustments made on request." data-fr="Vous validez la forme macro avant le détaillage. Ajustements sur demande.">You approve the macro form before detail work begins. Adjustments made on request.</span>
             </div>
           </div>
@@ -1611,17 +2016,17 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
         </div>
       </div>
 
-      <!-- 03 — DETAIL / Studio + client revision loop -->
+      <!-- 03 · DETAIL / Studio + client revision loop -->
       <div class="process-step">
         <div class="process-node"><span class="process-node-num">03</span></div>
         <div class="process-card">
           <div class="process-role process-role--studio" data-en="Studio" data-fr="Studio">Studio</div>
           <div class="process-card-name" data-en="DETAIL" data-fr="DÉTAIL">DETAIL</div>
-          <div class="process-card-desc" data-en="Houdini procedural detailing — surface textures, materials, scatter systems, FX, colour grading." data-fr="Détaillage procédural Houdini — textures de surface, matériaux, scatter, FX, colorimétrie.">Houdini procedural detailing — surface textures, materials, scatter systems, FX, colour grading.</div>
+          <div class="process-card-desc" data-en="Houdini procedural detailing · surface textures, materials, scatter systems, FX, colour grading." data-fr="Détaillage procédural Houdini · textures de surface, matériaux, scatter, FX, colorimétrie." data-terrain-en="Houdini procedural detailing · surface textures, materials, scatter systems, FX, colour grading." data-terrain-fr="Détaillage procédural Houdini · textures de surface, matériaux, scatter, FX, colorimétrie." data-hero-en="Texturing in Substance Painter · LOD chain, collision setup, material parameters, UV layout, engine integration." data-hero-fr="Texturing dans Substance Painter · chaîne de LOD, setup collision, paramètres matériaux, UV layout, intégration moteur.">Houdini procedural detailing · surface textures, materials, scatter systems, FX, colour grading.</div>
           <div class="process-revloop">
             <span class="process-revloop-icon">↺</span>
             <div class="process-revloop-text">
-              <strong data-en="Revision rounds — your feedback" data-fr="Rounds de révision — vos retours">Revision rounds — your feedback</strong>
+              <strong data-en="Revision rounds · your feedback" data-fr="Rounds de révision · vos retours">Revision rounds · your feedback</strong>
               <span data-en="You review renders and request changes. The loop repeats until everything is locked and approved." data-fr="Vous évaluez les rendus et demandez des ajustements. La boucle se répète jusqu'à validation complète.">You review renders and request changes. The loop repeats until everything is locked and approved.</span>
             </div>
           </div>
@@ -1629,13 +2034,13 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
         </div>
       </div>
 
-      <!-- 04 — DELIVERY -->
+      <!-- 04 · DELIVERY -->
       <div class="process-step">
         <div class="process-node"><span class="process-node-num">04</span></div>
         <div class="process-card">
           <div class="process-role process-role--studio" data-en="Studio" data-fr="Studio">Studio</div>
           <div class="process-card-name" data-en="DELIVERY" data-fr="LIVRAISON">DELIVERY</div>
-          <div class="process-card-desc" data-en="Production-ready package in your engine — World Partition, LODs, RVT, full documentation. Drop it in and it works." data-fr="Package prêt production dans votre moteur — World Partition, LODs, RVT, documentation complète. Intégrez et c'est prêt.">Production-ready package in your engine — World Partition, LODs, RVT, full documentation. Drop it in and it works.</div>
+          <div class="process-card-desc" data-en="Production-ready package in your engine · World Partition, LODs, RVT, full documentation. Drop it in and it works." data-fr="Package prêt production dans votre moteur · World Partition, LODs, RVT, documentation complète. Intégrez et c'est prêt.">Production-ready package in your engine · World Partition, LODs, RVT, full documentation. Drop it in and it works.</div>
           <div class="process-duration" data-en="✦ Ready to ship" data-fr="✦ Prêt à livrer">✦ Ready to ship</div>
         </div>
       </div>
@@ -1671,7 +2076,7 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
             <span class="faq-question-text" data-en="Do you offer revisions?" data-fr="Des révisions sont-elles incluses ?">Do you offer revisions?</span>
             <span class="faq-chevron">▾</span>
           </div>
-          <div class="faq-answer" data-en="Yes. Terrain S and M include 2 revision rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief — major scope changes are quoted separately." data-fr="Oui. Terrain S et M incluent 2 tours de révision, Terrain L en inclut 3, et Terrain XL inclut des révisions illimitées. Les révisions sont limitées aux modifications dans le cadre du brief convenu — les changements majeurs sont devisés séparément.">Yes. Terrain S and M include 2 revision rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief — major scope changes are quoted separately.</div>
+          <div class="faq-answer" data-en="Yes. Terrain S and M include 2 revision rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief · major scope changes are quoted separately." data-fr="Oui. Terrain S et M incluent 2 tours de révision, Terrain L en inclut 3, et Terrain XL inclut des révisions illimitées. Les révisions sont limitées aux modifications dans le cadre du brief convenu · les changements majeurs sont devisés séparément.">Yes. Terrain S and M include 2 revision rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief · major scope changes are quoted separately.</div>
         </div>
 
         <div class="faq-item">
@@ -1712,8 +2117,8 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
     <h2 class="fcta-title">LET'S BUILD<br><em>YOUR WORLD</em></h2>
   </div>
   <div class="fcta-actions">
-    <a href="#configure" class="btn-svc-primary" style="font-size:1rem;padding:0.9rem 2rem;" data-en="Get a Quote" data-fr="Obtenir un devis">Get a Quote</a>
-    <a href="contact.html" class="btn-svc-ghost" style="font-size:1rem;padding:0.9rem 2rem;" data-en="Contact Us" data-fr="Nous contacter">Contact Us</a>
+    <a href="#services" class="btn-svc-primary" style="font-size:1rem;padding:0.9rem 2rem;" data-en="Get a Quote" data-fr="Obtenir un devis">Get a Quote</a>
+    <a href="contact.html" class="btn-svc-ghost" style="font-size:1rem;padding:0.9rem 2rem;" data-en="Contact Me" data-fr="Me contacter">Contact Me</a>
   </div>
 </div>
 
@@ -1723,22 +2128,32 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 </footer>
 
 <script>
-/* ═══ COMMISSION STATUS — change to false to show "Closed" ═══ */
+/* ═══ COMMISSION STATUS · change to false to show "Closed" ═══ */
 var COMMISSION_OPEN = true;
 (function() {
   var el = document.getElementById('commission-status');
   if (!el) return;
   if (COMMISSION_OPEN) {
     el.className = 'commission-status open';
-    el.innerHTML = '<span class="status-dot"></span><span data-en="Accepting Commissions — Limited Slots" data-fr="Commissions ouvertes — Places limitées">Accepting Commissions — Limited Slots</span>';
+    el.innerHTML = '<span class="status-dot"></span><span data-en="Accepting Commissions · Limited Slots" data-fr="Commissions ouvertes · Places limitées">Accepting Commissions · Limited Slots</span>';
   } else {
     el.className = 'commission-status closed';
-    el.innerHTML = '<span class="status-dot"></span><span data-en="STATUS — Currently Unavailable" data-fr="STATUT — Indisponible actuellement">STATUS — Currently Unavailable</span>';
+    el.innerHTML = '<span class="status-dot"></span><span data-en="STATUS · Currently Unavailable" data-fr="STATUT · Indisponible actuellement">STATUS · Currently Unavailable</span>';
   }
 })();
 
 /* ═══ PRICING DATA ═══ */
 var PRESET_BASE    = { s:2100, m:3600, l:6800, xl:null };
+/* ── Hero asset pricing ── */
+var HERO_BASE          = { 'Prop':2400, 'Character':4400, 'Structure':8200, 'Landmark':14000 };
+var HERO_SCOPE_PCT     = { 'Mesh Only':0, 'Mesh + Props':0.28, 'Mesh + FX':0.20, 'Full Kit':0.52, 'To Discuss':null };
+var HERO_EXCL_REDUCTION= { 'Prop':0.12, 'Character':0.18, 'Structure':0.22, 'Landmark':0.25 };
+var VIZ_HERO = {
+  'Prop':      { slide:'hviz-slide-prop',   legsq:'vlegsq-prop',   legtxt:'vlegtext-prop'   },
+  'Character': { slide:'hviz-slide-char',   legsq:'vlegsq-char',   legtxt:'vlegtext-char'   },
+  'Structure': { slide:'hviz-slide-struct', legsq:'vlegsq-struct', legtxt:'vlegtext-struct' },
+  'Landmark':  { slide:'hviz-slide-land',   legsq:'vlegsq-land',   legtxt:'vlegtext-land'   }
+};
 var SIZE_MULT = {
   s:  { '256m\u00B2':0.88, '512m\u00B2':1.0, '1\u202F024m\u00B2':1.15, '2\u202F048m\u00B2':1.32 },
   m:  { '2km\u00B2':0.90, '4km\u00B2':1.0, '8km\u00B2':1.28 },
@@ -1783,9 +2198,10 @@ var deliveryOptions = {
   'terrain-xl': [
     { val:'Standard', label:'Sur discussion apr\u00E8s audit' }
   ],
-  'hero-landscape': [
-    { val:'Standard', label:'Timeline defined on call' }
-  ]
+  'hero-landscape':  [{ val:'Standard', label:'Timeline defined on call' }],
+  'hero-vegetation': [{ val:'Standard', label:'Timeline defined on call' }],
+  'hero-structure':  [{ val:'Standard', label:'Timeline defined on call' }],
+  'hero-climate':    [{ val:'Standard', label:'Timeline defined on call' }]
 };
 
 var VIZ = {
@@ -1800,7 +2216,7 @@ var panelTimer      = null;
 var LANG            = 'en';
 var hasScrolledOnce = false;
 
-/* ═══ PRICE FORMATTER — 8.800,00 € — psychological pricing (always ends in .99) ═══ */
+/* ═══ PRICE FORMATTER · 8.800,00 € · psychological pricing (always ends in .99) ═══ */
 function formatPrice(n) {
   if (n === null || n === undefined || isNaN(n)) return '\u2014 \u20AC';
   var adjusted = Math.floor(n) - 0.01; /* 2100 → 2099.99 */
@@ -1945,6 +2361,19 @@ function applyPresetDefaults(preset) {
     });
     var fullEnv = document.getElementById('ast-full');
     if (fullEnv) { fullEnv.checked = true; toggleAssetNote('Full Environment'); }
+  } else if (preset && preset.startsWith('hero-')) {
+    /* Hero defaults */
+    ['hd-y','vc-y','pm-y','wu-y'].forEach(function(id){        /* Yes by default */
+      var el = document.getElementById(id); if (el) el.checked = true;
+    });
+    ['cb-n','hcol-n','mm-n','hm-n','rl-n'].forEach(function(id){ /* No by default */
+      var el = document.getElementById(id); if (el) el.checked = true;
+    });
+    /* Default Object Scale = Prop, highlight viz */
+    var scaleEl = document.getElementById('scale-prop');
+    if (scaleEl) scaleEl.checked = true;
+    highlightHeroScale('Prop');
+    toggleScopeNote('Mesh Only');
   }
   applyEngineLock(engine);
 }
@@ -1953,17 +2382,38 @@ function applyPresetDefaults(preset) {
 function applyPresetClass(preset) {
   var fw = document.getElementById('form-wrap');
   fw.className = fw.className.replace(/\bpreset-\S+/g,'').trim();
+  var isHero = preset && preset.startsWith('hero-');
   if (preset === 'terrain-s') fw.className += ' preset-s';
+  if (isHero) {
+    fw.className += ' preset-hero';
+    /* If Retro was selected, fall back to Realistic (not available for hero) */
+    var retro = document.getElementById('sty-retro');
+    if (retro && retro.checked) {
+      var realistic = document.getElementById('sty-realistic');
+      if (realistic) realistic.checked = true;
+    }
+  }
+  /* Panel viz toggle */
+  var pvT = document.getElementById('panel-viz-terrain');
+  var pvH = document.getElementById('panel-viz-hero');
+  var phl = document.getElementById('panel-head-label');
+  if (pvT) pvT.style.display = isHero ? 'none' : '';
+  if (pvH) pvH.style.display = isHero ? '' : 'none';
+  if (phl && preset) phl.textContent = isHero ? 'Asset Scale' : (LANG === 'fr' ? '\u00c9chelle du terrain' : 'Terrain Scale');
   var xlLabel = document.getElementById('context-label-xl');
   if (preset === 'terrain-xl') {
     fw.className += ' preset-xl';
     if (xlLabel) xlLabel.style.display = 'inline';
     document.getElementById('context-textarea').placeholder = 'Engine, world size, art direction, technical constraints, timeline\u2026';
-    document.getElementById('submit-btn').textContent = 'Request a Quote \u2192';
+    document.getElementById('submit-btn').textContent = LANG === 'fr' ? 'Soumettre pour examen \u2192' : 'Submit for Review \u2192';
+  } else if (isHero) {
+    if (xlLabel) xlLabel.style.display = 'none';
+    document.getElementById('context-textarea').placeholder = 'Engine, asset use case (game / cinematic / portfolio), style refs, technical constraints\u2026';
+    document.getElementById('submit-btn').textContent = LANG === 'fr' ? 'Soumettre pour examen \u2192' : 'Submit for Review \u2192';
   } else {
     if (xlLabel) xlLabel.style.display = 'none';
     document.getElementById('context-textarea').placeholder = 'Game genre, art direction refs, engine version, technical constraints\u2026';
-    document.getElementById('submit-btn').textContent = LANG === 'fr' ? 'Envoyer le brief \u2192' : 'Send Brief \u2192';
+    document.getElementById('submit-btn').textContent = LANG === 'fr' ? 'Soumettre pour examen \u2192' : 'Submit for Review \u2192';
   }
 }
 
@@ -2045,7 +2495,7 @@ function updateExclusivity() {
   if (cb.checked) {
     row.classList.add('active');
     note.className = 'excl-note on';
-    note.textContent = LANG === 'fr' ? 'Exclusivit\u00E9 totale incluse dans votre estimation.' : 'Full exclusivity included in your price estimate.';
+    note.textContent = LANG === 'fr' ? 'Exclusivit\u00E9 totale incluse dans votre estimation.' : 'Sole Rights included in your price estimate.';
   } else {
     row.classList.remove('active');
     note.className = 'excl-note off';
@@ -2068,11 +2518,11 @@ function updateCommercialLicense() {
   if (cb.checked) {
     row.classList.add('active');
     note.className = 'excl-note on';
-    note.textContent = LANG === 'fr' ? 'Licence commerciale incluse \u00B7 tarif \u00D71.5.' : 'Commercial license included \u00B7 \u00D71.5 rate.';
+    note.textContent = LANG === 'fr' ? 'Ship License incluse · tarif ×1.5.' : 'Ship License included · ×1.5 rate.';
   } else {
     row.classList.remove('active');
     note.className = 'excl-note off';
-    note.textContent = LANG === 'fr' ? 'Usage personnel / interne uniquement \u2014 pas de commercialisation.' : 'Personal / internal use only \u2014 no commercial shipping.';
+    note.textContent = LANG === 'fr' ? 'Usage personnel uniquement · pas de commercialisation.' : 'Personal use only · no commercial shipping.';
   }
 }
 
@@ -2081,19 +2531,98 @@ function getRadio(name) {
   var el = document.querySelector('input[name="' + name + '"]:checked');
   return el ? el.value : null;
 }
+/* ── Smooth price counter ──────────────────────────────────────────── */
+var _priceRaf = null;
+var _priceFrom = 0;
+function setPrice(amountEl, targetNum, targetText, isMuted) {
+  if (_priceRaf) { cancelAnimationFrame(_priceRaf); _priceRaf = null; }
+  if (targetText || isMuted) {
+    amountEl.textContent = targetText;
+    amountEl.className = 'panel-price-amount' + (isMuted ? ' muted' : '');
+    amountEl.classList.remove('price-updated');
+    void amountEl.offsetWidth; // reflow
+    amountEl.classList.add('price-updated');
+    _priceFrom = 0;
+    return;
+  }
+  var start = null, dur = 480;
+  var from = _priceFrom || targetNum;
+  function step(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    var e = 1 - Math.pow(1 - p, 3); // cubic ease-out
+    var val = Math.round((from + (targetNum - from) * e) / 100) * 100;
+    amountEl.textContent = '~ ' + formatPrice(val);
+    amountEl.className = 'panel-price-amount';
+    if (p < 1) { _priceRaf = requestAnimationFrame(step); }
+    else { _priceFrom = targetNum; amountEl.classList.remove('price-updated'); void amountEl.offsetWidth; amountEl.classList.add('price-updated'); }
+  }
+  _priceRaf = requestAnimationFrame(step);
+}
+
 function recalcPrice() {
   var amountEl    = document.getElementById('price-amount');
   var breakdownEl = document.getElementById('price-breakdown');
   if (!amountEl || !breakdownEl) return;
 
   if (!currentPreset) {
-    amountEl.textContent = '\u2014 \u20AC'; amountEl.className = 'panel-price-amount muted';
+    setPrice(amountEl, 0, '— €', true);
     breakdownEl.textContent = LANG === 'fr' ? 'S\u00E9lectionnez un preset pour commencer.' : 'Select a preset to get started.';
     return;
   }
   if (currentPreset === 'terrain-xl') {
-    amountEl.textContent = 'Sur devis'; amountEl.className = 'panel-price-amount muted';
+    setPrice(amountEl, 0, LANG === 'fr' ? 'Sur devis' : 'On request', true);
     breakdownEl.textContent = LANG === 'fr' ? 'Scope XL d\u00E9fini sur appel.' : 'XL scope defined on call.';
+    return;
+  }
+
+  /* ── HERO ASSET PRICING ── */
+  if (currentPreset.startsWith('hero-')) {
+    var scale   = getRadio('object_scale') || 'Prop';
+    var hBase   = HERO_BASE[scale] || 0;
+    var hLines  = [];
+    var hEngine = getRadio('engine') || 'Unreal Engine 5';
+    var hEngMul = ENGINE_MULT[hEngine] || 1.0;
+    hBase *= hEngMul;
+    var hStyle   = getRadio('graphic_style') || 'Realistic';
+    var hStylMul = STYLE_MULT[hStyle] || 1.0;
+    var hScope       = getRadio('h_scope') || 'Mesh Only';
+    var hScopePct    = HERO_SCOPE_PCT[hScope];
+    var hScopeCustom = (hScopePct === null);
+    var hScopeAdd    = hScopeCustom ? 0 : (hBase * (hScopePct || 0));
+    var hSub = (hBase + hScopeAdd) * hStylMul;
+    if (getRadio('closed_base')    === 'yes') hSub *= 1.18;
+    if (getRadio('h_displacement') === 'no')  hSub *= 0.90;
+    if (getRadio('h_collision')    === 'yes') hSub *= 1.10;
+    if (getRadio('vertex_colors')  === 'no')  hSub *= 0.93;
+    if (getRadio('parametric_mat') === 'no')  hSub *= 0.92;
+    if (getRadio('worldspace_uvs') === 'no')  hSub *= 0.93;
+    if (getRadio('h_ref_layout')   === 'yes') hSub *= 1.12;
+    if (getRadio('h_multi_mat')    === 'yes') hSub *= 1.15;
+    if (getRadio('h_modular')      === 'yes') hSub *= 1.25;
+    var hExclCb = document.getElementById('excl-toggle');
+    var hExclOn = hExclCb ? hExclCb.checked : true;
+    if (!hExclOn && HERO_EXCL_REDUCTION[scale]) hSub *= (1 - HERO_EXCL_REDUCTION[scale]);
+    var hComlCb = document.getElementById('coml-toggle');
+    var hComlOn = hComlCb ? hComlCb.checked : true;
+    if (hComlOn) hSub *= 1.5;
+    var hQty = getRadio('quantity') || '1';
+    var hQtyMul = QUANTITY_MULT[hQty];
+    var hQtyCustom = (hQtyMul === null);
+    if (!hQtyCustom && hQtyMul) hSub *= hQtyMul;
+    var hResult = Math.round(hSub / 100) * 100;
+    setPrice(amountEl, hResult, null, false);
+    var hpEl = document.getElementById('hidden-price'); if (hpEl) hpEl.value = formatPrice(hResult);
+    var hprEl = document.getElementById('hidden-price-raw'); if (hprEl) hprEl.value = (Math.floor(hResult)-0.01).toFixed(2);
+    hLines.push('Hero ' + scale + ' · ' + hEngine);
+    if (hStyle !== 'Realistic') hLines.push('Style ' + hStyle + ' · ×' + hStylMul.toFixed(2));
+    if (hScopePct > 0) hLines.push(hScope + ' · +' + Math.round(hScopePct*100) + '%');
+    if (hScopeCustom) hLines.push('<span class="hi">Scope: custom · TBD on call</span>');
+    if (!hExclOn && HERO_EXCL_REDUCTION[scale]) hLines.push('No Sole Rights · −' + Math.round(HERO_EXCL_REDUCTION[scale]*100) + '%');
+    if (hComlOn) hLines.push('Ship License · ×1.5');
+    if (hQty !== '1' && !hQtyCustom) hLines.push('Qty ×' + hQty + ' · ×' + hQtyMul.toFixed(2));
+    if (hQtyCustom) hLines.push('<span class="hi">Qty: custom · scope on call</span>');
+    breakdownEl.innerHTML = hLines.join('<br>');
     return;
   }
 
@@ -2160,8 +2689,7 @@ function recalcPrice() {
   if (!isQtyCustom && qtyMul !== null) subtotal *= qtyMul;
 
   var result = Math.round(subtotal / 100) * 100;
-  amountEl.textContent = '~\u202F' + formatPrice(result);
-  amountEl.className = 'panel-price-amount';
+  setPrice(amountEl, result, null, false);
   /* Sync hidden fields for Make */
   var hp = document.getElementById('hidden-price');
   var hpr = document.getElementById('hidden-price-raw');
@@ -2204,10 +2732,31 @@ function showPanel(name, desc, img) {
 }
 function resetPanel() {
   panelTimer = setTimeout(function() {
-    document.getElementById('panel-head-label').textContent = LANG === 'fr' ? '\u00C9chelle du terrain' : 'Terrain Scale';
+
+    var isHero = currentPreset && currentPreset.startsWith('hero-');
+    document.getElementById('panel-head-label').textContent = isHero ? 'Asset Scale' : (LANG === 'fr' ? 'Échelle du terrain' : 'Terrain Scale');
     document.getElementById('panel-feature').classList.add('hidden');
     document.getElementById('panel-viz').classList.remove('hidden');
   }, 120);
+}
+function highlightHeroScale(scale) {
+  /* deactivate all slides + legend rows */
+  document.querySelectorAll('.hero-viz-slide').forEach(function(el){ el.classList.remove('active'); });
+  Object.keys(VIZ_HERO).forEach(function(k) {
+    var v = VIZ_HERO[k];
+    ['legsq','legtxt'].forEach(function(f){ var el = document.getElementById(v[f]); if (el) el.classList.remove('active'); });
+  });
+  if (!scale || !VIZ_HERO[scale]) return;
+  var v = VIZ_HERO[scale];
+  /* show the matching slide */
+  var slide = document.getElementById(v.slide);
+  if (slide) slide.classList.add('active');
+  /* highlight legend row */
+  ['legsq','legtxt'].forEach(function(f){ var el = document.getElementById(v[f]); if (el) el.classList.add('active'); });
+}
+function toggleScopeNote(val) {
+  var show = (val==='Mesh + Props'||val==='Mesh + FX'||val==='Full Kit'||val==='To Discuss');
+  var el = document.getElementById('h-scope-note'); if (el) el.style.display = show ? 'block' : 'none';
 }
 
 /* ═══ DEGRESSIVE QTY MULTIPLIER ═══ */
@@ -2283,28 +2832,51 @@ function showRecap() {
   var rows = [];
 
   rows.push({ key: 'Preset', val: document.getElementById('selected-badge').textContent });
-  if (currentPreset !== 'terrain-xl') {
+  var isHeroRecap = currentPreset && currentPreset.startsWith('hero-');
+  if (isHeroRecap) {
+    var hEng = getRadio('engine'); if (hEng) rows.push({ key:'Engine', val:hEng });
+    var hScl = getRadio('object_scale'); if (hScl) rows.push({ key:'Object Scale', val:hScl });
+    var hSty = getRadio('graphic_style'); if (hSty) rows.push({ key:'Style', val:hSty });
+    var yn = function(v){ return v==='yes' ? '✓ Yes' : '– No'; };
+    rows.push({ key:'Closed Base',       val: yn(getRadio('closed_base')) });
+    rows.push({ key:'Displacement',      val: yn(getRadio('h_displacement')) });
+    rows.push({ key:'Complex Collision', val: yn(getRadio('h_collision')) });
+    rows.push({ key:'Vertex Colors',     val: yn(getRadio('vertex_colors')) });
+    rows.push({ key:'Parametric Mat.',   val: yn(getRadio('parametric_mat')) });
+    rows.push({ key:'World-Space UVs',   val: yn(getRadio('worldspace_uvs')) });
+    rows.push({ key:'Ref. Layout',       val: yn(getRadio('h_ref_layout')) });
+    rows.push({ key:'Multi-Mat. Zones',  val: yn(getRadio('h_multi_mat')) });
+    rows.push({ key:'Modular Parts',     val: yn(getRadio('h_modular')) });
+    var hScope = getRadio('h_scope'); if (hScope) rows.push({ key:'Scope', val:hScope });
+    var hScopeDetails = document.querySelector('textarea[name="h_scope_details"]');
+    if (hScopeDetails && hScopeDetails.value.trim()) rows.push({ key:'Scope details', val:hScopeDetails.value.trim(), full:true });
+    var hDel = document.getElementById('delivery-select');
+    if (hDel) rows.push({ key:'Delivery', val:hDel.options[hDel.selectedIndex].text });
+    var hExcl = document.getElementById('excl-toggle');
+    rows.push({ key:'Sole Rights',  val: hExcl && hExcl.checked ? '✓ Yes' : '– No' });
+    var hComl = document.getElementById('coml-toggle');
+    rows.push({ key:'Ship License', val: hComl && hComl.checked ? '✓ Yes (×1.5)' : '– No' });
+  } else if (currentPreset !== 'terrain-xl') {
     var eng = getRadio('engine'); if (eng) rows.push({ key:'Engine', val:eng });
     var sz  = document.getElementById('terrain-size-select').value; if (sz) rows.push({ key: LANG==='fr' ? 'Taille' : 'Size', val:sz });
     var sty = getRadio('graphic_style'); if (sty) rows.push({ key:'Style', val:sty });
-    rows.push({ key:'RVT',          val: getRadio('rvt')            === 'yes' ? '\u2713 Yes' : '\u2013 No' });
-    rows.push({ key:'HLOD',         val: getRadio('hlod')           === 'yes' ? '\u2713 Yes' : '\u2013 No' });
-    rows.push({ key:'World Part.',  val: getRadio('wp')             === 'yes' ? '\u2713 Yes' : '\u2013 No' });
-    rows.push({ key:'Displacement', val: getRadio('displacement')   === 'yes' ? '\u2713 Yes' : '\u2013 No' });
+    rows.push({ key:'RVT',          val: getRadio('rvt')         === 'yes' ? '✓ Yes' : '– No' });
+    rows.push({ key:'HLOD',         val: getRadio('hlod')        === 'yes' ? '✓ Yes' : '– No' });
+    rows.push({ key:'World Part.',  val: getRadio('wp')          === 'yes' ? '✓ Yes' : '– No' });
+    rows.push({ key:'Displacement', val: getRadio('displacement')  === 'yes' ? '✓ Yes' : '– No' });
     var assetVal = getRadio('assets');
-    rows.push({ key:'Assets/FX', val: assetVal || '\u2014' });
+    rows.push({ key:'Assets/FX', val: assetVal || '—' });
     var assetDetails = document.querySelector('textarea[name="asset_details"]');
     if (assetDetails && assetDetails.value.trim() && assetVal !== 'Terrain only') {
-      rows.push({ key: LANG==='fr' ? 'D\u00E9tails assets' : 'Asset details', val: assetDetails.value.trim(), full: true });
+      rows.push({ key: LANG==='fr' ? 'Détails assets' : 'Asset details', val: assetDetails.value.trim(), full: true });
     }
     var del = document.getElementById('delivery-select');
     if (del) rows.push({ key: LANG==='fr' ? 'Livraison' : 'Delivery', val: del.options[del.selectedIndex].text });
     var excl = document.getElementById('excl-toggle');
-    rows.push({ key: LANG==='fr' ? 'Exclusivit\u00E9' : 'Exclusivity', val: excl && excl.checked ? '\u2713 Yes' : '\u2013 No' });
+    rows.push({ key:'Sole Rights',  val: excl && excl.checked ? '✓ Yes' : '– No' });
     var coml = document.getElementById('coml-toggle');
-    rows.push({ key: LANG==='fr' ? 'Licence commerciale' : 'Commercial license', val: coml && coml.checked ? '\u2713 Yes (\u00D71.5)' : '\u2013 No' });
+    rows.push({ key:'Ship License', val: coml && coml.checked ? '✓ Yes (×1.5)' : '– No' });
   }
-  if (nameEl.value.trim()) rows.push({ key: LANG==='fr' ? 'Nom / Studio' : 'Name / Studio', val: nameEl.value.trim() });
   rows.push({ key: 'Email', val: email.value, full: true });
   if (refsEl.value.trim()) rows.push({ key: LANG==='fr' ? 'R\u00E9f\u00E9rences' : 'References', val: refsEl.value.trim(), full: true });
   var ctx = document.getElementById('context-textarea');
@@ -2352,6 +2924,21 @@ function submitForm() {
     .catch(function() { alert('Something went wrong. Please try again.'); });
 }
 
+/* ── Process type toggle ───────────────────────────────────────────── */
+var processType = 'terrain';
+function setProcessType(type) {
+  processType = type;
+  document.querySelectorAll('.process-type-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.processType === type);
+  });
+  document.querySelectorAll('.process-card-desc[data-terrain-en]').forEach(function(el) {
+    var en = type === 'hero' ? el.dataset.heroEn : el.dataset.terrainEn;
+    var fr = type === 'hero' ? el.dataset.heroFr : el.dataset.terrainFr;
+    if (en) { el.setAttribute('data-en', en); el.textContent = en; }
+    if (fr) el.setAttribute('data-fr', fr);
+  });
+}
+
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded', function() {
   /* Move commission form to after both service content blocks so it's
@@ -2362,6 +2949,26 @@ document.addEventListener('DOMContentLoaded', function() {
     heroContent.parentNode.insertBefore(form, heroContent.nextSibling);
   }
 
+  /* Hash-based tab activation — handles links from other pages:
+     commission.html#tab-terrain  →  opens terrain + scrolls to configure
+     commission.html#tab-hero     →  opens hero + scrolls to configure    */
+  var hash = window.location.hash;
+  if (hash === '#tab-terrain' || hash === '#tab-hero') {
+    var type = hash === '#tab-hero' ? 'hero' : 'terrain';
+    document.querySelectorAll('.svc-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    var panel = document.getElementById('svc-content-' + type);
+    if (panel) panel.classList.add('active');
+    setTimeout(function() {
+      var anchor = document.getElementById('configure');
+      if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  }
+
+  /* Process type toggle buttons */
+  document.querySelectorAll('.process-type-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { setProcessType(btn.dataset.processType); });
+  });
+
   /* Convert preset-target text to tag pills */
   document.querySelectorAll('.preset-target').forEach(function(el) {
     var text = el.getAttribute('data-en') || el.textContent;
@@ -2369,12 +2976,33 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   document.querySelectorAll('[data-fname]').forEach(function(el) {
-    el.addEventListener('mouseenter', function(){ showPanel(el.dataset.fname, el.dataset.fdesc||'', el.dataset.fimg||null); });
-    el.addEventListener('mouseleave', resetPanel);
-  });
-  document.querySelectorAll('.yn-row[data-fname]').forEach(function(row) {
-    row.addEventListener('mouseenter', function(){ showPanel(row.dataset.fname, row.dataset.fdesc||'', row.dataset.fimg||null); });
-    row.addEventListener('mouseleave', resetPanel);
+    el.addEventListener('mouseenter', function() {
+      /* Scale cards in hero mode: update panel viz instead of photo panel */
+      if (el.dataset.heroPanel === 'scale' && currentPreset && currentPreset.startsWith('hero-')) {
+        clearTimeout(panelTimer);
+        document.getElementById('panel-viz').classList.remove('hidden');
+        document.getElementById('panel-feature').classList.add('hidden');
+        document.getElementById('panel-head-label').textContent = el.dataset.fname || 'Asset Scale';
+        var forId = el.getAttribute('for');
+        var radio = forId ? document.getElementById(forId) : null;
+        if (radio) highlightHeroScale(radio.value);
+        return;
+      }
+      var isHeroMode = currentPreset && currentPreset.startsWith('hero-');
+      var fimg = (isHeroMode && el.dataset.fimgHero) ? el.dataset.fimgHero : (el.dataset.fimg||null);
+      showPanel(el.dataset.fname, el.dataset.fdesc||'', fimg);
+    });
+    el.addEventListener('mouseleave', function() {
+      /* Restore to currently selected scale on scale-card mouseleave */
+      if (el.dataset.heroPanel === 'scale' && currentPreset && currentPreset.startsWith('hero-')) {
+        clearTimeout(panelTimer);
+        var checked = document.querySelector('input[name="object_scale"]:checked');
+        if (checked) { highlightHeroScale(checked.value); }
+        document.getElementById('panel-head-label').textContent = 'Asset Scale';
+        return;
+      }
+      resetPanel();
+    });
   });
   document.querySelectorAll('input[name="engine"]').forEach(function(r) {
     r.addEventListener('change', function(){ applyEngineLock(r.value); });
@@ -2399,6 +3027,18 @@ document.addEventListener('DOMContentLoaded', function() {
     r.addEventListener('change', function(){ updateQtyNote(r.value); });
   });
   ['graphic_style','rvt','hlod','wp','displacement','mat_transition','paintable','specific_map','biomes','water'].forEach(function(name) {
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function(el) {
+      el.addEventListener('change', recalcPrice);
+    });
+  });
+  /* Hero asset listeners */
+  document.querySelectorAll('input[name="object_scale"]').forEach(function(r) {
+    r.addEventListener('change', function(){ highlightHeroScale(r.value); recalcPrice(); });
+  });
+  document.querySelectorAll('input[name="h_scope"]').forEach(function(r) {
+    r.addEventListener('change', function(){ toggleScopeNote(r.value); recalcPrice(); });
+  });
+  ['h_displacement','closed_base','h_collision','vertex_colors','parametric_mat','worldspace_uvs','h_ref_layout','h_multi_mat','h_modular'].forEach(function(name) {
     document.querySelectorAll('input[name="' + name + '"]').forEach(function(el) {
       el.addEventListener('change', recalcPrice);
     });
