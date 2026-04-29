@@ -2381,6 +2381,8 @@ function formatPrice(n) {
     up[0] = up[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return '$' + up[0] + '.' + up[1];
   }
+  var adjusted = Math.floor(n) - 0.01;
+  var parts = adjusted.toFixed(2).split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   return parts[0] + ',' + parts[1] + ' €';
 }
@@ -2816,8 +2818,29 @@ function recalcPrice() {
     if (!hQtyCustom && hQtyMul) hSub *= hQtyMul;
     var hResult = Math.round(hSub / 100) * 100;
     setPrice(amountEl, hResult, null, false);
-    var hpEl = document.getElementById('hidden-price'); if (hpEl) hpEl.value = formatPrice(hResult);
-    var hprEl = document.getElementById('hidden-price-raw'); if (hprEl) hprEl.value = (Math.floor(hResult)-0.01).toFixed(2);
+    /* Always store EUR in estimated_price regardless of selected currency */
+    var hEurAdj = Math.floor(hResult) - 0.01;
+    var hEurParts = hEurAdj.toFixed(2).split('.');
+    hEurParts[0] = hEurParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    var hpEl = document.getElementById('hidden-price'); if (hpEl) hpEl.value = hEurParts[0] + ',' + hEurParts[1] + ' €';
+    var hprEl = document.getElementById('hidden-price-raw'); if (hprEl) hprEl.value = hEurAdj.toFixed(2);
+    /* Always store USD in estimated_price_usd regardless of selected currency */
+    var hUsdVal = Math.ceil(hResult * 1.15 / 100) * 100 - 0.01;
+    var hUsdParts = hUsdVal.toFixed(2).split('.');
+    hUsdParts[0] = hUsdParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var hUsdEl = document.getElementById('hidden-price-usd'); if (hUsdEl) hUsdEl.value = '$' + hUsdParts[0] + '.' + hUsdParts[1];
+    /* Hero breakdown fields for devis */
+    var hfh = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
+    hfh('hidden-price-base', formatPrice(Math.round((HERO_BASE[scale] || 0) * hEngMul / 100) * 100));
+    hfh('hidden-price-assets', hScopeCustom ? 'À définir' : (hScopePct > 0 ? formatPrice(Math.round(hScopeAdd / 100) * 100) : 'Inclus'));
+    hfh('hidden-price-style', hStylMul < 1.0 ? formatPrice(Math.round((hBase + hScopeAdd) * (hStylMul - 1.0) / 100) * 100) : 'Inclus');
+    hfh('hidden-price-delivery', 'Inclus');
+    hfh('hidden-price-coml', hComlOn ? formatPrice(Math.round(hSub / 1.5 * 0.5 / 100) * 100) : '—');
+    hfh('hidden-price-excl', hExclOn ? 'Inclus' : '−' + Math.round((HERO_EXCL_REDUCTION[scale] || 0) * 100) + '%');
+    var hQtyMulFinal = (!hQtyCustom && hQtyMul) ? hQtyMul : 1;
+    hfh('hidden-price-quantity', hQtyMulFinal > 1 ? '×' + hQtyMulFinal : 'Inclus');
+    hfh('hidden-commission-type', 'Hero Asset · ' + scale);
+    hfh('hidden-currency', CURRENCY);
     hLines.push('Hero ' + scale + ' · ' + hEngine);
     if (hStyle !== 'Realistic') hLines.push('Style ' + hStyle + ' · ×' + hStylMul.toFixed(2));
     if (hScopePct > 0) hLines.push(hScope + ' · +' + Math.round(hScopePct*100) + '%');
@@ -2898,12 +2921,21 @@ function recalcPrice() {
   var result = Math.round(subtotal / 100) * 100;
   setPrice(amountEl, result, null, false);
   /* Sync hidden fields for Make */
+  var hf = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
   var hp = document.getElementById('hidden-price');
   var hpr = document.getElementById('hidden-price-raw');
-  if (hp) hp.value = formatPrice(result);
-  if (hpr) hpr.value = (Math.floor(result) - 0.01).toFixed(2);
+  /* Always store EUR in estimated_price regardless of selected currency */
+  var eurAdjusted = Math.floor(result) - 0.01;
+  var eurParts = eurAdjusted.toFixed(2).split('.');
+  eurParts[0] = eurParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  if (hp) hp.value = eurParts[0] + ',' + eurParts[1] + ' €';
+  if (hpr) hpr.value = eurAdjusted.toFixed(2);
+  /* Always store USD in estimated_price_usd regardless of selected currency */
+  var usdVal = Math.ceil(result * 1.15 / 100) * 100 - 0.01;
+  var usdParts = usdVal.toFixed(2).split('.');
+  usdParts[0] = usdParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  hf('hidden-price-usd', '$' + usdParts[0] + '.' + usdParts[1]);
   /* Sync breakdown fields for devis */
-  var hf = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
   hf('hidden-price-base',     formatPrice(Math.round(base / 100) * 100));
   hf('hidden-price-assets',   isCustom ? 'À définir' : (assetAdd > 0 ? formatPrice(Math.round(assetAdd / 100) * 100) : 'Inclus'));
   hf('hidden-price-style',    stylMul < 1.0 ? formatPrice(Math.round((base + assetAdd) * (stylMul - 1.0) / 100) * 100) : 'Inclus');
@@ -2914,7 +2946,6 @@ function recalcPrice() {
   hf('hidden-price-quantity',  qtyMulFinal > 1 ? '×' + qtyMulFinal + ' (+' + formatPrice(Math.round(result * (1 - 1/qtyMulFinal) / 100) * 100) + ')' : 'Inclus');
   hf('hidden-commission-type', 'Terrain');
   hf('hidden-currency', CURRENCY);
-  hf('hidden-price-usd', CURRENCY === 'USD' ? formatPrice(result) : '$' + (Math.floor(result * 1.15) - 0.01).toFixed(2));
 
   lines.push('Preset ' + tier.toUpperCase() + ' \u00B7 ' + engine);
   if (size) lines.push((LANG === 'fr' ? 'Taille' : 'Size') + ' \u00B7 ' + size);
