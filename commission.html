@@ -39,6 +39,7 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
 .lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
 .lang-btn.active { color: var(--accent); }
+.curr-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); margin-right: 0.5rem; }
 .lang-sep { color: var(--text-dim); font-size: 0.7rem; }
 
 /* NAV PILLS */
@@ -285,29 +286,88 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .submit-btn { margin-top: 1.75rem; background: linear-gradient(135deg, #8B6914 0%, #C9A84C 35%, #F2D777 60%, #C9A84C 80%, #8B6914 100%); color: #020A16; border-radius: 4px; border-top: 1px solid rgba(255,240,160,0.60); border-left: 1px solid rgba(255,240,160,0.45); border-bottom: 1px solid rgba(80,50,0,0.70); border-right: 1px solid rgba(80,50,0,0.70); padding: 0.95rem 2.5rem; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.14em; cursor: pointer; transition: all 0.25s; width: 100%; text-transform: uppercase; box-shadow: 0 4px 25px rgba(201,168,76,0.35), 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,180,0.35); font-weight: 700; }
 .submit-btn:hover { box-shadow: 0 6px 40px rgba(201,168,76,0.55), 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,180,0.45); transform: translateY(-1px); filter: brightness(1.06); }
 .form-note { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); margin-top: 0.75rem; text-align: center; }
-.success-msg { display: none; text-align: center; padding: 3rem; }
-.success-msg.show { display: block; }
-.success-title { font-family: var(--display); font-size: 2.5rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-.success-sub { font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted); }
+/* ── RECAP MODE — layout expansion ──────────────────────────────────── */
+.form-outer.recap-mode .info-panel { display: none; }
+.form-outer.recap-mode .form-wrap  { flex: 0 0 860px; max-width: 860px; }
 
-/* RECAP SCREEN */
+/* ── RECAP SCREEN ───────────────────────────────────────────────────── */
 .recap-screen { display: none; }
 .recap-screen.show { display: block; }
-.recap-heading { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.4rem; }
-.recap-sub-text { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2rem; }
-.recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: transparent; border: 1px solid rgba(201,168,76,0.22); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 1.5rem; }
-.recap-row { background: linear-gradient(145deg, #0C1C36 0%, #060F1E 100%); padding: 0.6rem 1rem; display: flex; flex-direction: column; gap: 0.15rem; border-radius: 4px; }
-.recap-row.full { grid-column: 1 / -1; }
-.recap-key { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase; }
-.recap-val { font-family: var(--mono); font-size: 0.78rem; color: var(--text); }
-.recap-price-row { background: linear-gradient(145deg, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0.05) 100%); border-top: 1px solid rgba(201,168,76,0.70); border-left: 1px solid rgba(201,168,76,0.50); border-bottom: 1px solid var(--border-dark); border-right: 1px solid var(--border-dark); box-shadow: inset 1px 1px 0 rgba(201,168,76,0.18); padding: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius-sm); }
-.recap-price-key { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; }
-.recap-price-val { font-family: var(--display); font-size: 2rem; letter-spacing: 0.06em; color: var(--accent); }
-.recap-actions { display: flex; gap: 1rem; }
-.recap-back-btn { flex: 0 0 auto; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.25); border-radius: var(--radius-xs); color: var(--text-muted); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; padding: 0.75rem 1.5rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
-.recap-back-btn:hover { border-color: rgba(201,168,76,0.50); color: var(--text); background: rgba(201,168,76,0.07); }
-.recap-confirm-btn { flex: 1; background: linear-gradient(135deg, #8B6914 0%, #C9A84C 35%, #F2D777 60%, #C9A84C 80%, #8B6914 100%); color: #020A16; border-radius: 4px; border-top: 1px solid rgba(255,240,160,0.60); border-left: 1px solid rgba(255,240,160,0.45); border-bottom: 1px solid rgba(80,50,0,0.70); border-right: 1px solid rgba(80,50,0,0.70); padding: 0.9rem 2rem; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.25s; text-transform: uppercase; box-shadow: 0 4px 25px rgba(201,168,76,0.35), inset 0 1px 0 rgba(255,245,180,0.35); }
-.recap-confirm-btn:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 6px 35px rgba(201,168,76,0.50), inset 0 1px 0 rgba(255,245,180,0.45); }
+
+/* Blueprint corners */
+.brief-frame { position: relative; padding: 2rem 0 0; }
+.brief-corner { position: absolute; width: 20px; height: 20px; pointer-events: none; }
+.brief-corner--tl { top: 0; left: 0;   border-top: 1px solid rgba(201,168,76,0.55); border-left:  1px solid rgba(201,168,76,0.55); }
+.brief-corner--tr { top: 0; right: 0;  border-top: 1px solid rgba(201,168,76,0.55); border-right: 1px solid rgba(201,168,76,0.55); }
+.brief-corner--bl { bottom: 0; left: 0;   border-bottom: 1px solid rgba(201,168,76,0.55); border-left:  1px solid rgba(201,168,76,0.55); }
+.brief-corner--br { bottom: 0; right: 0;  border-bottom: 1px solid rgba(201,168,76,0.55); border-right: 1px solid rgba(201,168,76,0.55); }
+
+/* Header */
+.brief-eyebrow { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.30em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.45rem; }
+.brief-title-line { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); letter-spacing: 0.14em; color: var(--text); line-height: 1; margin-bottom: 1rem; }
+.brief-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(201,168,76,0.14); }
+.brief-meta-item { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); }
+.brief-meta-item strong { color: var(--text); font-weight: 500; }
+
+/* Animated scan line */
+@keyframes briefScan { 0% { transform: translateY(-100%); opacity: 0.7; } 80% { transform: translateY(2000%); opacity: 0.35; } 100% { transform: translateY(2000%); opacity: 0; } }
+.brief-scan-wrap { position: relative; height: 2px; overflow: visible; margin: 0.65rem 0 1.8rem; background: rgba(201,168,76,0.08); }
+.brief-scan { position: absolute; left: 0; right: 0; top: -18px; height: 38px; background: linear-gradient(to bottom, transparent 0%, rgba(201,168,76,0.28) 50%, transparent 100%); animation: briefScan 4s ease-in-out infinite; }
+
+/* Sections */
+.brief-sections { display: flex; flex-direction: column; gap: 1.6rem; margin-bottom: 1.8rem; }
+.brief-section-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.30em; color: rgba(201,168,76,0.50); text-transform: uppercase; padding: 0 0.2rem 0.45rem; border-bottom: 1px solid rgba(201,168,76,0.14); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.7rem; }
+.brief-section-label::before { content: ''; display: inline-block; width: 10px; height: 1px; background: rgba(201,168,76,0.40); flex-shrink: 0; }
+.brief-items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.brief-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-left: 2px solid rgba(201,168,76,0.28); padding: 0.62rem 0.9rem; border-radius: 3px; display: flex; flex-direction: column; gap: 0.15rem; transition: border-color 0.15s; }
+.brief-item:hover { border-color: rgba(255,255,255,0.14); border-left-color: rgba(201,168,76,0.55); }
+.brief-item.full { grid-column: 1 / -1; }
+.brief-item-key { font-family: var(--mono); font-size: 0.49rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+.brief-item-val { font-family: var(--mono); font-size: 0.75rem; color: rgba(255,255,255,0.82); line-height: 1.45; word-break: break-word; }
+.brief-item-val.val-yes { color: rgba(90,215,130,0.90); }
+.brief-item-val.val-no  { color: rgba(255,255,255,0.30); }
+
+/* Price block */
+.brief-price-block { background: linear-gradient(145deg, rgba(201,168,76,0.10) 0%, rgba(201,168,76,0.03) 100%); border-top: 1px solid rgba(201,168,76,0.65); border-left: 1px solid rgba(201,168,76,0.45); border-bottom: 1px solid var(--border-dark); border-right: 1px solid var(--border-dark); box-shadow: inset 1px 1px 0 rgba(201,168,76,0.15), 0 4px 20px rgba(0,0,0,0.4); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.brief-price-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.24em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.2rem; }
+.brief-price-vat { font-family: var(--mono); font-size: 0.52rem; color: var(--text-dim); letter-spacing: 0.06em; }
+.brief-price-amount { font-family: var(--display); font-size: clamp(2rem, 3.5vw, 2.8rem); letter-spacing: 0.06em; color: var(--accent); line-height: 1; flex-shrink: 0; }
+
+/* CTAs */
+.brief-actions { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+.brief-submit-btn { background: linear-gradient(135deg, #8B6914 0%, #C9A84C 35%, #F2D777 60%, #C9A84C 80%, #8B6914 100%); color: #020A16; border-radius: 4px; border-top: 1px solid rgba(255,240,160,0.60); border-left: 1px solid rgba(255,240,160,0.45); border-bottom: 1px solid rgba(80,50,0,0.70); border-right: 1px solid rgba(80,50,0,0.70); padding: 1rem 2.5rem; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.14em; cursor: pointer; transition: all 0.25s; width: 100%; text-transform: uppercase; box-shadow: 0 4px 25px rgba(201,168,76,0.35), 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,180,0.35); font-weight: 700; }
+.brief-submit-btn:hover { box-shadow: 0 6px 40px rgba(201,168,76,0.55), 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,180,0.45); transform: translateY(-1px); filter: brightness(1.06); }
+.brief-edit-btn { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.14em; color: var(--text-dim); text-transform: uppercase; padding: 0.4rem 0; text-align: center; transition: color 0.2s; width: 100%; }
+.brief-edit-btn:hover { color: var(--text-muted); }
+
+/* Reassurance strip */
+.brief-reassurance { display: flex; align-items: center; justify-content: center; gap: 0.65rem; padding: 0.65rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
+@keyframes gentlePulse { 0%,100% { box-shadow: 0 0 0 0 rgba(60,222,122,0.5); } 50% { box-shadow: 0 0 0 5px rgba(60,222,122,0); } }
+.brief-reassure-dot { width: 6px; height: 6px; border-radius: 50%; background: #3CDE7A; flex-shrink: 0; animation: gentlePulse 2.4s ease-in-out infinite; }
+.brief-reassure-text { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; color: var(--text-dim); }
+
+/* ── SUCCESS SCREEN ─────────────────────────────────────────────────── */
+@keyframes ringExpand  { 0% { transform: scale(0.55); opacity: 0.75; } 100% { transform: scale(2.8); opacity: 0; } }
+@keyframes horizonScan { 0%,100% { opacity: 0.35; transform: scaleX(0.5); } 50% { opacity: 0.9; transform: scaleX(1); } }
+@keyframes dotBlink    { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes cosmosGlow  { 0%,100% { text-shadow: 0 0 30px rgba(201,168,76,0.30), 0 0 60px rgba(201,168,76,0.10); } 50% { text-shadow: 0 0 55px rgba(201,168,76,0.60), 0 0 110px rgba(201,168,76,0.22); } }
+.success-msg { display: none; text-align: center; padding: 3.5rem 2rem; }
+.success-msg.show { display: block; }
+.success-cosmos { position: relative; width: 110px; height: 110px; margin: 0 auto 2.2rem; }
+.success-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); animation: ringExpand 3s ease-out infinite; }
+.success-ring:nth-child(2) { animation-delay: 1s; }
+.success-ring:nth-child(3) { animation-delay: 2s; }
+.success-ring-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.9) 0%, rgba(201,168,76,0.3) 60%, transparent 100%); border: 1px solid rgba(201,168,76,0.6); }
+.success-title { font-family: var(--display); font-size: clamp(1.3rem, 3vw, 2rem); letter-spacing: 0.16em; color: var(--accent); margin-bottom: 1rem; animation: cosmosGlow 3s ease-in-out infinite; }
+.success-horizon-wrap { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1.6rem; }
+.success-horizon-line { height: 1px; width: 40px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.45)); animation: horizonScan 2.5s ease-in-out infinite; }
+.success-horizon-line.right { background: linear-gradient(to left, transparent, rgba(201,168,76,0.45)); }
+.success-horizon { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.22em; color: var(--text-muted); text-transform: uppercase; }
+.success-dot { display: inline-block; animation: dotBlink 1.2s ease-in-out infinite; }
+.success-dot:nth-child(2) { animation-delay: 0.4s; }
+.success-dot:nth-child(3) { animation-delay: 0.8s; }
+.success-body { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); line-height: 1.85; max-width: 380px; margin: 0 auto 1rem; }
+.success-timestamp { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; color: var(--text-dim); opacity: 0.45; }
 
 /* XL BANNER */
 .xl-banner { display: none; border: 1px solid rgba(201,168,76,0.45); border-radius: var(--radius-sm); background: linear-gradient(145deg, rgba(201,168,76,0.10) 0%, rgba(201,168,76,0.03) 100%); box-shadow: 0 0 24px rgba(201,168,76,0.07), inset 0 1px 0 rgba(201,168,76,0.20); padding: 1.5rem; margin-bottom: 2rem; }
@@ -469,6 +529,16 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .preset-card[data-preset="hero-vegetation"] .preset-id::after { content: '●'; color: #D4873A; margin-left: 0.5rem; font-size: 0.55rem; }
 .preset-card[data-preset="hero-structure"]  .preset-id::after { content: '▲'; color: #B8C8D8; margin-left: 0.5rem; font-size: 0.55rem; }
 .preset-card[data-preset="hero-climate"]    .preset-id::after { content: '★'; color: #9D6BE0; margin-left: 0.5rem; font-size: 0.55rem; }
+
+/* COMING SOON preset cards */
+.preset-card.soon { opacity: 0.45; cursor: default !important; }
+.preset-card.soon:hover { opacity: 0.72; transform: none !important; box-shadow: 0 4px 24px rgba(0,0,0,0.55) !important; }
+.preset-card.soon:hover::after { width: 0 !important; }
+.preset-card.soon .preset-cta { display: none; }
+.preset-soon-chip { position: absolute; top: 0.9rem; right: 0.9rem; font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 2rem; padding: 0.2rem 0.65rem; pointer-events: none; }
+.preset-soon-overlay { position: absolute; inset: 0; border-radius: inherit; background: rgba(2,8,20,0.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.22s; pointer-events: none; }
+.preset-soon-overlay-text { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.30em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+.preset-card.soon:hover .preset-soon-overlay { opacity: 1; }
 
 /* ABOUT SECTION */
 #about { padding: 5rem 2.5rem 4rem; max-width: 1100px; margin: 0 auto; }
@@ -923,6 +993,11 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
   </nav>
 
   <div class="header-right">
+    <div class="curr-toggle">
+      <button class="lang-btn" id="curr-btn-usd" onclick="setCurrency('USD')">$</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn active" id="curr-btn-eur" onclick="setCurrency('EUR')">€</button>
+    </div>
     <div class="lang-toggle">
       <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-sep">|</span>
@@ -1130,7 +1205,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>2 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price">1,799 €</div>
+    <div class="preset-price" id="price-s">1.999,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1149,7 +1224,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>2 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price">2,999 €</div>
+    <div class="preset-price" id="price-m">2.799,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1167,7 +1242,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>3 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price">5,499 €</div>
+    <div class="preset-price" id="price-l">4.499,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1224,6 +1299,16 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
           <input type="hidden" name="preset" id="hidden-preset" value="">
           <input type="hidden" name="estimated_price" id="hidden-price" value="">
           <input type="hidden" name="estimated_price_raw" id="hidden-price-raw" value="">
+          <input type="hidden" name="price_base" id="hidden-price-base" value="">
+          <input type="hidden" name="price_style" id="hidden-price-style" value="">
+          <input type="hidden" name="price_assets" id="hidden-price-assets" value="">
+          <input type="hidden" name="price_delivery" id="hidden-price-delivery" value="">
+          <input type="hidden" name="price_com_license" id="hidden-price-coml" value="">
+          <input type="hidden" name="price_exclusivity" id="hidden-price-excl" value="">
+          <input type="hidden" name="price_quantity" id="hidden-price-quantity" value="">
+          <input type="hidden" name="commission_type" id="hidden-commission-type" value="">
+          <input type="hidden" name="currency" id="hidden-currency" value="EUR">
+          <input type="hidden" name="estimated_price_usd" id="hidden-price-usd" value="">
 
           <!-- STEP 1: FORM -->
           <div id="step-form">
@@ -1676,18 +1761,64 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
             <div class="form-note" id="form-note" data-en="I will review your brief and get back to you with a finalized quote within 48h. No commitment." data-fr="Je lirai votre brief et vous répondrai avec un devis finalisé sous 48h. Sans engagement.">I will review your brief and get back to you with a finalized quote within 48h. No commitment.</div>
           </div>
 
-          <!-- STEP 2: RECAP -->
+          <!-- STEP 2: RECAP — MISSION BRIEF -->
           <div id="step-recap" class="recap-screen">
-            <div class="recap-heading" data-en="SUMMARY" data-fr="RÉCAPITULATIF">SUMMARY</div>
-            <div class="recap-sub-text" data-en="Review your selections before sending." data-fr="Vérifiez vos sélections avant l'envoi.">Review your selections before sending.</div>
-            <div class="recap-grid" id="recap-grid"></div>
-            <div class="recap-price-row">
-              <span class="recap-price-key" data-en="Price estimate" data-fr="Estimation">Price estimate</span>
-              <span class="recap-price-val" id="recap-price-display">—</span>
-            </div>
-            <div class="recap-actions">
-              <button type="button" class="recap-back-btn" onclick="hideRecap()" data-en="← Modify" data-fr="← Modifier">← Modify</button>
-              <button type="button" class="recap-confirm-btn" onclick="submitForm()" data-en="Confirm &amp; Send →" data-fr="Confirmer et envoyer →">Confirm &amp; Send →</button>
+            <div class="brief-frame">
+              <div class="brief-corner brief-corner--tl"></div>
+              <div class="brief-corner brief-corner--tr"></div>
+              <div class="brief-corner brief-corner--bl"></div>
+              <div class="brief-corner brief-corner--br"></div>
+
+              <div class="brief-eyebrow">KALYSTEON STUDIO &middot; PROJECT BRIEF</div>
+              <div class="brief-title-line" data-en="MISSION BRIEF" data-fr="MISSION BRIEF">MISSION BRIEF</div>
+              <div class="brief-meta">
+                <div class="brief-meta-item" data-en="Client:" data-fr="Client:">Client: <strong id="recap-meta-client">—</strong></div>
+                <div class="brief-meta-item" data-en="Preset:" data-fr="Preset:">Preset: <strong id="recap-meta-preset">—</strong></div>
+              </div>
+
+              <div class="brief-scan-wrap"><div class="brief-scan"></div></div>
+
+              <div class="brief-sections">
+                <div class="brief-section">
+                  <div class="brief-section-label" data-en="Core Specs" data-fr="Spécifications">Core Specs</div>
+                  <div class="brief-items-grid" id="recap-core"></div>
+                </div>
+                <div class="brief-section">
+                  <div class="brief-section-label" data-en="Visual Identity" data-fr="Identité visuelle">Visual Identity</div>
+                  <div class="brief-items-grid" id="recap-visual"></div>
+                </div>
+                <div class="brief-section">
+                  <div class="brief-section-label" data-en="Technical" data-fr="Technique">Technical</div>
+                  <div class="brief-items-grid" id="recap-tech"></div>
+                </div>
+                <div class="brief-section">
+                  <div class="brief-section-label" data-en="Rights &amp; Delivery" data-fr="Droits &amp; Livraison">Rights &amp; Delivery</div>
+                  <div class="brief-items-grid" id="recap-rights"></div>
+                </div>
+              </div>
+
+              <div id="recap-ctx-section" class="brief-section" style="display:none; margin-bottom:1.8rem;">
+                <div class="brief-section-label" data-en="Project Context" data-fr="Contexte du projet">Project Context</div>
+                <div class="brief-items-grid" id="recap-ctx"></div>
+              </div>
+
+              <div class="brief-price-block">
+                <div>
+                  <div class="brief-price-label" data-en="Project Estimate (Excl. VAT)" data-fr="Estimation du projet (HT)">Project Estimate (Excl. VAT)</div>
+                  <div class="brief-price-vat" data-en="VAT may apply depending on your country." data-fr="TVA applicable selon votre pays.">VAT may apply depending on your country.</div>
+                </div>
+                <div class="brief-price-amount" id="recap-price-display">—</div>
+              </div>
+
+              <div class="brief-actions">
+                <button type="button" class="brief-submit-btn" onclick="submitForm()" data-en="Send Brief to Studio →" data-fr="Envoyer le brief au studio →">Send Brief to Studio →</button>
+                <button type="button" class="brief-edit-btn" onclick="hideRecap()" data-en="← Edit Configuration" data-fr="← Modifier la configuration">← Edit Configuration</button>
+              </div>
+
+              <div class="brief-reassurance">
+                <div class="brief-reassure-dot"></div>
+                <div class="brief-reassure-text" data-en="I personally review every brief and reply within 48h with a finalized quote. No commitment." data-fr="Je lis personnellement chaque brief et réponds sous 48h avec un devis finalisé. Sans engagement.">I personally review every brief and reply within 48h with a finalized quote. No commitment.</div>
+              </div>
             </div>
           </div>
 
@@ -1695,8 +1826,20 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       </div>
 
       <div class="success-msg" id="success-msg">
-        <div class="success-title" data-en="BRIEF RECEIVED" data-fr="BRIEF REÇU">BRIEF RECEIVED</div>
-        <div class="success-sub" data-en="Your request has been sent and will be reviewed within 48 hours." data-fr="Votre demande a été envoyée et sera examinée sous 48 heures.">Your request has been sent and will be reviewed within 48 hours.</div>
+        <div class="success-cosmos">
+          <div class="success-ring"></div>
+          <div class="success-ring"></div>
+          <div class="success-ring"></div>
+          <div class="success-ring-center"></div>
+        </div>
+        <div class="success-title" data-en="YOUR VISION HAS BEEN RECEIVED." data-fr="VOTRE VISION A ÉTÉ REÇUE.">YOUR VISION HAS BEEN RECEIVED.</div>
+        <div class="success-horizon-wrap">
+          <div class="success-horizon-line"></div>
+          <span class="success-horizon" data-en="Preparing the horizon" data-fr="Préparation de l'horizon">Preparing the horizon</span><span class="success-dot">.</span><span class="success-dot">.</span><span class="success-dot">.</span>
+          <div class="success-horizon-line right"></div>
+        </div>
+        <div class="success-body" data-en="Your brief has been received. I will review your specifications and get back to you with a finalized quote within 48 hours." data-fr="Votre brief a été reçu. Je lirai vos spécifications et vous répondrai avec un devis finalisé sous 48 heures.">Your brief has been received. I will review your specifications and get back to you with a finalized quote within 48 hours.</div>
+        <div class="success-timestamp" id="success-timestamp"></div>
       </div>
     </div>
 
@@ -1888,7 +2031,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 
     <!-- 01 · Vegetation / Foliage -->
     <div class="hero-preset-card">
-      <div class="preset-card" data-preset="hero-vegetation" data-label="Hero Vegetation" onclick="selectPreset(this)">
+      <div class="preset-card soon" data-preset="hero-vegetation" data-label="Hero Vegetation">
+        <div class="preset-soon-chip">Soon</div>
         <div class="preset-id">01 / Hero</div>
         <div class="preset-title">VEGETATION</div>
         <div class="preset-target" data-en="Foliage &amp; biome assets" data-fr="Foliage &amp; assets de biome">Foliage &amp; biome assets</div>
@@ -1901,7 +2045,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         </ul>
         <div class="preset-price">On request</div>
         <div class="preset-price-note">quote after scoping call</div>
-        <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
+        <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
     </div>
 
@@ -1927,7 +2071,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 
     <!-- 03 · Structures -->
     <div class="hero-preset-card">
-      <div class="preset-card" data-preset="hero-structure" data-label="Hero Structure" onclick="selectPreset(this)">
+      <div class="preset-card soon" data-preset="hero-structure" data-label="Hero Structure">
+        <div class="preset-soon-chip">Soon</div>
         <div class="preset-id">03 / Hero</div>
         <div class="preset-title">STRUCTURE</div>
         <div class="preset-target" data-en="Buildings, villages &amp; castles" data-fr="Bâtiments, villages &amp; châteaux">Buildings, villages &amp; castles</div>
@@ -1940,13 +2085,14 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         </ul>
         <div class="preset-price">On request</div>
         <div class="preset-price-note">quote after scoping call</div>
-        <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
+        <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
     </div>
 
     <!-- 04 · Climate FX -->
     <div class="hero-preset-card">
-      <div class="preset-card" data-preset="hero-climate" data-label="Hero Atmospherics" onclick="selectPreset(this)">
+      <div class="preset-card soon" data-preset="hero-climate" data-label="Hero Atmospherics">
+        <div class="preset-soon-chip">Soon</div>
         <div class="preset-badge--specialist">★ Specialist</div>
         <div class="preset-id">04 / Hero</div>
         <div class="preset-title">ATMOSPHERICS</div>
@@ -1960,7 +2106,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         </ul>
         <div class="preset-price">On request</div>
         <div class="preset-price-note">quote after scoping call</div>
-        <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
+        <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
     </div>
 
@@ -2143,9 +2289,9 @@ var COMMISSION_OPEN = true;
 })();
 
 /* ═══ PRICING DATA ═══ */
-var PRESET_BASE    = { s:2100, m:3600, l:6800, xl:null };
+var PRESET_BASE    = { s:3200, m:4800, l:9000, xl:null };
 /* ── Hero asset pricing ── */
-var HERO_BASE          = { 'Prop':2400, 'Character':4400, 'Structure':8200, 'Landmark':14000 };
+var HERO_BASE          = { 'Prop':3200, 'Character':5900, 'Structure':10900, 'Landmark':18600 };
 var HERO_SCOPE_PCT     = { 'Mesh Only':0, 'Mesh + Props':0.28, 'Mesh + FX':0.20, 'Full Kit':0.52, 'To Discuss':null };
 var HERO_EXCL_REDUCTION= { 'Prop':0.12, 'Character':0.18, 'Structure':0.22, 'Landmark':0.25 };
 var VIZ_HERO = {
@@ -2161,9 +2307,9 @@ var SIZE_MULT = {
   xl: {}
 };
 var ENGINE_MULT   = { 'Unreal Engine 5':1.0, 'Unity':0.90, 'RAW':0.78 };
-var STYLE_MULT    = { 'Realistic':1.0,'Stylized':0.91,'Polygonal':0.81,'Cartoon':0.75,'Retro':0.70 };
+var STYLE_MULT    = { 'Realistic':1.0,'Stylized':0.95,'Polygonal':0.90,'Cartoon':0.88,'Retro':0.85 };
 var ASSET_PCT     = { 'Terrain only':0,'Terrain + Assets':0.30,'Terrain + FX':0.22,'Full Environment':0.58,'To discuss':null };
-var DELIVERY_MULT  = { 'Standard':1.0,'Express':1.20,'Rush':1.40 };
+var DELIVERY_MULT  = { 'Standard':1.0,'Express':1.32,'Rush':1.60 };
 var QUANTITY_MULT  = { '1':1.0, '2':1.75, '3':2.40, 'custom':null };
 var EXCL_REDUCTION = { s:0.15, m:0.20, l:0.30, xl:null };
 
@@ -2179,24 +2325,32 @@ var sizeOptions = {
 };
 var presetTier = { 'terrain-s':'s','terrain-m':'m','terrain-l':'l','terrain-xl':'xl','hero-landscape':'xl','hero-vegetation':'xl','hero-structure':'xl','hero-climate':'xl' };
 
+var DELIVERY_TIMES = {
+  s: {
+    'Terrain only':     ['~1 week',  '~5 days',   '~3 days'  ],
+    'Terrain + Assets': ['~3 weeks', '~2 weeks',  '~10 days' ],
+    'Terrain + FX':     ['~3 weeks', '~2 weeks',  '~10 days' ],
+    'Full Environment': ['~5 weeks', '~4 weeks',  '~3 weeks' ],
+    'To discuss':       [null, null, null]
+  },
+  m: {
+    'Terrain only':     ['~2 weeks', '~10 days',  '~1 week'  ],
+    'Terrain + Assets': ['~4 weeks', '~3 weeks',  '~2 weeks' ],
+    'Terrain + FX':     ['~4 weeks', '~3 weeks',  '~2 weeks' ],
+    'Full Environment': ['~6 weeks', '~4 weeks',  '~3 weeks' ],
+    'To discuss':       [null, null, null]
+  },
+  l: {
+    'Terrain only':     ['~3 weeks', '~2 weeks',  '~10 days' ],
+    'Terrain + Assets': ['~5 weeks', '~4 weeks',  '~3 weeks' ],
+    'Terrain + FX':     ['~5 weeks', '~4 weeks',  '~3 weeks' ],
+    'Full Environment': ['~7 weeks', '~5 weeks',  '~4 weeks' ],
+    'To discuss':       [null, null, null]
+  }
+};
 var deliveryOptions = {
-  'terrain-s': [
-    { val:'Standard', label:'Standard \u2014 ~3 semaines' },
-    { val:'Express',  label:'Express \u2014 ~10 jours (+20\u202F%)' },
-    { val:'Rush',     label:'Rush \u2014 ~5 jours (+40\u202F%)' }
-  ],
-  'terrain-m': [
-    { val:'Standard', label:'Standard \u2014 ~6 semaines' },
-    { val:'Express',  label:'Express \u2014 ~3 semaines (+20\u202F%)' },
-    { val:'Rush',     label:'Rush \u2014 ~10 jours (+40\u202F%)' }
-  ],
-  'terrain-l': [
-    { val:'Standard', label:'Standard \u2014 ~10 semaines' },
-    { val:'Express',  label:'Express \u2014 ~5 semaines (+20\u202F%)' },
-    { val:'Rush',     label:'Rush \u2014 ~3 semaines (+40\u202F%)' }
-  ],
   'terrain-xl': [
-    { val:'Standard', label:'Sur discussion apr\u00E8s audit' }
+    { val:'Standard', label:'Sur discussion après audit' }
   ],
   'hero-landscape':  [{ val:'Standard', label:'Timeline defined on call' }],
   'hero-vegetation': [{ val:'Standard', label:'Timeline defined on call' }],
@@ -2214,20 +2368,36 @@ var VIZ = {
 var currentPreset   = null;
 var panelTimer      = null;
 var LANG            = 'en';
+var CURRENCY        = 'EUR';
 var hasScrolledOnce = false;
+var PRESET_STARTING = { s: 2000, m: 2800, l: 4500 };
 
-/* ═══ PRICE FORMATTER · 8.800,00 € · psychological pricing (always ends in .99) ═══ */
+/* ═══ PRICE FORMATTER ═══ */
 function formatPrice(n) {
-  if (n === null || n === undefined || isNaN(n)) return '\u2014 \u20AC';
-  var adjusted = Math.floor(n) - 0.01; /* 2100 → 2099.99 */
-  var parts = adjusted.toFixed(2).split('.');
+  if (n === null || n === undefined || isNaN(n)) return CURRENCY === 'USD' ? '$—' : '— €';
+  if (CURRENCY === 'USD') {
+    var usd = Math.ceil(n * 1.15 / 100) * 100 - 0.01;
+    var up = usd.toFixed(2).split('.');
+    up[0] = up[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return '$' + up[0] + '.' + up[1];
+  }
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return parts[0] + ',' + parts[1] + '\u00A0\u20AC';
+  return parts[0] + ',' + parts[1] + ' €';
 }
 
-/* ═══ LANGUAGE ═══ */
 function makeTags(text) {
   return text.split('|').map(function(s){ return '<span class="preset-target-tag">' + s.trim() + '</span>'; }).join('');
+}
+
+function setCurrency(curr) {
+  CURRENCY = curr;
+  document.getElementById('curr-btn-usd').classList.toggle('active', curr === 'USD');
+  document.getElementById('curr-btn-eur').classList.toggle('active', curr === 'EUR');
+  ['s','m','l'].forEach(function(tier) {
+    var el = document.getElementById('price-' + tier);
+    if (el) el.textContent = formatPrice(PRESET_STARTING[tier]);
+  });
+  recalcPrice();
 }
 
 function setLang(lang) {
@@ -2345,31 +2515,42 @@ function closeForm() {
 function applyPresetDefaults(preset) {
   var engine = (document.querySelector('input[name="engine"]:checked') || {}).value || 'Unreal Engine 5';
   if (preset === 'terrain-s') {
-    var wpN = document.getElementById('wp-n');    if (wpN)    wpN.checked    = true;
-    var hlodN = document.getElementById('hlod-n'); if (hlodN)  hlodN.checked  = true;
-    var rvtY  = document.getElementById('rvt-y');  if (rvtY)   rvtY.checked   = true;
-    var dispY = document.getElementById('disp-y'); if (dispY)  dispY.checked  = true;
-    var mtY   = document.getElementById('mt-y');   if (mtY)    mtY.checked    = true;
-    var ptY   = document.getElementById('pt-y');   if (ptY)    ptY.checked    = true;
-  } else if (preset === 'terrain-m') {
-    ['rvt-y','hlod-y','wp-y','disp-y','mt-y','pt-y'].forEach(function(id){
+    ['wp-n','hlod-n','rvt-n','disp-n'].forEach(function(id){
       var el = document.getElementById(id); if (el) el.checked = true;
     });
+    ['mt-y','pt-y'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.checked = true;
+    });
+    var astT = document.getElementById('ast-terrain');
+    if (astT) { astT.checked = true; toggleAssetNote('Terrain only'); }
+    updateDeliverySelect(preset, 'Terrain only');
+  } else if (preset === 'terrain-m') {
+    ['rvt-n','wp-n','disp-n'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.checked = true;
+    });
+    ['hlod-y','mt-y','pt-y'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.checked = true;
+    });
+    var astA = document.getElementById('ast-assets');
+    if (astA) { astA.checked = true; toggleAssetNote('Terrain + Assets'); }
+    updateDeliverySelect(preset, 'Terrain + Assets');
   } else if (preset === 'terrain-l') {
-    ['rvt-y','hlod-y','wp-y','disp-y','mt-y','pt-y'].forEach(function(id){
+    ['rvt-n','wp-n','disp-n'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.checked = true;
+    });
+    ['hlod-y','mt-y','pt-y'].forEach(function(id){
       var el = document.getElementById(id); if (el) el.checked = true;
     });
     var fullEnv = document.getElementById('ast-full');
     if (fullEnv) { fullEnv.checked = true; toggleAssetNote('Full Environment'); }
+    updateDeliverySelect(preset, 'Full Environment');
   } else if (preset && preset.startsWith('hero-')) {
-    /* Hero defaults */
-    ['hd-y','vc-y','pm-y','wu-y'].forEach(function(id){        /* Yes by default */
+    ['hd-y','vc-y','pm-y','wu-y'].forEach(function(id){
       var el = document.getElementById(id); if (el) el.checked = true;
     });
-    ['cb-n','hcol-n','mm-n','hm-n','rl-n'].forEach(function(id){ /* No by default */
+    ['cb-n','hcol-n','mm-n','hm-n','rl-n'].forEach(function(id){
       var el = document.getElementById(id); if (el) el.checked = true;
     });
-    /* Default Object Scale = Prop, highlight viz */
     var scaleEl = document.getElementById('scale-prop');
     if (scaleEl) scaleEl.checked = true;
     highlightHeroScale('Prop');
@@ -2418,13 +2599,38 @@ function applyPresetClass(preset) {
 }
 
 /* ═══ DELIVERY OPTIONS ═══ */
-function updateDeliverySelect(preset) {
+function updateDeliverySelect(preset, assets) {
   var sel = document.getElementById('delivery-select');
-  var opts = deliveryOptions[preset] || deliveryOptions['terrain-m'];
+  var tier = preset ? preset.replace('terrain-', '') : null;
+  var timesForTier = tier ? DELIVERY_TIMES[tier] : null;
+  if (!timesForTier) {
+    var opts = deliveryOptions[preset] || [{ val:'Standard', label:'Timeline defined on call' }];
+    sel.innerHTML = '';
+    opts.forEach(function(o) {
+      var el = document.createElement('option');
+      el.value = o.val; el.textContent = o.label; sel.appendChild(el);
+    });
+    return;
+  }
+  var assetsKey = assets || getRadio('assets') || 'Terrain only';
+  var times = timesForTier[assetsKey] || timesForTier['Terrain only'];
+  var curVal = sel.value;
   sel.innerHTML = '';
-  opts.forEach(function(o) {
+  if (!times[0]) {
     var el = document.createElement('option');
-    el.value = o.val; el.textContent = o.label; sel.appendChild(el);
+    el.value = 'Standard'; el.textContent = 'Standard — scope on call';
+    sel.appendChild(el);
+    return;
+  }
+  [
+    { val:'Standard', label:'Standard — ' + times[0] },
+    { val:'Express',  label:'Express — ' + times[1] + ' (+32 %)' },
+    { val:'Rush',     label:'Rush — ' + times[2] + ' (+60 %)' }
+  ].forEach(function(o) {
+    var el = document.createElement('option');
+    el.value = o.val; el.textContent = o.label;
+    if (o.val === curVal) el.selected = true;
+    sel.appendChild(el);
   });
 }
 
@@ -2472,14 +2678,12 @@ function applyEngineLock(engine) {
   techRows.forEach(function(id) {
     var row = document.getElementById(id); if (!row) return;
     row.classList.toggle('locked', lockTech);
-    var inp = row.querySelector('input[value="' + (lockTech ? 'no' : 'yes') + '"]');
-    if (inp) inp.checked = true;
+    if (lockTech) { var inp = row.querySelector('input[value="no"]'); if (inp) inp.checked = true; }
   });
   matRows.forEach(function(id) {
     var row = document.getElementById(id); if (!row) return;
     row.classList.toggle('locked', lockMat);
-    var inp = row.querySelector('input[value="' + (lockMat ? 'no' : 'yes') + '"]');
-    if (inp) inp.checked = true;
+    if (lockMat) { var inp = row.querySelector('input[value="no"]'); if (inp) inp.checked = true; }
   });
   recalcPrice();
 }
@@ -2654,22 +2858,25 @@ function recalcPrice() {
     if (getRadio('wp')   === 'no') subtotal *= 0.97;
   }
   if (engine !== 'RAW') {
-    if (getRadio('displacement')   === 'no') subtotal *= 0.96;
+    if (getRadio('displacement')   === 'no') subtotal *= 0.94;
     if (getRadio('mat_transition') === 'no') subtotal *= 0.97;
     if (getRadio('paintable')      === 'no') subtotal *= 0.98;
   }
-  if (getRadio('specific_map') === 'yes') subtotal *= 1.10;
-  if (getRadio('biomes')       === 'yes') subtotal *= 1.15;
-  if (getRadio('water')        === 'yes') subtotal *= 1.12;
+  if (getRadio('specific_map') === 'yes') subtotal *= 1.18;
+  if (getRadio('biomes')       === 'yes') subtotal *= 1.28;
+  if (getRadio('water')        === 'yes') subtotal *= 1.20;
 
+  var subPreExcl = subtotal;
   var exclCb = document.getElementById('excl-toggle');
   var exclOn = exclCb ? exclCb.checked : true;
   if (!exclOn && EXCL_REDUCTION[tier]) subtotal *= (1 - EXCL_REDUCTION[tier]);
 
+  var subPreComl = subtotal;
   var comlCb = document.getElementById('coml-toggle');
   var comlOn = comlCb ? comlCb.checked : false;
   if (comlOn) subtotal *= 1.5;
 
+  var subPreDel = subtotal;
   var delivery = document.getElementById('delivery-select');
   var delKey   = delivery ? delivery.value : 'Standard';
   var delMul   = DELIVERY_MULT[delKey] || 1.0;
@@ -2695,6 +2902,19 @@ function recalcPrice() {
   var hpr = document.getElementById('hidden-price-raw');
   if (hp) hp.value = formatPrice(result);
   if (hpr) hpr.value = (Math.floor(result) - 0.01).toFixed(2);
+  /* Sync breakdown fields for devis */
+  var hf = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
+  hf('hidden-price-base',     formatPrice(Math.round(base / 100) * 100));
+  hf('hidden-price-assets',   isCustom ? 'À définir' : (assetAdd > 0 ? formatPrice(Math.round(assetAdd / 100) * 100) : 'Inclus'));
+  hf('hidden-price-style',    stylMul < 1.0 ? formatPrice(Math.round((base + assetAdd) * (stylMul - 1.0) / 100) * 100) : 'Inclus');
+  hf('hidden-price-delivery', delMul > 1.0 ? formatPrice(Math.round(subPreDel * (delMul - 1.0) / 100) * 100) : 'Inclus');
+  hf('hidden-price-coml',     comlOn ? formatPrice(Math.round(subPreComl * 0.5 / 100) * 100) : '—');
+  hf('hidden-price-excl',     exclOn ? 'Inclus' : '−' + Math.round((EXCL_REDUCTION[tier] || 0) * 100) + '% (−' + formatPrice(Math.round(subPreExcl * (EXCL_REDUCTION[tier] || 0) / 100) * 100) + ')');
+  var qtyMulFinal = (!isQtyCustom && qtyMul) ? qtyMul : 1;
+  hf('hidden-price-quantity',  qtyMulFinal > 1 ? '×' + qtyMulFinal + ' (+' + formatPrice(Math.round(result * (1 - 1/qtyMulFinal) / 100) * 100) + ')' : 'Inclus');
+  hf('hidden-commission-type', 'Terrain');
+  hf('hidden-currency', CURRENCY);
+  hf('hidden-price-usd', CURRENCY === 'USD' ? formatPrice(result) : '$' + (Math.floor(result * 1.15) - 0.01).toFixed(2));
 
   lines.push('Preset ' + tier.toUpperCase() + ' \u00B7 ' + engine);
   if (size) lines.push((LANG === 'fr' ? 'Taille' : 'Size') + ' \u00B7 ' + size);
@@ -2808,108 +3028,170 @@ function toggleAssetNote(val) {
 }
 
 /* ═══ RECAP ═══ */
-function showRecap() {
-  var nameEl  = document.getElementById('field-client-name');
-  var email   = document.getElementById('field-email');
-  var refsEl  = document.getElementById('field-references');
+function makeBriefItem(key, val, full) {
+  var div = document.createElement('div');
+  div.className = 'brief-item' + (full ? ' full' : '');
+  var v = val || '—';
+  var cls = 'brief-item-val';
+  if (typeof v === 'string' && v.charAt(0) === '✓') cls += ' val-yes';
+  else if (typeof v === 'string' && v.charAt(0) === '–') cls += ' val-no';
+  div.innerHTML = '<div class="brief-item-key">' + key + '</div><div class="' + cls + '">' + v + '</div>';
+  return div;
+}
 
-  if (!currentPreset) { alert(LANG === 'fr' ? 'Veuillez d\u00E9abord s\u00E9lectionner un preset.' : 'Please select a preset first.'); return; }
+function fillBriefSection(containerId, items) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = '';
+  items.forEach(function(r) { el.appendChild(makeBriefItem(r.key, r.val, r.full)); });
+}
+
+function showRecap() {
+  var nameEl = document.getElementById('field-client-name');
+  var email  = document.getElementById('field-email');
+  var refsEl = document.getElementById('field-references');
+
+  if (!currentPreset) { alert(LANG === 'fr' ? 'Veuillez déabord sélectionner un preset.' : 'Please select a preset first.'); return; }
   if (!nameEl.value.trim()) { nameEl.focus(); return; }
   if (!email.value || !email.checkValidity()) { email.focus(); return; }
 
-  /* URL validation for references (if filled) */
-  if (refsEl.value.trim()) {
-    try { new URL(refsEl.value.trim()); }
-    catch(e) {
-      refsEl.focus();
-      alert(LANG === 'fr' ? 'Le lien de r\u00E9f\u00E9rence doit \u00EAtre une URL valide (https://…).' : 'The reference link must be a valid URL (https://…).');
+  var isTerrain = currentPreset && currentPreset.startsWith('terrain-') && currentPreset !== 'terrain-xl';
+  if (isTerrain) {
+    var sizeVal = document.getElementById('terrain-size-select').value;
+    if (!sizeVal) {
+      var sizeEl = document.getElementById('terrain-size-select');
+      sizeEl.focus();
+      alert(LANG === 'fr' ? 'Veuillez sélectionner une taille de terrain.' : 'Please select a terrain size.');
       return;
     }
   }
 
-  var grid = document.getElementById('recap-grid');
-  grid.innerHTML = '';
-  var rows = [];
+  if (refsEl.value.trim()) {
+    try { new URL(refsEl.value.trim()); }
+    catch(e) {
+      refsEl.focus();
+      alert(LANG === 'fr' ? 'Le lien de référence doit être une URL valide (https://…).' : 'The reference link must be a valid URL (https://…).');
+      return;
+    }
+  }
 
-  rows.push({ key: 'Preset', val: document.getElementById('selected-badge').textContent });
   var isHeroRecap = currentPreset && currentPreset.startsWith('hero-');
+  var yn = function(v) { return v === 'yes' ? '✓ Yes' : '– No'; };
+
+  /* Meta bar */
+  document.getElementById('recap-meta-client').textContent = nameEl.value.trim();
+  document.getElementById('recap-meta-preset').textContent = document.getElementById('selected-badge').textContent;
+
+  var coreItems = [], visualItems = [], techItems = [], rightsItems = [];
+
   if (isHeroRecap) {
-    var hEng = getRadio('engine'); if (hEng) rows.push({ key:'Engine', val:hEng });
-    var hScl = getRadio('object_scale'); if (hScl) rows.push({ key:'Object Scale', val:hScl });
-    var hSty = getRadio('graphic_style'); if (hSty) rows.push({ key:'Style', val:hSty });
-    var yn = function(v){ return v==='yes' ? '✓ Yes' : '– No'; };
-    rows.push({ key:'Closed Base',       val: yn(getRadio('closed_base')) });
-    rows.push({ key:'Displacement',      val: yn(getRadio('h_displacement')) });
-    rows.push({ key:'Complex Collision', val: yn(getRadio('h_collision')) });
-    rows.push({ key:'Vertex Colors',     val: yn(getRadio('vertex_colors')) });
-    rows.push({ key:'Parametric Mat.',   val: yn(getRadio('parametric_mat')) });
-    rows.push({ key:'World-Space UVs',   val: yn(getRadio('worldspace_uvs')) });
-    rows.push({ key:'Ref. Layout',       val: yn(getRadio('h_ref_layout')) });
-    rows.push({ key:'Multi-Mat. Zones',  val: yn(getRadio('h_multi_mat')) });
-    rows.push({ key:'Modular Parts',     val: yn(getRadio('h_modular')) });
-    var hScope = getRadio('h_scope'); if (hScope) rows.push({ key:'Scope', val:hScope });
+    /* ── HERO ──────────────────────────────────────────── */
+    var hEng = getRadio('engine');       if (hEng) coreItems.push({ key: 'Engine', val: hEng });
+    var hScl = getRadio('object_scale'); if (hScl) coreItems.push({ key: 'Object Scale', val: hScl });
+    var hScope = getRadio('h_scope');    if (hScope) coreItems.push({ key: 'Scope', val: hScope });
+
+    var hSty = getRadio('graphic_style'); if (hSty) visualItems.push({ key: 'Style', val: hSty });
+    visualItems.push({ key: 'Ref. Layout', val: yn(getRadio('h_ref_layout')) });
     var hScopeDetails = document.querySelector('textarea[name="h_scope_details"]');
-    if (hScopeDetails && hScopeDetails.value.trim()) rows.push({ key:'Scope details', val:hScopeDetails.value.trim(), full:true });
+    if (hScopeDetails && hScopeDetails.value.trim()) visualItems.push({ key: 'Scope Details', val: hScopeDetails.value.trim(), full: true });
+
+    techItems.push({ key: 'Closed Base',     val: yn(getRadio('closed_base')) });
+    techItems.push({ key: 'Displacement',    val: yn(getRadio('h_displacement')) });
+    techItems.push({ key: 'Cmplx Collision', val: yn(getRadio('h_collision')) });
+    techItems.push({ key: 'Vertex Colors',   val: yn(getRadio('vertex_colors')) });
+    techItems.push({ key: 'Parametric Mat.', val: yn(getRadio('parametric_mat')) });
+    techItems.push({ key: 'World-Space UVs', val: yn(getRadio('worldspace_uvs')) });
+    techItems.push({ key: 'Multi-Mat. Zones',val: yn(getRadio('h_multi_mat')) });
+    techItems.push({ key: 'Modular Parts',   val: yn(getRadio('h_modular')) });
+
     var hDel = document.getElementById('delivery-select');
-    if (hDel) rows.push({ key:'Delivery', val:hDel.options[hDel.selectedIndex].text });
+    if (hDel) rightsItems.push({ key: 'Delivery', val: hDel.options[hDel.selectedIndex].text });
     var hExcl = document.getElementById('excl-toggle');
-    rows.push({ key:'Sole Rights',  val: hExcl && hExcl.checked ? '✓ Yes' : '– No' });
+    rightsItems.push({ key: 'Sole Rights',  val: hExcl && hExcl.checked ? '✓ Yes' : '– No' });
     var hComl = document.getElementById('coml-toggle');
-    rows.push({ key:'Ship License', val: hComl && hComl.checked ? '✓ Yes (×1.5)' : '– No' });
+    rightsItems.push({ key: 'Ship License', val: hComl && hComl.checked ? '✓ Yes (×1.5)' : '– No' });
+    rightsItems.push({ key: 'Email', val: email.value, full: true });
+    if (refsEl.value.trim()) rightsItems.push({ key: LANG === 'fr' ? 'Références' : 'References', val: refsEl.value.trim(), full: true });
+
   } else if (currentPreset !== 'terrain-xl') {
-    var eng = getRadio('engine'); if (eng) rows.push({ key:'Engine', val:eng });
-    var sz  = document.getElementById('terrain-size-select').value; if (sz) rows.push({ key: LANG==='fr' ? 'Taille' : 'Size', val:sz });
-    var sty = getRadio('graphic_style'); if (sty) rows.push({ key:'Style', val:sty });
-    rows.push({ key:'RVT',          val: getRadio('rvt')         === 'yes' ? '✓ Yes' : '– No' });
-    rows.push({ key:'HLOD',         val: getRadio('hlod')        === 'yes' ? '✓ Yes' : '– No' });
-    rows.push({ key:'World Part.',  val: getRadio('wp')          === 'yes' ? '✓ Yes' : '– No' });
-    rows.push({ key:'Displacement', val: getRadio('displacement')  === 'yes' ? '✓ Yes' : '– No' });
+    /* ── TERRAIN ───────────────────────────────────────── */
+    var eng = getRadio('engine'); if (eng) coreItems.push({ key: 'Engine', val: eng });
+    var sz  = document.getElementById('terrain-size-select').value; if (sz) coreItems.push({ key: LANG === 'fr' ? 'Taille' : 'Size', val: sz });
+
+    var sty = getRadio('graphic_style'); if (sty) visualItems.push({ key: 'Style', val: sty });
     var assetVal = getRadio('assets');
-    rows.push({ key:'Assets/FX', val: assetVal || '—' });
+    if (assetVal) visualItems.push({ key: 'Assets / FX', val: assetVal });
     var assetDetails = document.querySelector('textarea[name="asset_details"]');
     if (assetDetails && assetDetails.value.trim() && assetVal !== 'Terrain only') {
-      rows.push({ key: LANG==='fr' ? 'Détails assets' : 'Asset details', val: assetDetails.value.trim(), full: true });
+      visualItems.push({ key: LANG === 'fr' ? 'Détails assets' : 'Asset Details', val: assetDetails.value.trim(), full: true });
     }
-    var del = document.getElementById('delivery-select');
-    if (del) rows.push({ key: LANG==='fr' ? 'Livraison' : 'Delivery', val: del.options[del.selectedIndex].text });
-    var excl = document.getElementById('excl-toggle');
-    rows.push({ key:'Sole Rights',  val: excl && excl.checked ? '✓ Yes' : '– No' });
-    var coml = document.getElementById('coml-toggle');
-    rows.push({ key:'Ship License', val: coml && coml.checked ? '✓ Yes (×1.5)' : '– No' });
-  }
-  rows.push({ key: 'Email', val: email.value, full: true });
-  if (refsEl.value.trim()) rows.push({ key: LANG==='fr' ? 'R\u00E9f\u00E9rences' : 'References', val: refsEl.value.trim(), full: true });
-  var ctx = document.getElementById('context-textarea');
-  if (ctx && ctx.value.trim()) rows.push({ key: LANG==='fr' ? 'Contexte projet' : 'Project context', val: ctx.value.trim(), full: true });
 
-  rows.forEach(function(r) {
-    var div = document.createElement('div');
-    div.className = 'recap-row' + (r.full ? ' full' : '');
-    div.innerHTML = '<div class="recap-key">' + r.key + '</div><div class="recap-val">' + r.val + '</div>';
-    grid.appendChild(div);
-  });
+    techItems.push({ key: 'RVT',         val: yn(getRadio('rvt')) });
+    techItems.push({ key: 'HLOD',        val: yn(getRadio('hlod')) });
+    techItems.push({ key: 'World Part.', val: yn(getRadio('wp')) });
+    techItems.push({ key: 'Displacement',val: yn(getRadio('displacement')) });
+
+    var del = document.getElementById('delivery-select');
+    if (del) rightsItems.push({ key: LANG === 'fr' ? 'Livraison' : 'Delivery', val: del.options[del.selectedIndex].text });
+    var excl = document.getElementById('excl-toggle');
+    rightsItems.push({ key: 'Sole Rights',  val: excl && excl.checked ? '✓ Yes' : '– No' });
+    var coml = document.getElementById('coml-toggle');
+    rightsItems.push({ key: 'Ship License', val: coml && coml.checked ? '✓ Yes (×1.5)' : '– No' });
+    rightsItems.push({ key: 'Email', val: email.value, full: true });
+    if (refsEl.value.trim()) rightsItems.push({ key: LANG === 'fr' ? 'Références' : 'References', val: refsEl.value.trim(), full: true });
+  }
+
+  fillBriefSection('recap-core',   coreItems);
+  fillBriefSection('recap-visual', visualItems);
+  fillBriefSection('recap-tech',   techItems);
+  fillBriefSection('recap-rights', rightsItems);
+
+  /* Optional context block */
+  var ctx = document.getElementById('context-textarea');
+  var ctxSection = document.getElementById('recap-ctx-section');
+  if (ctx && ctx.value.trim()) {
+    fillBriefSection('recap-ctx', [{ key: LANG === 'fr' ? 'Contexte projet' : 'Project Context', val: ctx.value.trim(), full: true }]);
+    ctxSection.style.display = '';
+  } else {
+    ctxSection.style.display = 'none';
+  }
 
   document.getElementById('recap-price-display').textContent = document.getElementById('price-amount').textContent;
+
+  /* Switch layout */
+  document.querySelector('.form-outer').classList.add('recap-mode');
   document.getElementById('step-form').style.display = 'none';
   document.getElementById('step-recap').classList.add('show');
 
-  /* Scroll to recap */
+  /* Scroll to top of the configurator section — not just the recap block */
   setTimeout(function() {
-    document.getElementById('step-recap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var anchor = document.getElementById('commission-form-section');
+    if (anchor) {
+      var top = anchor.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    } else {
+      document.getElementById('step-recap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }, 60);
 }
 
 function hideRecap() {
+  document.querySelector('.form-outer').classList.remove('recap-mode');
   document.getElementById('step-form').style.display = '';
   document.getElementById('step-recap').classList.remove('show');
 }
 
 function showSuccess() {
   document.getElementById('form-inner').style.display = 'none';
+  /* Timestamp */
+  var ts = document.getElementById('success-timestamp');
+  if (ts) {
+    var d = new Date();
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    ts.textContent = 'REF · ' + d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' — ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' UTC';
+  }
   document.getElementById('success-msg').classList.add('show');
-  /* Scroll to top of page */
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  /* Auto-reload after 5s */
   setTimeout(function() { location.reload(); }, 5000);
 }
 
@@ -3014,7 +3296,7 @@ document.addEventListener('DOMContentLoaded', function() {
     recalcPrice();
   });
   document.querySelectorAll('input[name="assets"]').forEach(function(r) {
-    r.addEventListener('change', function(){ toggleAssetNote(r.value); recalcPrice(); });
+    r.addEventListener('change', function(){ toggleAssetNote(r.value); updateDeliverySelect(currentPreset, r.value); recalcPrice(); });
   });
   document.getElementById('excl-toggle').addEventListener('change', function() {
     updateExclusivity(); recalcPrice();

@@ -43,6 +43,7 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
 .lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
 .lang-btn.active { color: var(--accent); }
+.curr-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); margin-right: 0.5rem; }
 .lang-sep { color: var(--text-dim); font-size: 0.7rem; }
 /* NAV PILLS */
 .header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
@@ -521,6 +522,11 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       </svg>
       <span class="cart-badge" id="cart-badge">0</span>
     </button>
+    <div class="curr-toggle">
+      <button class="lang-btn" id="curr-btn-usd" onclick="setCurrency('USD')">$</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn active" id="curr-btn-eur" onclick="setCurrency('EUR')">€</button>
+    </div>
     <div class="lang-toggle">
       <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-sep">|</span>
@@ -600,7 +606,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <div class="collection-content">
           <div class="collection-title">8K TERRAIN</div>
           <div class="collection-desc" data-en="Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like, there is a terrain for it." data-fr="Vingt et un environnements 8K chacun construit autour d'un biome distinct. Quel que soit votre univers, il y a un terrain pour ça.">Twenty-one 8K environments each built around a distinct biome. Whatever your world looks like, there is a terrain for it.</div>
-          <div class="collection-pack-count">21 PACKS · €34.99+</div>
+          <div class="collection-pack-count" id="coll-price-8k" data-coll-eur="34.99" data-coll-prefix="21 PACKS · ">21 PACKS · €34.99+</div>
           <div class="collection-cta" data-en="Discover →" data-fr="Découvrir →">Discover →</div>
         </div>
       </div>
@@ -609,7 +615,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <div class="collection-content">
           <div class="collection-title">ARCTIC LANDSCAPES</div>
           <div class="collection-desc" data-en="The original Arctic landscape fully rebuilt for modern engines — five art directions optimized for UE5 and Unity." data-fr="Le paysage Arctique original entièrement reconstruit — cinq directions artistiques optimisées pour UE5 et Unity.">The original Arctic landscape fully rebuilt for modern engines — five art directions optimized for UE5 and Unity.</div>
-          <div class="collection-pack-count">5 PACKS · €29.99+</div>
+          <div class="collection-pack-count" id="coll-price-arctic" data-coll-eur="29.99" data-coll-prefix="5 PACKS · ">5 PACKS · €29.99+</div>
           <div class="collection-cta" data-en="Discover →" data-fr="Découvrir →">Discover →</div>
         </div>
       </div>
@@ -810,6 +816,33 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 </div>
 
 <script>
+/* ═══ CURRENCY ═══ */
+var CURRENCY = 'EUR';
+
+function formatProductPrice(eur) {
+  if (CURRENCY === 'USD') {
+    var usd = Math.ceil(eur * 1.15) - 0.01;
+    return '$' + usd.toFixed(2);
+  }
+  return '€' + eur.toFixed(2);
+}
+
+function setCurrency(curr) {
+  CURRENCY = curr;
+  document.getElementById('curr-btn-usd').classList.toggle('active', curr === 'USD');
+  document.getElementById('curr-btn-eur').classList.toggle('active', curr === 'EUR');
+  document.querySelectorAll('.pc-price[data-eur]').forEach(function(el) {
+    el.textContent = formatProductPrice(parseFloat(el.dataset.eur));
+  });
+  var dpEl = document.getElementById('drawer-price');
+  if (dpEl && dpEl.dataset.eur) dpEl.textContent = formatProductPrice(parseFloat(dpEl.dataset.eur));
+  document.querySelectorAll('[data-coll-eur]').forEach(function(el) {
+    var eur = parseFloat(el.dataset.collEur);
+    el.textContent = el.dataset.collPrefix + formatProductPrice(eur) + '+';
+  });
+  renderCart();
+}
+
 /* ═══ LANGUAGE ═══ */
 function setLang(lang) {
   document.documentElement.lang = lang;
@@ -843,7 +876,7 @@ var PRODUCTS = [
   {id:'a5161656-4501-4f49-89eb-f87bdf98a69e',t:'Frostholm Glaciers Polygonal',p:79.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c6ebc88d-341f-4752-8c97-b409f77f82fc/355c1fc8-253d-4724-ac71-2259471185a1.jpg',vf:'PkkmyndfI2Y',vs:'68M48VDEaOA'},
   {id:'386fc789-f1d7-402f-89d4-a80913f2db2f',t:'Frostholm Glaciers Cartoon',p:99.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/3d681940-6d10-405a-a7ec-f6beb0cef3b5/6873e8a0-86f5-412f-a33e-1cd948dba9f6.jpg',vf:'PkkmyndfI2Y',vs:'z0CtDTxMvWE'},
   // ── 8K PACKS ──────────────────────────────────────────────────────────
-  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vf:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
+  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vs:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
   {id:'72f2e599-e00d-454e-a1c3-1227b12fe90e',t:'8K Island Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg',vs:'Az2pWjcJwZ0',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-island-landscape-pack-294443',pa:'https://www.artstation.com/marketplace/p/JNNk/8k-island-landscape-pack'},
   {id:'d1cc7e58-1282-4985-84de-722052e1f263',t:'8K Canyon Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Desert',th:'https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg',vs:'ZUwPlwBBY54',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-canyon-landscape-pack-297171',pa:'https://www.artstation.com/marketplace/p/7Gyd/8k-canyon-landscape-pack'},
   {id:'2d95efdd-74f4-40e2-8189-8402aec130c4',t:'8K Volcano Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Volcanic',th:'https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg',vs:'G833u3tenyE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-volcano-landscape-pack-300480',pa:'https://www.artstation.com/marketplace/p/n7k2V/8k-volcano-landscape-pack'},
@@ -1252,6 +1285,26 @@ var PRODUCT_SPECS = {
     {k:'Textures',   v:'Full PBR (albedo, normal, roughness)'},
     {k:'Format',     v:'PNG heightmaps'},
     {k:'Rendering',  v:'Nanite \u00b7 Lumen \u00b7 HDRP'}
+  ],
+  '6baa964b': [
+    {k:'Engine',     v:'UE 5.0 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments \u00b7 8\u00d78km each'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'Procedural \u00b7 Grass Layers'},
+    {k:'Assets',     v:'4 Pines \u00b7 2 Trees \u00b7 2 Rocks \u00b7 3 Grass'},
+    {k:'Textures',   v:'30 terrain \u00b7 1024\u20132048px PBR'},
+    {k:'Water',      v:'Plugin required'}
+  ],
+  '3e2f982b': [
+    {k:'Engine',     v:'UE 5.0 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments \u00b7 8\u00d78km each'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'Procedural \u00b7 Grass Layers'},
+    {k:'Assets',     v:'3 Savannah Trees \u00b7 3 Grass types'},
+    {k:'Textures',   v:'25 terrain \u00b7 1024\u20132048px PBR'},
+    {k:'Materials',  v:'Grass \u00b7 Dirt \u00b7 Soil \u00b7 Sand'}
   ]
 };
 
@@ -1285,6 +1338,8 @@ var GALLERY = {
   '7f935664': ['https://media.fab.com/image_previews/gallery_images/33e0d6fe-b195-498b-be0d-946a0ad64fe7/60918a11-e3dd-429f-9513-79ed9e721f5f.jpg','https://media.fab.com/image_previews/gallery_images/46d3bead-927a-418b-a29f-4ae83d22d4b2/fc689ed0-fe20-4f9d-9efb-043715a10445.jpg','https://media.fab.com/image_previews/gallery_images/f9a4629f-c44e-443a-8589-7d0b6fd36b65/17e27a30-304e-403f-937b-b9ab17b60135.jpg','https://media.fab.com/image_previews/gallery_images/c55620e9-3ef6-4105-881c-d206565707d5/8cff9b8a-a2bf-4e33-b59a-adce7c006afb.jpg','https://media.fab.com/image_previews/gallery_images/76469c4b-ab08-4ebc-89d5-618656628cff/4195fb53-cb47-488b-940d-a0c40c861a3a.jpg','https://media.fab.com/image_previews/gallery_images/880e92e1-43f3-40b2-879f-146dc277c289/33d40f0f-b4f7-48d1-add4-552d15753fd1.jpg','https://media.fab.com/image_previews/gallery_images/2c0bacaa-1130-4669-aafa-cb590547e858/f2cc2a52-88f5-4444-9e61-0a6b52028863.jpg','https://media.fab.com/image_previews/gallery_images/44b112b0-a0b5-420a-a14b-00a87a3ab325/53f269a7-0cbc-4bc4-841a-9938dfb3866a.jpg','https://media.fab.com/image_previews/gallery_images/1ca97049-edb6-4fa9-b432-36c178d85df1/e12563b4-024c-4de7-bfd0-e6d908a8645f.jpg','https://media.fab.com/image_previews/gallery_images/3b945ace-eb35-4067-843f-bd97ec6b38c3/e0138949-e5dd-4159-b888-dc7664bc629d.jpg','https://media.fab.com/image_previews/gallery_images/4283f79b-088d-4841-ae50-c717748f841c/95272df4-5bb3-4edd-8a39-164619194fd7.jpg','https://media.fab.com/image_previews/gallery_images/543ceb34-a4f6-4f76-b290-2e98e67e76f4/4ef4dcb6-84a9-4df6-91b9-1625d6903690.jpg','https://media.fab.com/image_previews/gallery_images/b88e4994-a17a-4abf-9861-770b08f5e1d0/67403ad4-d979-4ccf-9013-abaa70962499.jpg','https://media.fab.com/image_previews/gallery_images/7e191587-36c2-4f42-8d24-54c581206dab/e6906ac1-cff7-4a75-bdf9-30e61f9109d2.jpg','https://media.fab.com/image_previews/gallery_images/359f3e1c-5161-403a-b44b-4adc30da3b0e/64fa0f4f-7533-4ebe-b6e3-3f8c21990977.jpg','https://media.fab.com/image_previews/gallery_images/39a71dc7-877a-40e3-90ac-3793f1a9ac7f/a52dedd3-3a2b-46e9-b5e2-fa3615732345.jpg'],
   'd5b011c9': ['https://media.fab.com/image_previews/gallery_images/c8ee501d-bbda-403f-8bc3-492bbc2d75a9/079b01eb-3bd6-4e5b-9e85-c933143916cf.jpg','https://media.fab.com/image_previews/gallery_images/bc13a68f-4fcf-4573-a24c-2bbc95638ab1/c0f9d521-0ebf-4aea-93b5-42dcf57ae45d.jpg','https://media.fab.com/image_previews/gallery_images/efccd1cd-3e5e-4377-a288-87b7391cf922/ac8aac3f-67b6-4624-ad7c-1433c01499a4.jpg','https://media.fab.com/image_previews/gallery_images/f57ac4dc-a060-4c3d-9613-270642cf392b/71da715d-4156-4b94-8427-21792ba8fa57.jpg','https://media.fab.com/image_previews/gallery_images/6ac4c6a4-2c6a-4045-9ef8-0311dd954fda/dcdca7de-b737-400e-ba4d-3f03e3a9054d.jpg','https://media.fab.com/image_previews/gallery_images/65be8570-30c5-4508-a1b8-7740a5589902/8ad59514-9e19-47d8-ab7c-185d8da42db7.jpg','https://media.fab.com/image_previews/gallery_images/6377878c-0b96-4a12-b90c-ee05a6ea2226/08de07f2-e8eb-4ea8-a7d3-ab6d86a45bb2.jpg','https://media.fab.com/image_previews/gallery_images/420220e3-c2ca-465d-9e7f-413b420db2fc/a0fedf47-f231-4190-a151-64d6f2f78940.jpg','https://media.fab.com/image_previews/gallery_images/0bb0b587-4f9e-4ea0-a210-b3c897a2ab57/4de95d7f-af06-4181-b89c-2e8e817b4ecd.jpg','https://media.fab.com/image_previews/gallery_images/f8024994-30c9-4bf7-b86c-6a641cb59ca5/f7b86551-0479-4410-ac69-4a6a76fd718c.jpg','https://media.fab.com/image_previews/gallery_images/31b82257-1cf1-465e-8295-88a7dfe4af74/d7b3b6ab-e835-489b-acc4-5649d586184a.jpg','https://media.fab.com/image_previews/gallery_images/dd06aabb-8eba-4f2a-87f1-75a673e3763b/53cf2384-6c0f-4903-9d30-f82f21211d67.jpg','https://media.fab.com/image_previews/gallery_images/a5884c75-b970-4184-a8ed-db5d15ea6270/e6890547-6b6d-4de3-bd6a-b3a7cca56173.jpg','https://media.fab.com/image_previews/gallery_images/9d7f3c73-efac-42ed-b2be-7b72cb0d8ad2/d7c346da-b88d-475e-b8a6-0645df14dbff.jpg','https://media.fab.com/image_previews/gallery_images/d804ead4-ed28-42f4-83be-59bffa333cdc/520c9ed5-b7f7-4737-a70e-8d5e5704d859.jpg'],
   'c862c4eb': ['https://media.fab.com/image_previews/gallery_images/0145b873-fc5f-417b-9f89-aa76bdc5ebcd/9a1323bb-38f4-4a5b-bf68-d43dd42ba5c1.jpg','https://media.fab.com/image_previews/gallery_images/a67695a5-5dec-47fb-bdb8-204515fb9bbc/f0fda6a1-033d-4e7c-a819-d78866693406.jpg','https://media.fab.com/image_previews/gallery_images/c08cb5b7-dbef-477b-9abc-4754603c8f75/2bb3d31f-8679-4c7c-97fa-2001ce421dd6.jpg','https://media.fab.com/image_previews/gallery_images/7e8e3231-28f8-4f7b-9cf7-3d576f732408/21b4d427-7c03-4f54-a6c2-5f4f281a5988.jpg','https://media.fab.com/image_previews/gallery_images/43d1c98c-7a01-462b-8f62-f743953009ca/55fdbbd5-68b1-4aa4-ab2f-fed70e10b022.jpg','https://media.fab.com/image_previews/gallery_images/66482ebb-8fb0-4976-8af5-7fd6979c954c/ede96034-ffbb-4613-ad44-4cfdd6d7615f.jpg','https://media.fab.com/image_previews/gallery_images/a7253dec-6ded-4d55-bc49-3ce4de339b46/9b2a8aca-ccc8-44c2-8fb4-dfdf9134ee4c.jpg','https://media.fab.com/image_previews/gallery_images/aa96cd77-76b4-4661-afbe-18187545dd90/4cf23e08-ae90-47f3-a8d7-882eeeb40373.jpg','https://media.fab.com/image_previews/gallery_images/6f67bc84-6538-4dc5-a458-dbb8be1073a1/2a2bfdcb-0bb6-4d74-95eb-f5993cbb8a34.jpg','https://media.fab.com/image_previews/gallery_images/9a6d619d-6a90-462f-9372-a822cb9b7d7c/fe49460d-5fc6-4e56-8280-c4e1cefaff9c.jpg','https://media.fab.com/image_previews/gallery_images/0198aaf9-1878-4db1-97fd-4593474c2c03/6309f87e-2b28-465c-bc4f-c8ea99ba2ac6.jpg','https://media.fab.com/image_previews/gallery_images/f17a10ac-f133-4782-aee1-5b0a114ad311/9579a4ef-d10f-4297-a1cd-ab3f91baf233.jpg','https://media.fab.com/image_previews/gallery_images/617fc8a5-0ab1-41bd-8fae-a8990c861cbc/c99e8a46-5a27-46ce-8a5c-4e2d67d676d7.jpg','https://media.fab.com/image_previews/gallery_images/2d05d3d5-5cf3-46ad-8fde-491ed7b6f691/41113d41-20f3-4008-98d6-2a8d414362a1.jpg','https://media.fab.com/image_previews/gallery_images/b52273fa-a3fd-462c-b6b8-a82a7553f484/f949b219-5f6d-4871-9a95-af6a4efab29d.jpg','https://media.fab.com/image_previews/gallery_images/b463f0bd-673d-4c33-9443-514423e9a270/54e34ef7-f345-42fc-93d9-959bd6f06dbf.jpg'],
+  '6baa964b': ['https://media.fab.com/image_previews/gallery_images/b55c0253-b513-4881-b30b-5388fde8eea7/cfd595c0-7464-41a1-b41a-d2525845e10e.jpg','https://media.fab.com/image_previews/gallery_images/e0ce921b-d699-4a88-83c1-82e468b38ada/d3373e3f-3eac-49a1-a98b-9626106c0ead.jpg','https://media.fab.com/image_previews/gallery_images/d65b2488-c22e-4b33-bf93-470156e847e9/3962005e-5a0f-4450-b9a3-f066081a87a0.jpg','https://media.fab.com/image_previews/gallery_images/13f8bf56-880a-4be0-9e0c-b811c4d61cf6/5721887c-e279-4d57-a520-f9a6f11bab42.jpg','https://media.fab.com/image_previews/gallery_images/552c4773-7c7e-4aa0-ae07-33215ae5f4f2/b5d01d1b-66d6-47fb-bc2e-c1913a4e1b47.jpg','https://media.fab.com/image_previews/gallery_images/d9d0b320-6cc8-49e6-a0e1-865672067d92/c1e36ead-39df-4f55-b3cf-1664eb673331.jpg','https://media.fab.com/image_previews/gallery_images/4d685bf5-8e78-4d24-b10e-b0ef6e21da5c/e4b8ebed-b3b4-4925-8685-afd7961d77fc.jpg','https://media.fab.com/image_previews/gallery_images/cb6de61f-595f-4c13-94ad-3ba5667e6a40/5be9c0a3-ab57-482f-a80f-092b4c8cdccc.jpg','https://media.fab.com/image_previews/gallery_images/1ef68f67-5d0f-4859-982a-b08d95a60323/98cb8988-7db6-4dc8-b7f2-013015c10c89.jpg','https://media.fab.com/image_previews/gallery_images/78a73d37-df8a-4174-a481-36ec689624ad/345b2e6f-38e1-4393-9718-4596d79fcf41.jpg','https://media.fab.com/image_previews/gallery_images/5293fc45-799f-43dc-b383-01763a060ce7/9f8ebe73-2b62-42d5-93f4-fcd1b9163318.jpg','https://media.fab.com/image_previews/gallery_images/470898e1-7556-401a-86ba-666df53507a0/33f0f1b4-66ab-44db-9038-3664ccf30ca4.jpg','https://media.fab.com/image_previews/gallery_images/2e92e57a-0e6c-4a9b-8f6a-4909fcaa88bf/7392d79f-8d8f-4313-b99c-8dd3ec22328a.jpg','https://media.fab.com/image_previews/gallery_images/df6d8e21-7671-4fb3-883b-c03de97b2222/7aee3218-255d-4631-8c2a-f263134ff2c3.jpg','https://media.fab.com/image_previews/gallery_images/234c8468-eea9-4198-aeae-453fd810fba5/1ad8030f-f0c1-405b-9932-0effb8f79b87.jpg','https://media.fab.com/image_previews/gallery_images/6ab8b782-0506-42d8-b16b-65a8fe04a7fe/18c26889-6173-44fb-b077-3a6536862c7f.jpg','https://media.fab.com/image_previews/gallery_images/dfe940d6-dcd2-4ea5-a268-599376a0252e/ffc508b0-e48b-4db2-a3b5-a7d81d76f111.jpg','https://media.fab.com/image_previews/gallery_images/5f13ca7f-4c01-498e-bd38-e4e1177e4fd7/2576d0eb-4c8f-4f9f-a7cf-00838983b838.jpg','https://media.fab.com/image_previews/gallery_images/f8364dc0-f072-484f-8861-6fcbd0e184bd/898485d2-a54c-4d26-bc2f-3ac82ece616d.jpg','https://media.fab.com/image_previews/gallery_images/b47d05fb-d674-497b-9303-57c29e0ac5f4/08afb4dc-feaf-4554-8c98-a0a7a41b24e4.jpg','https://media.fab.com/image_previews/gallery_images/34bebb93-0822-4956-a480-026faa79c021/a0dd379f-9e81-446f-9b84-d0306d70f0d4.jpg'],
+  '3e2f982b': ['https://media.fab.com/image_previews/gallery_images/95c2dbfa-25d6-4f26-8523-233cc0c3503c/eca59899-e760-48ab-b36f-cde46293b544.jpg','https://media.fab.com/image_previews/gallery_images/038aecce-d7c4-4003-9f45-8f07a9e80721/70d2c6db-656e-4559-b945-bb1f62ab8c30.jpg','https://media.fab.com/image_previews/gallery_images/f498e82c-673c-43bf-9ae5-9cd446c157ad/549972e9-7d2d-4802-8532-97b987d12823.jpg','https://media.fab.com/image_previews/gallery_images/cf0f9b7d-7325-4196-81c3-751d02410efd/1f638c82-9095-49a4-b376-66e447d68286.jpg','https://media.fab.com/image_previews/gallery_images/9c1b188a-4605-4792-84ba-6e4bc1bb71b0/4124042f-9cf8-4304-b1d4-ab91083a3d33.jpg','https://media.fab.com/image_previews/gallery_images/9851a2fe-216a-4ab6-accf-78256222ba14/ffa93024-5086-483b-99f9-190b51d954a7.jpg','https://media.fab.com/image_previews/gallery_images/dd0746c4-064f-49cc-89cf-322e04beec7c/e3396eba-6ace-4fcd-b63a-ba642bdf88f4.jpg','https://media.fab.com/image_previews/gallery_images/edb96cbd-63b0-4120-9c88-ca6a5da76902/91c8510f-a592-4270-82bb-eeac7fd50f78.jpg','https://media.fab.com/image_previews/gallery_images/42236a20-64a6-4a8b-9fbb-52e5032c724c/3e3baedb-7242-4384-80dd-d87421def84a.jpg','https://media.fab.com/image_previews/gallery_images/3bdd8fd9-b041-434a-ad86-6dbdca0b15ed/df8de49a-487e-4c76-a1da-57456f18aa0e.jpg','https://media.fab.com/image_previews/gallery_images/27831917-2daf-4b89-8f6d-9e4b5460c28e/0102893d-7e5f-4efd-bb89-c62344c6f8d4.jpg','https://media.fab.com/image_previews/gallery_images/7cc4cfef-37e6-4807-b01f-53128480bbdf/6de1b4fb-1245-436c-b909-ea5859a62167.jpg','https://media.fab.com/image_previews/gallery_images/f8771bfd-0330-47dc-862e-e0ba5ab36f38/74cc9d3e-312f-461d-a063-7167e9bc4603.jpg','https://media.fab.com/image_previews/gallery_images/f99bb753-c4ea-4c71-8a40-de12632df44e/6193ffe0-dcb0-4a71-b45e-b33f88e689ee.jpg','https://media.fab.com/image_previews/gallery_images/ac318dc6-b3aa-4d16-8b35-1d1fb217584c/3bc86f98-0ebe-4823-b890-51b91dd242d0.jpg','https://media.fab.com/image_previews/gallery_images/25e82ace-6a93-43da-b090-0e1439583e65/fb99751d-06d8-40d9-b9af-08b262ae85cf.jpg','https://media.fab.com/image_previews/gallery_images/12d677f5-4d56-40ca-bd82-0a9a0d7cc9a5/aa385954-3635-4beb-9af9-23acd4d002b7.jpg','https://media.fab.com/image_previews/gallery_images/66d8eb6a-bde7-41e4-af9e-256bdb2d22a9/79aa458f-7796-458b-bc85-e80fc707b8f1.jpg','https://media.fab.com/image_previews/gallery_images/5255fccd-2339-43b7-9edd-ca9dab2d29b1/02d0fd00-fb3e-4352-9243-49e8dc2c2368.jpg','https://media.fab.com/image_previews/gallery_images/68f9ad20-e5ff-425f-afb9-74b91d42f3bf/3c5151ff-6133-42bc-b070-2eda4c0c2c98.jpg','https://media.fab.com/image_previews/gallery_images/4e0be1ec-305b-47f2-b060-2db4d0af2cfa/f2766e0e-2122-4b61-871a-782dd64b37d7.jpg'],
   '386fc789': ['https://media.fab.com/image_previews/gallery_images/9c0222e7-97c6-48e4-857b-cfbeb1ca7414/943321cb-aab3-4ef4-9de8-1955aa08b382.jpg','https://media.fab.com/image_previews/gallery_images/f00934ee-bec5-4d43-b2bf-40be117b39e1/3e4708c3-135c-411d-8f19-d442e27c6827.jpg','https://media.fab.com/image_previews/gallery_images/8c7bd9c9-4674-46fd-9009-c79c77199b92/e5c32d83-0c4e-4194-bd8e-156bfe7c04f5.jpg','https://media.fab.com/image_previews/gallery_images/0705887b-1462-4839-b0a1-23e2187bf2cb/2cb69bac-7ef3-4b62-b003-64792d663488.jpg','https://media.fab.com/image_previews/gallery_images/98df298e-50ba-4701-b113-999c9d9c2d78/879d7b6d-0ffe-4dc4-8b12-501ec5c1c8ed.jpg','https://media.fab.com/image_previews/gallery_images/1fe52468-0b47-4262-bb85-8773f7eebb34/81e60ed7-3000-4558-920a-1bba03c7ae1c.jpg','https://media.fab.com/image_previews/gallery_images/369779ad-01eb-466e-b7a6-0612dfd25363/4ffdeb79-d501-4eb5-8f52-ca1afaafb926.jpg','https://media.fab.com/image_previews/gallery_images/522c80e8-aa13-41a6-b165-d9aa03018820/3216b9bb-9827-472a-8d4e-5374764180ce.jpg','https://media.fab.com/image_previews/gallery_images/46f1af0d-de8d-43cb-8085-b4aff713e2b1/9eb4cf6a-1884-41d9-8983-a7a65c007ad9.jpg','https://media.fab.com/image_previews/gallery_images/2b30925a-82ed-4bea-b2eb-39a1b8e24ae0/5f919961-8455-4182-98d9-a96082b8b231.jpg','https://media.fab.com/image_previews/gallery_images/9cfa3eb6-e92d-4bfe-b4d4-158e7ccbe384/951f1f50-30a8-4c87-9af9-8eb90528ce58.jpg','https://media.fab.com/image_previews/gallery_images/2a038ef6-a60b-450e-82b5-aab9fa988f98/0f25e817-189c-4752-be64-e6271f28833c.jpg','https://media.fab.com/image_previews/gallery_images/a96ea590-a533-4ed2-8278-2864143490ee/5f90f409-c5d6-4151-991a-26e7414487a7.jpg']
 };
 
@@ -1308,7 +1363,7 @@ function makeCard(p, idx, animDelay) {
       '<div class="pc-name">' + p.t + '</div>' +
       '<div class="pc-footer">' +
         '<div class="badge-wrap">' + badges + '</div>' +
-        '<span class="pc-price">€' + p.p.toFixed(2) + '</span>' +
+        '<span class="pc-price" data-eur="' + p.p + '">' + formatProductPrice(p.p) + '</span>' +
       '</div>' +
     '</div>' +
   '</div>';
@@ -1695,19 +1750,6 @@ var PRODUCT_RICH_DESC = {
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Sandstone \u00b7 Cliff \u00b7 Sand \u00b7 Each with albedo, normal and roughness layers</div>',
       '</div>',
     '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'7177546c-582f-4833-86b2-0a09f92de594\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/29bda059-5c27-4bc7-97ba-33f7bb1c5d4e/f940571a-5fea-43fa-b034-9892e642f6af.jpg" alt="8K Zhangjiajie Landscape Pack">',
-          '<span>8K Zhangjiajie Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'d5b011c9-2c16-4013-bc78-c11b69505942\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/b08c2551-ad3a-4726-b695-261e8accba97/83202882-1a1e-4637-b47e-6f06208fef95.jpg" alt="8K Dune Landscape Pack">',
-          '<span>8K Dune Landscape Pack</span>',
-        '</div>',
-      '</div>',
-    '</div>',
   ].join(''),
   '2d95efdd': [
     '<p class="rdesc-intro">Inspired by the world\'s most volcanic regions, with <b>molten rivers</b>, ash-covered terrains and towering peaks. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
@@ -1726,19 +1768,6 @@ var PRODUCT_RICH_DESC = {
       '<div class="rdesc-mats">',
         '<div class="rdesc-mat"><b>Heightmaps</b>10 unique volcanic landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Lava \u00b7 Rock \u00b7 Ash \u00b7 Each with albedo, normal and roughness layers</div>',
-      '</div>',
-    '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'7e198e93-4c8e-463f-8585-77a7f5be6bc3\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/e00fed35-9e51-4b9c-971a-d260f064c01a/b5520b69-aeef-45d5-b126-b492d170a4e2.jpg" alt="8K Desolate Landscape Pack">',
-          '<span>8K Desolate Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'d1cc7e58-1282-4985-84de-722052e1f263\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg" alt="8K Canyon Landscape Pack">',
-          '<span>8K Canyon Landscape Pack</span>',
-        '</div>',
       '</div>',
     '</div>',
   ].join(''),
@@ -1761,19 +1790,6 @@ var PRODUCT_RICH_DESC = {
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Sand \u00b7 Grass \u00b7 Rock \u00b7 Each with albedo, normal and roughness layers</div>',
       '</div>',
     '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'7f935664-3728-4cb0-971d-a88f798a1004\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/d6db6a4a-0650-4c57-8784-4613b138252b/1b66bbd7-95b5-45c4-9b88-0467e05880f3.jpg" alt="8K Coastal Landscape Pack">',
-          '<span>8K Coastal Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
-          '<span>8K Provencal Landscape Pack</span>',
-        '</div>',
-      '</div>',
-    '</div>',
   ].join(''),
   '85fe6436': [
     '<p class="rdesc-intro">Inspired by the icy landscapes of the Arctic, with <b>snow-capped mountains</b>, monumental peaks and erosion-sculpted terrain. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
@@ -1792,19 +1808,6 @@ var PRODUCT_RICH_DESC = {
       '<div class="rdesc-mats">',
         '<div class="rdesc-mat"><b>Heightmaps</b>10 unique arctic landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Ice \u00b7 Cliff \u00b7 Mud \u00b7 Each with albedo, normal and roughness layers</div>',
-      '</div>',
-    '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'6baa964b-95dc-4043-ab4c-185624c36ba1\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/44ee62da-b7f2-4932-b8e3-bb06a8b5bff4/d3539ac9-3274-4a18-95c3-6d7b477734d7.jpg" alt="8K Nordic Landscape Pack">',
-          '<span>8K Nordic Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'dab7957e-c32d-4170-966a-c73d76cd5566\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg" alt="8K Karakoram Landscape Pack">',
-          '<span>8K Karakoram Landscape Pack</span>',
-        '</div>',
       '</div>',
     '</div>',
   ].join(''),
@@ -1827,19 +1830,6 @@ var PRODUCT_RICH_DESC = {
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Snow \u00b7 Grass \u00b7 Rock \u00b7 Each with albedo, normal and roughness layers</div>',
       '</div>',
     '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'fa24aee0-b5d1-4341-8983-bada3212ed1a\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/7183dd63-2c5e-4c9e-86ad-d6140ec113a8.jpg" alt="8K Hills Landscape Pack">',
-          '<span>8K Hills Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'c862c4eb-f37a-4ed2-9846-5e1ae02e716f\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/b594fe20-e0ea-4fc8-855e-2fdcb6386b14/d03da4e3-51bb-4f4c-9e33-427368e97657.jpg" alt="8K Valley Landscape Pack">',
-          '<span>8K Valley Landscape Pack</span>',
-        '</div>',
-      '</div>',
-    '</div>',
   ].join(''),
   '7f935664': [
     '<p class="rdesc-intro">Inspired by Mediterranean shores, with <b>sunlit cliffs</b>, sandy beaches and tranquil seas. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
@@ -1858,19 +1848,6 @@ var PRODUCT_RICH_DESC = {
       '<div class="rdesc-mats">',
         '<div class="rdesc-mat"><b>Heightmaps</b>10 unique coastal landscapes at 8192\u00d78192 native resolution \u00b7 Ready to import in any engine</div>',
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Cliff \u00b7 Sand \u00b7 Grass \u00b7 Each with albedo, normal and roughness layers</div>',
-      '</div>',
-    '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'72f2e599-e00d-454e-a1c3-1227b12fe90e\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg" alt="8K Island Landscape Pack">',
-          '<span>8K Island Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
-          '<span>8K Provencal Landscape Pack</span>',
-        '</div>',
       '</div>',
     '</div>',
   ].join(''),
@@ -1893,19 +1870,6 @@ var PRODUCT_RICH_DESC = {
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Sand \u00b7 Stone \u00b7 Rock \u00b7 Each with albedo, normal and roughness layers</div>',
       '</div>',
     '</div>',
-    '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'964ab5d7-06e8-4a99-a27a-1a4e6ded09e6\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/bc4595d0-8035-41c6-b818-a1a285e7957b/8eaab037-7655-4bd6-8ef3-ebe86e4cb240.jpg" alt="8K Salar Landscape Pack">',
-          '<span>8K Salar Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3e2f982b-fd76-42c9-9435-b381a7cfd3e1\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/b62b081f-61da-433f-bd15-f2dd22fbe2ae/ec6629c8-8365-4b67-b2a0-fb1b98d64e74.jpg" alt="8K Savannah Landscape Pack">',
-          '<span>8K Savannah Landscape Pack</span>',
-        '</div>',
-      '</div>',
-    '</div>',
   ].join(''),
   'c862c4eb': [
     '<p class="rdesc-intro">Inspired by the majesty of vast valley basins, with <b>rolling hills</b>, steep cliffs and open plains. A <span style="color:var(--gold-bright)">production-ready heightmap pack</span> delivering <b>10 unique landscapes</b> at native 8K resolution.</p>',
@@ -1926,17 +1890,47 @@ var PRODUCT_RICH_DESC = {
         '<div class="rdesc-mat"><b>Materials</b>3 fully customizable PBR landscape materials \u00b7 Grass \u00b7 Rock \u00b7 Pine \u00b7 Each with albedo, normal and roughness layers</div>',
       '</div>',
     '</div>',
+  ].join(''),
+  '6baa964b': [
+    '<p class="rdesc-intro">Inspired by the vast landscapes of Scandinavia, with <b>dense pine forests</b>, snow-capped mountains and wide nordic plateaus. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> of 64km² each with procedural vegetation.</p>',
     '<div class="rdesc-block">',
-      '<div class="rdesc-label">Pairs Well With</div>',
-      '<div class="rdesc-pairswith">',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'0529cee3-ed8f-46e0-9f01-1cd2923f8fda\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/daf07ad7-78d8-4c83-82bb-f5ecbf238943/8658bec5-eb1f-4acd-a16e-f154124cc285.jpg" alt="8K Amazon Landscape Pack">',
-          '<span>8K Amazon Landscape Pack</span>',
-        '</div>',
-        '<div class="rdesc-pair-card" onclick="openDrawerById(\'3dda2235-b89a-4d54-8949-3c9341d1a854\')">',
-          '<img src="https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg" alt="8K Provencal Landscape Pack">',
-          '<span>8K Provencal Landscape Pack</span>',
-        '</div>',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">64km² Terrain</span>',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Procedural Foliage</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique nordic landscapes at 8×8km · 10 Demo Levels + 1 Zoo Level</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 6 controllable PBR functions · Snow · Pine · Rock · Grass</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>4 Pines · 2 Trees · 2 Rocks · 3 Grass · Procedural density via Grass Layers</div>',
+        '<div class="rdesc-mat"><b>Water</b>Water plugin compatible · plugin required</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '3e2f982b': [
+    '<p class="rdesc-intro">Inspired by the vast open plains of sub-Saharan Africa, with <b>golden grasslands</b>, scattered acacia trees and sun-baked terrain. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> of 64km² each with procedural vegetation.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">64km² Terrain</span>',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Procedural Foliage</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique savannah landscapes at 8×8km · 10 Demo Levels + 1 Zoo Level</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 5 controllable PBR functions · Grass · Dirt · Soil · Sand</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>3 Savannah Trees · 3 Grass types · Procedural density via Grass Layers</div>',
       '</div>',
     '</div>',
   ].join('')
@@ -1961,7 +1955,7 @@ function openDrawer(idx) {
   document.getElementById('drawer-title').textContent = p.t;
 
   // Price
-  document.getElementById('drawer-price').textContent = '€' + p.p.toFixed(2);
+  var dpEl = document.getElementById('drawer-price'); dpEl.textContent = formatProductPrice(p.p); dpEl.dataset.eur = p.p;
 
   // Badge
   var badgeHtml = '';
@@ -2383,7 +2377,7 @@ function renderCart() {
         '<div class="cart-item-info">' +
           '<div class="cart-item-name">' + p.t + '</div>' +
           '<div class="cart-item-meta">' + metaParts.join(' · ') + '</div>' +
-          '<div class="cart-item-price">€' + p.p.toFixed(2) + '</div>' +
+          '<div class="cart-item-price">' + formatProductPrice(p.p) + '</div>' +
         '</div>' +
         '<button class="cart-item-remove" onclick="removeFromCart(\'' + id + '\')" title="Remove">✕</button>' +
       '</div>';
@@ -2391,7 +2385,7 @@ function renderCart() {
   itemsEl.innerHTML = html;
 
   // Total
-  if (totalEl) totalEl.textContent = '€' + total.toFixed(2);
+  if (totalEl) totalEl.textContent = formatProductPrice(total);
 
   // Savings hint (only if multi-item)
   if (savingsEl) {
@@ -2415,7 +2409,7 @@ function renderCart() {
           '<img src="' + p.th + '" alt="" loading="lazy">' +
           '<div class="cart-cross-info">' +
             '<div class="cart-cross-name">' + p.t + '</div>' +
-            '<div class="cart-cross-price">€' + p.p.toFixed(2) + '</div>' +
+            '<div class="cart-cross-price">' + formatProductPrice(p.p) + '</div>' +
           '</div>' +
           '<button class="cart-cross-add" onclick="event.stopPropagation();addToCart(\'' + p.id + '\')">+ Add</button>' +
         '</div>';
