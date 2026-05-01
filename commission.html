@@ -58,6 +58,11 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .nav-dd-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 0.3rem 0.5rem; }
 .nav-dd-reviews { color: rgba(212,175,55,0.85); }
 .nav-dd-reviews:hover { color: var(--gold-bright); background: rgba(201,168,76,0.12); }
+.nav-dd-wide { min-width: 490px; display: flex; flex-direction: row; gap: 0; padding: 0.6rem 0.4rem; right: 0; left: auto; transform: translateY(-6px); }
+.nav-pill:hover .nav-dd-wide { opacity: 1; pointer-events: all; transform: translateY(0); }
+.nav-dd-col { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: 0 0.3rem; }
+.nav-dd-col-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--gold); padding: 0.35rem 0.7rem 0.4rem; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+.nav-dd-col-sep { width: 1px; background: rgba(201,168,76,0.15); margin: 0.25rem 0; flex-shrink: 0; }
 @media (max-width: 768px) { .header-nav { display: none; } }
 
 /* HERO */
@@ -337,8 +342,8 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .brief-actions { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
 .brief-submit-btn { background: linear-gradient(135deg, #8B6914 0%, #C9A84C 35%, #F2D777 60%, #C9A84C 80%, #8B6914 100%); color: #020A16; border-radius: 4px; border-top: 1px solid rgba(255,240,160,0.60); border-left: 1px solid rgba(255,240,160,0.45); border-bottom: 1px solid rgba(80,50,0,0.70); border-right: 1px solid rgba(80,50,0,0.70); padding: 1rem 2.5rem; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.14em; cursor: pointer; transition: all 0.25s; width: 100%; text-transform: uppercase; box-shadow: 0 4px 25px rgba(201,168,76,0.35), 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,180,0.35); font-weight: 700; }
 .brief-submit-btn:hover { box-shadow: 0 6px 40px rgba(201,168,76,0.55), 0 2px 6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,245,180,0.45); transform: translateY(-1px); filter: brightness(1.06); }
-.brief-edit-btn { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.14em; color: var(--text-dim); text-transform: uppercase; padding: 0.4rem 0; text-align: center; transition: color 0.2s; width: 100%; }
-.brief-edit-btn:hover { color: var(--text-muted); }
+.brief-edit-btn { background: none; border: 1px solid rgba(255,255,255,0.18); border-radius: 2px; cursor: pointer; font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; padding: 0.55rem 0; text-align: center; transition: color 0.2s, border-color 0.2s; width: 100%; }
+.brief-edit-btn:hover { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.38); }
 
 /* Reassurance strip */
 .brief-reassurance { display: flex; align-items: center; justify-content: center; gap: 0.65rem; padding: 0.65rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -351,14 +356,31 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 @keyframes horizonScan { 0%,100% { opacity: 0.35; transform: scaleX(0.5); } 50% { opacity: 0.9; transform: scaleX(1); } }
 @keyframes dotBlink    { 0%,100% { opacity: 0; } 50% { opacity: 1; } }
 @keyframes cosmosGlow  { 0%,100% { text-shadow: 0 0 30px rgba(201,168,76,0.30), 0 0 60px rgba(201,168,76,0.10); } 50% { text-shadow: 0 0 55px rgba(201,168,76,0.60), 0 0 110px rgba(201,168,76,0.22); } }
-.success-msg { display: none; text-align: center; padding: 3.5rem 2rem; }
-.success-msg.show { display: block; }
-.success-cosmos { position: relative; width: 110px; height: 110px; margin: 0 auto 2.2rem; }
+/* ── SUCCESS TWO-PHASE ── */
+.success-msg { display: none; text-align: center; padding: 4rem 2rem; min-height: 400px; flex-direction: column; align-items: center; justify-content: center; }
+.success-msg.show { display: flex; }
+/* phase 1: loading */
+.success-loading { display: flex; flex-direction: column; align-items: center; }
+/* phase 2: confirmed — hidden until .confirmed */
+.success-done { display: none; flex-direction: column; align-items: center; }
+.success-msg.confirmed .success-loading { display: none; }
+.success-msg.confirmed .success-done    { display: flex; }
+/* cosmos rings (shared) */
+.success-cosmos { position: relative; width: 120px; height: 120px; margin: 0 auto 2.4rem; }
 .success-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); animation: ringExpand 3s ease-out infinite; }
 .success-ring:nth-child(2) { animation-delay: 1s; }
 .success-ring:nth-child(3) { animation-delay: 2s; }
 .success-ring-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.9) 0%, rgba(201,168,76,0.3) 60%, transparent 100%); border: 1px solid rgba(201,168,76,0.6); }
-.success-title { font-family: var(--display); font-size: clamp(1.3rem, 3vw, 2rem); letter-spacing: 0.16em; color: var(--accent); margin-bottom: 1rem; animation: cosmosGlow 3s ease-in-out infinite; }
+/* checkmark (phase 2 only, overlays cosmos center) */
+.success-check-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 64px; height: 64px; }
+.success-check-svg { width: 100%; height: 100%; overflow: visible; }
+.success-check-circle { fill: none; stroke: rgba(201,168,76,0.6); stroke-width: 2; stroke-dasharray: 166; stroke-dashoffset: 166; }
+.success-check-mark   { fill: none; stroke: rgba(201,168,76,1); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 50; stroke-dashoffset: 50; }
+.success-msg.confirmed .success-check-circle { animation: drawCircle 0.65s cubic-bezier(0.65,0,0.45,1) 0.1s forwards; }
+.success-msg.confirmed .success-check-mark   { animation: drawCheck  0.35s cubic-bezier(0.65,0,0.45,1) 0.75s forwards; }
+@keyframes drawCircle { to { stroke-dashoffset: 0; } }
+@keyframes drawCheck  { to { stroke-dashoffset: 0; } }
+/* loading text */
 .success-horizon-wrap { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1.6rem; }
 .success-horizon-line { height: 1px; width: 40px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.45)); animation: horizonScan 2.5s ease-in-out infinite; }
 .success-horizon-line.right { background: linear-gradient(to left, transparent, rgba(201,168,76,0.45)); }
@@ -366,6 +388,9 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .success-dot { display: inline-block; animation: dotBlink 1.2s ease-in-out infinite; }
 .success-dot:nth-child(2) { animation-delay: 0.4s; }
 .success-dot:nth-child(3) { animation-delay: 0.8s; }
+/* confirmed text */
+.success-title { font-family: var(--display); font-size: clamp(1.3rem, 3vw, 2rem); letter-spacing: 0.16em; color: var(--accent); margin-bottom: 1rem; }
+.success-divider { width: 60px; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.45), transparent); margin: 0 auto 1.2rem; }
 .success-body { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); line-height: 1.85; max-width: 380px; margin: 0 auto 1rem; }
 .success-timestamp { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; color: var(--text-dim); opacity: 0.45; }
 
@@ -377,6 +402,52 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .xl-banner-title { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.6rem; }
 .xl-banner-desc { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); line-height: 1.8; }
 .form-wrap.preset-xl .xl-hide { display: none; }
+/* XL TERMINAL TEXTAREA */
+.xl-terminal-bar    { display: none; }
+.xl-terminal-prompt { display: none; }
+.xl-terminal-footer { display: none; }
+.form-wrap.preset-xl .xl-hide-label { display: none; }
+.form-wrap.preset-xl .xl-terminal {
+  background: #020c05;
+  border: 1px solid rgba(29,201,122,0.30);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(29,201,122,0.07), inset 0 0 80px rgba(0,0,0,0.5);
+}
+.form-wrap.preset-xl .xl-terminal-bar {
+  display: flex; align-items: center; gap: 0.45rem;
+  background: rgba(29,201,122,0.07);
+  border-bottom: 1px solid rgba(29,201,122,0.18);
+  padding: 0.55rem 1rem;
+}
+.xl-terminal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.xl-terminal-dot:nth-child(1) { background: rgba(29,201,122,0.65); }
+.xl-terminal-dot:nth-child(2) { background: rgba(29,201,122,0.35); }
+.xl-terminal-dot:nth-child(3) { background: rgba(29,201,122,0.18); }
+.xl-terminal-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; color: rgba(29,201,122,0.50); margin-left: auto; text-transform: uppercase; }
+.form-wrap.preset-xl .xl-terminal-prompt {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.75rem 1.1rem 0.3rem;
+  font-family: var(--mono); font-size: 0.75rem;
+  color: rgba(29,201,122,0.55);
+}
+.xl-terminal-caret { color: rgba(29,201,122,0.80); font-size: 0.8rem; }
+.form-wrap.preset-xl #context-textarea {
+  background: transparent; border: none; border-radius: 0;
+  padding: 0.4rem 1.1rem 1.2rem;
+  font-family: var(--mono); font-size: 0.80rem;
+  color: rgba(29,201,122,0.90); line-height: 1.85;
+  min-height: 200px; resize: vertical; width: 100%;
+  caret-color: rgba(29,201,122,1); outline: none;
+}
+.form-wrap.preset-xl #context-textarea::placeholder { color: rgba(29,201,122,0.22); }
+.form-wrap.preset-xl .xl-terminal-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.45rem 1.1rem;
+  border-top: 1px solid rgba(29,201,122,0.12);
+  font-family: var(--mono); font-size: 0.60rem; letter-spacing: 0.14em;
+  color: rgba(29,201,122,0.30); text-transform: uppercase;
+}
 /* S preset · hide complexity section (irrelevant at indie scale) */
 .form-wrap.preset-s .preset-s-hide { display: none; }
 /* Hero vs Terrain section toggling */
@@ -971,11 +1042,11 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
     <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="products.html" data-en="Products" data-fr="Produits">Products</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="products.html#coll-card-frostholm" data-en="Frosthölm Collection" data-fr="Collection Frosthölm"><span class="nav-dd-icon">❄</span>Frosthölm Collection</a>
-        <a class="nav-dd-item" href="products.html#coll-card-8k" data-en="8K Terrain Packs" data-fr="Packs Terrain 8K"><span class="nav-dd-icon">⛰</span>8K Terrain Packs</a>
-        <a class="nav-dd-item" href="products.html#coll-card-arctic" data-en="Arctic Landscapes" data-fr="Paysages Arctiques"><span class="nav-dd-icon">🏔</span>Arctic Landscapes</a>
+        <a class="nav-dd-item" href="products.html#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Arctic Landscapes" data-fr="Paysages Arctiques">Arctic Landscapes</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item nav-dd-reviews" href="reviews.html" data-en="Client Reviews" data-fr="Avis Clients"><span class="nav-dd-icon">★</span>Client Reviews</a>
+        <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
     </div>
     <div class="nav-pill">
@@ -988,8 +1059,19 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         <a class="nav-dd-item" href="commission.html#about" data-en="FAQ" data-fr="FAQ"><span class="nav-dd-icon">?</span>FAQ</a>
       </div>
     </div>
-    <div class="nav-pill"><a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a></div>
-    <div class="nav-pill"><a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a></div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="about.html" data-en="Studio" data-fr="Studio">Studio</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="about.html#bio"><span class="nav-dd-icon">▸</span><span data-en="Narrative" data-fr="Récit">Narrative</span></a>
+        <a class="nav-dd-item" href="about.html#namelore"><span class="nav-dd-icon">Ω</span><span data-en="Etymology" data-fr="Étymologie">Etymology</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
+        <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
+        <a class="nav-dd-item" href="contact.html#socials"><span class="nav-dd-icon">@</span><span data-en="Socials" data-fr="Réseaux">Socials</span></a>
+      </div>
+    </div>
   </nav>
 
   <div class="header-right">
@@ -1276,7 +1358,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <!-- XL BANNER -->
       <div class="xl-banner">
         <div class="xl-banner-eyebrow">Enterprise scope</div>
-        <div class="xl-banner-title">XL SCOPE / SUR DEVIS</div>
+        <div class="xl-banner-title">ENTERPRISE SCOPE</div>
         <div class="xl-banner-desc" data-en="Projects at this scale require a technical audit before any quote can be issued. Send your brief below: engine, world size, art direction, production context, and I'll get back to you within 48h to schedule a scoping call." data-fr="Les projets à cette échelle nécessitent un audit technique avant tout devis. Envoyez votre brief ci-dessous : moteur, taille du monde, direction artistique, contexte de production. Je reviendrai vers vous sous 48h pour un appel de cadrage.">Projects at this scale require a technical audit before any quote can be issued. Send your brief below: engine, world size, art direction, production context, and I'll get back to you within 48h to schedule a scoping call.</div>
       </div>
 
@@ -1752,8 +1834,21 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
                 <div class="drive-hint" data-en="Max 10 MB if using direct upload. For larger references, paste a shared Drive or WeTransfer link." data-fr="Max 10 Mo si upload direct. Pour des références plus lourdes, collez un lien Drive ou WeTransfer partagé.">Max 10 MB if using direct upload. For larger references, paste a shared Drive or WeTransfer link.</div>
               </div>
               <div class="field">
-                <label id="context-label">Project context <span id="context-label-xl" style="display:none">(engine, world size, art direction, constraints)</span></label>
-                <textarea name="context" id="context-textarea" placeholder="Game genre, art direction refs, engine version, technical constraints…"></textarea>
+                <label id="context-label" class="xl-hide-label">Project context <span id="context-label-xl" style="display:none">(engine, world size, art direction, constraints)</span></label>
+                <div class="xl-terminal">
+                  <div class="xl-terminal-bar">
+                    <span class="xl-terminal-dot"></span>
+                    <span class="xl-terminal-dot"></span>
+                    <span class="xl-terminal-dot"></span>
+                    <span class="xl-terminal-title">PROJECT DOSSIER &middot; KALYSTEON STUDIO</span>
+                  </div>
+                  <div class="xl-terminal-prompt"><span class="xl-terminal-caret">&#10095;</span>&nbsp;brief --scope=enterprise</div>
+                  <textarea name="context" id="context-textarea" placeholder="Describe your project in detail — engine, world size, art direction, production context, technical constraints, timeline, team size, references…"></textarea>
+                  <div class="xl-terminal-footer">
+                    <span>TRANSMISSION ENCRYPTED</span>
+                    <span id="xl-char-count">0 CHARS</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1778,7 +1873,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 
               <div class="brief-scan-wrap"><div class="brief-scan"></div></div>
 
-              <div class="brief-sections">
+              <div class="brief-sections" id="recap-main-sections">
                 <div class="brief-section">
                   <div class="brief-section-label" data-en="Core Specs" data-fr="Spécifications">Core Specs</div>
                   <div class="brief-items-grid" id="recap-core"></div>
@@ -1826,20 +1921,38 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       </div>
 
       <div class="success-msg" id="success-msg">
-        <div class="success-cosmos">
-          <div class="success-ring"></div>
-          <div class="success-ring"></div>
-          <div class="success-ring"></div>
-          <div class="success-ring-center"></div>
+        <!-- Phase 1 : chargement -->
+        <div class="success-loading">
+          <div class="success-cosmos">
+            <div class="success-ring"></div>
+            <div class="success-ring"></div>
+            <div class="success-ring"></div>
+            <div class="success-ring-center"></div>
+          </div>
+          <div class="success-horizon-wrap">
+            <div class="success-horizon-line"></div>
+            <span class="success-horizon" data-en="Transmitting brief" data-fr="Transmission en cours">Transmitting brief</span><span class="success-dot">.</span><span class="success-dot">.</span><span class="success-dot">.</span>
+            <div class="success-horizon-line right"></div>
+          </div>
         </div>
-        <div class="success-title" data-en="YOUR VISION HAS BEEN RECEIVED." data-fr="VOTRE VISION A ÉTÉ REÇUE.">YOUR VISION HAS BEEN RECEIVED.</div>
-        <div class="success-horizon-wrap">
-          <div class="success-horizon-line"></div>
-          <span class="success-horizon" data-en="Preparing the horizon" data-fr="Préparation de l'horizon">Preparing the horizon</span><span class="success-dot">.</span><span class="success-dot">.</span><span class="success-dot">.</span>
-          <div class="success-horizon-line right"></div>
+        <!-- Phase 2 : confirmé -->
+        <div class="success-done">
+          <div class="success-cosmos">
+            <div class="success-ring"></div>
+            <div class="success-ring"></div>
+            <div class="success-ring"></div>
+            <div class="success-check-center">
+              <svg class="success-check-svg" viewBox="0 0 52 52">
+                <circle class="success-check-circle" cx="26" cy="26" r="23"/>
+                <polyline class="success-check-mark" points="14,27 22,35 38,17"/>
+              </svg>
+            </div>
+          </div>
+          <div class="success-title" data-en="BRIEF RECEIVED." data-fr="BRIEF REÇU.">BRIEF RECEIVED.</div>
+          <div class="success-divider"></div>
+          <div class="success-body" data-en="Your configuration has been sent to the studio.<br>I'll review everything and come back to you with a finalized quote within 48h." data-fr="Votre configuration a été transmise au studio.<br>Je lirai tout et vous répondrai avec un devis finalisé sous 48h.">Your configuration has been sent to the studio.<br>I'll review everything and come back to you with a finalized quote within 48h.</div>
+          <div class="success-timestamp" id="success-timestamp"></div>
         </div>
-        <div class="success-body" data-en="Your brief has been received. I will review your specifications and get back to you with a finalized quote within 48 hours." data-fr="Votre brief a été reçu. Je lirai vos spécifications et vous répondrai avec un devis finalisé sous 48 heures.">Your brief has been received. I will review your specifications and get back to you with a finalized quote within 48 hours.</div>
-        <div class="success-timestamp" id="success-timestamp"></div>
       </div>
     </div>
 
@@ -2779,6 +2892,16 @@ function recalcPrice() {
   if (currentPreset === 'terrain-xl') {
     setPrice(amountEl, 0, LANG === 'fr' ? 'Sur devis' : 'On request', true);
     breakdownEl.textContent = LANG === 'fr' ? 'Scope XL d\u00E9fini sur appel.' : 'XL scope defined on call.';
+    var hfxl = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
+    hfxl('hidden-commission-type', 'XL');
+    hfxl('hidden-price-base',     'On request');
+    hfxl('hidden-price-style',    '-');
+    hfxl('hidden-price-assets',   '-');
+    hfxl('hidden-price-delivery', '-');
+    hfxl('hidden-price-coml',     '-');
+    hfxl('hidden-price-excl',     '-');
+    hfxl('hidden-price-quantity', '-');
+    hfxl('hidden-currency',       CURRENCY);
     return;
   }
 
@@ -3177,6 +3300,10 @@ function showRecap() {
   fillBriefSection('recap-tech',   techItems);
   fillBriefSection('recap-rights', rightsItems);
 
+  /* For Terrain XL, hide the standard spec sections — only Project Context is relevant */
+  var mainSections = document.getElementById('recap-main-sections');
+  if (mainSections) mainSections.style.display = currentPreset === 'terrain-xl' ? 'none' : '';
+
   /* Optional context block */
   var ctx = document.getElementById('context-textarea');
   var ctxSection = document.getElementById('recap-ctx-section');
@@ -3212,29 +3339,56 @@ function hideRecap() {
   document.getElementById('step-recap').classList.remove('show');
 }
 
-function showSuccess() {
+function showLoading() {
   document.getElementById('form-inner').style.display = 'none';
-  /* Timestamp */
+  var msg = document.getElementById('success-msg');
+  msg.classList.remove('confirmed');
+  msg.classList.add('show');
+  /* Double rAF : attend que le display:flex soit rendu avant de scroller */
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+}
+
+function showSuccess() {
   var ts = document.getElementById('success-timestamp');
   if (ts) {
     var d = new Date();
     var pad = function(n) { return String(n).padStart(2, '0'); };
     ts.textContent = 'REF · ' + d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' — ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' UTC';
   }
-  document.getElementById('success-msg').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(function() { location.reload(); }, 5000);
+  var msg = document.getElementById('success-msg');
+  msg.classList.add('confirmed');
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+  /* 4s après : scroll instantané en haut puis reload */
+  setTimeout(function() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setTimeout(function() { location.reload(); }, 300);
+  }, 4000);
 }
 
 function submitForm() {
+  showLoading();
   var form = document.getElementById('main-form');
-  if (form.action.indexOf('YOUR_FORM_ID') !== -1) { showSuccess(); return; }
+  var MIN_LOAD = 3500;
+  var start = Date.now();
+  function onDone() {
+    var wait = Math.max(0, MIN_LOAD - (Date.now() - start));
+    setTimeout(showSuccess, wait);
+  }
+  if (form.action.indexOf('YOUR_FORM_ID') !== -1) { onDone(); return; }
   fetch(form.action, { method:'POST', body: new FormData(form), headers:{'Accept':'application/json'} })
     .then(function(r) {
-      if (r.ok) { showSuccess(); }
-      else { alert('Something went wrong. Please try again.'); }
+      if (r.ok) { onDone(); }
+      else { document.getElementById('form-inner').style.display = ''; document.getElementById('success-msg').classList.remove('show'); alert('Something went wrong. Please try again.'); }
     })
-    .catch(function() { alert('Something went wrong. Please try again.'); });
+    .catch(function() { document.getElementById('form-inner').style.display = ''; document.getElementById('success-msg').classList.remove('show'); alert('Something went wrong. Please try again.'); });
 }
 
 /* ── Process type toggle ───────────────────────────────────────────── */
@@ -3356,6 +3510,14 @@ document.addEventListener('DOMContentLoaded', function() {
       el.addEventListener('change', recalcPrice);
     });
   });
+  /* XL terminal char counter */
+  var ctxTa = document.getElementById('context-textarea');
+  var xlCount = document.getElementById('xl-char-count');
+  if (ctxTa && xlCount) {
+    ctxTa.addEventListener('input', function() {
+      xlCount.textContent = ctxTa.value.length + ' CHARS';
+    });
+  }
 });
 
 /* ═══ FAQ TOGGLE ═══ */

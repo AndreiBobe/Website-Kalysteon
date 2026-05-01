@@ -126,6 +126,11 @@ header {
 .nav-dd-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 0.3rem 0.5rem; }
 .nav-dd-reviews { color: rgba(212,175,55,0.85); }
 .nav-dd-reviews:hover { color: var(--gold-bright); background: rgba(201,168,76,0.12); }
+.nav-dd-wide { min-width: 490px; display: flex; flex-direction: row; gap: 0; padding: 0.6rem 0.4rem; right: 0; left: auto; transform: translateY(-6px); }
+.nav-pill:hover .nav-dd-wide { opacity: 1; pointer-events: all; transform: translateY(0); }
+.nav-dd-col { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: 0 0.3rem; }
+.nav-dd-col-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--gold); padding: 0.35rem 0.7rem 0.4rem; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+.nav-dd-col-sep { width: 1px; background: rgba(201,168,76,0.15); margin: 0.25rem 0; flex-shrink: 0; }
 .lang-toggle {
   display: flex;
   align-items: center;
@@ -622,25 +627,36 @@ footer {
     <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="products.html" data-en="Products" data-fr="Produits">Products</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="products.html#coll-card-frostholm" data-en="Frosthölm Collection" data-fr="Collection Frosthölm"><span class="nav-dd-icon">❄</span>Frosthölm Collection</a>
-        <a class="nav-dd-item" href="products.html#coll-card-8k" data-en="8K Terrain Packs" data-fr="Packs Terrain 8K"><span class="nav-dd-icon">⛰</span>8K Terrain Packs</a>
-        <a class="nav-dd-item" href="products.html#coll-card-arctic" data-en="Arctic Landscapes" data-fr="Paysages Arctiques"><span class="nav-dd-icon">🏔</span>Arctic Landscapes</a>
+        <a class="nav-dd-item" href="products.html#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Arctic Landscapes" data-fr="Paysages Arctiques">Arctic Landscapes</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item nav-dd-reviews" href="reviews.html" data-en="Client Reviews" data-fr="Avis Clients"><span class="nav-dd-icon">★</span>Client Reviews</a>
+        <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
     </div>
         <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="commission.html#tab-terrain" data-en="Custom Terrain" data-fr="Terrain Custom"><span class="nav-dd-icon">⛰</span>Custom Terrain</a>
-        <a class="nav-dd-item" href="commission.html#tab-hero" data-en="Hero Assets" data-fr="Hero Assets"><span class="nav-dd-icon">◆</span>Hero Assets</a>
+        <a class="nav-dd-item" href="commission.html#tab-terrain"><span class="nav-dd-icon">⛰</span><span data-en="Custom Terrain" data-fr="Terrain Custom">Custom Terrain</span></a>
+        <a class="nav-dd-item" href="commission.html#tab-hero"><span class="nav-dd-icon">◆</span><span data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item" href="commission.html#process" data-en="How It Works" data-fr="Comment ca marche"><span class="nav-dd-icon">↺</span>How It Works</a>
-        <a class="nav-dd-item" href="commission.html#about" data-en="FAQ" data-fr="FAQ"><span class="nav-dd-icon">?</span>FAQ</a>
+        <a class="nav-dd-item" href="commission.html#process"><span class="nav-dd-icon">↺</span><span data-en="How It Works" data-fr="Comment ca marche">How It Works</span></a>
+        <a class="nav-dd-item" href="commission.html#about"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
       </div>
     </div>
-    <div class="nav-pill"><a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a></div>
-    <div class="nav-pill"><a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a></div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="about.html" data-en="Studio" data-fr="Studio">Studio</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="about.html#bio"><span class="nav-dd-icon">▸</span><span data-en="Narrative" data-fr="Récit">Narrative</span></a>
+        <a class="nav-dd-item" href="about.html#namelore"><span class="nav-dd-icon">Ω</span><span data-en="Etymology" data-fr="Étymologie">Etymology</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
+        <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
+        <a class="nav-dd-item" href="contact.html#socials"><span class="nav-dd-icon">@</span><span data-en="Socials" data-fr="Réseaux">Socials</span></a>
+      </div>
+    </div>
   </nav>
   <div class="lang-toggle">
     <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>

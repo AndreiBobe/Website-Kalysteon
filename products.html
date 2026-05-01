@@ -61,6 +61,11 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .nav-dd-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 0.3rem 0.5rem; }
 .nav-dd-reviews { color: rgba(212,175,55,0.85); }
 .nav-dd-reviews:hover { color: var(--gold-bright); background: rgba(201,168,76,0.12); }
+.nav-dd-wide { min-width: 490px; display: flex; flex-direction: row; gap: 0; padding: 0.6rem 0.4rem; right: 0; left: auto; transform: translateY(-6px); }
+.nav-pill:hover .nav-dd-wide { opacity: 1; pointer-events: all; transform: translateY(0); }
+.nav-dd-col { display: flex; flex-direction: column; flex: 1; min-width: 0; padding: 0 0.3rem; }
+.nav-dd-col-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--gold); padding: 0.35rem 0.7rem 0.4rem; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+.nav-dd-col-sep { width: 1px; background: rgba(201,168,76,0.15); margin: 0.25rem 0; flex-shrink: 0; }
 @media (max-width: 768px) { .header-nav { display: none; } }
 
 /* PAGE BANNER */
@@ -242,6 +247,48 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .biome-l { color: #6FBB85; border-color: rgba(111,187,133,0.35); background: rgba(111,187,133,0.07); }
 .biome-sub { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
 
+/* ── 8K VOLUME TABS ── */
+.vol-8k-wrap { margin-bottom: 1.75rem; }
+.vol-8k-tabs { display: flex; gap: 3px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-mid); padding: 3px; border-radius: 6px; flex-wrap: wrap; }
+.vol-tab-8k { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted); background: transparent; border: none; padding: 0.38rem 0.85rem; cursor: pointer; border-radius: 4px; transition: all 0.18s; display: flex; align-items: center; gap: 0.32rem; white-space: nowrap; }
+.vol-tab-8k:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.04); }
+.vol-tab-8k.active { background: rgba(201,168,76,0.10); color: var(--gold-bright); box-shadow: 0 0 0 1px rgba(201,168,76,0.35); }
+.vol-tab-8k.all-tab.active { background: rgba(201,168,76,0.14); }
+.vol-cnt-8k { display: inline-block; font-size: 0.50rem; background: rgba(255,255,255,0.06); color: var(--text-dim); padding: 1px 5px; border-radius: 3px; vertical-align: 1px; transition: all 0.18s; }
+.vol-tab-8k.active .vol-cnt-8k { background: rgba(201,168,76,0.18); color: var(--gold); }
+
+/* ── 8K VOL SECTION HEADERS (All view) ── */
+.vol-section-8k { margin-bottom: 2.25rem; }
+.vol-section-8k:last-child { margin-bottom: 0; }
+.vol-sec-hdr { display: flex; align-items: center; gap: 12px; margin-bottom: 0.9rem; cursor: pointer; }
+.vol-sec-badge { font-family: var(--mono); font-size: 0.50rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #010810; background: var(--gold); padding: 3px 9px; border-radius: 3px; flex-shrink: 0; }
+.vol-sec-name { font-family: var(--display); font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); }
+.vol-sec-sub { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.06em; color: var(--text-dim); }
+.vol-sec-line { flex: 1; height: 1px; background: rgba(55,80,120,0.22); }
+.vol-sec-count { font-family: var(--mono); font-size: 0.50rem; letter-spacing: 0.10em; color: var(--text-dim); text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+
+/* ── SINGLE VOL BANNER ── */
+.single-vol-banner { display: flex; align-items: center; gap: 16px; margin-bottom: 1.4rem; padding: 0.9rem 1.2rem; background: rgba(201,168,76,0.03); border: 1px solid var(--border-mid); border-radius: var(--radius-sm); border-left: 3px solid var(--gold); }
+.svb-vol { font-family: var(--display); font-size: 1.7rem; letter-spacing: 0.1em; color: var(--gold); line-height: 1; flex-shrink: 0; }
+.svb-divider { width: 1px; height: 34px; background: var(--border-mid); flex-shrink: 0; }
+.svb-meta { display: flex; flex-direction: column; gap: 2px; }
+.svb-title { font-family: var(--display); font-size: 0.88rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); line-height: 1.2; }
+.svb-sub { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.07em; color: var(--text-dim); }
+.svb-spacer { flex: 1; }
+.svb-nav { display: flex; gap: 5px; }
+.svb-nav-btn { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted); background: transparent; border: 1px solid var(--border-mid); padding: 0.28rem 0.65rem; border-radius: 4px; cursor: pointer; transition: all 0.18s; }
+.svb-nav-btn:hover { color: var(--gold-bright); border-color: var(--gold); }
+.svb-nav-btn:disabled { opacity: 0.28; pointer-events: none; }
+
+/* ── COMING SOON CARD ── */
+.cs-card { position: relative; background: var(--surface); border: 1px dashed rgba(201,168,76,0.15); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; opacity: 0.42; pointer-events: none; }
+.cs-thumb { aspect-ratio: 16/9; background: rgba(201,168,76,0.025); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.4rem; flex-shrink: 0; }
+.cs-coming-label { font-family: var(--mono); font-size: 0.50rem; letter-spacing: 0.20em; color: rgba(201,168,76,0.45); text-transform: uppercase; }
+.cs-body { padding: 0.72rem 0.85rem 0.6rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; }
+.cs-name { font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.15; }
+.cs-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.45rem; border-top: 1px solid rgba(55,80,120,0.18); }
+.cs-badge { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(201,168,76,0.40); border: 1px solid rgba(201,168,76,0.15); padding: 0.18rem 0.52rem; border-radius: 3px; }
+
 /* STORE FOOTER */
 .store-footer { margin-top: 2.5rem; display: flex; justify-content: center; }
 .btn-store-more { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: 1px solid var(--border); padding: 0.65rem 2rem; border-radius: 20px; transition: all 0.18s; }
@@ -389,8 +436,8 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .btn-buy { display: block; text-align: center; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.95rem 1.5rem; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); color: #010810; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); }
 .btn-buy:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
 .drawer-stores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-.btn-store { display: block; text-align: center; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.6rem 0.5rem; border-radius: var(--radius-xs); border: 1px solid var(--border-mid); color: var(--text-muted); transition: all 0.15s; }
-.btn-store:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.06); }
+.btn-store { display: block; text-align: center; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.6rem 0.5rem; border-radius: var(--radius-xs); border: 1px solid rgba(201,168,76,0.38); color: rgba(238,232,214,0.72); background: rgba(201,168,76,0.05); transition: all 0.18s; }
+.btn-store:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.12); box-shadow: 0 0 10px rgba(201,168,76,0.08); }
 .btn-store--na { opacity: 0.28; pointer-events: none; cursor: default; text-decoration: line-through; }
 
 /* ── CART ICON IN HEADER ── */
@@ -401,15 +448,32 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .cart-badge.visible { opacity: 1; transform: scale(1); }
 
 /* ── VALUE PROP BLOCK ── */
-.drawer-value-prop { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.20); border-radius: var(--radius-sm); padding: 0.8rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.vp-title { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.5rem; }
-.vp-title::before { content: '✦'; font-size: 0.45rem; }
-.vp-rows { display: flex; flex-direction: column; gap: 0.28rem; }
-.vp-row { display: flex; align-items: flex-start; gap: 0.55rem; font-family: var(--mono); font-size: 0.61rem; color: var(--text-muted); line-height: 1.5; }
-.vp-row::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; opacity: 0.65; margin-top: 0.42em; }
-.vp-row strong { color: var(--text); font-weight: 500; }
-.vp-saving { font-family: var(--mono); font-size: 0.58rem; color: rgba(94,207,183,0.85); border-top: 1px solid rgba(201,168,76,0.14); padding-top: 0.42rem; margin-top: 0.05rem; display: flex; align-items: center; gap: 0.4rem; }
-.vp-saving::before { content: '↓'; font-weight: bold; color: rgba(94,207,183,0.7); }
+.drawer-value-prop { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.22); border-radius: var(--radius-sm); overflow: hidden; }
+/* header row */
+.vp-header { display: flex; align-items: center; justify-content: space-between; padding: 0.62rem 1rem 0.58rem; border-bottom: 1px solid rgba(201,168,76,0.13); }
+.vp-header-title { font-family: var(--display); font-size: 0.92rem; letter-spacing: 0.14em; color: var(--gold-bright); line-height: 1; }
+.vp-header-badge { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.16em; text-transform: uppercase; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); color: #010810; padding: 0.22rem 0.62rem; border-radius: 20px; font-weight: 700; box-shadow: 0 1px 6px rgba(201,168,76,0.25); flex-shrink: 0; }
+/* comparison column headers */
+.vp-cols-hdr { display: grid; grid-template-columns: 0.88fr 1.5fr 1.05fr; padding: 0.36rem 1rem; background: rgba(0,0,0,0.20); border-bottom: 1px solid rgba(201,168,76,0.10); align-items: center; }
+.vp-col-feat  { font-family: var(--mono); font-size: 0.44rem; letter-spacing: 0.14em; text-transform: uppercase; color: transparent; }
+.vp-col-direct { font-family: var(--mono); font-size: 0.50rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.32rem; }
+.vp-col-direct::before { content: '✦'; font-size: 0.40rem; opacity: 0.85; }
+.vp-col-mkt { font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); text-align: right; opacity: 0.68; }
+/* comparison rows */
+.vp-rows { display: flex; flex-direction: column; }
+.vp-cmp-row { display: grid; grid-template-columns: 0.88fr 1.5fr 1.05fr; padding: 0.55rem 1rem; border-bottom: 1px solid rgba(201,168,76,0.07); align-items: center; transition: background 0.18s; }
+.vp-cmp-row:last-child { border-bottom: none; }
+.vp-cmp-row:hover { background: rgba(201,168,76,0.04); }
+.vp-cmp-feat { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+.vp-cmp-yes { font-family: var(--mono); font-size: 0.63rem; color: var(--text); font-weight: 500; display: flex; align-items: center; gap: 0.38rem; }
+.vp-cmp-yes::before { content: '✓'; color: rgba(94,207,183,0.88); font-weight: 700; font-size: 0.62rem; flex-shrink: 0; }
+.vp-cmp-no { font-family: var(--mono); font-size: 0.58rem; color: rgba(112,133,160,0.58); text-align: right; }
+/* bundle star highlight — l'argument massue */
+.vp-cmp-row--star { background: rgba(201,168,76,0.06); }
+.vp-cmp-row--star:hover { background: rgba(201,168,76,0.10); }
+.vp-cmp-row--star .vp-cmp-feat { color: rgba(201,168,76,0.80); }
+.vp-cmp-row--star .vp-cmp-yes { color: var(--gold-bright); }
+.vp-cmp-row--star .vp-cmp-yes::before { color: var(--gold-bright); }
 
 /* ── NEW CTA BUTTONS ── */
 .btn-add-cart { display: flex; align-items: center; justify-content: center; gap: 0.6rem; font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.9rem 1.5rem; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); color: #010810; font-weight: 700; border: none; cursor: pointer; transition: all 0.22s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow: 0 4px 20px rgba(201,168,76,0.28); width: 100%; }
@@ -482,6 +546,61 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 /* ── PARTICLE CANVAS ── */
 #ptx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .page-banner, .store-section, .coming-soon-section, footer { position: relative; z-index: 1; }
+
+/* ── NEW ARRIVALS ── */
+@keyframes naGlow {
+  0%,100% { box-shadow: 0 8px 32px -8px rgba(0,0,0,0.5), 0 0 28px rgba(201,168,76,0.14); }
+  50%      { box-shadow: 0 8px 32px -8px rgba(0,0,0,0.5), 0 0 50px rgba(201,168,76,0.28); }
+}
+/* fresh-drop pulse on the badge */
+@keyframes naFreshPulse { 0%,100%{opacity:1;box-shadow:0 0 0 rgba(201,168,76,0)} 50%{opacity:0.82;box-shadow:0 0 14px rgba(201,168,76,0.38)} }
+/* section */
+.new-arrivals-section { position: relative; margin-bottom: 2.5rem; padding-top: 2rem; opacity: 0; animation: slideUpFade 0.7s 0.15s cubic-bezier(0.2,0.9,0.4,1.1) forwards; }
+.new-arrivals-section::before { content: ''; position: absolute; top: 0; left: -2.5rem; right: -2.5rem; height: 1px; background: linear-gradient(to right, transparent 0%, rgba(201,168,76,0.28) 18%, rgba(242,215,119,0.58) 50%, rgba(201,168,76,0.28) 82%, transparent 100%); }
+.new-arrivals-section::after { content: ''; position: absolute; top: -50px; left: 5%; right: 5%; height: 110px; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 65%); pointer-events: none; z-index: 0; }
+/* header */
+.na-hdr { position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1.4rem; padding-bottom: 1.1rem; border-bottom: 1px solid rgba(201,168,76,0.12); flex-wrap: wrap; gap: 0.75rem; }
+.na-eyebrow { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.45rem; }
+.na-eyebrow-line { width: 22px; height: 1px; background: linear-gradient(to right, var(--gold-dark), var(--gold)); opacity: 0.6; flex-shrink: 0; }
+.na-eyebrow-text { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; }
+.na-title-row { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.38rem; flex-wrap: wrap; }
+.na-title { font-family: var(--display); font-size: clamp(1.75rem, 3.2vw, 2.65rem); letter-spacing: 0.08em; background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 35%, var(--gold-bright) 50%, var(--gold) 65%, var(--gold-dark) 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmerText 6s linear infinite; line-height: 1; }
+.na-title-badge { font-family: var(--mono); font-size: 0.50rem; letter-spacing: 0.18em; padding: 0.24rem 0.68rem; border-radius: 20px; border: 1px solid rgba(201,168,76,0.48); color: var(--gold-bright); background: rgba(201,168,76,0.09); text-transform: uppercase; animation: naFreshPulse 2.8s ease-in-out infinite; align-self: center; }
+.na-subtitle { font-family: var(--mono); font-size: 0.63rem; color: var(--text-dim); letter-spacing: 0.07em; }
+.na-hdr-meta { text-align: right; flex-shrink: 0; }
+.na-release-label { font-family: var(--mono); font-size: 0.50rem; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase; display: block; margin-bottom: 0.1rem; }
+.na-release-date { font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.08em; color: var(--text-muted); display: block; line-height: 1; }
+/* slider */
+.na-slider-wrap { position: relative; z-index: 1; }
+.na-slider { display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 0.75rem 0.5rem 2.25rem; scrollbar-width: none; -ms-overflow-style: none; cursor: grab; -webkit-overflow-scrolling: touch; }
+.na-slider.na-dragging { cursor: grabbing; scroll-behavior: auto; }
+.na-slider::-webkit-scrollbar { display: none; }
+.na-card { position: relative; flex-shrink: 0; width: 286px; border-radius: 20px; overflow: hidden; cursor: pointer; scroll-snap-align: center; background: rgba(9,27,50,0.62); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(201,168,76,0.20); transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s, border-color 0.25s; box-shadow: 0 8px 32px -8px rgba(0,0,0,0.5); }
+.na-card::before { content: ''; position: absolute; inset: 0; border-radius: 20px; padding: 1px; background: conic-gradient(from var(--angle), transparent 25%, #C9A84C 45%, #F2D777 50%, #C9A84C 55%, transparent 75%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; z-index: 3; pointer-events: none; animation: rotateBorder 2.5s linear infinite paused; transition: opacity 0.3s; }
+.na-card:hover::before { opacity: 1; animation-play-state: running; }
+.na-card:hover { transform: translateY(-8px) scale(1.015); border-color: rgba(201,168,76,0.55); box-shadow: 0 24px 50px -12px rgba(0,0,0,0.6), 0 0 32px rgba(201,168,76,0.15); }
+.na-card.na-center { border-color: rgba(201,168,76,0.40); animation: naGlow 3s ease-in-out infinite; }
+.na-img { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+.na-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block; transition: transform 0.45s cubic-bezier(0.23,1,0.32,1); }
+.na-card:hover .na-img img { transform: scale(1.07); }
+.na-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(1,8,16,0.80) 0%, transparent 55%); }
+.na-shimmer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; border-radius: 20px; }
+.na-shimmer::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.038) 50%, transparent 60%); transition: left 0.65s ease; }
+.na-card:hover .na-shimmer::after { left: 160%; }
+.na-new-badge { position: absolute; top: 0.62rem; right: 0.62rem; background: linear-gradient(135deg, var(--gold-dark), var(--gold-bright)); color: #010810; font-family: var(--mono); font-size: 0.50rem; font-weight: 700; letter-spacing: 0.20em; padding: 0.22rem 0.58rem; border-radius: 20px; text-transform: uppercase; z-index: 4; box-shadow: 0 2px 10px rgba(201,168,76,0.45); }
+.na-body { padding: 0.85rem 1rem 1rem; position: relative; z-index: 2; }
+.na-name { font-family: var(--display); font-size: 1.2rem; letter-spacing: 0.04em; color: var(--text); line-height: 1.1; margin-bottom: 0.28rem; }
+.na-sub { font-family: var(--mono); font-size: 0.60rem; color: var(--gold-bright); letter-spacing: 0.10em; text-transform: uppercase; opacity: 0.72; margin-bottom: 0.5rem; }
+.na-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(201,168,76,0.12); }
+.na-price { font-family: var(--mono); font-size: 0.88rem; color: var(--gold-bright); font-weight: 500; }
+.na-icon { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(201,168,76,0.22); color: rgba(201,168,76,0.50); font-size: 0.65rem; transition: color 0.22s, border-color 0.22s, box-shadow 0.22s, background 0.22s; flex-shrink: 0; }
+.na-card:hover .na-icon { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,0.42); background: rgba(201,168,76,0.10); }
+.na-nav { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: -0.35rem; }
+.na-nav-btn { width: 28px; height: 28px; border-radius: 50%; background: rgba(9,27,50,0.7); border: 1px solid var(--border-mid); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.18s; font-size: 0.8rem; flex-shrink: 0; }
+.na-nav-btn:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.08); }
+.na-dots { display: flex; justify-content: center; gap: 0.4rem; align-items: center; }
+.na-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-mid); transition: all 0.25s; cursor: pointer; }
+.na-dot.na-dot-active { background: var(--gold); width: 14px; border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -503,15 +622,26 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="commission.html#tab-terrain" data-en="Custom Terrain" data-fr="Terrain Custom"><span class="nav-dd-icon">⛰</span>Custom Terrain</a>
-        <a class="nav-dd-item" href="commission.html#tab-hero" data-en="Hero Assets" data-fr="Hero Assets"><span class="nav-dd-icon">◆</span>Hero Assets</a>
+        <a class="nav-dd-item" href="commission.html#tab-terrain"><span class="nav-dd-icon">⛰</span><span data-en="Custom Terrain" data-fr="Terrain Custom">Custom Terrain</span></a>
+        <a class="nav-dd-item" href="commission.html#tab-hero"><span class="nav-dd-icon">◆</span><span data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item" href="commission.html#process" data-en="How It Works" data-fr="Comment ca marche"><span class="nav-dd-icon">↺</span>How It Works</a>
-        <a class="nav-dd-item" href="commission.html#about" data-en="FAQ" data-fr="FAQ"><span class="nav-dd-icon">?</span>FAQ</a>
+        <a class="nav-dd-item" href="commission.html#process"><span class="nav-dd-icon">↺</span><span data-en="How It Works" data-fr="Comment ca marche">How It Works</span></a>
+        <a class="nav-dd-item" href="commission.html#about"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
       </div>
     </div>
-    <div class="nav-pill"><a class="nav-link" href="about.html" data-en="About" data-fr="À propos">About</a></div>
-    <div class="nav-pill"><a class="nav-link" href="contact.html" data-en="Contact" data-fr="Contact">Contact</a></div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="about.html" data-en="Studio" data-fr="Studio">Studio</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="about.html#bio"><span class="nav-dd-icon">▸</span><span data-en="Narrative" data-fr="Récit">Narrative</span></a>
+        <a class="nav-dd-item" href="about.html#namelore"><span class="nav-dd-icon">Ω</span><span data-en="Etymology" data-fr="Étymologie">Etymology</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
+        <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
+        <a class="nav-dd-item" href="contact.html#socials"><span class="nav-dd-icon">@</span><span data-en="Socials" data-fr="Réseaux">Socials</span></a>
+      </div>
+    </div>
   </nav>
   <div class="header-right">
     <button class="cart-icon-btn" id="cart-icon-btn" onclick="openCartDrawer()" aria-label="Cart">
@@ -560,6 +690,36 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
 <section class="store-section">
 <div class="store-wrap">
+
+  <!-- ══ NOUVEAUTÉS / NEW ARRIVALS ══ -->
+  <div class="new-arrivals-section" id="new-arrivals-section">
+    <div class="na-hdr">
+      <div>
+        <div class="na-eyebrow">
+          <span class="na-eyebrow-line"></span>
+          <span class="na-eyebrow-text" data-en="Just Released" data-fr="Vient de sortir">Just Released</span>
+          <span class="na-eyebrow-line"></span>
+        </div>
+        <div class="na-title-row">
+          <span class="na-title" data-en="NEW ARRIVALS" data-fr="NOUVEAUTÉS">NEW ARRIVALS</span>
+          <span class="na-title-badge" data-en="FRESH DROP" data-fr="DERNIÈRES SORTIES">FRESH DROP</span>
+        </div>
+        <div class="na-subtitle" data-en="Hero Meshes · Frosthölm &amp; Arctic Collections" data-fr="Hero Meshes · Collections Frosthölm &amp; Arctique">Hero Meshes · Frosthölm &amp; Arctic Collections</div>
+      </div>
+      <div class="na-hdr-meta">
+        <span class="na-release-label" data-en="Latest Release" data-fr="Dernière sortie">Latest Release</span>
+        <span class="na-release-date">Q2 · 2026</span>
+      </div>
+    </div>
+    <div class="na-slider-wrap">
+      <div class="na-slider" id="na-slider"></div>
+      <div class="na-nav">
+        <button class="na-nav-btn" onclick="naScroll(-1)">&#8249;</button>
+        <div class="na-dots" id="na-dots"></div>
+        <button class="na-nav-btn" onclick="naScroll(1)">&#8250;</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ══ SECTION HEADER ══ -->
   <div class="section-hdr">
@@ -661,6 +821,21 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       <button class="filter-pill" data-filter="retro" onclick="applyFilter('retro')" data-en="Retro" data-fr="Retro">Retro</button>
     </div>
 
+    <!-- 8K Vol tabs (replaces biome pills) -->
+    <div class="vol-8k-wrap" id="filters-8k-vol" style="display:none">
+      <div class="vol-8k-tabs" id="vol8kTabs">
+        <button class="vol-tab-8k all-tab active" data-v="all" onclick="applyFilter8k('all')" data-en="All" data-fr="Tout">All <span class="vol-cnt-8k" id="v8k-cnt-all">21</span></button>
+        <button class="vol-tab-8k" data-v="1" onclick="applyFilter8k('1')">Vol.1 · Borealis <span class="vol-cnt-8k">3</span></button>
+        <button class="vol-tab-8k" data-v="2" onclick="applyFilter8k('2')">Vol.2 · Exotic <span class="vol-cnt-8k">3</span></button>
+        <button class="vol-tab-8k" data-v="3" onclick="applyFilter8k('3')">Vol.3 · Badlands <span class="vol-cnt-8k">3</span></button>
+        <button class="vol-tab-8k" data-v="4" onclick="applyFilter8k('4')">Vol.4 · Zenith <span class="vol-cnt-8k">2</span></button>
+        <button class="vol-tab-8k" data-v="5" onclick="applyFilter8k('5')">Vol.5 · Primal <span class="vol-cnt-8k">3</span></button>
+        <button class="vol-tab-8k" data-v="6" onclick="applyFilter8k('6')">Vol.6 · Lush <span class="vol-cnt-8k">3</span></button>
+        <button class="vol-tab-8k" data-v="7" onclick="applyFilter8k('7')">Vol.7 · Ether <span class="vol-cnt-8k">4</span></button>
+      </div>
+    </div>
+
+    <!-- legacy biome pills (frostholm/arctic style fallback — hidden for 8k) -->
     <div class="store-filters" id="filters-biome" style="display:none">
       <button class="filter-pill active" data-filter="all" onclick="applyFilter('all')">All</button>
       <button class="filter-pill" data-filter="m" onclick="applyFilter('m')" data-en="Mountain" data-fr="Montagne">Mountain</button>
@@ -669,7 +844,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       <button class="filter-pill" data-filter="l" onclick="applyFilter('l')" data-en="Lush" data-fr="Luxuriant">Lush</button>
     </div>
 
-    <div class="products-grid" id="store-grid"></div>
+    <div id="store-grid"></div>
   </div>
 
 </div>
@@ -739,13 +914,46 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
       <!-- Value Proposition -->
       <div class="drawer-value-prop">
-        <div class="vp-title" data-en="Direct Purchase Advantage" data-fr="Avantage achat direct">Direct Purchase Advantage</div>
-        <div class="vp-rows">
-          <div class="vp-row"><span>All engines in one pack — <strong>UE5 · Unity · ArtStation</strong></span></div>
-          <div class="vp-row"><span><strong>No platform fees</strong> — purchased direct from the creator</span></div>
-          <div class="vp-row"><span><strong>Instant download</strong> · all future updates included</span></div>
+
+        <div class="vp-header">
+          <span class="vp-header-title" data-en="Direct Advantage" data-fr="Avantage Direct">Direct Advantage</span>
+          <span class="vp-header-badge" data-en="BEST VALUE" data-fr="MEILLEUR CHOIX">BEST VALUE</span>
         </div>
-        <div class="vp-saving" data-en="Direct store coming soon — Stripe / LemonSqueezy integration" data-fr="Boutique directe bientôt — intégration Stripe / LemonSqueezy">Direct store coming soon — Stripe / LemonSqueezy integration</div>
+
+        <div class="vp-cols-hdr">
+          <span class="vp-col-feat"></span>
+          <span class="vp-col-direct" data-en="Kalysteon Direct" data-fr="Kalysteon Direct">Kalysteon Direct</span>
+          <span class="vp-col-mkt" data-en="Marketplaces" data-fr="Marketplaces">Marketplaces</span>
+        </div>
+
+        <div class="vp-rows">
+
+          <div class="vp-cmp-row">
+            <span class="vp-cmp-feat" data-en="Engines" data-fr="Moteurs">Engines</span>
+            <span class="vp-cmp-yes" data-en="UE5 + Unity + ArtStation" data-fr="UE5 + Unity + ArtStation">UE5 + Unity + ArtStation</span>
+            <span class="vp-cmp-no" data-en="Single engine" data-fr="Moteur unique">Single engine</span>
+          </div>
+
+          <div class="vp-cmp-row">
+            <span class="vp-cmp-feat" data-en="Price" data-fr="Prix">Price</span>
+            <span class="vp-cmp-yes" data-en="Best price · 0% commission" data-fr="Meilleur prix · 0% commission">Best price · 0% commission</span>
+            <span class="vp-cmp-no" data-en="+ 30% platform fee" data-fr="+ 30% de commission">+ 30% platform fee</span>
+          </div>
+
+          <div class="vp-cmp-row">
+            <span class="vp-cmp-feat" data-en="Access" data-fr="Accès">Access</span>
+            <span class="vp-cmp-yes" data-en="Direct · no account needed" data-fr="Direct · sans compte requis">Direct · no account needed</span>
+            <span class="vp-cmp-no" data-en="Platform mediated" data-fr="Via plateforme">Platform mediated</span>
+          </div>
+
+          <div class="vp-cmp-row vp-cmp-row--star">
+            <span class="vp-cmp-feat" data-en="Bundles" data-fr="Bundles">Bundles</span>
+            <span class="vp-cmp-yes" data-en="Buy 3 · pay 2 · custom deals" data-fr="3 achetés · 2 payés · offres perso">Buy 3 · pay 2 · custom deals</span>
+            <span class="vp-cmp-no" data-en="Fixed listings only" data-fr="Listings fixes">Fixed listings only</span>
+          </div>
+
+        </div>
+
       </div>
 
       <!-- Primary: Add to Cart -->
@@ -831,7 +1039,7 @@ function setCurrency(curr) {
   CURRENCY = curr;
   document.getElementById('curr-btn-usd').classList.toggle('active', curr === 'USD');
   document.getElementById('curr-btn-eur').classList.toggle('active', curr === 'EUR');
-  document.querySelectorAll('.pc-price[data-eur]').forEach(function(el) {
+  document.querySelectorAll('.pc-price[data-eur], .na-price[data-eur]').forEach(function(el) {
     el.textContent = formatProductPrice(parseFloat(el.dataset.eur));
   });
   var dpEl = document.getElementById('drawer-price');
@@ -850,7 +1058,7 @@ function setLang(lang) {
     var txt = el.getAttribute('data-' + lang);
     if (txt) el.innerHTML = txt;
   });
-  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.id === 'lang-btn-' + lang); });
+  document.querySelectorAll('.lang-toggle .lang-btn').forEach(function(b){ b.classList.toggle('active', b.id === 'lang-btn-' + lang); });
 }
 
 /* ═══ PRODUCT DATA ═══ */
@@ -876,27 +1084,27 @@ var PRODUCTS = [
   {id:'a5161656-4501-4f49-89eb-f87bdf98a69e',t:'Frostholm Glaciers Polygonal',p:79.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c6ebc88d-341f-4752-8c97-b409f77f82fc/355c1fc8-253d-4724-ac71-2259471185a1.jpg',vf:'PkkmyndfI2Y',vs:'68M48VDEaOA'},
   {id:'386fc789-f1d7-402f-89d4-a80913f2db2f',t:'Frostholm Glaciers Cartoon',p:99.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/3d681940-6d10-405a-a7ec-f6beb0cef3b5/6873e8a0-86f5-412f-a33e-1cd948dba9f6.jpg',vf:'PkkmyndfI2Y',vs:'z0CtDTxMvWE'},
   // ── 8K PACKS ──────────────────────────────────────────────────────────
-  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vs:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
-  {id:'72f2e599-e00d-454e-a1c3-1227b12fe90e',t:'8K Island Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg',vs:'Az2pWjcJwZ0',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-island-landscape-pack-294443',pa:'https://www.artstation.com/marketplace/p/JNNk/8k-island-landscape-pack'},
-  {id:'d1cc7e58-1282-4985-84de-722052e1f263',t:'8K Canyon Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Desert',th:'https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg',vs:'ZUwPlwBBY54',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-canyon-landscape-pack-297171',pa:'https://www.artstation.com/marketplace/p/7Gyd/8k-canyon-landscape-pack'},
-  {id:'2d95efdd-74f4-40e2-8189-8402aec130c4',t:'8K Volcano Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Volcanic',th:'https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg',vs:'G833u3tenyE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-volcano-landscape-pack-300480',pa:'https://www.artstation.com/marketplace/p/n7k2V/8k-volcano-landscape-pack'},
-  {id:'6d867688-80b8-4c45-9c83-ddddd52eafcf',t:'8K Alpine Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Snow',th:'https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg',vs:'gVUtd2-DbaM',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-alpine-landscape-pack-305335'},
-  {id:'7f935664-3728-4cb0-971d-a88f798a1004',t:'8K Coastal Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Shore',th:'https://media.fab.com/image_previews/gallery_images/d6db6a4a-0650-4c57-8784-4613b138252b/1b66bbd7-95b5-45c4-9b88-0467e05880f3.jpg',vs:'2fKF2e2Z7rM',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-coastal-landscape-pack-310036',pa:'https://www.artstation.com/marketplace/p/mJ8n6/8k-coastal-landscape-pack'},
-  {id:'d5b011c9-2c16-4013-bc78-c11b69505942',t:'8K Dune Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Sand',th:'https://media.fab.com/image_previews/gallery_images/b08c2551-ad3a-4726-b695-261e8accba97/83202882-1a1e-4637-b47e-6f06208fef95.jpg',vs:'UMNGjn4Vfy4',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-dune-landscape-pack-314388',pa:'https://www.artstation.com/marketplace/p/9nvYn/8k-dune-landscape-pack'},
-  {id:'c862c4eb-f37a-4ed2-9846-5e1ae02e716f',t:'8K Valley Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'River',th:'https://media.fab.com/image_previews/gallery_images/b594fe20-e0ea-4fc8-855e-2fdcb6386b14/d03da4e3-51bb-4f4c-9e33-427368e97657.jpg',vs:'xNkAe2FVtKE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-valley-landscape-pack-320161'},
-  {id:'6baa964b-95dc-4043-ab4c-185624c36ba1',t:'8K Nordic Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Forest',th:'https://media.fab.com/image_previews/gallery_images/44ee62da-b7f2-4932-b8e3-bb06a8b5bff4/d3539ac9-3274-4a18-95c3-6d7b477734d7.jpg'},
-  {id:'3e2f982b-fd76-42c9-9435-b381a7cfd3e1',t:'8K Savannah Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Grass',th:'https://media.fab.com/image_previews/gallery_images/b62b081f-61da-433f-bd15-f2dd22fbe2ae/ec6629c8-8365-4b67-b2a0-fb1b98d64e74.jpg'},
-  {id:'3dda2235-b89a-4d54-8949-3c9341d1a854',t:'8K Provencal Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Field',th:'https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg'},
-  {id:'dab7957e-c32d-4170-966a-c73d76cd5566',t:'8K Karakoram Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Snow',th:'https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg'},
-  {id:'6f4c30ac-3fd7-4a9f-81bf-a34f1b78df60',t:'8K Garni Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Rock',th:'https://media.fab.com/image_previews/gallery_images/6d54cbf8-2cd8-4181-bc45-148bb1e43661/c0ba2120-00d1-4ab9-bd88-9805fde0604e.jpg'},
-  {id:'4e30dcd7-f726-43e7-be22-c31761b8c760',t:'8K Highlands Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Grass',th:'https://media.fab.com/image_previews/gallery_images/79d4b9a6-2d2b-4df6-8dad-59a9c5d018b6/b7f9f22d-34f8-4dc6-9bb3-03fbffd709af.jpg'},
-  {id:'ce9c9f49-dfb5-49c6-a96d-817f90cb3620',t:'8K Patagonia Landscape Pack',p:34.99,col:'8k',bi:'c',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/6a75cfd9-b762-47ba-9654-2a482fd86fd7/5aa18acb-561b-461b-b420-709280104f18.jpg'},
-  {id:'7177546c-582f-4833-86b2-0a09f92de594',t:'8K Zhangjiajie Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Tropical',th:'https://media.fab.com/image_previews/gallery_images/29bda059-5c27-4bc7-97ba-33f7bb1c5d4e/f940571a-5fea-43fa-b034-9892e642f6af.jpg'},
-  {id:'7e198e93-4c8e-463f-8585-77a7f5be6bc3',t:'8K Desolate Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Barren',th:'https://media.fab.com/image_previews/gallery_images/e00fed35-9e51-4b9c-971a-d260f064c01a/b5520b69-aeef-45d5-b126-b492d170a4e2.jpg'},
-  {id:'964ab5d7-06e8-4a99-a27a-1a4e6ded09e6',t:'8K Salar Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Salt',th:'https://media.fab.com/image_previews/gallery_images/bc4595d0-8035-41c6-b818-a1a285e7957b/8eaab037-7655-4bd6-8ef3-ebe86e4cb240.jpg'},
-  {id:'0529cee3-ed8f-46e0-9f01-1cd2923f8fda',t:'8K Amazon Landscape Pack',p:34.99,col:'8k',bi:'l',b2:'Jungle',th:'https://media.fab.com/image_previews/gallery_images/daf07ad7-78d8-4c83-82bb-f5ecbf238943/8658bec5-eb1f-4acd-a16e-f154124cc285.jpg'},
-  {id:'9c46865c-f968-486d-b6e2-21509e7b2a30',t:'8K African Landscape Pack',p:34.99,col:'8k',bi:'a',b2:'Savannah',th:'https://media.fab.com/image_previews/gallery_images/f2c73e5d-321c-4641-a3f2-b2dd2ef30a3b/76325299-2667-46bf-8fe5-9521eec8429f.jpg'},
-  {id:'fa24aee0-b5d1-4341-8983-bada3212ed1a',t:'8K Hills Landscape Pack',p:34.99,col:'8k',bi:'m',b2:'Meadow',th:'https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/7183dd63-2c5e-4c9e-86ad-d6140ec113a8.jpg',vs:'PW313kfwkwQ'},
+  {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',v:1,bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vs:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
+  {id:'72f2e599-e00d-454e-a1c3-1227b12fe90e',t:'8K Island Landscape Pack',p:34.99,col:'8k',v:2,bi:'l',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg',vs:'Az2pWjcJwZ0',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-island-landscape-pack-294443',pa:'https://www.artstation.com/marketplace/p/JNNk/8k-island-landscape-pack'},
+  {id:'d1cc7e58-1282-4985-84de-722052e1f263',t:'8K Canyon Landscape Pack',p:34.99,col:'8k',v:3,bi:'m',b2:'Desert',th:'https://media.fab.com/image_previews/gallery_images/f5b6bfdb-1a25-427a-8326-c2e466e5d95b/5a2ce11a-19d3-4eb4-8ddd-32c1500b6fa0.jpg',vs:'ZUwPlwBBY54',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-canyon-landscape-pack-297171',pa:'https://www.artstation.com/marketplace/p/7Gyd/8k-canyon-landscape-pack'},
+  {id:'2d95efdd-74f4-40e2-8189-8402aec130c4',t:'8K Volcano Landscape Pack',p:34.99,col:'8k',v:5,bi:'a',b2:'Volcanic',th:'https://media.fab.com/image_previews/gallery_images/856b46ac-6946-4386-a169-e146be3aefd3/38059709-cf00-474b-807a-e7db3d7315c9.jpg',vs:'G833u3tenyE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-volcano-landscape-pack-300480',pa:'https://www.artstation.com/marketplace/p/n7k2V/8k-volcano-landscape-pack'},
+  {id:'6d867688-80b8-4c45-9c83-ddddd52eafcf',t:'8K Alpine Landscape Pack',p:34.99,col:'8k',v:1,bi:'m',b2:'Snow',th:'https://media.fab.com/image_previews/gallery_images/e85f0f85-1e43-4a79-9eae-ce14dc0355b5/9fe4a5d7-7c2c-40d2-ab08-036438aefff0.jpg',vs:'gVUtd2-DbaM',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-alpine-landscape-pack-305335'},
+  {id:'7f935664-3728-4cb0-971d-a88f798a1004',t:'8K Coastal Landscape Pack',p:34.99,col:'8k',v:2,bi:'l',b2:'Shore',th:'https://media.fab.com/image_previews/gallery_images/d6db6a4a-0650-4c57-8784-4613b138252b/1b66bbd7-95b5-45c4-9b88-0467e05880f3.jpg',vs:'2fKF2e2Z7rM',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-coastal-landscape-pack-310036',pa:'https://www.artstation.com/marketplace/p/mJ8n6/8k-coastal-landscape-pack'},
+  {id:'d5b011c9-2c16-4013-bc78-c11b69505942',t:'8K Dune Landscape Pack',p:34.99,col:'8k',v:3,bi:'a',b2:'Sand',th:'https://media.fab.com/image_previews/gallery_images/b08c2551-ad3a-4726-b695-261e8accba97/83202882-1a1e-4637-b47e-6f06208fef95.jpg',vs:'UMNGjn4Vfy4',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-dune-landscape-pack-314388',pa:'https://www.artstation.com/marketplace/p/9nvYn/8k-dune-landscape-pack'},
+  {id:'c862c4eb-f37a-4ed2-9846-5e1ae02e716f',t:'8K Valley Landscape Pack',p:34.99,col:'8k',v:6,bi:'m',b2:'River',th:'https://media.fab.com/image_previews/gallery_images/b594fe20-e0ea-4fc8-855e-2fdcb6386b14/d03da4e3-51bb-4f4c-9e33-427368e97657.jpg',vs:'xNkAe2FVtKE',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-valley-landscape-pack-320161'},
+  {id:'6baa964b-95dc-4043-ab4c-185624c36ba1',t:'8K Nordic Landscape Pack',p:34.99,col:'8k',v:1,bi:'c',b2:'Forest',th:'https://media.fab.com/image_previews/gallery_images/44ee62da-b7f2-4932-b8e3-bb06a8b5bff4/d3539ac9-3274-4a18-95c3-6d7b477734d7.jpg'},
+  {id:'3e2f982b-fd76-42c9-9435-b381a7cfd3e1',t:'8K Savannah Landscape Pack',p:34.99,col:'8k',v:5,bi:'l',b2:'Grass',th:'https://media.fab.com/image_previews/gallery_images/b62b081f-61da-433f-bd15-f2dd22fbe2ae/ec6629c8-8365-4b67-b2a0-fb1b98d64e74.jpg'},
+  {id:'3dda2235-b89a-4d54-8949-3c9341d1a854',t:'8K Provencal Landscape Pack',p:34.99,col:'8k',v:2,bi:'l',b2:'Field',th:'https://media.fab.com/image_previews/gallery_images/c603f6b4-24fd-40fd-ad22-0d4fe23ff8b3/4a96d619-375d-40b1-b040-2ba4ed5f9b97.jpg'},
+  {id:'dab7957e-c32d-4170-966a-c73d76cd5566',t:'8K Karakoram Landscape Pack',p:34.99,col:'8k',v:4,bi:'m',b2:'Snow',th:'https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/0dda4b5a-5bdb-47a7-9cd1-90e6809ca7cc.jpg'},
+  {id:'6f4c30ac-3fd7-4a9f-81bf-a34f1b78df60',t:'8K Garni Landscape Pack',p:34.99,col:'8k',v:7,bi:'m',b2:'Rock',th:'https://media.fab.com/image_previews/gallery_images/6d54cbf8-2cd8-4181-bc45-148bb1e43661/c0ba2120-00d1-4ab9-bd88-9805fde0604e.jpg'},
+  {id:'4e30dcd7-f726-43e7-be22-c31761b8c760',t:'8K Highlands Landscape Pack',p:34.99,col:'8k',v:7,bi:'m',b2:'Grass',th:'https://media.fab.com/image_previews/gallery_images/79d4b9a6-2d2b-4df6-8dad-59a9c5d018b6/b7f9f22d-34f8-4dc6-9bb3-03fbffd709af.jpg'},
+  {id:'ce9c9f49-dfb5-49c6-a96d-817f90cb3620',t:'8K Patagonia Landscape Pack',p:34.99,col:'8k',v:4,bi:'c',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/6a75cfd9-b762-47ba-9654-2a482fd86fd7/5aa18acb-561b-461b-b420-709280104f18.jpg'},
+  {id:'7177546c-582f-4833-86b2-0a09f92de594',t:'8K Zhangjiajie Landscape Pack',p:34.99,col:'8k',v:6,bi:'m',b2:'Tropical',th:'https://media.fab.com/image_previews/gallery_images/29bda059-5c27-4bc7-97ba-33f7bb1c5d4e/f940571a-5fea-43fa-b034-9892e642f6af.jpg'},
+  {id:'7e198e93-4c8e-463f-8585-77a7f5be6bc3',t:'8K Desolate Landscape Pack',p:34.99,col:'8k',v:3,bi:'a',b2:'Barren',th:'https://media.fab.com/image_previews/gallery_images/e00fed35-9e51-4b9c-971a-d260f064c01a/b5520b69-aeef-45d5-b126-b492d170a4e2.jpg'},
+  {id:'964ab5d7-06e8-4a99-a27a-1a4e6ded09e6',t:'8K Salar Landscape Pack',p:34.99,col:'8k',v:7,bi:'a',b2:'Salt',th:'https://media.fab.com/image_previews/gallery_images/bc4595d0-8035-41c6-b818-a1a285e7957b/8eaab037-7655-4bd6-8ef3-ebe86e4cb240.jpg'},
+  {id:'0529cee3-ed8f-46e0-9f01-1cd2923f8fda',t:'8K Amazon Landscape Pack',p:34.99,col:'8k',v:6,bi:'l',b2:'Jungle',th:'https://media.fab.com/image_previews/gallery_images/daf07ad7-78d8-4c83-82bb-f5ecbf238943/8658bec5-eb1f-4acd-a16e-f154124cc285.jpg'},
+  {id:'9c46865c-f968-486d-b6e2-21509e7b2a30',t:'8K African Landscape Pack',p:34.99,col:'8k',v:5,bi:'a',b2:'Savannah',th:'https://media.fab.com/image_previews/gallery_images/f2c73e5d-321c-4641-a3f2-b2dd2ef30a3b/76325299-2667-46bf-8fe5-9521eec8429f.jpg'},
+  {id:'fa24aee0-b5d1-4341-8983-bada3212ed1a',t:'8K Hills Landscape Pack',p:34.99,col:'8k',v:7,bi:'m',b2:'Meadow',th:'https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/7183dd63-2c5e-4c9e-86ad-d6140ec113a8.jpg',vs:'PW313kfwkwQ'},
   // ── LANDSCAPE COLLECTION — Arctic Series ──────────────────────────────
   {id:'897b47f0-8d34-4b40-a45a-0c73a2315849',t:'Arctic Landscape Realistic',p:69.99,col:'arctic',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-realistic-364126',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1KdyjABMr22rjrIdF1PaKnk8C2IWi1Kjq/view'},
   {id:'5e439f0f-f6f2-4104-873a-245a60aec3ff',t:'Arctic Landscape Stylized',p:59.99,col:'arctic',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/06807a5b-7cc4-4579-8dee-c1e8ccc7f90b/eaebf142-cded-4d32-916f-961f95f7e639.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-stylized-364268',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1sb8Eq6rx2tEhYh3CkRTncr_tV0eomHwc/view'},
@@ -1345,6 +1553,116 @@ var GALLERY = {
 
 var BIOME_LABEL = { m:'Mountain', a:'Arid', c:'Cold', l:'Lush' };
 
+/* ═══ 8K VOLUME DATA ═══
+   slots: ordered mix of {id:'first-8-chars'} (real product) or {cs:'Short Name'} (coming soon)
+══════════════════════════════════════════════════════════════════════════════════════════════ */
+var VOL_8K = [
+  { v:1, name:'Borealis',  sub:'The Frozen Collection',
+    slots:[{id:'85fe6436'},{id:'6d867688'},{id:'6baa964b'},{cs:'Vestrahorn'}] },
+  { v:2, name:'Exotic',    sub:'The Coastal Collection',
+    slots:[{id:'72f2e599'},{id:'7f935664'},{id:'3dda2235'},{cs:'Galapagos'}] },
+  { v:3, name:'Badlands',  sub:'The Arid Collection',
+    slots:[{id:'d1cc7e58'},{id:'d5b011c9'},{id:'7e198e93'},{cs:'Mesa'}] },
+  { v:4, name:'Zenith',    sub:'The High-Altitude Collection',
+    slots:[{id:'dab7957e'},{id:'ce9c9f49'},{cs:'Himalaya'},{cs:'Venezuela'}] },
+  { v:5, name:'Primal',    sub:'The Wildlands Collection',
+    slots:[{id:'3e2f982b'},{id:'9c46865c'},{cs:'Okavango'},{id:'2d95efdd'}] },
+  { v:6, name:'Lush',      sub:'The Luxuriant Collection',
+    slots:[{id:'c862c4eb'},{id:'0529cee3'},{id:'7177546c'},{cs:'Iguazu'}] },
+  { v:7, name:'Ether',     sub:'The Liminal Collection',
+    slots:[{id:'fa24aee0'},{id:'964ab5d7'},{id:'4e30dcd7'},{id:'6f4c30ac'}] },
+];
+
+/* Helper: find a product by 8-char id prefix */
+function findProd8k(idPrefix) {
+  return PRODUCTS.find(function(p){ return p.id.indexOf(idPrefix) === 0; });
+}
+
+/* Build one coming-soon card */
+function makeCS(shortName) {
+  return '<div class="cs-card">' +
+    '<div class="cs-thumb"><span class="cs-coming-label">Coming Soon</span></div>' +
+    '<div class="cs-body">' +
+      '<div class="cs-name">8K ' + shortName + ' Landscape Pack</div>' +
+      '<div class="cs-footer"><span class="cs-badge">Upcoming</span></div>' +
+    '</div>' +
+  '</div>';
+}
+
+/* Build vol section (section header + grid) for "All" view */
+function makeVolSection8k(vd) {
+  var available = vd.slots.filter(function(s){ return s.id; });
+  var csCount   = vd.slots.length - available.length;
+  var countTxt  = available.length + ' pack' + (available.length > 1 ? 's' : '');
+  if (csCount) countTxt += ' · ' + csCount + ' coming soon';
+  var cards = vd.slots.map(function(s, i) {
+    if (s.cs) return makeCS(s.cs);
+    var p = findProd8k(s.id);
+    if (!p) return '';
+    return makeCard(p, PRODUCTS.indexOf(p), Math.min(i, 6) * 40);
+  }).join('');
+  return '<div class="vol-section-8k">' +
+    '<div class="vol-sec-hdr" onclick="applyFilter8k(\'' + vd.v + '\')">' +
+      '<span class="vol-sec-badge">Vol.' + vd.v + '</span>' +
+      '<span class="vol-sec-name">' + vd.name + '</span>' +
+      '<span class="vol-sec-sub">' + vd.sub + '</span>' +
+      '<span class="vol-sec-line"></span>' +
+      '<span class="vol-sec-count">' + countTxt + '</span>' +
+    '</div>' +
+    '<div class="products-grid">' + cards + '</div>' +
+  '</div>';
+}
+
+/* Build single-vol view */
+function makeVolSingle8k(vd) {
+  var prevBtn = vd.v > 1
+    ? '<button class="svb-nav-btn" onclick="applyFilter8k(\'' + (vd.v - 1) + '\')">← Vol.' + (vd.v - 1) + '</button>'
+    : '<button class="svb-nav-btn" disabled>← Vol.' + (vd.v - 1) + '</button>';
+  var nextBtn = vd.v < 7
+    ? '<button class="svb-nav-btn" onclick="applyFilter8k(\'' + (vd.v + 1) + '\')">Vol.' + (vd.v + 1) + ' →</button>'
+    : '<button class="svb-nav-btn" disabled>Vol.' + (vd.v + 1) + ' →</button>';
+  var cards = vd.slots.map(function(s, i) {
+    if (s.cs) return makeCS(s.cs);
+    var p = findProd8k(s.id);
+    if (!p) return '';
+    return makeCard(p, PRODUCTS.indexOf(p), Math.min(i, 6) * 55);
+  }).join('');
+  return '<div class="single-vol-banner">' +
+    '<span class="svb-vol">Vol.' + vd.v + '</span>' +
+    '<span class="svb-divider"></span>' +
+    '<div class="svb-meta">' +
+      '<div class="svb-title">' + vd.name + '</div>' +
+      '<div class="svb-sub">' + vd.sub + '</div>' +
+    '</div>' +
+    '<span class="svb-spacer"></span>' +
+    '<div class="svb-nav">' + prevBtn + nextBtn + '</div>' +
+  '</div>' +
+  '<div class="products-grid">' + cards + '</div>';
+}
+
+/* Switch vol for 8k collection */
+var _vol8k = 'all';
+function applyFilter8k(v) {
+  _vol8k = String(v);
+  document.querySelectorAll('.vol-tab-8k').forEach(function(t){
+    t.classList.toggle('active', t.dataset.v === _vol8k);
+  });
+  var grid = document.getElementById('store-grid');
+  if (_vol8k === 'all') {
+    grid.className = '';
+    grid.innerHTML = '<div style="animation:slideUpFade 0.32s ease both">' +
+      VOL_8K.map(makeVolSection8k).join('') +
+    '</div>';
+  } else {
+    var vd = VOL_8K.find(function(d){ return String(d.v) === _vol8k; });
+    if (!vd) return;
+    grid.className = '';
+    grid.innerHTML = '<div style="animation:slideUpFade 0.28s ease both">' +
+      makeVolSingle8k(vd) +
+    '</div>';
+  }
+}
+
 /* ═══ RENDER GRID ═══ */
 function makeCard(p, idx, animDelay) {
   var delay = animDelay || 0;
@@ -1450,11 +1768,14 @@ function backToCollections() {
 }
 
 function renderStore() {
+  if (_col === '8k') {
+    applyFilter8k(_vol8k);
+    return;
+  }
   var grid = document.getElementById('store-grid');
   var filtered = PRODUCTS.filter(function(p) {
     if (p.col !== _col) return false;
     if (_filter === 'all') return true;
-    if (_col === '8k') return p.bi === _filter;
     return p.st === _filter;
   });
   grid.innerHTML = filtered.map(function(p, i) { return makeCard(p, PRODUCTS.indexOf(p), Math.min(i, 10) * 45); }).join('');
@@ -1464,8 +1785,13 @@ function renderStore() {
 function switchCollection(col) {
   _col = col; _filter = 'all';
   document.querySelectorAll('.store-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.col === col); });
-  document.getElementById('filters-style').style.display = col === 'frostholm' || col === 'arctic' ? '' : 'none';
-  document.getElementById('filters-biome').style.display = col === '8k' ? '' : 'none';
+  document.getElementById('filters-style').style.display = (col === 'frostholm' || col === 'arctic') ? '' : 'none';
+  document.getElementById('filters-biome').style.display = 'none'; /* replaced by vol tabs for 8k */
+  document.getElementById('filters-8k-vol').style.display = col === '8k' ? '' : 'none';
+  if (col === '8k') {
+    _vol8k = 'all';
+    document.querySelectorAll('.vol-tab-8k').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
+  }
   document.querySelector('.filter-pill[data-filter="retro"]').style.display = col === 'arctic' ? '' : 'none';
   document.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === 'all'); });
   renderStore();
@@ -1473,8 +1799,8 @@ function switchCollection(col) {
 
 function applyFilter(f) {
   _filter = f;
-  var activeBar = _col === '8k' ? document.getElementById('filters-biome') : document.getElementById('filters-style');
-  activeBar.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === f); });
+  var activeBar = document.getElementById('filters-style');
+  if (activeBar) activeBar.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === f); });
   renderStore();
 }
 
@@ -2577,6 +2903,195 @@ document.querySelectorAll('.nav-dd-item').forEach(function(link) {
   }
   tick();
 })();
+
+/* ═══════════════════════════════════════════════
+   DEEP LINKING — URL ?p=product-slug
+═══════════════════════════════════════════════ */
+function productSlug(p) {
+  return p.t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+/* Patch openDrawer to push URL state on every open */
+var _origOpenDrawer = openDrawer;
+openDrawer = function(idx) {
+  _origOpenDrawer(idx);
+  var p = PRODUCTS[idx];
+  if (p) history.pushState({ kp: p.id }, '', '?p=' + productSlug(p));
+};
+
+/* Patch closeDrawer to restore clean URL */
+var _origCloseDrawer = closeDrawer;
+closeDrawer = function() {
+  _origCloseDrawer();
+  history.pushState({}, '', location.pathname);
+};
+
+/* Back / forward button support */
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.kp) {
+    var idx = PRODUCTS.findIndex(function(x) { return x.id === e.state.kp; });
+    if (idx >= 0) _origOpenDrawer(idx);
+  } else {
+    _origCloseDrawer();
+  }
+});
+
+/* ═══════════════════════════════════════════════
+   NEW ARRIVALS SLIDER
+═══════════════════════════════════════════════ */
+/* Hero meshes featured as "New" — Frostholm Glaciers series + Mountains Realistic */
+var NA_IDS = [
+  '080a6e16-809b-4feb-bae5-bcc7ff42ce5a', /* Glaciers Realistic  */
+  '1645ee54-4c64-48d2-8d59-5fc5ad8627eb', /* Glaciers Stylized   */
+  'a5161656-4501-4f49-89eb-f87bdf98a69e', /* Glaciers Polygonal  */
+  '386fc789-f1d7-402f-89d4-a80913f2db2f', /* Glaciers Cartoon    */
+  '897b47f0-8d34-4b40-a45a-0c73a2315849', /* Arctic Realistic    */
+  '5e439f0f-f6f2-4104-873a-245a60aec3ff', /* Arctic Stylized     */
+  '14e34309-cb57-4901-be0e-11e60494cc56', /* Arctic Polygonal    */
+  '3d96a640-b331-4bd8-ab4f-1b7d01fd3ace', /* Arctic Cartoon      */
+  'af813c5f-5482-4d22-8e4a-90ac4e1d83eb'  /* Arctic Retro        */
+];
+var NA_PRODUCTS = PRODUCTS.filter(function(p) { return NA_IDS.indexOf(p.id) >= 0; })
+  .sort(function(a, b) { return NA_IDS.indexOf(a.id) - NA_IDS.indexOf(b.id); });
+
+var _naActiveIdx = 0;
+
+function renderNewArrivals() {
+  var slider = document.getElementById('na-slider');
+  var dotsEl = document.getElementById('na-dots');
+  if (!slider) return;
+
+  slider.innerHTML = NA_PRODUCTS.map(function(p) {
+    var globalIdx = PRODUCTS.indexOf(p);
+    var parts = p.t.split(' ');
+    var biome = parts[1] || '';
+    var style = p.st ? p.st.charAt(0).toUpperCase() + p.st.slice(1) : '';
+    var sub   = biome + (style ? ' · ' + style : '');
+    return (
+      '<div class="na-card" data-gidx="' + globalIdx + '" onclick="naCardOpen(this)">' +
+        '<div class="na-img">' +
+          '<img src="' + p.th + '" alt="' + p.t + '" loading="lazy">' +
+          '<div class="na-img-overlay"></div>' +
+        '</div>' +
+        '<span class="na-new-badge">NEW</span>' +
+        '<div class="na-shimmer"></div>' +
+        '<div class="na-body">' +
+          '<div class="na-name">' + p.t + '</div>' +
+          (sub ? '<div class="na-sub">' + sub + '</div>' : '') +
+          '<div class="na-meta">' +
+            '<span class="na-price" data-eur="' + p.p + '">' + formatProductPrice(p.p) + '</span>' +
+            '<span class="na-icon">◆</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+
+  if (dotsEl) {
+    dotsEl.innerHTML = NA_PRODUCTS.map(function(_, i) {
+      return '<div class="na-dot' + (i === 0 ? ' na-dot-active' : '') +
+             '" onclick="naScrollTo(' + i + ')"></div>';
+    }).join('');
+  }
+
+  slider.addEventListener('scroll', naCenterTrack, { passive: true });
+  naCenterTrack();
+  initNaDrag(slider);
+}
+
+function naCardOpen(card) {
+  var idx = parseInt(card.dataset.gidx, 10);
+  var p   = PRODUCTS[idx];
+  if (!p) return;
+  /* Ensure the store-inner is visible in the background so closing the drawer
+     lands on the right collection grid rather than the picker */
+  var inner  = document.getElementById('store-inner');
+  var picker = document.getElementById('coll-picker');
+  if (!inner || inner.style.display === 'none') {
+    if (picker) picker.style.display = 'none';
+    if (inner)  { inner.style.display = ''; switchCollection(p.col); }
+  } else if (_col !== p.col) {
+    switchCollection(p.col);
+  }
+  openDrawer(idx); /* patched version — also pushes URL */
+}
+
+function naCenterTrack() {
+  var slider = document.getElementById('na-slider');
+  if (!slider) return;
+  var cards = slider.querySelectorAll('.na-card');
+  if (!cards.length) return;
+  /* Use offsetLeft — stable regardless of page scroll position */
+  var sliderCenter = slider.scrollLeft + slider.offsetWidth / 2;
+  var bestIdx = 0, bestDist = Infinity;
+  cards.forEach(function(card, i) {
+    var dist = Math.abs((card.offsetLeft + card.offsetWidth / 2) - sliderCenter);
+    if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+    card.classList.remove('na-center');
+  });
+  cards[bestIdx].classList.add('na-center');
+  _naActiveIdx = bestIdx;
+  document.querySelectorAll('.na-dot').forEach(function(d, i) {
+    d.classList.toggle('na-dot-active', i === bestIdx);
+  });
+}
+
+function naScrollTo(idx) {
+  var slider = document.getElementById('na-slider');
+  if (!slider) return;
+  var cards = slider.querySelectorAll('.na-card');
+  var n = cards.length;
+  if (idx < 0) idx = 0;
+  if (idx >= n) idx = n - 1;
+  if (!cards[idx]) return;
+  var card   = cards[idx];
+  var target = card.offsetLeft - (slider.offsetWidth - card.offsetWidth) / 2;
+  slider.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+}
+
+function naScroll(dir) { naScrollTo(_naActiveIdx + dir); }
+
+function initNaDrag(el) {
+  var isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', function(e) {
+    isDown = true; el.classList.add('na-dragging');
+    startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
+  });
+  el.addEventListener('mouseleave',  function() { isDown = false; el.classList.remove('na-dragging'); });
+  el.addEventListener('mouseup',     function() { isDown = false; el.classList.remove('na-dragging'); });
+  el.addEventListener('mousemove',   function(e) {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX) * 1.4;
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   INIT — DOMContentLoaded
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  /* 1. Render the new arrivals slider */
+  renderNewArrivals();
+
+  /* 2. Deep-link: ?p=product-slug auto-opens the matching product drawer */
+  var params = new URLSearchParams(window.location.search);
+  var slug   = params.get('p');
+  if (!slug) return;
+
+  var prod = PRODUCTS.find(function(p) { return productSlug(p) === slug; });
+  if (!prod) return;
+
+  var idx    = PRODUCTS.indexOf(prod);
+  var inner  = document.getElementById('store-inner');
+  var picker = document.getElementById('coll-picker');
+
+  /* Show correct collection grid immediately (no animation on cold load) */
+  if (picker) picker.style.display = 'none';
+  if (inner)  { inner.style.display = ''; switchCollection(prod.col); }
+
+  /* Small delay lets the hash-routing rAF (if any) settle first */
+  setTimeout(function() { _origOpenDrawer(idx); }, 60);
+});
 </script>
 <div id="rdesc-type-tooltip" class="rdesc-type-tooltip"><img id="rdesc-type-tooltip-img" src="" alt=""></div>
 </body>
