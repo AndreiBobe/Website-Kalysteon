@@ -4349,6 +4349,10 @@ function proceedToCheckout() {
         unit_price_cents: Math.round((CURRENCY === 'USD' ? priceUsd : priceEur) * 100),
         quantity: 1, discount_pct: 0, is_free: false
       });
+      // Legacy unlock gives access to all arctic products not already in cart
+      allArcticIds.forEach(function(id) {
+        if (cart.indexOf(id) === -1) productIds.push(id);
+      });
     }
   });
 
@@ -4431,6 +4435,19 @@ function proceedToCheckout() {
 
 // ── Init badge on page load ──
 updateCartBadge();
+
+// ── Reset checkout button when browser restores page from bfcache ──
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) {
+    var btn = document.querySelector('.btn-checkout');
+    if (btn) {
+      btn.disabled = false;
+      btn.style.opacity = '';
+      var lang = (typeof LANG !== 'undefined' ? LANG : 'en');
+      btn.textContent = btn.getAttribute('data-' + lang) || (lang === 'fr' ? 'Procéder au paiement →' : 'Proceed to Checkout →');
+    }
+  }
+});
 
 // ── Deep-link / nav-dropdown collection routing ──
 var _hashToCol = {
