@@ -4325,6 +4325,7 @@ function proceedToCheckout() {
   var payload = {
     currency: CURRENCY.toLowerCase(),
     items: items,
+    product_ids: items.map(function(i) { return i.id; }).join(','),
     total_original_eur: Math.round(totalOrigEur * 100) / 100,
     total_final_eur:    Math.round(totalFinalEur * 100) / 100,
     savings_eur:        Math.round((totalOrigEur - totalFinalEur) * 100) / 100,
