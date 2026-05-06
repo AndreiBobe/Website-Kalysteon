@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalysteon — Thank You</title>
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #010810; --surface: #051322; --surface2: #091B32;
+  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
+  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22);
+  --accent: #C9A84C; --accent-bright: #F2D777;
+  --accent-dim: rgba(201,168,76,0.09); --accent-glow: rgba(201,168,76,0.18);
+  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
+  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+  --display: 'Bebas Neue', sans-serif;
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+html { scroll-behavior: smooth; }
+body {
+  background-color: #020A16;
+  background-image: radial-gradient(ellipse at 30% 20%, rgba(20,45,90,0.5) 0%, transparent 65%);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 2.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.55);
+  background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%);
+  backdrop-filter: blur(20px);
+}
+.logo { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+.main {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 4rem 2rem;
+}
+.card {
+  max-width: 560px; width: 100%;
+  background: linear-gradient(160deg, rgba(9,27,50,0.90) 0%, rgba(5,14,32,0.95) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  animation: fadeUp 0.7s cubic-bezier(0.2,0.9,0.4,1) forwards;
+  box-shadow: 0 0 60px rgba(201,168,76,0.06), 0 24px 48px rgba(0,0,0,0.5);
+}
+.icon {
+  font-size: 3rem; margin-bottom: 1.5rem;
+  display: inline-block;
+}
+.tag {
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+}
+.tag::before, .tag::after { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold-dark); }
+h1 {
+  font-family: var(--display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+  letter-spacing: 0.06em; line-height: 1; color: var(--text);
+  margin-bottom: 1.25rem;
+}
+h1 em {
+  background: linear-gradient(135deg, #C9A84C 0%, #F2D777 50%, #C9A84C 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; font-style: normal;
+}
+.subtitle {
+  font-family: var(--sans); font-size: 0.95rem; color: var(--text-muted);
+  line-height: 1.7; margin-bottom: 2rem;
+}
+.info-box {
+  background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 10px; padding: 1rem 1.25rem;
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+  color: var(--text-muted); line-height: 1.75;
+  margin-bottom: 2rem; text-align: left;
+}
+.info-box strong { color: var(--text); }
+.btn {
+  display: inline-block; font-family: var(--display); font-size: 0.95rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.85rem 2.2rem; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%);
+  color: #010810; font-weight: 700; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.28);
+}
+.btn:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
+footer {
+  text-align: center; padding: 1.5rem;
+  font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em;
+  color: var(--text-dim); border-top: 1px solid rgba(201,168,76,0.10);
+}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="logo">KALYST<span>EON</span></a>
+</header>
+<main class="main">
+  <div class="card">
+    <div class="icon">✦</div>
+    <div class="tag">Order confirmed</div>
+    <h1>THANK<br><em>YOU</em></h1>
+    <p class="subtitle">
+      Your payment was successful. You'll receive a confirmation email shortly with your download instructions.
+    </p>
+    <div class="info-box">
+      <strong>WHAT'S NEXT</strong><br>
+      Check your inbox — the download link for your assets will arrive within a few minutes.<br>
+      If you don't see it, check your spam folder.
+    </div>
+    <a href="products.html" class="btn">Browse more assets →</a>
+  </div>
+</main>
+<footer>© KALYSTEON STUDIO — ALL RIGHTS RESERVED</footer>
+</body>
+</html>

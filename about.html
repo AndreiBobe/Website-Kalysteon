@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Kalysteon — About</title>
-<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
-<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
+<title>Kalysteon</title>
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -408,26 +408,25 @@ section.visible, .about-hero.visible, .name-lore-section.visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.92);
+  background: transparent;
   border-radius: 10px;
   margin-bottom: 0.4rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
-  transition: box-shadow 0.2s;
+  transition: filter 0.25s ease;
   flex-shrink: 0;
 }
 .tool-icon img, .tool-icon svg {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  mix-blend-mode: multiply;
-  transition: opacity 0.2s;
+  border-radius: 8px;
+  transition: opacity 0.25s ease, filter 0.25s ease;
 }
 .tool-card:hover .tool-icon {
-  box-shadow: 0 2px 10px rgba(0,0,0,0.35), 0 0 14px rgba(212,175,55,0.30);
+  filter: drop-shadow(0 0 10px rgba(212,175,55,0.55));
 }
 .tool-card:hover .tool-icon img,
 .tool-card:hover .tool-icon svg {
-  opacity: 0.85;
+  opacity: 0.92;
 }
 .tool-name {
   font-family: 'Inter', sans-serif;
@@ -773,14 +772,14 @@ footer.visible {
   <div class="wrap">
     <div class="sec-label" data-en="Toolchain" data-fr="Chaîne technique">Toolchain</div>
     <div class="stack-grid">
-      <a class="tool-card" href="https://www.unrealengine.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/engine-ue5.webp" alt="Unreal Engine" onerror="this.src='https://cdn.simpleicons.org/unrealengine/1a1a1a'"></div><div class="tool-name">Unreal Engine 5</div><div class="tool-role">Primary scene assembly & lighting</div></a>
-      <a class="tool-card" href="https://unity.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/engine-unity.webp" alt="Unity" onerror="this.src='https://cdn.simpleicons.org/unity/1a1a1a'"></div><div class="tool-name">Unity</div><div class="tool-role">Cross-engine asset validation</div></a>
-      <a class="tool-card" href="https://www.sidefx.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-houdini.webp" alt="Houdini" onerror="this.src='https://cdn.simpleicons.org/houdini/FF4713'"></div><div class="tool-name">Houdini</div><div class="tool-role">Procedural terrain & FX</div></a>
-      <a class="tool-card" href="https://quadspinner.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-gaea2.webp" alt="Gaea 2" onerror="this.style.display='none'; this.nextElementSibling?.style.setProperty('display','flex')"><svg style="display:none" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="6" fill="rgba(125,179,86,0.2)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="11" fill="#7DB356">G2</text></svg></div><div class="tool-name">Gaea 2</div><div class="tool-role">Heightmap sculpting & erosion</div></a>
-      <a class="tool-card" href="https://www.adobe.com/products/substance3d-painter.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-painter.webp" alt="Substance Painter" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3dpainter/FF9A00'"></div><div class="tool-name">Substance Painter</div><div class="tool-role">PBR texture painting</div></a>
-      <a class="tool-card" href="https://www.adobe.com/products/substance3d-designer.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-designer.webp" alt="Substance Designer" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3ddesigner/E05A00'"></div><div class="tool-name">Substance Designer</div><div class="tool-role">Procedural materials</div></a>
-      <a class="tool-card" href="https://www.adobe.com/products/substance3d-sampler.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-sampler.webp" alt="Substance Sampler" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3dsampler/FFB300'"></div><div class="tool-name">Substance Sampler</div><div class="tool-role">Material scanning</div></a>
-      <a class="tool-card" href="https://marmoset.co/toolbag/" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-marmoset.webp" alt="Marmoset Toolbag" onerror="this.src='https://cdn.simpleicons.org/marmoset/5B9BD5'"></div><div class="tool-name">Marmoset Toolbag</div><div class="tool-role">High-quality real-time renders</div></a>
+      <a class="tool-card" href="https://www.unrealengine.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/engine-ue5.png" alt="Unreal Engine" style="filter:brightness(0) invert(1);" onerror="this.src='https://cdn.simpleicons.org/unrealengine/ffffff'"></div><div class="tool-name">Unreal Engine 5</div><div class="tool-role">Primary scene assembly & lighting</div></a>
+      <a class="tool-card" href="https://unity.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/engine-unity.png" alt="Unity" style="filter:brightness(0) invert(1);" onerror="this.src='https://cdn.simpleicons.org/unity/ffffff'"></div><div class="tool-name">Unity</div><div class="tool-role">Cross-engine asset validation</div></a>
+      <a class="tool-card" href="https://www.sidefx.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-houdini.png" alt="Houdini" onerror="this.src='https://cdn.simpleicons.org/houdini/FF4713'"></div><div class="tool-name">Houdini</div><div class="tool-role">Procedural terrain & FX</div></a>
+      <a class="tool-card" href="https://quadspinner.com" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-gaea2.png" alt="Gaea 2" onerror="this.style.display='none'; this.nextElementSibling?.style.setProperty('display','flex')"><svg style="display:none" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="6" fill="rgba(125,179,86,0.2)"/><text x="14" y="19" text-anchor="middle" font-family="monospace" font-weight="700" font-size="11" fill="#7DB356">G2</text></svg></div><div class="tool-name">Gaea 2</div><div class="tool-role">Heightmap sculpting & erosion</div></a>
+      <a class="tool-card" href="https://www.adobe.com/products/substance3d-painter.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-painter.png" alt="Substance Painter" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3dpainter/FF9A00'"></div><div class="tool-name">Substance Painter</div><div class="tool-role">PBR texture painting</div></a>
+      <a class="tool-card" href="https://www.adobe.com/products/substance3d-designer.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-designer.png" alt="Substance Designer" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3ddesigner/E05A00'"></div><div class="tool-name">Substance Designer</div><div class="tool-role">Procedural materials</div></a>
+      <a class="tool-card" href="https://www.adobe.com/products/substance3d-sampler.html" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-substance-sampler.png" alt="Substance Sampler" onerror="this.src='https://cdn.simpleicons.org/adobesubstance3dsampler/FFB300'"></div><div class="tool-name">Substance Sampler</div><div class="tool-role">Material scanning</div></a>
+      <a class="tool-card" href="https://marmoset.co/toolbag/" target="_blank" rel="noopener"><div class="tool-icon"><img src="img/logo-marmoset.png" alt="Marmoset Toolbag" onerror="this.src='https://cdn.simpleicons.org/marmoset/5B9BD5'"></div><div class="tool-name">Marmoset Toolbag</div><div class="tool-role">High-quality real-time renders</div></a>
     </div>
   </div>
 </section>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kalysteon — Environment Packs</title>
+<title>Kalysteon</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -95,15 +95,25 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .store-tab.active .tab-count { color: var(--gold); border-color: var(--border); }
 
 /* FILTER BARS */
-.store-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
-.filter-pill { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: 1px solid var(--border-mid); padding: 0.28rem 0.75rem; border-radius: 20px; cursor: pointer; transition: all 0.15s; }
-.filter-pill:hover { color: var(--text); border-color: var(--border); }
-.filter-pill.active { color: var(--gold-bright); background: rgba(201,168,76,0.09); border-color: var(--border); }
-.filter-pill.active[data-filter="realistic"] { color: #E05555; background: rgba(224,85,85,0.09); border-color: rgba(224,85,85,0.4); }
-.filter-pill.active[data-filter="stylized"]  { color: #5BA4F5; background: rgba(91,164,245,0.09); border-color: rgba(91,164,245,0.4); }
-.filter-pill.active[data-filter="polygonal"] { color: #5ECFB7; background: rgba(94,207,183,0.09); border-color: rgba(94,207,183,0.4); }
-.filter-pill.active[data-filter="cartoon"]   { color: #A87AF0; background: rgba(168,122,240,0.09); border-color: rgba(168,122,240,0.4); }
-.filter-pill.active[data-filter="retro"]     { color: #F0D060; background: rgba(240,208,96,0.09); border-color: rgba(240,208,96,0.4); }
+/* STYLE FILTER BAR — matches vol-tabs visual language */
+.store-filters { display: flex; gap: 3px; flex-wrap: wrap; margin-bottom: 1.75rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-mid); padding: 3px; border-radius: 6px; width: fit-content; }
+.filter-pill { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted); background: transparent; border: none; padding: 0.38rem 0.85rem; border-radius: 4px; cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 0.38rem; white-space: nowrap; }
+.filter-pill:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.04); }
+.filter-pill.active { background: rgba(201,168,76,0.14); color: var(--gold-bright); box-shadow: 0 0 0 1px rgba(201,168,76,0.35); }
+/* Colored style dot before each non-All pill */
+.filter-pill[data-filter]:not([data-filter="all"])::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; opacity: 0.5; transition: opacity 0.18s; }
+.filter-pill[data-filter]:not([data-filter="all"]):hover::before, .filter-pill[data-filter]:not([data-filter="all"]).active::before { opacity: 1; }
+.filter-pill[data-filter="realistic"]::before { background: #F2D777; }
+.filter-pill[data-filter="stylized"]::before  { background: #5BA4F5; }
+.filter-pill[data-filter="polygonal"]::before { background: #5ECFB7; }
+.filter-pill[data-filter="cartoon"]::before   { background: #A87AF0; }
+.filter-pill[data-filter="retro"]::before     { background: #F04444; }
+/* Active per-style: color + tinted bg + matching box-shadow */
+.filter-pill.active[data-filter="realistic"] { color: #F2D777; background: rgba(201,168,76,0.09); box-shadow: 0 0 0 1px rgba(201,168,76,0.38); }
+.filter-pill.active[data-filter="stylized"]  { color: #5BA4F5; background: rgba(91,164,245,0.09); box-shadow: 0 0 0 1px rgba(91,164,245,0.38); }
+.filter-pill.active[data-filter="polygonal"] { color: #5ECFB7; background: rgba(94,207,183,0.09); box-shadow: 0 0 0 1px rgba(94,207,183,0.38); }
+.filter-pill.active[data-filter="cartoon"]   { color: #A87AF0; background: rgba(168,122,240,0.09); box-shadow: 0 0 0 1px rgba(168,122,240,0.38); }
+.filter-pill.active[data-filter="retro"]     { color: #F04444; background: rgba(208,48,48,0.09); box-shadow: 0 0 0 1px rgba(208,48,48,0.38); }
 
 /* BRAND SLOGAN */
 .banner-tagline-wrap { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.8rem; }
@@ -217,15 +227,23 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .product-card:hover .pc-explore { transform: translateY(0); }
 
 .pc-top-bar { height: 2px; flex-shrink: 0; }
-.pc-bar-realistic { background: linear-gradient(90deg, #C9874C, #E8A060); }
+.pc-bar-realistic { background: linear-gradient(90deg, #C9A84C, #F2D777); }
 .pc-bar-stylized  { background: linear-gradient(90deg, #4C7EC9, #7AB0F0); }
 .pc-bar-polygonal { background: linear-gradient(90deg, #4CB8A4, #7EDFCD); }
 .pc-bar-cartoon   { background: linear-gradient(90deg, #8B6AC9, #B89AEF); }
-.pc-bar-retro     { background: linear-gradient(90deg, #B0A828, #E0D850); }
+.pc-bar-retro     { background: linear-gradient(90deg, #D03030, #F04444); }
 .pc-bar-m { background: linear-gradient(90deg, #5A8DB5, #88B8DC); }
 .pc-bar-a { background: linear-gradient(90deg, #C9804C, #E89A60); }
 .pc-bar-c { background: linear-gradient(90deg, #6ABBD4, #A0DAEC); }
 .pc-bar-l { background: linear-gradient(90deg, #5AB870, #88E098); }
+/* 8K Volume bars — one color per vol theme */
+.pc-bar-v1 { background: linear-gradient(90deg, #4AB8E8, #82D8F8); } /* Borealis · Glacier blue */
+.pc-bar-v2 { background: linear-gradient(90deg, #28C4A0, #5ADFC0); } /* Exotic · Tropical teal */
+.pc-bar-v3 { background: linear-gradient(90deg, #C06828, #E08840); } /* Badlands · Terracotta */
+.pc-bar-v4 { background: linear-gradient(90deg, #C83040, #E85060); } /* Zenith · Summit crimson */
+.pc-bar-v5 { background: linear-gradient(90deg, #D47820, #F09838); } /* Primal · Wild amber */
+.pc-bar-v6 { background: linear-gradient(90deg, #38A858, #60CC78); } /* Lush · Forest green */
+.pc-bar-v7 { background: linear-gradient(90deg, #9090B8, #B8B8D8); } /* Ether · Mist silver */
 
 .pc-body { padding: 0.72rem 0.85rem 0.6rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; }
 .pc-name { font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.04em; color: var(--text); line-height: 1.15; }
@@ -234,11 +252,11 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 
 .badge-wrap { display: flex; gap: 0.3rem; flex-wrap: wrap; }
 .style-badge { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.18rem 0.52rem; border-radius: 3px; border: 1px solid; }
-.badge-realistic { color: #E05555; border-color: rgba(224,85,85,0.35); background: rgba(224,85,85,0.07); }
+.badge-realistic { color: #F2D777; border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.07); }
 .badge-stylized  { color: #5BA4F5; border-color: rgba(91,164,245,0.35); background: rgba(91,164,245,0.07); }
 .badge-polygonal { color: #5ECFB7; border-color: rgba(94,207,183,0.35); background: rgba(94,207,183,0.07); }
 .badge-cartoon   { color: #A87AF0; border-color: rgba(168,122,240,0.35); background: rgba(168,122,240,0.07); }
-.badge-retro     { color: #F0D060; border-color: rgba(240,208,96,0.35); background: rgba(240,208,96,0.07); }
+.badge-retro     { color: #F04444; border-color: rgba(208,48,48,0.35); background: rgba(208,48,48,0.07); }
 .badge-pack { color: var(--text-dim); border-color: var(--border-mid); background: transparent; }
 .biome-badge { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.18rem 0.52rem; border-radius: 3px; border: 1px solid; }
 .biome-m { color: #7AABB5; border-color: rgba(122,171,181,0.35); background: rgba(122,171,181,0.07); }
@@ -250,12 +268,12 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 /* ── 8K VOLUME TABS ── */
 .vol-8k-wrap { margin-bottom: 1.75rem; }
 .vol-8k-tabs { display: flex; gap: 3px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-mid); padding: 3px; border-radius: 6px; flex-wrap: wrap; }
-.vol-tab-8k { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted); background: transparent; border: none; padding: 0.38rem 0.85rem; cursor: pointer; border-radius: 4px; transition: all 0.18s; display: flex; align-items: center; gap: 0.32rem; white-space: nowrap; }
-.vol-tab-8k:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.04); }
-.vol-tab-8k.active { background: rgba(201,168,76,0.10); color: var(--gold-bright); box-shadow: 0 0 0 1px rgba(201,168,76,0.35); }
-.vol-tab-8k.all-tab.active { background: rgba(201,168,76,0.14); }
-.vol-cnt-8k { display: inline-block; font-size: 0.50rem; background: rgba(255,255,255,0.06); color: var(--text-dim); padding: 1px 5px; border-radius: 3px; vertical-align: 1px; transition: all 0.18s; }
-.vol-tab-8k.active .vol-cnt-8k { background: rgba(201,168,76,0.18); color: var(--gold); }
+.vol-tab-8k, .vol-tab-arctic, .vol-tab-fh { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-muted); background: transparent; border: none; padding: 0.38rem 0.85rem; cursor: pointer; border-radius: 4px; transition: all 0.18s; display: flex; align-items: center; gap: 0.32rem; white-space: nowrap; }
+.vol-tab-8k:hover:not(.active), .vol-tab-arctic:hover:not(.active), .vol-tab-fh:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.04); }
+.vol-tab-8k.active, .vol-tab-arctic.active, .vol-tab-fh.active { background: rgba(201,168,76,0.10); color: var(--gold-bright); box-shadow: 0 0 0 1px rgba(201,168,76,0.35); }
+.vol-tab-8k.all-tab.active, .vol-tab-arctic.all-tab.active, .vol-tab-fh.all-tab.active { background: rgba(201,168,76,0.14); }
+.vol-cnt-8k, .vol-cnt-arctic, .vol-cnt-fh { display: inline-block; font-size: 0.50rem; background: rgba(255,255,255,0.06); color: var(--text-dim); padding: 1px 5px; border-radius: 3px; vertical-align: 1px; transition: all 0.18s; }
+.vol-tab-8k.active .vol-cnt-8k, .vol-tab-arctic.active .vol-cnt-arctic, .vol-tab-fh.active .vol-cnt-fh { background: rgba(201,168,76,0.18); color: var(--gold); }
 
 /* ── 8K VOL SECTION HEADERS (All view) ── */
 .vol-section-8k { margin-bottom: 2.25rem; }
@@ -432,7 +450,7 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .drawer-ambient-placeholder span { font-family: var(--mono); font-size: 0.44rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-align: center; padding: 0 0.25rem; line-height: 1.5; }
 
 /* CTA */
-.drawer-cta { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-mid); }
+.drawer-cta { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.5rem; padding-top: 1.1rem; border-top: 1px solid var(--border-mid); }
 .btn-buy { display: block; text-align: center; font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; padding: 0.95rem 1.5rem; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); color: #010810; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); }
 .btn-buy:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
 .drawer-stores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
@@ -512,6 +530,218 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .cart-item-remove { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 0.8rem; padding: 0.2rem 0.3rem; border-radius: var(--radius-xs); line-height: 1; flex-shrink: 0; transition: color 0.15s; }
 .cart-item-remove:hover { color: rgba(224,85,85,0.85); }
 
+/* ── CART ITEM PRICING (Direct Advantage) ── */
+.cart-item-pricing { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.22rem; }
+.cart-item-price-orig { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); text-decoration: line-through; opacity: 0.7; }
+.cart-item-price-final { font-family: var(--mono); font-size: 0.82rem; color: var(--gold-bright); font-weight: 500; }
+.cart-item-price-final.is-free { font-family: var(--display); font-size: 0.95rem; letter-spacing: 0.08em; color: rgba(94,207,183,0.95); }
+.discount-tag { font-family: var(--mono); font-size: 0.48rem; font-weight: 700; letter-spacing: 0.06em; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; white-space: nowrap; }
+.discount-tag.tier1 { color: rgba(201,168,76,0.88); background: rgba(201,168,76,0.10); border: 1px solid rgba(201,168,76,0.28); }
+.discount-tag.tier2 { color: rgba(91,164,245,0.92); background: rgba(91,164,245,0.10); border: 1px solid rgba(91,164,245,0.28); }
+.discount-tag.tier3 { color: rgba(168,122,240,0.92); background: rgba(168,122,240,0.10); border: 1px solid rgba(168,122,240,0.28); }
+.discount-tag.tier4 { color: rgba(94,207,183,0.95); background: rgba(94,207,183,0.12); border: 1px solid rgba(94,207,183,0.38); font-size: 0.52rem; }
+
+/* ── CART FOOTER SAVINGS ── */
+.cart-total-labels { display: flex; flex-direction: column; gap: 2px; }
+.cart-total-orig-row { font-family: var(--mono); font-size: 0.52rem; color: var(--text-dim); }
+.cart-total-orig { text-decoration: line-through; }
+.cart-savings-row { display: flex; align-items: center; justify-content: space-between; padding: 0.42rem 0.7rem; background: rgba(94,207,183,0.06); border: 1px solid rgba(94,207,183,0.18); border-radius: 5px; }
+.cart-savings-label { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(94,207,183,0.75); }
+.cart-savings-amt { font-family: var(--mono); font-size: 0.66rem; font-weight: 600; color: rgba(94,207,183,0.95); }
+
+/* ── BUNDLE WIDGET ── */
+.bundle-widget { background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, rgba(201,168,76,0.02) 100%); border: 1px solid rgba(201,168,76,0.20); border-radius: var(--radius-sm); padding: 0.85rem 1rem 0.9rem; margin-bottom: 0.55rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.bundle-widget-hdr { display: flex; align-items: center; gap: 0.55rem; }
+.bundle-widget-icon { font-size: 0.75rem; flex-shrink: 0; }
+.bundle-widget-title { font-family: var(--display); font-size: 0.85rem; letter-spacing: 0.09em; color: var(--gold); line-height: 1; }
+.bundle-progress { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+.bundle-step { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bundle-step-bar { width: 100%; height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; transition: background 0.38s cubic-bezier(0.22,1,0.36,1); }
+.bundle-step-bar.done.tier1 { background: var(--gold); }
+.bundle-step-bar.done.tier2 { background: rgba(91,164,245,0.85); }
+.bundle-step-bar.done.tier3 { background: rgba(168,122,240,0.85); }
+.bundle-step-bar.done.tier4 { background: rgba(94,207,183,0.9); box-shadow: 0 0 6px rgba(94,207,183,0.4); }
+.bundle-step-lbl { font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.07em; color: var(--text-dim); text-transform: uppercase; transition: color 0.3s; }
+.bundle-step-lbl.done.tier1 { color: var(--gold); }
+.bundle-step-lbl.done.tier2 { color: rgba(91,164,245,0.95); }
+.bundle-step-lbl.done.tier3 { color: rgba(168,122,240,0.95); }
+.bundle-step-lbl.done.tier4 { color: rgba(94,207,183,0.95); }
+.bundle-widget-msg { font-family: var(--mono); font-size: 0.58rem; color: var(--text-muted); line-height: 1.58; }
+.bundle-widget-msg strong { color: var(--text); }
+.bundle-widget-msg .highlight-tier2 { color: rgba(91,164,245,0.95); }
+.bundle-widget-msg .highlight-tier3 { color: rgba(168,122,240,0.95); }
+.bundle-widget-msg .highlight-free { color: rgba(94,207,183,0.95); font-weight: 600; }
+.bundle-complete-msg { font-family: var(--display); font-size: 0.88rem; letter-spacing: 0.06em; color: rgba(94,207,183,0.90); text-align: center; padding: 0.2rem 0; }
+
+/* CART SECTION HEADERS */
+.cart-section-hdr { font-family: var(--mono); font-size: 0.49rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); padding: 0.7rem 0.2rem 0.28rem; display: flex; align-items: center; gap: 0.55rem; }
+.cart-section-hdr:first-child { padding-top: 0.1rem; }
+.cart-section-hdr::after { content: ''; flex: 1; height: 1px; background: var(--border-mid); }
+.cart-section-hdr.arctic-hdr { color: rgba(91,164,245,0.55); }
+.cart-section-hdr.arctic-hdr::after { background: rgba(91,164,245,0.18); }
+
+/* ARCTIC BUNDLE CART LINE ITEMS */
+.arctic-bundle-cart-item { border-color: rgba(91,164,245,0.18) !important; background: rgba(91,164,245,0.04) !important; }
+.arctic-bundle-cart-item .cart-item-name { color: rgba(140,200,255,0.92); }
+.arctic-bundle-cart-item .cart-item-meta { color: rgba(91,164,245,0.55); }
+.arctic-bundle-cart-item .cart-item-price-final { color: rgba(91,164,245,0.9); font-size: 0.78rem; }
+
+/* ARCTIC BUNDLE — DRAWER SECTION */
+.arctic-bundle-section { margin-top: 0.9rem; padding: 0.8rem 0.9rem 0.85rem; background: linear-gradient(135deg,rgba(91,164,245,0.04) 0%,rgba(120,190,255,0.02) 100%); border: 1px solid rgba(91,164,245,0.18); border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 0.6rem; }
+.arctic-bundle-hdr { display: flex; align-items: center; gap: 0.5rem; }
+.arctic-bundle-icon { font-size: 0.8rem; }
+.arctic-bundle-title { font-family: var(--display); font-size: 0.82rem; letter-spacing: 0.09em; color: rgba(140,200,255,0.9); line-height: 1; }
+.arc-dwr-styles { display: flex; flex-direction: column; gap: 0.25rem; }
+.arc-dwr-style { display: flex; align-items: center; gap: 0.55rem; padding: 0.28rem 0.42rem; border-radius: 4px; font-size: 0.7rem; opacity: 0.5; transition: opacity 0.2s; }
+.arc-dwr-style.owned { opacity: 1; }
+.arc-dwr-style.current { background: rgba(91,164,245,0.07); opacity: 1; outline: 1px solid rgba(91,164,245,0.2); }
+.arc-dwr-lock { font-size: 0.72rem; width: 1.1rem; text-align: center; flex-shrink: 0; }
+.arc-dwr-name { flex: 1; color: var(--text); font-family: var(--mono); letter-spacing: 0.04em; }
+.arc-dwr-price { font-family: var(--mono); font-size: 0.66rem; color: var(--text-dim); }
+.arc-dwr-tag { font-family: var(--mono); font-size: 0.47rem; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(91,164,245,0.75); background: rgba(91,164,245,0.10); border-radius: 3px; padding: 0.1em 0.4em; margin-left: 0.2rem; }
+.arctic-bundle-ctarow { display: flex; flex-direction: column; gap: 0.38rem; }
+.arctic-cta-legacy { width: 100%; padding: 0.48rem 0.72rem; background: rgba(91,164,245,0.07); border: 1px solid rgba(91,164,245,0.23); border-radius: var(--radius-xs); color: rgba(140,200,255,0.9); font-family: var(--display); font-size: 0.73rem; letter-spacing: 0.06em; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 0.18rem; transition: background 0.18s, border-color 0.18s; }
+.arctic-cta-legacy:hover { background: rgba(91,164,245,0.13); border-color: rgba(91,164,245,0.38); }
+.arctic-cta-legacy.active { background: rgba(94,207,183,0.07); border-color: rgba(94,207,183,0.28); color: rgba(94,207,183,0.9); }
+.arctic-cta-master { width: 100%; padding: 0.48rem 0.72rem; background: rgba(168,122,240,0.07); border: 1px solid rgba(168,122,240,0.22); border-radius: var(--radius-xs); color: rgba(200,160,255,0.9); font-family: var(--display); font-size: 0.73rem; letter-spacing: 0.06em; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 0.18rem; transition: background 0.18s, border-color 0.18s; }
+.arctic-cta-master:hover { background: rgba(168,122,240,0.13); border-color: rgba(168,122,240,0.38); }
+.arc-cta-sub { font-family: var(--mono); font-size: 0.51rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.62; }
+.arctic-master-active { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.07em; color: rgba(94,207,183,0.9); text-align: center; padding: 0.3rem 0; }
+
+/* ARCTIC BUNDLE — CART WIDGET */
+.arctic-cart-widget { background: linear-gradient(135deg,rgba(91,164,245,0.04) 0%,rgba(91,164,245,0.02) 100%); border: 1px solid rgba(91,164,245,0.15); border-radius: var(--radius-sm); padding: 0.78rem 0.88rem; margin-bottom: 0.55rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.arctic-cart-hdr { display: flex; align-items: center; gap: 0.52rem; }
+.arctic-cart-icon { font-size: 0.72rem; }
+.arctic-cart-title { font-family: var(--display); font-size: 0.82rem; letter-spacing: 0.09em; color: rgba(140,200,255,0.9); }
+.arctic-style-row { display: flex; align-items: center; gap: 0.52rem; padding: 0.26rem 0.4rem; border-radius: 4px; }
+.arctic-style-locked { opacity: 0.4; }
+.arctic-style-owned { opacity: 1; }
+.arctic-style-lock { font-size: 0.68rem; width: 1.1rem; text-align: center; flex-shrink: 0; }
+.arctic-style-name { flex: 1; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.04em; color: var(--text); }
+.arctic-style-price { font-family: var(--mono); font-size: 0.66rem; color: var(--text-dim); }
+.arctic-via-badge { font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.1em 0.38em; border-radius: 3px; margin-left: 0.2rem; }
+.arctic-owned-legacy .arctic-via-badge { background: rgba(91,164,245,0.12); color: rgba(91,164,245,0.8); }
+.arctic-owned-master .arctic-via-badge { background: rgba(168,122,240,0.12); color: rgba(168,122,240,0.85); }
+.arctic-bundle-lines { display: flex; flex-direction: column; gap: 0.28rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.42rem; margin-top: 0.1rem; }
+.arctic-bundle-line { display: flex; align-items: center; gap: 0.5rem; }
+.arctic-bundle-line-label { flex: 1; font-family: var(--mono); font-size: 0.65rem; color: var(--text); }
+.arctic-bundle-line-price { font-family: var(--mono); font-size: 0.66rem; color: rgba(91,164,245,0.85); }
+.arctic-bundle-line-remove { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 0.1rem 0.25rem; font-size: 0.62rem; line-height: 1; border-radius: 3px; transition: color 0.15s, background 0.15s; }
+.arctic-bundle-line-remove:hover { color: rgba(255,90,90,0.85); background: rgba(255,90,90,0.08); }
+.arctic-upgrade-suggest { background: rgba(94,207,183,0.05); border: 1px solid rgba(94,207,183,0.18); border-radius: 4px; padding: 0.48rem 0.58rem; font-family: var(--mono); font-size: 0.6rem; color: rgba(94,207,183,0.82); display: flex; flex-direction: column; gap: 0.38rem; line-height: 1.55; }
+.arctic-upgrade-btn { width: 100%; padding: 0.35rem 0.58rem; background: rgba(94,207,183,0.09); border: 1px solid rgba(94,207,183,0.28); border-radius: 4px; color: rgba(94,207,183,0.92); font-family: var(--display); font-size: 0.69rem; letter-spacing: 0.06em; cursor: pointer; transition: background 0.18s; }
+.arctic-upgrade-btn:hover { background: rgba(94,207,183,0.17); }
+.arctic-cart-ctarow { display: flex; flex-direction: column; gap: 0.32rem; }
+.arctic-savings-bar { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; background: rgba(94,207,183,0.05); border: 1px solid rgba(94,207,183,0.15); border-radius: 4px; padding: 0.44rem 0.62rem; font-family: var(--mono); font-size: 0.63rem; }
+.arctic-savings-orig { color: var(--text-dim); text-decoration: line-through; }
+.arctic-savings-arrow { color: var(--text-dim); }
+.arctic-savings-final { color: var(--text); font-weight: 600; }
+.arctic-savings-save { margin-left: auto; color: rgba(94,207,183,0.92); font-weight: 600; }
+
+/* FROSTHOLM BUNDLE — CART SECTION HEADER */
+.cart-section-hdr.fh-hdr { color: var(--gold-bright); }
+.cart-section-hdr.fh-hdr::after { background: rgba(201,168,76,0.22); }
+/* FROSTHOLM BUNDLE CART LINE ITEMS */
+.fh-bundle-cart-item { border-color: rgba(201,168,76,0.20) !important; background: rgba(201,168,76,0.04) !important; }
+.fh-bundle-cart-item .cart-item-name { color: var(--gold-bright); }
+.fh-bundle-cart-item .cart-item-meta { color: rgba(201,168,76,0.55); }
+.fh-bundle-cart-item .cart-item-price-final { color: var(--gold); font-size: 0.78rem; }
+/* FROSTHOLM BUNDLE — DRAWER SECTION */
+.fh-bundle-section { margin-top: 0.9rem; padding: 0.8rem 0.9rem 0.85rem; background: linear-gradient(135deg,rgba(201,168,76,0.05) 0%,rgba(201,168,76,0.02) 100%); border: 1px solid rgba(201,168,76,0.22); border-radius: var(--radius-sm); display: flex; flex-direction: column; gap: 0.6rem; }
+.fh-bundle-hdr { display: flex; align-items: center; gap: 0.5rem; }
+.fh-bundle-icon { font-size: 0.8rem; }
+.fh-bundle-title { font-family: var(--display); font-size: 0.82rem; letter-spacing: 0.09em; color: var(--gold-bright); line-height: 1; }
+.fh-dwr-styles { display: flex; flex-direction: column; gap: 0.25rem; }
+.fh-dwr-style { display: flex; align-items: center; gap: 0.55rem; padding: 0.28rem 0.42rem; border-radius: 4px; font-size: 0.7rem; opacity: 0.5; transition: opacity 0.2s; }
+.fh-dwr-style.owned { opacity: 1; }
+.fh-dwr-style.current { background: rgba(201,168,76,0.07); opacity: 1; outline: 1px solid rgba(201,168,76,0.22); }
+.fh-dwr-lock { font-size: 0.72rem; width: 1.1rem; text-align: center; flex-shrink: 0; }
+.fh-dwr-name { flex: 1; color: var(--text); font-family: var(--mono); letter-spacing: 0.04em; }
+.fh-dwr-price { font-family: var(--mono); font-size: 0.66rem; color: var(--text-dim); }
+.fh-dwr-tag { font-family: var(--mono); font-size: 0.47rem; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(201,168,76,0.8); background: rgba(201,168,76,0.12); border-radius: 3px; padding: 0.1em 0.4em; margin-left: 0.2rem; }
+.fh-bundle-ctarow { display: flex; flex-direction: column; gap: 0.38rem; }
+.fh-cta-unlock { width: 100%; padding: 0.48rem 0.72rem; background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.25); border-radius: var(--radius-xs); color: var(--gold-bright); font-family: var(--display); font-size: 0.73rem; letter-spacing: 0.06em; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 0.18rem; transition: background 0.18s, border-color 0.18s; }
+.fh-cta-unlock:hover { background: rgba(201,168,76,0.13); border-color: rgba(201,168,76,0.42); }
+.fh-cta-unlock.active { background: rgba(94,207,183,0.07); border-color: rgba(94,207,183,0.28); color: rgba(94,207,183,0.9); }
+.fh-cta-master { width: 100%; padding: 0.48rem 0.72rem; background: rgba(168,122,240,0.07); border: 1px solid rgba(168,122,240,0.22); border-radius: var(--radius-xs); color: rgba(200,160,255,0.9); font-family: var(--display); font-size: 0.73rem; letter-spacing: 0.06em; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 0.18rem; transition: background 0.18s, border-color 0.18s; }
+.fh-cta-master:hover { background: rgba(168,122,240,0.13); border-color: rgba(168,122,240,0.38); }
+.fh-master-active { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.07em; color: rgba(94,207,183,0.9); text-align: center; padding: 0.3rem 0; }
+/* FROSTHOLM BUNDLE — CART WIDGET */
+.fh-cart-widget { background: linear-gradient(135deg,rgba(201,168,76,0.04) 0%,rgba(201,168,76,0.02) 100%); border: 1px solid rgba(201,168,76,0.18); border-radius: var(--radius-sm); padding: 0.78rem 0.88rem; margin-bottom: 0.55rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.fh-cart-hdr { display: flex; align-items: center; gap: 0.52rem; }
+.fh-cart-icon { font-size: 0.72rem; }
+.fh-cart-title { font-family: var(--display); font-size: 0.82rem; letter-spacing: 0.09em; color: var(--gold-bright); }
+.fh-biome-steps { display: flex; gap: 0.55rem; align-items: flex-end; }
+.fh-biome-step { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; }
+.fh-biome-bar { width: 100%; height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; transition: background 0.38s; }
+.fh-biome-bar.filled.tier1 { background: var(--gold); }
+.fh-biome-bar.filled.tier2 { background: rgba(91,164,245,0.85); }
+.fh-biome-bar.filled.tier3 { background: rgba(168,122,240,0.85); }
+.fh-biome-bar.filled.tier4 { background: rgba(94,207,183,0.9); box-shadow: 0 0 6px rgba(94,207,183,0.4); }
+.fh-biome-lbl { font-family: var(--mono); font-size: 0.43rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); transition: color 0.3s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fh-biome-lbl.filled.tier1 { color: var(--gold); }
+.fh-biome-lbl.filled.tier2 { color: rgba(91,164,245,0.95); }
+.fh-biome-lbl.filled.tier3 { color: rgba(168,122,240,0.95); }
+.fh-biome-lbl.filled.tier4 { color: rgba(94,207,183,0.95); }
+.fh-cart-msg { font-family: var(--mono); font-size: 0.58rem; color: var(--text-muted); line-height: 1.58; }
+.fh-cart-msg strong { color: var(--text); }
+.fh-cart-msg .fh-hl-t2 { color: rgba(91,164,245,0.95); }
+.fh-cart-msg .fh-hl-t3 { color: rgba(168,122,240,0.95); }
+.fh-cart-msg .fh-hl-t4 { color: rgba(94,207,183,0.95); }
+.fh-cart-complete { font-family: var(--display); font-size: 0.88rem; letter-spacing: 0.06em; color: rgba(94,207,183,0.90); text-align: center; padding: 0.2rem 0; }
+/* FROSTHOLM CART WIDGET — PER-BIOME STYLE ROWS */
+.fh-cart-biome-sec { display: flex; flex-direction: column; gap: 0.2rem; }
+.fh-cart-biome-hdr { display: flex; align-items: center; gap: 0.45rem; padding: 0.15rem 0 0.3rem; }
+.fh-cart-biome-badge { font-family: var(--mono); font-size: 0.43rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #010810; background: var(--gold); padding: 2px 6px; border-radius: 3px; flex-shrink: 0; }
+.fh-cart-biome-name { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-bright); }
+.fh-cart-biome-sep { height: 1px; background: rgba(201,168,76,0.14); margin: 0.5rem 0 0.55rem; }
+.fh-cart-discount-sep { height: 1px; background: rgba(201,168,76,0.18); margin: 0.55rem 0 0.5rem; }
+.fh-savings-bar { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; background: rgba(94,207,183,0.05); border: 1px solid rgba(94,207,183,0.15); border-radius: 4px; padding: 0.44rem 0.62rem; font-family: var(--mono); font-size: 0.63rem; margin-top: 0.28rem; }
+.fh-savings-orig { color: var(--text-dim); text-decoration: line-through; }
+.fh-savings-arrow { color: var(--text-dim); }
+.fh-savings-final { color: var(--text); font-weight: 600; }
+.fh-savings-save { margin-left: auto; color: rgba(94,207,183,0.92); font-weight: 600; }
+
+/* ── FROSTHOLM VIEW TOGGLE ── */
+.fh-view-toggle { display: flex; gap: 3px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-mid); padding: 3px; border-radius: 6px; flex-shrink: 0; }
+.fh-view-btn { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); background: transparent; border: none; padding: 0.35rem 0.75rem; border-radius: 4px; cursor: pointer; transition: all 0.18s; white-space: nowrap; }
+.fh-view-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.04); }
+.fh-view-btn.active { background: rgba(201,168,76,0.10); color: var(--gold-bright); box-shadow: 0 0 0 1px rgba(201,168,76,0.35); }
+
+/* ── FROSTHOLM VOL SECTIONS (store grid) ── */
+.fh-vol-section { margin-bottom: 2.5rem; }
+.fh-vol-section:last-child { margin-bottom: 0; }
+.fh-vol-hdr { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.2rem; margin-bottom: 1.1rem; }
+.fh-vol-hdr-left { flex: 1; min-width: 0; }
+.fh-vol-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 0.45rem; }
+.fh-vol-badge { font-family: var(--mono); font-size: 0.50rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #010810; background: var(--gold); padding: 3px 9px; border-radius: 3px; flex-shrink: 0; }
+.fh-vol-ey-line { width: 22px; height: 1px; background: rgba(201,168,76,0.40); flex-shrink: 0; }
+.fh-vol-ey-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); }
+.fh-vol-title { font-family: var(--display); font-size: clamp(1.4rem, 2.4vw, 2.1rem); letter-spacing: 0.05em; color: var(--text); line-height: 1; margin-bottom: 0.48rem; }
+.fh-vol-title em { color: var(--gold-bright); font-style: normal; }
+.fh-vol-tagline { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.fh-vol-tag { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-dim); }
+.fh-vol-tag-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: 0.45; flex-shrink: 0; }
+/* Master bundle CTA embedded in each vol header */
+.fh-vol-master-btn { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.85rem 0.6rem 0.7rem; background: linear-gradient(135deg,rgba(201,168,76,0.09) 0%,rgba(201,168,76,0.03) 100%); border: 1px solid rgba(201,168,76,0.28); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s; flex-shrink: 0; min-width: 190px; text-align: left; }
+.fh-vol-master-btn:hover { background: linear-gradient(135deg,rgba(201,168,76,0.16) 0%,rgba(201,168,76,0.07) 100%); border-color: rgba(201,168,76,0.50); }
+.fh-vol-master-btn.owned { border-color: rgba(94,207,183,0.38); background: rgba(94,207,183,0.05); cursor: default; }
+.fh-vol-master-icon { font-size: 0.9rem; flex-shrink: 0; opacity: 0.85; color: var(--gold); }
+.fh-vol-master-icon.owned { color: #5ECFB7; }
+.fh-vol-master-info { flex: 1; min-width: 0; }
+.fh-vol-master-label { font-family: var(--mono); font-size: 0.45rem; letter-spacing: 0.20em; text-transform: uppercase; color: var(--gold); opacity: 0.70; line-height: 1; margin-bottom: 2px; }
+.fh-vol-master-name { font-family: var(--mono); font-size: 0.60rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text); line-height: 1.25; }
+.fh-vol-master-sub { font-family: var(--mono); font-size: 0.45rem; letter-spacing: 0.09em; color: var(--text-dim); line-height: 1; margin-top: 2px; }
+.fh-vol-master-price { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+.fh-vol-master-full { font-family: var(--mono); font-size: 0.44rem; color: var(--text-dim); text-decoration: line-through; line-height: 1; }
+.fh-vol-master-eur { font-family: var(--mono); font-size: 0.88rem; color: var(--gold-bright); font-weight: 600; line-height: 1; }
+.fh-vol-master-save { font-family: var(--mono); font-size: 0.44rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5ECFB7; line-height: 1; }
+/* Grid modes for Frostholm */
+.products-grid-fh2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.products-grid-fh4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+@media (max-width: 1100px) { .products-grid-fh4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .products-grid-fh2, .products-grid-fh4 { grid-template-columns: 1fr; } }
+
 /* CROSS-SELL */
 .cart-cross { margin-top: 1.5rem; }
 .cart-cross-label { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.6rem; }
@@ -528,10 +758,9 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 
 /* CART FOOTER */
 .cart-footer { padding: 0.9rem 1.4rem 1.35rem; border-top: 1px solid var(--border-mid); flex-shrink: 0; display: flex; flex-direction: column; gap: 0.7rem; }
-.cart-total-row { display: flex; align-items: baseline; justify-content: space-between; }
+.cart-total-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
 .cart-total-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
-.cart-total-amt { font-family: var(--display); font-size: 1.55rem; letter-spacing: 0.04em; color: var(--gold-bright); }
-.cart-savings { font-family: var(--mono); font-size: 0.56rem; color: rgba(94,207,183,0.80); text-align: right; }
+.cart-total-amt { font-family: var(--display); font-size: 1.55rem; letter-spacing: 0.04em; color: var(--gold-bright); flex-shrink: 0; }
 .btn-checkout { display: block; text-align: center; font-family: var(--display); font-size: 1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.88rem 1.5rem; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); color: #010810; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.28); text-decoration: none; width: 100%; }
 .btn-checkout:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
 .cart-note { font-family: var(--mono); font-size: 0.51rem; color: var(--text-dim); text-align: center; line-height: 1.6; }
@@ -612,11 +841,11 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger active" href="products.html" data-en="Products" data-fr="Produits">Products</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="#coll-card-frostholm" data-en="Frosthölm Collection" data-fr="Collection Frosthölm"><span class="nav-dd-icon">❄</span>Frosthölm Collection</a>
-        <a class="nav-dd-item" href="#coll-card-8k" data-en="8K Terrain Packs" data-fr="Packs Terrain 8K"><span class="nav-dd-icon">⛰</span>8K Terrain Packs</a>
-        <a class="nav-dd-item" href="#coll-card-arctic" data-en="Arctic Landscapes" data-fr="Paysages Arctiques"><span class="nav-dd-icon">🏔</span>Arctic Landscapes</a>
+        <a class="nav-dd-item" href="#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
+        <a class="nav-dd-item" href="#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
+        <a class="nav-dd-item" href="#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Complete Landscapes" data-fr="Paysages Complets">Complete Landscapes</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item nav-dd-reviews" href="reviews.html" data-en="Client Reviews" data-fr="Avis Clients"><span class="nav-dd-icon">★</span>Client Reviews</a>
+        <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
     </div>
         <div class="nav-pill">
@@ -809,7 +1038,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     <div class="store-tabs">
       <button class="store-tab active" data-col="frostholm" onclick="switchCollection('frostholm')" data-en="Frosth&#246;lm" data-fr="Frosth&#246;lm">Frosth&#246;lm <span class="tab-count">16</span></button>
       <button class="store-tab" data-col="8k" onclick="switchCollection('8k')" data-en="8K Terrain Packs" data-fr="8K Terrain Packs">8K Terrain Packs <span class="tab-count">21</span></button>
-      <button class="store-tab" data-col="arctic" onclick="switchCollection('arctic')" data-en="Arctic Landscapes" data-fr="Arctic Landscapes">Arctic Landscapes <span class="tab-count">5</span></button>
+      <button class="store-tab" data-col="arctic" onclick="switchCollection('arctic')" data-en="Complete Landscapes" data-fr="Paysages Complets">Complete Landscapes <span class="tab-count">5</span></button>
     </div>
 
     <div class="store-filters" id="filters-style">
@@ -819,6 +1048,32 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       <button class="filter-pill" data-filter="polygonal" onclick="applyFilter('polygonal')" data-en="Polygonal" data-fr="Polygonal">Polygonal</button>
       <button class="filter-pill" data-filter="cartoon" onclick="applyFilter('cartoon')" data-en="Cartoon" data-fr="Cartoon">Cartoon</button>
       <button class="filter-pill" data-filter="retro" onclick="applyFilter('retro')" data-en="Retro" data-fr="Retro">Retro</button>
+    </div>
+
+    <!-- Frostholm controls: style pills + view toggle (flex row) -->
+    <div id="fh-filter-row" style="display:none; flex-wrap:wrap; gap:0.6rem; align-items:center; justify-content:space-between; margin-bottom:1.75rem;">
+      <div class="store-filters" id="fh-filter-pills" style="margin-bottom:0">
+        <button class="filter-pill active" data-filter="all" onclick="applyFilter('all')">All</button>
+        <button class="filter-pill" data-filter="realistic" onclick="applyFilter('realistic')" data-en="Realistic" data-fr="Réaliste">Realistic</button>
+        <button class="filter-pill" data-filter="stylized" onclick="applyFilter('stylized')" data-en="Stylized" data-fr="Stylisé">Stylized</button>
+        <button class="filter-pill" data-filter="polygonal" onclick="applyFilter('polygonal')" data-en="Polygonal" data-fr="Polygonal">Polygonal</button>
+        <button class="filter-pill" data-filter="cartoon" onclick="applyFilter('cartoon')" data-en="Cartoon" data-fr="Cartoon">Cartoon</button>
+      </div>
+      <div class="fh-view-toggle">
+        <button class="fh-view-btn active" data-fhview="grid4" onclick="applyFhView('grid4')" data-en="Grid 4" data-fr="Grille 4">Grid 4</button>
+        <button class="fh-view-btn" data-fhview="grid2" onclick="applyFhView('grid2')" data-en="Grid 2×2" data-fr="Grille 2×2">Grid 2×2</button>
+      </div>
+    </div>
+
+    <!-- Frostholm Vol tabs (shown when frostholm active) -->
+    <div class="vol-8k-wrap" id="filters-fh-vol" style="display:none">
+      <div class="vol-8k-tabs" id="volFhTabs">
+        <button class="vol-tab-fh all-tab active" data-v="all" onclick="applyFhVol('all')" data-en="All" data-fr="Tout">All <span class="vol-cnt-fh">16</span></button>
+        <button class="vol-tab-fh" data-v="mountains" onclick="applyFhVol('mountains')" data-en="Vol.1 · Mountains" data-fr="Vol.1 · Montagnes">Vol.1 · Mountains <span class="vol-cnt-fh">4</span></button>
+        <button class="vol-tab-fh" data-v="fields" onclick="applyFhVol('fields')" data-en="Vol.2 · Fields" data-fr="Vol.2 · Champs">Vol.2 · Fields <span class="vol-cnt-fh">4</span></button>
+        <button class="vol-tab-fh" data-v="icebergs" onclick="applyFhVol('icebergs')" data-en="Vol.3 · Icebergs" data-fr="Vol.3 · Icebergs">Vol.3 · Icebergs <span class="vol-cnt-fh">4</span></button>
+        <button class="vol-tab-fh" data-v="glaciers" onclick="applyFhVol('glaciers')" data-en="Vol.4 · Glaciers" data-fr="Vol.4 · Glaciers">Vol.4 · Glaciers <span class="vol-cnt-fh">4</span></button>
+      </div>
     </div>
 
     <!-- 8K Vol tabs (replaces biome pills) -->
@@ -832,6 +1087,14 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <button class="vol-tab-8k" data-v="5" onclick="applyFilter8k('5')">Vol.5 · Primal <span class="vol-cnt-8k">3</span></button>
         <button class="vol-tab-8k" data-v="6" onclick="applyFilter8k('6')">Vol.6 · Lush <span class="vol-cnt-8k">3</span></button>
         <button class="vol-tab-8k" data-v="7" onclick="applyFilter8k('7')">Vol.7 · Ether <span class="vol-cnt-8k">4</span></button>
+      </div>
+    </div>
+
+    <!-- Arctic Vol tabs (shown alongside style filter when arctic tab active) -->
+    <div class="vol-8k-wrap" id="filters-arctic-vol" style="display:none">
+      <div class="vol-8k-tabs" id="volArcticTabs">
+        <button class="vol-tab-arctic all-tab active" data-v="all" onclick="applyFilterArctic('all')" data-en="All" data-fr="Tout">All <span class="vol-cnt-arctic" id="varc-cnt-all">5</span></button>
+        <button class="vol-tab-arctic" data-v="1" onclick="applyFilterArctic('1')">Vol.1 · Arctic <span class="vol-cnt-arctic">5</span></button>
       </div>
     </div>
 
@@ -912,7 +1175,33 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     <!-- CTA -->
     <div class="drawer-cta">
 
-      <!-- Value Proposition -->
+      <!-- ── ACCESS OPTIONS (arctic & frostholm only) ─────────────────── -->
+      <div id="drawer-access-section-hdr" class="drawer-section-label" style="display:none" data-en="Access Options" data-fr="Options d'accès">Access Options</div>
+
+      <!-- Arctic Style Bundles (shown only for arctic collection) -->
+      <div class="arctic-bundle-section" id="drawer-arctic-bundles" style="display:none">
+        <div class="arctic-bundle-hdr">
+          <span class="arctic-bundle-icon">❄️</span>
+          <span class="arctic-bundle-title">Arctic Style Bundles</span>
+        </div>
+        <div class="arc-dwr-styles" id="drawer-arctic-styles"></div>
+        <div class="arctic-bundle-ctarow" id="drawer-arctic-ctarow"></div>
+      </div>
+
+      <!-- Frostholm Biome Bundle (shown only for frostholm collection) -->
+      <div class="fh-bundle-section" id="drawer-fh-bundles" style="display:none">
+        <div class="fh-bundle-hdr">
+          <span class="fh-bundle-icon">❄</span>
+          <span class="fh-bundle-title">Biome Style Bundle</span>
+        </div>
+        <div class="fh-dwr-styles" id="drawer-fh-styles"></div>
+        <div class="fh-bundle-ctarow" id="drawer-fh-ctarow"></div>
+      </div>
+
+      <!-- separator shown only when bundles are visible -->
+      <div class="drawer-sep" id="drawer-access-sep" style="display:none"></div>
+
+      <!-- ── DIRECT ADVANTAGE ──────────────────────────────────────────── -->
       <div class="drawer-value-prop">
 
         <div class="vp-header">
@@ -922,7 +1211,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
         <div class="vp-cols-hdr">
           <span class="vp-col-feat"></span>
-          <span class="vp-col-direct" data-en="Kalysteon Direct" data-fr="Kalysteon Direct">Kalysteon Direct</span>
+          <span class="vp-col-direct" data-en="Kalysteon Direct" data-fr="Kalysteon Direct">· Kalysteon Direct</span>
           <span class="vp-col-mkt" data-en="Marketplaces" data-fr="Marketplaces">Marketplaces</span>
         </div>
 
@@ -930,25 +1219,25 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
           <div class="vp-cmp-row">
             <span class="vp-cmp-feat" data-en="Engines" data-fr="Moteurs">Engines</span>
-            <span class="vp-cmp-yes" data-en="UE5 + Unity + ArtStation" data-fr="UE5 + Unity + ArtStation">UE5 + Unity + ArtStation</span>
+            <span class="vp-cmp-yes" data-en="UE5 + Unity + ArtStation" data-fr="UE5 + Unity + ArtStation">✓ UE5 + Unity + ArtStation</span>
             <span class="vp-cmp-no" data-en="Single engine" data-fr="Moteur unique">Single engine</span>
           </div>
 
           <div class="vp-cmp-row">
             <span class="vp-cmp-feat" data-en="Price" data-fr="Prix">Price</span>
-            <span class="vp-cmp-yes" data-en="Best price · 0% commission" data-fr="Meilleur prix · 0% commission">Best price · 0% commission</span>
+            <span class="vp-cmp-yes" data-en="Best price · 0% commission" data-fr="Meilleur prix · 0% commission">✓ Best price · 0% commission</span>
             <span class="vp-cmp-no" data-en="+ 30% platform fee" data-fr="+ 30% de commission">+ 30% platform fee</span>
           </div>
 
           <div class="vp-cmp-row">
             <span class="vp-cmp-feat" data-en="Access" data-fr="Accès">Access</span>
-            <span class="vp-cmp-yes" data-en="Direct · no account needed" data-fr="Direct · sans compte requis">Direct · no account needed</span>
+            <span class="vp-cmp-yes" data-en="Direct · no account needed" data-fr="Direct · sans compte requis">✓ Direct · no account needed</span>
             <span class="vp-cmp-no" data-en="Platform mediated" data-fr="Via plateforme">Platform mediated</span>
           </div>
 
           <div class="vp-cmp-row vp-cmp-row--star">
             <span class="vp-cmp-feat" data-en="Bundles" data-fr="Bundles">Bundles</span>
-            <span class="vp-cmp-yes" data-en="Buy 3 · pay 2 · custom deals" data-fr="3 achetés · 2 payés · offres perso">Buy 3 · pay 2 · custom deals</span>
+            <span class="vp-cmp-yes" id="vp-bundles-direct" data-en="Buy 3 · pay 2 · custom deals" data-fr="3 achetés · 2 payés · offres perso">✓ Buy 3 · pay 2 · custom deals</span>
             <span class="vp-cmp-no" data-en="Fixed listings only" data-fr="Listings fixes">Fixed listings only</span>
           </div>
 
@@ -956,7 +1245,9 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
       </div>
 
-      <!-- Primary: Add to Cart -->
+      <div class="drawer-sep"></div>
+
+      <!-- ── ADD TO CART ────────────────────────────────────────────────── -->
       <button class="btn-add-cart" id="drawer-btn-add-cart" data-product-id="">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="17" r="1.2" fill="currentColor" stroke="none"/>
@@ -966,7 +1257,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <span data-en="Add to Cart" data-fr="Ajouter au panier">Add to Cart</span>
       </button>
 
-      <!-- De-emphasised store links -->
+      <!-- ── ALSO AVAILABLE ON ──────────────────────────────────────────── -->
       <div class="drawer-stores-label" data-en="Also available on" data-fr="Également disponible sur">Also available on</div>
       <div class="drawer-stores">
         <a class="btn-store" id="drawer-btn-fab"    href="#" target="_blank" rel="noopener">Fab ↗</a>
@@ -997,6 +1288,12 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     </div>
     <!-- Items -->
     <div class="cart-items" id="cart-items" style="display:none"></div>
+    <!-- Bundle widget (8K upsell) -->
+    <div id="bundle-widget-wrap"></div>
+    <!-- Frostholm bundle widget -->
+    <div id="fh-cart-widget-wrap"></div>
+    <!-- Arctic bundle widget -->
+    <div id="arctic-cart-widget-wrap"></div>
     <!-- Cross-sell -->
     <div class="cart-cross" id="cart-cross" style="display:none">
       <div class="cart-cross-label" data-en="Complete your universe" data-fr="Complétez votre univers">Complete your universe</div>
@@ -1005,10 +1302,18 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   </div>
   <div class="cart-footer" id="cart-footer" style="display:none">
     <div class="cart-total-row">
-      <span class="cart-total-label" data-en="Total" data-fr="Total">Total</span>
+      <div class="cart-total-labels">
+        <span class="cart-total-label" data-en="Direct Studio Total" data-fr="Total Direct Studio">Direct Studio Total</span>
+        <span class="cart-total-orig-row" id="cart-total-orig-row" style="display:none">
+          <span data-en="instead of" data-fr="au lieu de">instead of</span> <span class="cart-total-orig" id="cart-total-orig"></span>
+        </span>
+      </div>
       <span class="cart-total-amt" id="cart-total-amt">€0.00</span>
     </div>
-    <div class="cart-savings" id="cart-savings" style="display:none"></div>
+    <div class="cart-savings-row" id="cart-savings-row" style="display:none">
+      <span class="cart-savings-label" data-en="Direct Studio Savings" data-fr="Économie Direct Studio">Direct Studio Savings</span>
+      <span class="cart-savings-amt" id="cart-savings-amt"></span>
+    </div>
     <button class="btn-checkout" onclick="proceedToCheckout()" data-en="Proceed to Checkout →" data-fr="Procéder au paiement →">Proceed to Checkout →</button>
     <div class="cart-note" data-en="Direct checkout integration in progress. Currently redirects to your preferred store." data-fr="Intégration paiement direct en cours. Redirige vers votre boutique préférée.">Direct checkout integration in progress. Currently redirects to your preferred store.</div>
   </div>
@@ -1052,6 +1357,11 @@ function setCurrency(curr) {
 }
 
 /* ═══ LANGUAGE ═══ */
+/* Helper: bilingual text for JS-generated content */
+function _t(en, fr) {
+  return document.documentElement.lang === 'fr' ? fr : en;
+}
+
 function setLang(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-en]').forEach(function(el) {
@@ -1059,6 +1369,13 @@ function setLang(lang) {
     if (txt) el.innerHTML = txt;
   });
   document.querySelectorAll('.lang-toggle .lang-btn').forEach(function(b){ b.classList.toggle('active', b.id === 'lang-btn-' + lang); });
+  /* Re-render dynamic content that contains bilingual strings */
+  if (cart.length > 0 || cartBundles.length > 0 || frostholmBundles.length > 0) renderCart();
+  var pid = document.getElementById('drawer-btn-add-cart') ? document.getElementById('drawer-btn-add-cart').getAttribute('data-product-id') : null;
+  if (pid) { var dp = PRODUCTS.find(function(x){ return x.id === pid; }); if (dp && dp.col === 'arctic') _refreshDrawerArctic(); }
+  if (pid) { var dp2 = PRODUCTS.find(function(x){ return x.id === pid; }); if (dp2 && dp2.col === 'frostholm') _refreshDrawerFh(); }
+  /* Re-render Frostholm store grid so bilingual vol-section titles update */
+  if (typeof _col !== 'undefined' && _col === 'frostholm' && typeof FROSTHOLM_BIOMES !== 'undefined') renderStore();
 }
 
 /* ═══ PRODUCT DATA ═══ */
@@ -1066,23 +1383,23 @@ var PRODUCTS = [
   // ── FROSTHOLM — Mountains ──────────────────────────────────────────────
   {id:'2baaee7f-3fe2-45c3-9142-dd262aad2cb3',t:'Frostholm Mountains Realistic',p:109.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/012bb0d1-5666-41f2-b414-c34da51f7744/501b1f71-e80c-4410-bb40-478c4abdca58.jpg',vf:'6TlRJ0xKaTw',vs:'NmlZeYBv9nE'},
   {id:'59260bb5-cb8f-49e9-a25e-ac79f8238276',t:'Frostholm Mountains Stylized',p:99.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/9e7b14ba-0234-45ea-96c2-36c0e0957048/511a6d3f-0971-49d1-b495-4dd5ff18c8e7.jpg',vf:'6TlRJ0xKaTw',vs:'RYkey4ZYt84'},
-  {id:'38504349-c565-48e4-b732-c6ab65adb270',t:'Frostholm Mountains Polygonal',p:69.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/f2e0f90f-3b30-4d64-b075-216349a35f70/38030626-d573-47cf-9438-d0b64334ef9c.jpg',vf:'6TlRJ0xKaTw',vs:'B-YuwXKU6ZY'},
-  {id:'a657b6ad-42a2-4c6b-a0e0-ef005a9f9b91',t:'Frostholm Mountains Cartoon',p:89.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/15bd8cf5-f5e5-4522-a391-1e7c3fa1312b/b45ca24a-8f03-4fa0-adf1-c9121a94149f.jpg',vf:'6TlRJ0xKaTw',vs:'oubUPLo6WMQ'},
+  {id:'38504349-c565-48e4-b732-c6ab65adb270',t:'Frostholm Mountains Polygonal',p:89.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/f2e0f90f-3b30-4d64-b075-216349a35f70/38030626-d573-47cf-9438-d0b64334ef9c.jpg',vf:'6TlRJ0xKaTw',vs:'B-YuwXKU6ZY'},
+  {id:'a657b6ad-42a2-4c6b-a0e0-ef005a9f9b91',t:'Frostholm Mountains Cartoon',p:79.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/15bd8cf5-f5e5-4522-a391-1e7c3fa1312b/b45ca24a-8f03-4fa0-adf1-c9121a94149f.jpg',vf:'6TlRJ0xKaTw',vs:'oubUPLo6WMQ'},
   // ── FROSTHOLM — Fields ─────────────────────────────────────────────────
   {id:'1b7d67e9-2279-4bb2-829a-4b846031f059',t:'Frostholm Fields Realistic',p:89.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/3d801e4f-f714-4452-90cf-7b5de6d5f10f/ca79d9d7-7e40-4a52-9fe1-8724b2b1541e.jpg',vf:'DBV3C_E1NxE',vs:'4EyrGKDdPZE'},
   {id:'7765b549-60a4-4854-9f21-13c2d473db90',t:'Frostholm Fields Stylized',p:79.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/4f2cf20c-b086-4bb1-8665-c6f398045b58/716227e3-a75e-483d-9f97-1cf3ee8e1147.jpg',vf:'DBV3C_E1NxE',vs:'Wfp_Uj8XawY'},
-  {id:'48c58be4-9b2f-444f-b312-8f86b221a6ed',t:'Frostholm Fields Polygonal',p:49.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/9a286699-c24a-41b6-9a78-0eb6b40341d2/d86373de-589c-43d3-8a8a-26fc96235194.jpg',vf:'DBV3C_E1NxE',vs:'2Nr9B4757pk'},
-  {id:'5ae6cc28-c1cc-441d-8ea5-7c064428f63c',t:'Frostholm Fields Cartoon',p:69.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/d6a35c4f-42a7-4fd5-b750-6ca0649f8227/03735ff3-184d-433e-b1d4-72b9970ce08e.jpg',vf:'DBV3C_E1NxE',vs:'sRC54e-jPtg'},
+  {id:'48c58be4-9b2f-444f-b312-8f86b221a6ed',t:'Frostholm Fields Polygonal',p:69.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/9a286699-c24a-41b6-9a78-0eb6b40341d2/d86373de-589c-43d3-8a8a-26fc96235194.jpg',vf:'DBV3C_E1NxE',vs:'2Nr9B4757pk'},
+  {id:'5ae6cc28-c1cc-441d-8ea5-7c064428f63c',t:'Frostholm Fields Cartoon',p:59.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/d6a35c4f-42a7-4fd5-b750-6ca0649f8227/03735ff3-184d-433e-b1d4-72b9970ce08e.jpg',vf:'DBV3C_E1NxE',vs:'sRC54e-jPtg'},
   // ── FROSTHOLM — Icebergs ───────────────────────────────────────────────
   {id:'51f7b813-321d-42d0-9050-c260e1a5d6ec',t:'Frostholm Icebergs Realistic',p:99.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/e4b93b01-ff2d-431e-914b-851a5d6ab4e8/2e3af0d3-8b21-42e1-af87-93bc431e3dfe.jpg',vf:'Z8cmZkcJe-g',vs:'goPLVfbxJ4c'},
   {id:'025a3a0d-2c96-4398-afec-db91ecc58c0f',t:'Frostholm Icebergs Stylized',p:89.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/0e7947fa-e5e1-4e5b-83a2-bbf6ff75c1b0/e861917f-b66e-439c-8dcb-bba13111be4d.jpg',vf:'Z8cmZkcJe-g',vs:'mhieupfSv4g'},
-  {id:'5cf3fa06-d27f-49d7-8d49-a61bf18f0fe5',t:'Frostholm Icebergs Polygonal',p:59.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/e41496e7-b6a7-43d0-986c-dfa96f5a155e/2b498ae3-7583-4d30-b28f-d3f70256a81c.jpg',vf:'Z8cmZkcJe-g',vs:'UN9vOc9vlkE'},
-  {id:'7dd6414f-d3cb-4f63-970d-c1693ae83829',t:'Frostholm Icebergs Cartoon',p:79.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/439d4b81-a7e6-4b45-a6cb-ef7a4d1017db/ce244aa5-7402-49c7-aa8f-fe9146a14824.jpg',vf:'Z8cmZkcJe-g',vs:'ruqnt0S0qo4'},
+  {id:'5cf3fa06-d27f-49d7-8d49-a61bf18f0fe5',t:'Frostholm Icebergs Polygonal',p:79.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/e41496e7-b6a7-43d0-986c-dfa96f5a155e/2b498ae3-7583-4d30-b28f-d3f70256a81c.jpg',vf:'Z8cmZkcJe-g',vs:'UN9vOc9vlkE'},
+  {id:'7dd6414f-d3cb-4f63-970d-c1693ae83829',t:'Frostholm Icebergs Cartoon',p:69.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/439d4b81-a7e6-4b45-a6cb-ef7a4d1017db/ce244aa5-7402-49c7-aa8f-fe9146a14824.jpg',vf:'Z8cmZkcJe-g',vs:'ruqnt0S0qo4'},
   // ── FROSTHOLM — Glaciers ───────────────────────────────────────────────
   {id:'080a6e16-809b-4feb-bae5-bcc7ff42ce5a',t:'Frostholm Glaciers Realistic',p:119.99,col:'frostholm',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/c26e49bb-8662-401b-ab8b-531e51ecbcf1/e061f54f-861e-4761-87ca-5f677f55ccbb.jpg',vf:'PkkmyndfI2Y',vs:'FgO3BbIakJ4'},
   {id:'1645ee54-4c64-48d2-8d59-5fc5ad8627eb',t:'Frostholm Glaciers Stylized',p:109.99,col:'frostholm',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/fb2af5c4-0de5-49d7-8253-3835dc166944/dd29c5f3-3c55-48c8-97e2-abd6a40c4837.jpg',vf:'PkkmyndfI2Y',vs:'wv54akUcAeA'},
-  {id:'a5161656-4501-4f49-89eb-f87bdf98a69e',t:'Frostholm Glaciers Polygonal',p:79.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c6ebc88d-341f-4752-8c97-b409f77f82fc/355c1fc8-253d-4724-ac71-2259471185a1.jpg',vf:'PkkmyndfI2Y',vs:'68M48VDEaOA'},
-  {id:'386fc789-f1d7-402f-89d4-a80913f2db2f',t:'Frostholm Glaciers Cartoon',p:99.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/3d681940-6d10-405a-a7ec-f6beb0cef3b5/6873e8a0-86f5-412f-a33e-1cd948dba9f6.jpg',vf:'PkkmyndfI2Y',vs:'z0CtDTxMvWE'},
+  {id:'a5161656-4501-4f49-89eb-f87bdf98a69e',t:'Frostholm Glaciers Polygonal',p:99.99,col:'frostholm',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c6ebc88d-341f-4752-8c97-b409f77f82fc/355c1fc8-253d-4724-ac71-2259471185a1.jpg',vf:'PkkmyndfI2Y',vs:'68M48VDEaOA'},
+  {id:'386fc789-f1d7-402f-89d4-a80913f2db2f',t:'Frostholm Glaciers Cartoon',p:89.99,col:'frostholm',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/3d681940-6d10-405a-a7ec-f6beb0cef3b5/6873e8a0-86f5-412f-a33e-1cd948dba9f6.jpg',vf:'PkkmyndfI2Y',vs:'z0CtDTxMvWE'},
   // ── 8K PACKS ──────────────────────────────────────────────────────────
   {id:'85fe6436-38a3-475b-95d7-9ec0f4a57733',t:'8K Arctic Landscape Pack',p:34.99,col:'8k',v:1,bi:'c',b2:'Ice',th:'https://media.fab.com/image_previews/gallery_images/67ab9f45-45a9-4d70-a543-fafc3908133e/295f999b-f6d4-40d5-b29e-7a04b207fcc9.jpg',vs:'wQZuS7E9588',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-arctic-landscape-pack-291741',pa:'https://www.artstation.com/marketplace/p/kMB9/8k-arctic-landscape-pack'},
   {id:'72f2e599-e00d-454e-a1c3-1227b12fe90e',t:'8K Island Landscape Pack',p:34.99,col:'8k',v:2,bi:'l',b2:'Coast',th:'https://media.fab.com/image_previews/gallery_images/34e7043d-74c6-4b6c-a5e4-2bd1f2c30178/51744388-746d-4e40-80dc-5160ad6e503d.jpg',vs:'Az2pWjcJwZ0',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/8k-island-landscape-pack-294443',pa:'https://www.artstation.com/marketplace/p/JNNk/8k-island-landscape-pack'},
@@ -1106,11 +1423,11 @@ var PRODUCTS = [
   {id:'9c46865c-f968-486d-b6e2-21509e7b2a30',t:'8K African Landscape Pack',p:34.99,col:'8k',v:5,bi:'a',b2:'Savannah',th:'https://media.fab.com/image_previews/gallery_images/f2c73e5d-321c-4641-a3f2-b2dd2ef30a3b/76325299-2667-46bf-8fe5-9521eec8429f.jpg'},
   {id:'fa24aee0-b5d1-4341-8983-bada3212ed1a',t:'8K Hills Landscape Pack',p:34.99,col:'8k',v:7,bi:'m',b2:'Meadow',th:'https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/7183dd63-2c5e-4c9e-86ad-d6140ec113a8.jpg',vs:'PW313kfwkwQ'},
   // ── LANDSCAPE COLLECTION — Arctic Series ──────────────────────────────
-  {id:'897b47f0-8d34-4b40-a45a-0c73a2315849',t:'Arctic Landscape Realistic',p:69.99,col:'arctic',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-realistic-364126',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1KdyjABMr22rjrIdF1PaKnk8C2IWi1Kjq/view'},
-  {id:'5e439f0f-f6f2-4104-873a-245a60aec3ff',t:'Arctic Landscape Stylized',p:59.99,col:'arctic',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/06807a5b-7cc4-4579-8dee-c1e8ccc7f90b/eaebf142-cded-4d32-916f-961f95f7e639.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-stylized-364268',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1sb8Eq6rx2tEhYh3CkRTncr_tV0eomHwc/view'},
-  {id:'14e34309-cb57-4901-be0e-11e60494cc56',t:'Arctic Landscape Polygonal',p:39.99,col:'arctic',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c845301e-8c3c-47a0-8db1-f1b5f54f09da/a2d85eca-af38-4f68-ab54-026ea85752cb.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-polygonal-364270',pa:'https://www.artstation.com/marketplace/p/zRDaR/arctic-landscape-polygonal',pd:'https://drive.google.com/file/d/1qWHGUIWAShhQMd8uB7nHAK9xlQIE9IDL/view'},
-  {id:'3d96a640-b331-4bd8-ab4f-1b7d01fd3ace',t:'Arctic Landscape Cartoon',p:49.99,col:'arctic',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/672b01ac-c243-4f32-abd5-9e9094101509/213f0996-8942-42ef-a719-5495da103558.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-cartoon-364272',pa:'https://www.artstation.com/marketplace/p/6egnq/arctic-landscape-cartoon',pd:'https://drive.google.com/file/d/1QKRKlxZTqSyM6N11YweTqj5qqhKm0IhW/view'},
-  {id:'af813c5f-5482-4d22-8e4a-90ac4e1d83eb',t:'Arctic Landscape Retro',p:29.99,col:'arctic',st:'retro',th:'https://media.fab.com/image_previews/gallery_images/0e65a55f-3067-4e30-9ceb-3bb539d6c8a3/f4d800bf-c2a4-4543-a2d5-77cab864f40c.jpg',vf:'6TlRJ0xKaTw',vs:'2Eqfn3Di64M',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-retro-364274',pa:'https://www.artstation.com/marketplace/p/bDvAd/arctic-landscape-retro',pd:'https://drive.google.com/file/d/13Q7upxLBmfW3w4tXfHZdbgfjZrZd0wy1/view'}
+  {id:'897b47f0-8d34-4b40-a45a-0c73a2315849',t:'Arctic Landscape Realistic',p:69.99,col:'arctic',st:'realistic',th:'https://media.fab.com/image_previews/gallery_images/1366e281-3cd8-4c82-bb45-fd0b21492cf4/e4a90039-2da0-4342-a649-725032ef84d6.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-realistic-364126',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1KdyjABMr22rjrIdF1PaKnk8C2IWi1Kjq/view'},
+  {id:'5e439f0f-f6f2-4104-873a-245a60aec3ff',t:'Arctic Landscape Stylized',p:59.99,col:'arctic',st:'stylized',th:'https://media.fab.com/image_previews/gallery_images/06807a5b-7cc4-4579-8dee-c1e8ccc7f90b/eaebf142-cded-4d32-916f-961f95f7e639.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-stylized-364268',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1sb8Eq6rx2tEhYh3CkRTncr_tV0eomHwc/view'},
+  {id:'14e34309-cb57-4901-be0e-11e60494cc56',t:'Arctic Landscape Polygonal',p:49.99,col:'arctic',st:'polygonal',th:'https://media.fab.com/image_previews/gallery_images/c845301e-8c3c-47a0-8db1-f1b5f54f09da/a2d85eca-af38-4f68-ab54-026ea85752cb.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-polygonal-364270',pa:'https://www.artstation.com/marketplace/p/zRDaR/arctic-landscape-polygonal',pd:'https://drive.google.com/file/d/1qWHGUIWAShhQMd8uB7nHAK9xlQIE9IDL/view'},
+  {id:'3d96a640-b331-4bd8-ab4f-1b7d01fd3ace',t:'Arctic Landscape Cartoon',p:39.99,col:'arctic',st:'cartoon',th:'https://media.fab.com/image_previews/gallery_images/672b01ac-c243-4f32-abd5-9e9094101509/213f0996-8942-42ef-a719-5495da103558.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-cartoon-364272',pa:'https://www.artstation.com/marketplace/p/6egnq/arctic-landscape-cartoon',pd:'https://drive.google.com/file/d/1QKRKlxZTqSyM6N11YweTqj5qqhKm0IhW/view'},
+  {id:'af813c5f-5482-4d22-8e4a-90ac4e1d83eb',t:'Arctic Landscape Retro',p:29.99,col:'arctic',st:'retro',th:'https://media.fab.com/image_previews/gallery_images/0e65a55f-3067-4e30-9ceb-3bb539d6c8a3/f4d800bf-c2a4-4543-a2d5-77cab864f40c.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-retro-364274',pa:'https://www.artstation.com/marketplace/p/bDvAd/arctic-landscape-retro',pd:'https://drive.google.com/file/d/13Q7upxLBmfW3w4tXfHZdbgfjZrZd0wy1/view'}
 ];
 
 /* ═══ DESCRIPTIONS ═══ */
@@ -1663,10 +1980,178 @@ function applyFilter8k(v) {
   }
 }
 
+/* ═══ ARCTIC VOLUME SYSTEM ═══ */
+var VOL_ARCTIC = [
+  { v:1, name:'Arctic', sub:'The Polar Collection',
+    slots:[{id:'897b47f0'},{id:'5e439f0f'},{id:'14e34309'},{id:'3d96a640'},{id:'af813c5f'}] }
+];
+
+function findProdArctic(idPrefix) {
+  return PRODUCTS.find(function(p){ return p.id.indexOf(idPrefix) === 0; });
+}
+
+/* Build vol section (All view) — respects current style _filter */
+function makeVolSectionArctic(vd) {
+  var slots = vd.slots.filter(function(s) {
+    if (!s.id) return false;
+    if (_filter === 'all') return true;
+    var p = findProdArctic(s.id);
+    return p && p.st === _filter;
+  });
+  var cards = slots.map(function(s, i) {
+    var p = findProdArctic(s.id);
+    if (!p) return '';
+    return makeCard(p, PRODUCTS.indexOf(p), Math.min(i, 6) * 40);
+  }).join('');
+  var countTxt = slots.length + ' pack' + (slots.length !== 1 ? 's' : '');
+  return '<div class="vol-section-8k">' +
+    '<div class="vol-sec-hdr" onclick="applyFilterArctic(\'' + vd.v + '\')">' +
+      '<span class="vol-sec-badge">Vol.' + vd.v + '</span>' +
+      '<span class="vol-sec-name">' + vd.name + '</span>' +
+      '<span class="vol-sec-sub">' + vd.sub + '</span>' +
+      '<span class="vol-sec-line"></span>' +
+      '<span class="vol-sec-count">' + countTxt + '</span>' +
+    '</div>' +
+    '<div class="products-grid products-grid-5">' + cards + '</div>' +
+  '</div>';
+}
+
+/* Build single-vol view — respects current style _filter */
+function makeVolSingleArctic(vd) {
+  var slots = vd.slots.filter(function(s) {
+    if (!s.id) return false;
+    if (_filter === 'all') return true;
+    var p = findProdArctic(s.id);
+    return p && p.st === _filter;
+  });
+  var cards = slots.map(function(s, i) {
+    var p = findProdArctic(s.id);
+    if (!p) return '';
+    return makeCard(p, PRODUCTS.indexOf(p), Math.min(i, 6) * 55);
+  }).join('');
+  return '<div class="single-vol-banner">' +
+    '<span class="svb-vol">Vol.' + vd.v + '</span>' +
+    '<span class="svb-divider"></span>' +
+    '<div class="svb-meta">' +
+      '<div class="svb-title">' + vd.name + '</div>' +
+      '<div class="svb-sub">' + vd.sub + '</div>' +
+    '</div>' +
+    '<span class="svb-spacer"></span>' +
+    '<div class="svb-nav"></div>' +
+  '</div>' +
+  '<div class="products-grid products-grid-5">' + cards + '</div>';
+}
+
+var _volArctic = 'all';
+function applyFilterArctic(v) {
+  _volArctic = String(v);
+  document.querySelectorAll('.vol-tab-arctic').forEach(function(t){
+    t.classList.toggle('active', t.dataset.v === _volArctic);
+  });
+  renderStore();
+}
+
+/* ═══ FROSTHOLM VOL SECTION SYSTEM ═══ */
+var _fhVol = 'all';
+function applyFhVol(v) {
+  _fhVol = String(v);
+  document.querySelectorAll('.vol-tab-fh').forEach(function(t){
+    t.classList.toggle('active', t.dataset.v === _fhVol);
+  });
+  renderStore();
+}
+
+var _fhView = 'grid4';
+var FH_DISPLAY_ORDER = { realistic:1, stylized:2, polygonal:3, cartoon:4 };
+
+function applyFhView(mode) {
+  _fhView = mode;
+  document.querySelectorAll('.fh-view-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.fhview === mode);
+  });
+  renderStore();
+}
+
+function makeFhVolSection(biome, idx) {
+  var isF = document.documentElement.lang === 'fr';
+
+  /* Sort styles by fixed display order: Realistic → Stylized → Polygonal → Cartoon */
+  var styles = biome.styles.slice().sort(function(a, b){
+    return (FH_DISPLAY_ORDER[a.st] || 9) - (FH_DISPLAY_ORDER[b.st] || 9);
+  });
+  var styleProds = styles.map(function(s){
+    return PRODUCTS.find(function(p){ return p.id.indexOf(s.id) === 0; });
+  }).filter(Boolean);
+
+  var gridClass  = _fhView === 'grid2' ? 'products-grid-fh2' : 'products-grid-fh4';
+  var animDelay  = idx * 70;
+  var volNum     = 'Vol.' + (idx + 1 < 10 ? '0' + (idx + 1) : '' + (idx + 1));
+
+  /* Bilingual strings */
+  var bioLabel   = isF ? (biome.labelFr || biome.label) : biome.label;
+  var bioName    = isF ? (biome.displayNameFr || biome.displayName) : biome.displayName;
+  var bioTagline = isF ? (biome.taglineFr || biome.tagline) : biome.tagline;
+  var strMaster  = isF ? 'Pack Maître'           : 'Master Bundle';
+  var strGet     = isF ? 'Pack Complet'           : 'Get Full Biome';
+  var strAll4    = isF ? '4 Styles · ' + bioLabel : 'All 4 Styles · ' + biome.label;
+  var strIter    = isF ? '4 Styles Artistiques'   : '4 Stylistic Iterations';
+  var strSave    = isF ? 'Éco. '                  : 'Save ';
+  var strInBdl   = isF ? '✓ Dans le pack'         : '✓ In Bundle';
+
+  /* Master bundle pricing */
+  var indivTotal = biome.styles.reduce(function(s, st){ return s + st.price; }, 0);
+  var saveAmt    = Math.round((indivTotal - biome.master) / indivTotal * 100);
+  var hasMaster  = frostholmBundles.some(function(b){ return b.biomeId === biome.id && b.type === 'fh-master'; });
+
+  var cards = styleProds.map(function(p, ci){
+    return makeCard(p, PRODUCTS.indexOf(p), animDelay + Math.min(ci, 3) * 45);
+  }).join('');
+
+  var masterBtnClick = hasMaster ? '' : 'addFhBundle(\'fh-master\',\'' + biome.id + '\')';
+  var masterBtnHtml =
+    '<button class="fh-vol-master-btn' + (hasMaster ? ' owned' : '') + '" onclick="' + masterBtnClick + '">' +
+      '<span class="fh-vol-master-icon' + (hasMaster ? ' owned' : '') + '">' + (hasMaster ? '✓' : '❄') + '</span>' +
+      '<div class="fh-vol-master-info">' +
+        '<div class="fh-vol-master-label">' + strMaster + '</div>' +
+        '<div class="fh-vol-master-name">' + strGet + '</div>' +
+        '<div class="fh-vol-master-sub">' + strAll4 + '</div>' +
+      '</div>' +
+      '<div class="fh-vol-master-price">' +
+        '<span class="fh-vol-master-full">' + formatProductPrice(indivTotal) + '</span>' +
+        '<span class="fh-vol-master-eur">' + formatProductPrice(biome.master) + '</span>' +
+        (hasMaster
+          ? '<span class="fh-vol-master-save">' + strInBdl + '</span>'
+          : '<span class="fh-vol-master-save">' + strSave + saveAmt + '%</span>') +
+      '</div>' +
+    '</button>';
+
+  return '<div class="fh-vol-section" style="animation:slideUpFade 0.42s ' + animDelay + 'ms cubic-bezier(0.2,0.9,0.4,1.1) both">' +
+    '<div class="fh-vol-hdr">' +
+      '<div class="fh-vol-hdr-left">' +
+        '<div class="fh-vol-eyebrow">' +
+          '<span class="fh-vol-badge">' + volNum + '</span>' +
+          '<span class="fh-vol-ey-line"></span>' +
+          '<span class="fh-vol-ey-label">' + bioLabel + '</span>' +
+        '</div>' +
+        '<div class="fh-vol-title">' + volNum + ' · <em>' + bioName + '</em></div>' +
+        '<div class="fh-vol-tagline">' +
+          '<span class="fh-vol-tag">' + bioTagline + '</span>' +
+          '<span class="fh-vol-tag-dot"></span>' +
+          '<span class="fh-vol-tag">' + strIter + '</span>' +
+          '<span class="fh-vol-tag-dot"></span>' +
+          '<span class="fh-vol-tag">Suite Frostholm</span>' +
+        '</div>' +
+      '</div>' +
+      masterBtnHtml +
+    '</div>' +
+    '<div class="' + gridClass + '">' + cards + '</div>' +
+  '</div>';
+}
+
 /* ═══ RENDER GRID ═══ */
 function makeCard(p, idx, animDelay) {
   var delay = animDelay || 0;
-  var barClass = p.col === '8k' ? 'pc-bar-' + (p.bi || 'm') : (p.st ? 'pc-bar-' + p.st : '');
+  var barClass = p.col === '8k' ? 'pc-bar-v' + p.v : (p.st ? 'pc-bar-' + p.st : '');
   var badges = '';
   if (p.col === '8k') {
     badges = '<span class="biome-badge biome-' + p.bi + '">' + BIOME_LABEL[p.bi] + '</span>' +
@@ -1772,6 +2257,54 @@ function renderStore() {
     applyFilter8k(_vol8k);
     return;
   }
+  if (_col === 'arctic') {
+    var grid = document.getElementById('store-grid');
+    grid.className = '';
+    if (_volArctic === 'all') {
+      grid.innerHTML = '<div style="animation:slideUpFade 0.32s ease both">' +
+        VOL_ARCTIC.map(makeVolSectionArctic).join('') +
+      '</div>';
+    } else {
+      var vd = VOL_ARCTIC.find(function(d){ return String(d.v) === _volArctic; });
+      if (vd) {
+        grid.innerHTML = '<div style="animation:slideUpFade 0.28s ease both">' +
+          makeVolSingleArctic(vd) +
+        '</div>';
+      }
+    }
+    return;
+  }
+  if (_col === 'frostholm') {
+    var grid = document.getElementById('store-grid');
+    grid.className = '';
+    var biomesScope = _fhVol === 'all'
+      ? FROSTHOLM_BIOMES
+      : FROSTHOLM_BIOMES.filter(function(b){ return b.id === _fhVol; });
+    if (_fhVol !== 'all' || _filter !== 'all') {
+      /* Flat grid — filtered by vol and/or style, no section headers */
+      var flatProds = [];
+      biomesScope.forEach(function(b) {
+        var stylesToShow = _filter === 'all'
+          ? b.styles.slice().sort(function(a, b2){ return (FH_DISPLAY_ORDER[a.st]||9) - (FH_DISPLAY_ORDER[b2.st]||9); })
+          : b.styles.filter(function(s){ return s.st === _filter; });
+        stylesToShow.forEach(function(s) {
+          var p = PRODUCTS.find(function(x){ return x.id.indexOf(s.id) === 0; });
+          if (p) flatProds.push(p);
+        });
+      });
+      grid.innerHTML = '<div style="animation:slideUpFade 0.28s ease both">' +
+        '<div class="products-grid-fh4">' +
+        flatProds.map(function(p, i){ return makeCard(p, PRODUCTS.indexOf(p), i * 50); }).join('') +
+        '</div>' +
+      '</div>';
+    } else {
+      /* All biome sections — default view */
+      grid.innerHTML = '<div style="animation:slideUpFade 0.30s ease both">' +
+        FROSTHOLM_BIOMES.map(function(b, i){ return makeFhVolSection(b, i); }).join('') +
+      '</div>';
+    }
+    return;
+  }
   var grid = document.getElementById('store-grid');
   var filtered = PRODUCTS.filter(function(p) {
     if (p.col !== _col) return false;
@@ -1779,18 +2312,29 @@ function renderStore() {
     return p.st === _filter;
   });
   grid.innerHTML = filtered.map(function(p, i) { return makeCard(p, PRODUCTS.indexOf(p), Math.min(i, 10) * 45); }).join('');
-  grid.className = _col === 'arctic' ? 'products-grid products-grid-5' : 'products-grid';
+  grid.className = 'products-grid';
 }
 
 function switchCollection(col) {
   _col = col; _filter = 'all';
   document.querySelectorAll('.store-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.col === col); });
-  document.getElementById('filters-style').style.display = (col === 'frostholm' || col === 'arctic') ? '' : 'none';
-  document.getElementById('filters-biome').style.display = 'none'; /* replaced by vol tabs for 8k */
-  document.getElementById('filters-8k-vol').style.display = col === '8k' ? '' : 'none';
+  document.getElementById('filters-style').style.display   = col === 'arctic'    ? '' : 'none';
+  document.getElementById('fh-filter-row').style.display      = col === 'frostholm' ? 'flex' : 'none';
+  document.getElementById('filters-fh-vol').style.display     = col === 'frostholm' ? ''     : 'none';
+  document.getElementById('filters-biome').style.display      = 'none';
+  document.getElementById('filters-8k-vol').style.display     = col === '8k'        ? ''     : 'none';
+  document.getElementById('filters-arctic-vol').style.display = col === 'arctic'    ? ''     : 'none';
   if (col === '8k') {
     _vol8k = 'all';
     document.querySelectorAll('.vol-tab-8k').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
+  }
+  if (col === 'arctic') {
+    _volArctic = 'all';
+    document.querySelectorAll('.vol-tab-arctic').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
+  }
+  if (col === 'frostholm') {
+    _fhVol = 'all';
+    document.querySelectorAll('.vol-tab-fh').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
   }
   document.querySelector('.filter-pill[data-filter="retro"]').style.display = col === 'arctic' ? '' : 'none';
   document.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === 'all'); });
@@ -1799,12 +2343,12 @@ function switchCollection(col) {
 
 function applyFilter(f) {
   _filter = f;
-  var activeBar = document.getElementById('filters-style');
-  if (activeBar) activeBar.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === f); });
+  ['filters-style', 'fh-filter-pills'].forEach(function(id) {
+    var bar = document.getElementById(id);
+    if (bar) bar.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === f); });
+  });
   renderStore();
 }
-
-renderStore();
 
 /* ═══ GALLERY CAROUSEL ═══ */
 var _galleryImgs = [];
@@ -2294,7 +2838,7 @@ function openDrawer(idx) {
   document.getElementById('drawer-meta').innerHTML = badgeHtml;
 
   // Collection tag
-  var collLabel = { frostholm: 'Frosth\u00f6lm Collection', '8k': '8K Terrain Packs', arctic: 'Arctic Landscapes' };
+  var collLabel = { frostholm: 'Frosth\u00f6lm Collection', '8k': '8K Terrain Packs', arctic: 'Complete Landscapes' };
   document.getElementById('drawer-coll').innerHTML =
     '<span class="style-badge badge-pack">' + collLabel[p.col] + '</span>';
 
@@ -2339,7 +2883,7 @@ function openDrawer(idx) {
 
   // Full showcase video only (vs is shown ambient, not in tabs)
   _drawerVideos = [];
-  if (p.vf) _drawerVideos.push({ id: p.vf, label: 'Full Showcase' });
+  if (p.vf) _drawerVideos.push({ id: p.vf, label: 'Full Showcase', thumb: p.vfth || null });
 
   var vsec = document.getElementById('drawer-vsec');
   var vtabs = document.getElementById('drawer-vtabs');
@@ -2418,6 +2962,52 @@ function openDrawer(idx) {
     addCartSpan.setAttribute('data-fr', inCart ? '✓ Dans le panier' : 'Ajouter au panier');
   }
 
+  // Arctic bundle section — show only for arctic collection
+  var arcticBundlesEl = document.getElementById('drawer-arctic-bundles');
+  if (arcticBundlesEl) {
+    if (p.col === 'arctic') {
+      arcticBundlesEl.style.display = '';
+      populateDrawerArcticBundles(p);
+    } else {
+      arcticBundlesEl.style.display = 'none';
+    }
+  }
+
+  // Frostholm bundle section — show only for frostholm collection
+  var fhBundlesEl = document.getElementById('drawer-fh-bundles');
+  if (fhBundlesEl) {
+    if (p.col === 'frostholm') {
+      fhBundlesEl.style.display = '';
+      populateDrawerFhBundles(p);
+    } else {
+      fhBundlesEl.style.display = 'none';
+    }
+  }
+
+  // Access section header + separator — visible for arctic & frostholm only
+  var accessHdr = document.getElementById('drawer-access-section-hdr');
+  var accessSep = document.getElementById('drawer-access-sep');
+  var showAccess = p.col === 'arctic' || p.col === 'frostholm';
+  if (accessHdr) accessHdr.style.display = showAccess ? '' : 'none';
+  if (accessSep) accessSep.style.display = showAccess ? '' : 'none';
+
+  // Dynamic bundles row in VP table
+  var vpBundlesDirect = document.getElementById('vp-bundles-direct');
+  if (vpBundlesDirect) {
+    var en, fr;
+    if (p.col === '8k') {
+      en = '✓ Volume pricing · up to −50%'; fr = '✓ Prix par volume · jusqu\'à −50%';
+    } else if (p.col === 'frostholm') {
+      en = '✓ Biome bundles · style unlocks'; fr = '✓ Bundles biomes · styles débloqués';
+    } else if (p.col === 'arctic') {
+      en = '✓ Style bundles · Essentials + Master'; fr = '✓ Bundles styles · Essentials + Master';
+    } else {
+      en = '✓ Buy 3 · pay 2 · custom deals'; fr = '✓ 3 achetés · 2 payés · offres perso';
+    }
+    vpBundlesDirect.textContent = (document.documentElement.lang === 'fr') ? fr : en;
+    vpBundlesDirect.dataset.en = en; vpBundlesDirect.dataset.fr = fr;
+  }
+
   // Open
   document.getElementById('drawer-overlay').classList.add('open');
   document.getElementById('drawer').classList.add('open');
@@ -2440,7 +3030,7 @@ function setVideoTab(idx) {
   if (iframe) iframe.remove();
   var thumb = document.getElementById('drawer-vthumb');
   var playbtn = document.getElementById('drawer-vplaybtn');
-  thumb.src = 'https://img.youtube.com/vi/' + vid.id + '/mqdefault.jpg';
+  thumb.src = vid.thumb || ('https://img.youtube.com/vi/' + vid.id + '/mqdefault.jpg');
   thumb.alt = vid.label;
   thumb.style.display = '';
   playbtn.style.display = '';
@@ -2555,6 +3145,504 @@ function saveCart() {
   try { localStorage.setItem('kly_cart', JSON.stringify(cart)); } catch(e) {}
 }
 
+/* ═══════════════════════════════════════════════
+   ARCTIC BUNDLE SYSTEM
+═══════════════════════════════════════════════ */
+var ARCTIC_HIERARCHY = [
+  { id:'897b47f0', rank:1, label:'Realistic',  price:69.99 },
+  { id:'5e439f0f', rank:2, label:'Stylized',   price:59.99 },
+  { id:'14e34309', rank:3, label:'Polygonal',  price:49.99 },
+  { id:'3d96a640', rank:4, label:'Cartoon',    price:39.99 },
+  { id:'af813c5f', rank:5, label:'Retro',      price:29.99 },
+];
+var ARCTIC_LEGACY_EUR = 15;
+var ARCTIC_MASTER_EUR = 89.99;
+/* Direct Advantage -10% on arctic prices (same formula as cart pricing) */
+function _arcticDisc(basePrice) { return Math.ceil(basePrice * 0.9) - 0.01; }
+
+/* ═══ FROSTHOLM BIOME SYSTEM ═══ */
+var FROSTHOLM_BIOMES = [
+  { id:'mountains', label:'Mountains', labelFr:'Montagnes', displayName:'Frozen Peaks', displayNameFr:'Sommets Gelés', tagline:'High-fidelity alpine environment', taglineFr:'Environnement alpin haute-fidélité', master:149.99,
+    styles:[
+      {id:'2baaee7f',st:'realistic',price:109.99,rank:1},
+      {id:'59260bb5',st:'stylized', price:99.99, rank:2},
+      {id:'38504349',st:'polygonal',price:89.99, rank:3},
+      {id:'a657b6ad',st:'cartoon',  price:79.99, rank:4}
+    ]
+  },
+  { id:'fields', label:'Fields', labelFr:'Champs', displayName:'Boreal Plains', displayNameFr:'Plaines Boréales', tagline:'Open snow-covered tundra environment', taglineFr:'Environnement toundra enneigée ouverte', master:119.99,
+    styles:[
+      {id:'1b7d67e9',st:'realistic',price:89.99,rank:1},
+      {id:'7765b549',st:'stylized', price:79.99,rank:2},
+      {id:'48c58be4',st:'polygonal',price:69.99, rank:3},
+      {id:'5ae6cc28',st:'cartoon',  price:59.99, rank:4}
+    ]
+  },
+  { id:'icebergs', label:'Icebergs', labelFr:'Icebergs', displayName:'Drifting Giants', displayNameFr:'Géants Dérivants', tagline:'Floating monolith ocean environment', taglineFr:'Environnement océanique de monolithes', master:134.99,
+    styles:[
+      {id:'51f7b813',st:'realistic',price:99.99, rank:1},
+      {id:'025a3a0d',st:'stylized', price:89.99, rank:2},
+      {id:'5cf3fa06',st:'polygonal',price:79.99, rank:3},
+      {id:'7dd6414f',st:'cartoon',  price:69.99, rank:4}
+    ]
+  },
+  { id:'glaciers', label:'Glaciers', labelFr:'Glaciers', displayName:'Eternal Ice', displayNameFr:'Glaces Éternelles', tagline:'Cascading polar glacier environment', taglineFr:'Environnement glaciaire polaire en cascade', master:164.99,
+    styles:[
+      {id:'080a6e16',st:'realistic',price:119.99,rank:1},
+      {id:'1645ee54',st:'stylized', price:109.99,rank:2},
+      {id:'a5161656',st:'polygonal',price:99.99, rank:3},
+      {id:'386fc789',st:'cartoon',  price:89.99, rank:4}
+    ]
+  }
+];
+var FROSTHOLM_UNLOCK_EUR = 20;
+
+/* Map productId-prefix → biome */
+var _fhProdBiomeMap = {};
+FROSTHOLM_BIOMES.forEach(function(b){ b.styles.forEach(function(s){ _fhProdBiomeMap[s.id] = b.id; }); });
+
+var frostholmBundles = (function() {
+  try { return JSON.parse(localStorage.getItem('kly_fh_bundles') || '[]'); }
+  catch(e) { return []; }
+})();
+renderStore(); /* initial render — all data (PRODUCTS, FROSTHOLM_BIOMES, frostholmBundles) now available */
+function saveFhBundles() {
+  try { localStorage.setItem('kly_fh_bundles', JSON.stringify(frostholmBundles)); } catch(e) {}
+}
+
+/* Returns biome IDs currently "active" in cart (direct or master bundle) */
+function getFhActiveBiomes() {
+  var map = {}; /* biomeId → {directTotal, hasMaster, hasUnlock} */
+  cart.forEach(function(id) {
+    var p = PRODUCTS.find(function(x){ return x.id === id; });
+    if (!p || p.col !== 'frostholm') return;
+    var biomeId = _fhProdBiomeMap[p.id.substring(0,8)];
+    if (!biomeId) return;
+    if (!map[biomeId]) map[biomeId] = {directTotal:0, hasMaster:false, hasUnlock:false};
+    map[biomeId].directTotal += p.p;
+  });
+  frostholmBundles.forEach(function(b) {
+    var biome = FROSTHOLM_BIOMES.find(function(bi){ return bi.id === b.biomeId; });
+    if (!biome) return;
+    if (!map[b.biomeId]) map[b.biomeId] = {directTotal:0, hasMaster:false, hasUnlock:false};
+    if (b.type === 'fh-master') { map[b.biomeId].hasMaster = true; map[b.biomeId].directTotal = Math.max(map[b.biomeId].directTotal, b.price); }
+    if (b.type === 'fh-unlock') { map[b.biomeId].hasUnlock = true; }
+  });
+  return map;
+}
+
+/* Returns sorted biome rank array: [{biomeId, rank, pct, label, tierClass, info}] biome rank 1 = most expensive */
+var FH_TIERS  = {1:10,    2:25,    3:50,    4:75};
+var FH_LABELS = {1:'-10%',2:'-25%',3:'-50%',4:'-75%'};
+var FH_CLASSES= {1:'tier1',2:'tier2',3:'tier3',4:'tier4'};
+function getFhBiomeRanks() {
+  var map = getFhActiveBiomes();
+  var sorted = Object.keys(map).sort(function(a,b){ return map[b].directTotal - map[a].directTotal; });
+  return sorted.map(function(biomeId, i) {
+    var rank = i + 1;
+    return { biomeId:biomeId, rank:rank, pct:FH_TIERS[rank]||10,
+             label:FH_LABELS[rank]||'-10%', tierClass:FH_CLASSES[rank]||'tier1', info:map[biomeId] };
+  });
+}
+
+/* Get biome for a given product */
+function getFhBiomeForProduct(p) {
+  var biomeId = _fhProdBiomeMap[p.id.substring(0,8)];
+  return biomeId ? FROSTHOLM_BIOMES.find(function(b){ return b.id === biomeId; }) : null;
+}
+
+/* Ownership info for a specific biome */
+function getFhBiomeOwnership(biomeId) {
+  /* Returns object: {ownedStyles: Set of style shortIds, hasMaster, hasUnlock} */
+  var ownedIds = new Set();
+  cart.forEach(function(id) {
+    var p = PRODUCTS.find(function(x){ return x.id === id; });
+    if (!p || p.col !== 'frostholm') return;
+    var bid = _fhProdBiomeMap[p.id.substring(0,8)];
+    if (bid === biomeId) ownedIds.add(p.id.substring(0,8));
+  });
+  var hasMaster = frostholmBundles.some(function(b){ return b.type === 'fh-master' && b.biomeId === biomeId; });
+  var hasUnlock = frostholmBundles.some(function(b){ return b.type === 'fh-unlock' && b.biomeId === biomeId; });
+  return { ownedIds:ownedIds, hasMaster:hasMaster, hasUnlock:hasUnlock };
+}
+
+function addFhBundle(type, biomeId, productId) {
+  var biome = FROSTHOLM_BIOMES.find(function(b){ return b.id === biomeId; });
+  if (!biome) return;
+  if (type === 'fh-master') {
+    /* Remove existing unlock and master for this biome */
+    frostholmBundles = frostholmBundles.filter(function(b){ return b.biomeId !== biomeId; });
+    /* Remove individual biome products from cart */
+    cart = cart.filter(function(id) {
+      var p = PRODUCTS.find(function(x){ return x.id === id; });
+      if (!p || p.col !== 'frostholm') return true;
+      return _fhProdBiomeMap[p.id.substring(0,8)] !== biomeId;
+    });
+    saveCart();
+    frostholmBundles.push({ type:'fh-master', biomeId:biomeId, price:biome.master });
+  } else {
+    /* fh-unlock: remove existing unlock for this biome, keep master */
+    frostholmBundles = frostholmBundles.filter(function(b){ return !(b.biomeId === biomeId && b.type === 'fh-unlock'); });
+    /* Auto-add the product to cart if not already there */
+    if (productId && !cart.includes(productId)) {
+      cart.push(productId);
+      saveCart();
+    }
+    frostholmBundles.push({ type:'fh-unlock', biomeId:biomeId, price:FROSTHOLM_UNLOCK_EUR });
+  }
+  saveFhBundles();
+  var badge = document.getElementById('cart-badge');
+  if (badge) { badge.classList.remove('pop'); void badge.offsetWidth; badge.classList.add('pop'); }
+  updateCartBadge();
+  renderCart();
+  openCartDrawer();
+  _refreshDrawerFh();
+}
+
+function removeFhBundle(biomeId, type) {
+  frostholmBundles = frostholmBundles.filter(function(b){ return !(b.biomeId === biomeId && b.type === type); });
+  saveFhBundles();
+  updateCartBadge();
+  renderCart();
+  _refreshDrawerFh();
+}
+
+function _refreshDrawerFh() {
+  var el = document.getElementById('drawer-fh-bundles');
+  if (!el) return;
+  /* Find which product is currently open in drawer */
+  var titleEl = document.getElementById('drawer-title');
+  if (!titleEl) return;
+  var dp = PRODUCTS.find(function(p){ return p.t === titleEl.textContent; });
+  if (dp && dp.col === 'frostholm') populateDrawerFhBundles(dp);
+}
+
+function populateDrawerFhBundles(p) {
+  var biome = getFhBiomeForProduct(p);
+  if (!biome) return;
+  var own        = getFhBiomeOwnership(biome.id);
+  var biomeRanks = getFhBiomeRanks();
+  var myRankEntry = biomeRanks.find(function(r){ return r.biomeId === biome.id; });
+  var biomeDisc  = myRankEntry ? myRankEntry.pct : 10;
+
+  /* Dynamic section title */
+  var titleEl = document.querySelector('#drawer-fh-bundles .fh-bundle-title');
+  if (titleEl) titleEl.textContent = biome.label + ' Style Bundles';
+
+  /* Sort styles by rank for display: Realistic(1) → Stylized(2) → Polygonal(3) → Cartoon(4) */
+  var sortedStyles = biome.styles.slice().sort(function(a, b){ return a.rank - b.rank; });
+
+  /* Current product's rank within this biome */
+  var anchor     = biome.styles.find(function(s){ return p.id.indexOf(s.id) === 0; });
+  var anchorRank = anchor ? anchor.rank : 0;
+  var maxRank    = biome.styles.reduce(function(m, s){ return Math.max(m, s.rank); }, 0);
+
+  /* Styles list */
+  var stylesHtml = sortedStyles.map(function(s) {
+    var isProd      = p.id.indexOf(s.id) === 0;
+    var isInCart    = isProd && cart.includes(p.id);
+    var isDirectOwn = own.ownedIds.has(s.id) || isInCart;
+    /* Essentials Access unlocks styles with rank HIGHER than the anchor (cheaper tiers) */
+    var isEssential = !own.hasMaster && own.hasUnlock && s.rank > anchorRank && !isDirectOwn;
+    var isOwned     = own.hasMaster || isDirectOwn || isEssential;
+    var lock        = isOwned ? '🔓' : '🔒';
+    var discPrice   = Math.ceil(s.price * (1 - biomeDisc / 100)) - 0.01;
+    var priceStr    = formatProductPrice(discPrice);
+    var tag = '';
+    if (own.hasMaster)    tag = '<span class="fh-dwr-tag">MASTER</span>';
+    else if (isEssential) tag = '<span class="fh-dwr-tag">ESSENTIALS</span>';
+    var cls = 'fh-dwr-style' + (isOwned ? ' owned' : '') + (isProd ? ' current' : '');
+    return '<div class="' + cls + '">' +
+      '<span class="fh-dwr-lock">' + lock + '</span>' +
+      '<span class="fh-dwr-name">' + s.st.charAt(0).toUpperCase() + s.st.slice(1) + '</span>' +
+      '<span class="fh-dwr-price">' + priceStr + '</span>' +
+      tag +
+    '</div>';
+  }).join('');
+  document.getElementById('drawer-fh-styles').innerHTML = stylesHtml;
+
+  /* CTAs */
+  var ctaHtml = '';
+  if (own.hasMaster) {
+    ctaHtml = '<div class="fh-master-active">✓ ' + _t('Master Access active — All styles unlocked', 'Master Access actif — Tous les styles débloqués') + '</div>';
+  } else {
+    /* Essentials Access — only when anchor is not the cheapest style (rank < maxRank) */
+    var essentialUnlocks = sortedStyles.filter(function(s){ return s.rank > anchorRank && !own.ownedIds.has(s.id); });
+    var essentialsAllowed = anchorRank < maxRank && essentialUnlocks.length > 0;
+    if (essentialsAllowed) {
+      var unlockNames = essentialUnlocks.map(function(s){ return s.st.charAt(0).toUpperCase() + s.st.slice(1); }).join(', ');
+      if (own.hasUnlock) {
+        ctaHtml += '<button class="fh-cta-unlock active" onclick="removeFhBundle(\'' + biome.id + '\',\'fh-unlock\')">' +
+          '✓ ' + _t('Essentials Access active · Remove (+€', 'Essentials Access actif · Retirer (+€') + FROSTHOLM_UNLOCK_EUR + ')</button>';
+      } else {
+        ctaHtml += '<button class="fh-cta-unlock" onclick="addFhBundle(\'fh-unlock\',\'' + biome.id + '\',\'' + p.id + '\')">' +
+          '🔓 ' + _t('Essentials Access · +€', 'Essentials Access · +€') + FROSTHOLM_UNLOCK_EUR +
+          '<span class="arc-cta-sub">' + _t('Unlocks: ', 'Débloque : ') + unlockNames + '</span>' +
+        '</button>';
+      }
+    }
+    /* Master Access */
+    ctaHtml += '<button class="fh-cta-master" onclick="addFhBundle(\'fh-master\',\'' + biome.id + '\',null)">' +
+      '⭐ ' + _t('Master Access · €', 'Master Access · €') + biome.master.toFixed(2) +
+      '<span class="arc-cta-sub">' + _t('All 4 styles · Best value', '4 styles inclus · Meilleure valeur') + '</span>' +
+    '</button>';
+  }
+  document.getElementById('drawer-fh-ctarow').innerHTML = ctaHtml;
+}
+
+var cartBundles = (function() {
+  try { return JSON.parse(localStorage.getItem('kly_bundles') || '[]'); }
+  catch(e) { return []; }
+})();
+
+function saveBundles() {
+  try { localStorage.setItem('kly_bundles', JSON.stringify(cartBundles)); } catch(e) {}
+}
+
+/* ── Shared: refresh drawer arctic section if currently open ── */
+function _refreshDrawerArctic() {
+  var drawerArcticEl = document.getElementById('drawer-arctic-bundles');
+  if (!drawerArcticEl || drawerArcticEl.style.display === 'none') return;
+  var pid = document.getElementById('drawer-btn-add-cart').getAttribute('data-product-id');
+  if (!pid) return;
+  var dp = PRODUCTS.find(function(x){ return x.id === pid; });
+  if (dp && dp.col === 'arctic') populateDrawerArcticBundles(dp);
+}
+
+function addArcticBundle(type, productId) {
+  /* Always remove any existing entry of same type; Legacy = only one globally */
+  cartBundles = cartBundles.filter(function(b){ return b.type !== type; });
+  if (type === 'master') {
+    /* Master also removes any legacy */
+    cartBundles = cartBundles.filter(function(b){ return b.type !== 'legacy'; });
+    /* Auto-remove individually purchased arctic products (Master covers them all) */
+    cart = cart.filter(function(id){
+      var p = PRODUCTS.find(function(x){ return x.id === id; });
+      return !p || p.col !== 'arctic';
+    });
+    saveCart();
+    cartBundles.push({ type:'master', price:ARCTIC_MASTER_EUR });
+  } else {
+    /* Legacy: auto-add the anchor product to cart if not already there */
+    if (productId && !cart.includes(productId)) {
+      cart.push(productId);
+      saveCart();
+    }
+    cartBundles.push({ type:'legacy', price:ARCTIC_LEGACY_EUR });
+  }
+  saveBundles();
+  /* Badge pop animation */
+  var badge = document.getElementById('cart-badge');
+  if (badge) { badge.classList.remove('pop'); void badge.offsetWidth; badge.classList.add('pop'); }
+  updateCartBadge();
+  renderCart();
+  openCartDrawer();
+  _refreshDrawerArctic();
+}
+
+function removeArcticBundle(type) {
+  cartBundles = cartBundles.filter(function(b){ return b.type !== type; });
+  saveBundles();
+  updateCartBadge();
+  renderCart();
+  _refreshDrawerArctic();
+}
+
+/* Returns per-rank ownership: null | 'direct' | 'legacy' | 'master'
+   Legacy = anchored dynamically to highest-rank (most expensive) direct arctic item in cart */
+function getArcticCartInfo() {
+  var info = {};
+  ARCTIC_HIERARCHY.forEach(function(h) {
+    info[h.rank] = cart.some(function(id){ return id.substring(0,8) === h.id; }) ? 'direct' : null;
+  });
+  var hasMaster = cartBundles.some(function(b){ return b.type === 'master'; });
+  if (hasMaster) {
+    ARCTIC_HIERARCHY.forEach(function(h){ if (!info[h.rank]) info[h.rank] = 'master'; });
+    return info;
+  }
+  var hasLegacy = cartBundles.some(function(b){ return b.type === 'legacy'; });
+  if (hasLegacy) {
+    /* Find the most expensive (lowest rank number) arctic item directly in cart */
+    var directRanks = ARCTIC_HIERARCHY.filter(function(h){ return info[h.rank] === 'direct'; })
+                                      .map(function(h){ return h.rank; });
+    if (directRanks.length > 0) {
+      var topRank = Math.min.apply(null, directRanks);
+      ARCTIC_HIERARCHY.forEach(function(h){
+        if (h.rank > topRank && !info[h.rank]) info[h.rank] = 'legacy';
+      });
+    }
+  }
+  return info;
+}
+
+/* Suggest Master upgrade when current arctic spend ≥ Master price */
+function getArcticAutoUpgradeSuggestion() {
+  var hasMaster = cartBundles.some(function(b){ return b.type === 'master'; });
+  if (hasMaster) return null;
+  var info = getArcticCartInfo();
+  var directItems = ARCTIC_HIERARCHY.filter(function(h){ return info[h.rank] === 'direct'; });
+  var hasLegacy   = cartBundles.some(function(b){ return b.type === 'legacy'; });
+  var currentCost = directItems.reduce(function(s,h){ return s + h.price; }, 0)
+                  + (hasLegacy ? ARCTIC_LEGACY_EUR : 0);
+  var ownedCount  = ARCTIC_HIERARCHY.filter(function(h){ return info[h.rank] !== null; }).length;
+  if (ownedCount >= 3 || currentCost >= ARCTIC_MASTER_EUR - 0.01) {
+    return { saving: parseFloat((currentCost - ARCTIC_MASTER_EUR).toFixed(2)) };
+  }
+  return null;
+}
+
+/* Arctic widget shown inside the cart drawer */
+function buildArcticCartWidget(pricingItems) {
+  var arcticInCart = pricingItems.filter(function(it){ return it.product.col === 'arctic'; });
+  var hasBundles   = cartBundles.length > 0;
+  if (arcticInCart.length === 0 && !hasBundles) return '';
+
+  var info      = getArcticCartInfo();
+  var hasMaster = cartBundles.some(function(b){ return b.type === 'master'; });
+  var hasLegacy = cartBundles.some(function(b){ return b.type === 'legacy'; });
+  var suggest   = getArcticAutoUpgradeSuggestion();
+
+  /* ── 5 style rows (🔓/🔒) ── */
+  var styleRows = ARCTIC_HIERARCHY.map(function(h) {
+    var status   = info[h.rank];
+    var owned    = status !== null;
+    var lockIcon = owned ? '🔓' : '🔒';
+    var rowCls   = 'arctic-style-row ' + (owned ? 'arctic-style-owned arctic-owned-' + status : 'arctic-style-locked');
+    var badge    = '';
+    if (status === 'direct') badge = '';
+    if (status === 'legacy') badge = '<span class="arctic-via-badge">' + _t('via Essentials Access', 'via Essentials Access') + '</span>';
+    if (status === 'master') badge = '<span class="arctic-via-badge">' + _t('via Master', 'via Master') + '</span>';
+    return '<div class="' + rowCls + '">' +
+      '<span class="arctic-style-lock">' + lockIcon + '</span>' +
+      '<span class="arctic-style-name">' + h.label + '</span>' +
+      '<span class="arctic-style-price">€' + h.price.toFixed(2) + '</span>' +
+      badge +
+    '</div>';
+  }).join('');
+
+  /* ── Savings bar ── */
+  var savingsHtml = '';
+  if (hasMaster) {
+    /* Master: compare sum of all 5 individually vs bundle price */
+    var masterNormal = ARCTIC_HIERARCHY.reduce(function(s,h){ return s + _arcticDisc(h.price); }, 0);
+    var masterSaving = parseFloat((masterNormal - ARCTIC_MASTER_EUR).toFixed(2));
+    if (masterSaving > 0) {
+      savingsHtml = '<div class="arctic-savings-bar">' +
+        '<span class="arctic-savings-orig">€' + masterNormal.toFixed(2) + '</span>' +
+        '<span class="arctic-savings-arrow">→</span>' +
+        '<span class="arctic-savings-final">€' + ARCTIC_MASTER_EUR.toFixed(2) + '</span>' +
+        '<span class="arctic-savings-save">' + _t('Save', 'Économie') + ' €' + masterSaving.toFixed(2) + '</span>' +
+      '</div>';
+    }
+  } else if (hasLegacy) {
+    /* Legacy: compare (anchor + all below individually) vs (anchor discounted + €15) */
+    var topDirect0 = ARCTIC_HIERARCHY.filter(function(h){ return info[h.rank] === 'direct'; })
+                                     .sort(function(a,b){ return a.rank - b.rank; })[0];
+    if (topDirect0) {
+      var covered   = ARCTIC_HIERARCHY.filter(function(h){ return h.rank >= topDirect0.rank; });
+      var legNormal = covered.reduce(function(s,h){ return s + _arcticDisc(h.price); }, 0);
+      var legBundle = _arcticDisc(topDirect0.price) + ARCTIC_LEGACY_EUR;
+      var legSaving = parseFloat((legNormal - legBundle).toFixed(2));
+      if (legSaving > 0) {
+        savingsHtml = '<div class="arctic-savings-bar">' +
+          '<span class="arctic-savings-orig">€' + legNormal.toFixed(2) + '</span>' +
+          '<span class="arctic-savings-arrow">→</span>' +
+          '<span class="arctic-savings-final">€' + legBundle.toFixed(2) + '</span>' +
+          '<span class="arctic-savings-save">' + _t('Save', 'Économie') + ' €' + legSaving.toFixed(2) + '</span>' +
+        '</div>';
+      }
+    }
+  }
+
+  /* ── Auto-upgrade suggestion (Legacy → Master) ── */
+  var suggestHtml = '';
+  if (suggest && suggest.saving > 0.01) {
+    suggestHtml = '<div class="arctic-upgrade-suggest">' +
+      _t('⬆️ Switch to <strong>Master Access</strong> and save <strong>€' + suggest.saving.toFixed(2) + '</strong>!',
+         '⬆️ Passe au <strong>Master Access</strong> et économise <strong>€' + suggest.saving.toFixed(2) + '</strong> !') +
+      '<button class="arctic-upgrade-btn" onclick="addArcticBundle(\'master\')">' +
+        _t('Upgrade — €', 'Upgrade — €') + ARCTIC_MASTER_EUR.toFixed(2) +
+      '</button>' +
+    '</div>';
+  }
+
+  /* ── CTAs ── */
+  var ctaHtml = '';
+  if (!hasMaster) {
+    if (hasLegacy) {
+      ctaHtml += '<button class="arctic-cta-legacy active" onclick="removeArcticBundle(\'legacy\')">' +
+        _t('✓ Essentials Access active · Remove (+€', '✓ Essentials Access actif · Retirer (+€') + ARCTIC_LEGACY_EUR + ')' +
+      '</button>';
+    }
+    ctaHtml += '<button class="arctic-cta-master" onclick="addArcticBundle(\'master\')">' +
+      '❄️ Master Access · €' + ARCTIC_MASTER_EUR.toFixed(2) +
+      '<span class="arc-cta-sub">' + _t('All 5 styles included', 'Tous les 5 styles inclus') + '</span>' +
+    '</button>';
+  }
+
+  return '<div class="arctic-cart-widget">' +
+    '<div class="arctic-cart-hdr"><span class="arctic-cart-icon">❄️</span>' +
+    '<span class="arctic-cart-title">' + _t('Arctic Landscapes', 'Paysages Arctiques') + '</span></div>' +
+    styleRows +
+    savingsHtml +
+    suggestHtml +
+    (ctaHtml ? '<div class="arctic-cart-ctarow">' + ctaHtml + '</div>' : '') +
+  '</div>';
+}
+
+/* Populate the arctic bundle section inside the product drawer */
+function populateDrawerArcticBundles(p) {
+  var anchor = ARCTIC_HIERARCHY.find(function(h){ return h.id === p.id.substring(0,8); });
+  if (!anchor) return;
+
+  var info      = getArcticCartInfo();
+  var hasMaster = cartBundles.some(function(b){ return b.type === 'master'; });
+  var hasLegacy = cartBundles.some(function(b){ return b.type === 'legacy'; });
+
+  /* Styles that Legacy would unlock from this product's position */
+  var legacyUnlocks = ARCTIC_HIERARCHY.filter(function(h){ return h.rank > anchor.rank && !info[h.rank]; });
+
+  /* Style hierarchy list */
+  var stylesHtml = ARCTIC_HIERARCHY.map(function(h) {
+    var owned      = info[h.rank] !== null;
+    var isCurrent  = h.id === anchor.id;
+    var wouldUnlock = h.rank > anchor.rank && !hasMaster && !owned;
+    var cls = 'arc-dwr-style' + (owned ? ' owned' : '') + (isCurrent ? ' current' : '');
+    return '<div class="' + cls + '">' +
+      '<span class="arc-dwr-lock">' + (owned ? '🔓' : '🔒') + '</span>' +
+      '<span class="arc-dwr-name">' + h.label + '</span>' +
+      '<span class="arc-dwr-price">€' + h.price.toFixed(2) + '</span>' +
+      (wouldUnlock ? '<span class="arc-dwr-tag">Essentials</span>' : '') +
+    '</div>';
+  }).join('');
+  document.getElementById('drawer-arctic-styles').innerHTML = stylesHtml;
+
+  /* CTA buttons — Legacy hidden when Realistic (rank 1) is this product (same result as Master) */
+  var ctaHtml = '';
+  if (!hasMaster) {
+    var legacyAllowed = anchor.rank > 1 && legacyUnlocks.length > 0;
+    if (legacyAllowed) {
+      var names = legacyUnlocks.map(function(h){ return h.label; }).join(', ');
+      if (hasLegacy) {
+        ctaHtml += '<button class="arctic-cta-legacy active" onclick="removeArcticBundle(\'legacy\')">' +
+          _t('✓ Essentials Access active · Remove (+€', '✓ Essentials Access actif · Retirer (+€') + ARCTIC_LEGACY_EUR + ')</button>';
+      } else {
+        ctaHtml += '<button class="arctic-cta-legacy" onclick="addArcticBundle(\'legacy\',\'' + p.id + '\')">' +
+          '🔓 ' + _t('Essentials Access · +€', 'Essentials Access · +€') + ARCTIC_LEGACY_EUR +
+          '<span class="arc-cta-sub">' + _t('Unlocks: ', 'Débloque : ') + names + '</span></button>';
+      }
+    }
+    ctaHtml += '<button class="arctic-cta-master" onclick="addArcticBundle(\'master\')">' +
+      '❄️ Master Access · €' + ARCTIC_MASTER_EUR.toFixed(2) +
+      '<span class="arc-cta-sub">' + _t('All 5 styles included', 'Tous les 5 styles inclus') + '</span></button>';
+  } else {
+    ctaHtml = '<div class="arctic-master-active">' +
+      _t('✓ Master Access active — All styles unlocked', '✓ Master Access actif — Tous les styles débloqués') +
+    '</div>';
+  }
+  document.getElementById('drawer-arctic-ctarow').innerHTML = ctaHtml;
+}
+
 /* ── Add / Remove ── */
 function addToCart(productId) {
   if (!cart.includes(productId)) {
@@ -2575,11 +3663,40 @@ function addToCart(productId) {
 }
 
 function removeFromCart(productId) {
+  var p = PRODUCTS.find(function(x){ return x.id === productId; });
+  var wasArctic = p && p.col === 'arctic';
   cart = cart.filter(function(x){ return x !== productId; });
   saveCart();
+  /* If the removed item was arctic and no arctic products remain, auto-drop Legacy bundle
+     (Legacy has no anchor without a direct arctic purchase) */
+  if (wasArctic) {
+    var arcticLeft = cart.some(function(id){
+      var cp = PRODUCTS.find(function(x){ return x.id === id; });
+      return cp && cp.col === 'arctic';
+    });
+    if (!arcticLeft) {
+      cartBundles = cartBundles.filter(function(b){ return b.type !== 'legacy'; });
+      saveBundles();
+    }
+  }
+  /* Auto-remove fh-unlock if no more direct items in that biome */
+  if (p && p.col === 'frostholm') {
+    var removedBiomeId = _fhProdBiomeMap[productId.substring(0,8)];
+    if (removedBiomeId) {
+      var biomeItemsLeft = cart.some(function(id) {
+        var cp = PRODUCTS.find(function(x){ return x.id === id; });
+        return cp && cp.col === 'frostholm' && _fhProdBiomeMap[cp.id.substring(0,8)] === removedBiomeId;
+      });
+      if (!biomeItemsLeft) {
+        frostholmBundles = frostholmBundles.filter(function(b){ return !(b.biomeId === removedBiomeId && b.type === 'fh-unlock'); });
+        saveFhBundles();
+      }
+    }
+  }
   updateCartBadge();
   renderCart();
   syncDrawerCartBtn(productId);
+  _refreshDrawerFh();
 }
 
 /* ── Sync the "Add to Cart" button in the product drawer ── */
@@ -2602,8 +3719,9 @@ function syncDrawerCartBtn(productId) {
 function updateCartBadge() {
   var badge = document.getElementById('cart-badge');
   if (!badge) return;
-  badge.textContent = cart.length;
-  badge.classList.toggle('visible', cart.length > 0);
+  var total = cart.length + cartBundles.length + frostholmBundles.length;
+  badge.textContent = total;
+  badge.classList.toggle('visible', total > 0);
 }
 
 /* ── Smart cross-sell suggestions ──
@@ -2659,27 +3777,288 @@ function getCartSuggestions(cartIds) {
   return results.slice(0, 3);
 }
 
-/* ── Render cart drawer contents ── */
-function renderCart() {
-  var emptyEl   = document.getElementById('cart-empty');
-  var itemsEl   = document.getElementById('cart-items');
-  var footerEl  = document.getElementById('cart-footer');
-  var crossEl   = document.getElementById('cart-cross');
-  var countEl   = document.getElementById('cart-hdr-count');
-  var totalEl   = document.getElementById('cart-total-amt');
-  var savingsEl = document.getElementById('cart-savings');
-  if (!itemsEl) return;
+/* ══════════════════════════════════════════════════════════════════
+   CART PRICING ENGINE — Direct Advantage + 8K Bundle tiers
+   ──────────────────────────────────────────────────────────────────
+   Global rule   : every product gets -10% (Direct Advantage)
+   8K Bundle rule: items sharing the same base price within col='8k'
+                   get escalating tiers: -10% / -20% / -50% / FREE
+   Rounding      : ceil(base × (1-pct)) − 0.01  → always ends in .99
+════════════════════════════════════════════════════════════════════ */
+/* 3-tier bundle: -10% / -25% / -50% cycling every 3 packs */
+var TIER_PCT   = { 1:10,    2:25,    3:50    };
+var TIER_LABEL = { 1:'-10%',2:'-25%',3:'-50%'};
+var TIER_CLASS = { 1:'tier1',2:'tier2',3:'tier3'};
 
-  // Update item count label
-  if (countEl) {
-    countEl.textContent = cart.length + (cart.length === 1 ? ' item' : ' items');
+function computeCartPricing() {
+  /* ── 8K same-price cycling tiers ── */
+  var k8groups = {};
+  cart.forEach(function(id) {
+    var p = PRODUCTS.find(function(x){ return x.id === id; });
+    if (!p || p.col !== '8k') return;
+    var key = p.p.toFixed(2);
+    if (!k8groups[key]) k8groups[key] = [];
+    k8groups[key].push(id);
+  });
+  var bundleTier = {};
+  Object.keys(k8groups).forEach(function(key) {
+    k8groups[key].forEach(function(id, i) { bundleTier[id] = (i % 3) + 1; });
+  });
+
+  /* ── Frostholm horizontal biome tiers ── */
+  var fhRanks = getFhBiomeRanks();
+  var fhBiomeRankMap = {};
+  fhRanks.forEach(function(r){ fhBiomeRankMap[r.biomeId] = r; });
+
+  /* ── Build per-item pricing ── */
+  return cart.map(function(id) {
+    var p = PRODUCTS.find(function(x){ return x.id === id; });
+    if (!p) return null;
+
+    if (p.col === 'frostholm') {
+      var biomeId = _fhProdBiomeMap[p.id.substring(0,8)];
+      var rankEntry = fhBiomeRankMap[biomeId];
+      var pct      = rankEntry ? rankEntry.pct : 10;
+      var tLabel   = rankEntry ? rankEntry.label : '-10%';
+      var tClass   = rankEntry ? rankEntry.tierClass : 'tier1';
+      var finalEur = Math.ceil(p.p * (1 - pct / 100)) - 0.01;
+      return { id:id, product:p, basePrice:p.p, finalPrice:finalEur,
+               discountPct:pct, label:tLabel, tierClass:tClass,
+               tier:rankEntry ? rankEntry.rank : 1, inBundle: rankEntry && rankEntry.rank > 1,
+               isFree:false, fhBiomeId:biomeId };
+    }
+
+    var tier     = bundleTier[id] || null;
+    var inBundle = tier && k8groups[p.p.toFixed(2)] && k8groups[p.p.toFixed(2)].length > 1;
+    var pct      = inBundle ? TIER_PCT[tier] : 10;
+    var tClass   = inBundle ? TIER_CLASS[tier] : 'tier1';
+    var tLabel   = inBundle ? TIER_LABEL[tier] : '-10%';
+    var finalEur = Math.ceil(p.p * (1 - pct / 100)) - 0.01;
+    return { id:id, product:p, basePrice:p.p, finalPrice:finalEur,
+             discountPct:pct, label:tLabel, tierClass:tClass,
+             tier:tier, inBundle:inBundle, isFree:false };
+  }).filter(Boolean);
+}
+
+/* Format discounted EUR price respecting current currency setting */
+function formatFinalPrice(eurPrice, isFree) {
+  if (isFree) return (CURRENCY === 'USD') ? 'FREE' : 'GRATUIT';
+  if (CURRENCY === 'USD') {
+    return '$' + (Math.ceil(eurPrice * 1.15) - 0.01).toFixed(2);
+  }
+  return '€' + eurPrice.toFixed(2);
+}
+
+/* Build the bundle upsell / progress widget — 3-step cycling */
+function buildBundleWidget(pricingItems) {
+  var k8items = pricingItems.filter(function(it){ return it.product.col === '8k'; });
+  var n = k8items.length;
+  if (n === 0) return '';   /* no 8K in cart → no widget */
+
+  /* Position within current trilogy cycle (1, 2, or 3) */
+  var posInCycle = ((n - 1) % 3) + 1;   /* 1→2→3→1→2→3… */
+  var cycleNum   = Math.floor((n - 1) / 3) + 1;  /* which trilogy */
+  var trilogyComplete = (n % 3 === 0);            /* 3, 6, 9... */
+
+  /* Progress bar — 3 steps, filled up to posInCycle (or all if trilogy complete) */
+  var steps = [
+    { pct:'-10%', cls:'tier1' },
+    { pct:'-25%', cls:'tier2' },
+    { pct:'-50%', cls:'tier3' },
+  ];
+  var progressHtml = steps.map(function(s, idx) {
+    var filled = trilogyComplete ? true : (idx < posInCycle);
+    var barCls = 'bundle-step-bar' + (filled ? ' done ' + s.cls : '');
+    var lblCls = 'bundle-step-lbl' + (filled ? ' done ' + s.cls : '');
+    return '<div class="bundle-step">' +
+      '<div class="' + barCls + '"></div>' +
+      '<span class="' + lblCls + '">' + s.pct + '</span>' +
+    '</div>';
+  }).join('');
+
+  /* Upsell message or completion banner */
+  var inner;
+  if (trilogyComplete) {
+    /* Trilogy complete (n = 3, 6, 9…) */
+    inner = '<div class="bundle-progress">' + progressHtml + '</div>' +
+            '<div class="bundle-complete-msg">TRILOGIE DÉBLOQUÉE — <span class="highlight-tier3">−50%</span> SUR LE 3ÈME PACK</div>';
+  } else {
+    var msg;
+    if (posInCycle === 1) {
+      /* First pack of a cycle (n = 1, 4, 7…) */
+      msg = 'Ajoutez <strong>1 autre pack 8K</strong> pour débloquer <span class="highlight-tier2">−25%</span> sur le suivant !';
+    } else {
+      /* Second pack of a cycle (n = 2, 5, 8…) */
+      msg = 'Plus qu\'<strong>1 pack 8K</strong> pour l\'avoir à <span class="highlight-tier3">−50%</span> !';
+    }
+    inner = '<div class="bundle-progress">' + progressHtml + '</div>' +
+            '<div class="bundle-widget-msg">' + msg + '</div>';
   }
 
-  if (cart.length === 0) {
+  return '<div class="bundle-widget">' +
+    '<div class="bundle-widget-hdr">' +
+      '<span class="bundle-widget-icon">⚡</span>' +
+      '<span class="bundle-widget-title">Bundle 8K Terrain</span>' +
+    '</div>' +
+    inner +
+  '</div>';
+}
+
+function buildFhCartWidget(pricingItems) {
+  var fhItems = pricingItems.filter(function(it){ return it.product.col === 'frostholm'; });
+  var hasFh = fhItems.length > 0 || frostholmBundles.length > 0;
+  if (!hasFh) return '';
+
+  /* ── Per-biome style rows ── */
+  var activeBiomeIds = {};
+  fhItems.forEach(function(it) {
+    var b = getFhBiomeForProduct(it.product);
+    if (b) activeBiomeIds[b.id] = true;
+  });
+  frostholmBundles.forEach(function(b){ activeBiomeIds[b.biomeId] = true; });
+
+  var isF = document.documentElement.lang === 'fr';
+  var activeBiomes = FROSTHOLM_BIOMES.filter(function(b){ return activeBiomeIds[b.id]; });
+
+  var biomeSectionsHtml = activeBiomes.map(function(biome, secIdx) {
+    var own = getFhBiomeOwnership(biome.id);
+    var sortedStyles = biome.styles.slice().sort(function(a, b2){ return a.rank - b2.rank; });
+
+    /* Anchor = direct product in cart for this biome */
+    var anchorRank = 0;
+    fhItems.forEach(function(it) {
+      var bm = getFhBiomeForProduct(it.product);
+      if (bm && bm.id === biome.id) {
+        var s = biome.styles.find(function(st){ return it.product.id.indexOf(st.id) === 0; });
+        if (s) anchorRank = s.rank;
+      }
+    });
+
+    var styleRows = sortedStyles.map(function(s) {
+      var isDirectOwn = own.ownedIds.has(s.id);
+      var isEssential = !own.hasMaster && own.hasUnlock && s.rank > anchorRank && !isDirectOwn;
+      var isOwned = own.hasMaster || isDirectOwn || isEssential;
+      var lock = isOwned ? '🔓' : '🔒';
+      var cls = 'fh-dwr-style' + (isOwned ? ' owned' : '') + (isDirectOwn ? ' current' : '');
+      var tag = '';
+      if (own.hasMaster && !isDirectOwn)  tag = '<span class="fh-dwr-tag">' + _t('Master', 'Master') + '</span>';
+      else if (isEssential)               tag = '<span class="fh-dwr-tag">' + _t('Essentials', 'Essentials') + '</span>';
+      return '<div class="' + cls + '">' +
+        '<span class="fh-dwr-lock">' + lock + '</span>' +
+        '<span class="fh-dwr-name">' + s.st.charAt(0).toUpperCase() + s.st.slice(1) + '</span>' +
+        '<span class="fh-dwr-price">€' + s.price.toFixed(2) + '</span>' +
+        tag +
+      '</div>';
+    }).join('');
+
+    /* Savings bar */
+    var savingsHtml = '';
+    if (own.hasMaster) {
+      var indivTotal = biome.styles.reduce(function(sum, s){ return sum + s.price; }, 0);
+      var mSave = parseFloat((indivTotal - biome.master).toFixed(2));
+      if (mSave > 0) {
+        savingsHtml = '<div class="fh-savings-bar">' +
+          '<span class="fh-savings-orig">€' + indivTotal.toFixed(2) + '</span>' +
+          '<span class="fh-savings-arrow">→</span>' +
+          '<span class="fh-savings-final">€' + biome.master.toFixed(2) + '</span>' +
+          '<span class="fh-savings-save">' + _t('Save', 'Économie') + ' €' + mSave.toFixed(2) + '</span>' +
+        '</div>';
+      }
+    } else if (own.hasUnlock && anchorRank > 0) {
+      var unlocked = sortedStyles.filter(function(s){ return s.rank > anchorRank; });
+      var unlockedTotal = unlocked.reduce(function(sum, s){ return sum + s.price; }, 0);
+      var anchorStyle = sortedStyles.find(function(s){ return s.rank === anchorRank; });
+      var anchorPrice = anchorStyle ? anchorStyle.price : 0;
+      var eSave = parseFloat((unlockedTotal + anchorPrice - (anchorPrice + FROSTHOLM_UNLOCK_EUR)).toFixed(2));
+      if (eSave > 0) {
+        savingsHtml = '<div class="fh-savings-bar">' +
+          '<span class="fh-savings-orig">€' + (unlockedTotal + anchorPrice).toFixed(2) + '</span>' +
+          '<span class="fh-savings-arrow">→</span>' +
+          '<span class="fh-savings-final">€' + (anchorPrice + FROSTHOLM_UNLOCK_EUR).toFixed(2) + '</span>' +
+          '<span class="fh-savings-save">' + _t('Save', 'Économie') + ' €' + eSave.toFixed(2) + '</span>' +
+        '</div>';
+      }
+    }
+
+    var biomeLabel = isF ? (biome.labelFr || biome.label) : biome.label;
+    var volNum = 'Vol.' + (FROSTHOLM_BIOMES.indexOf(biome) + 1);
+    var sep = secIdx > 0 ? '<div class="fh-cart-biome-sep"></div>' : '';
+    return sep +
+      '<div class="fh-cart-biome-sec">' +
+        '<div class="fh-cart-biome-hdr">' +
+          '<span class="fh-cart-biome-badge">' + volNum + '</span>' +
+          '<span class="fh-cart-biome-name">' + biomeLabel + '</span>' +
+        '</div>' +
+        styleRows +
+        savingsHtml +
+      '</div>';
+  }).join('');
+
+  /* ── Biome discount bar ── */
+  var ranks = getFhBiomeRanks();
+  var filledCount = ranks.length;
+  var tierColors = ['tier1','tier2','tier3','tier4'];
+  var discounts = ['-10%','-25%','-50%','-75%'];
+  var stepsHtml = '';
+  for (var i = 0; i < 4; i++) {
+    var isFilled = i < filledCount;
+    var tCls = isFilled ? tierColors[i] : '';
+    var bLbl = isFilled ? ranks[i].biomeId.charAt(0).toUpperCase() + ranks[i].biomeId.slice(1) : '·';
+    stepsHtml += '<div class="fh-biome-step">' +
+      '<div class="fh-biome-bar' + (isFilled ? ' filled ' + tCls : '') + '"></div>' +
+      '<div class="fh-biome-lbl' + (isFilled ? ' filled ' + tCls : '') + '">' + (isFilled ? bLbl + ' ' + discounts[i] : discounts[i]) + '</div>' +
+    '</div>';
+  }
+  var msgHtml = '';
+  if (filledCount >= 4) {
+    msgHtml = '<div class="fh-cart-complete">' + _t('ALL BIOMES · MAX DISCOUNT UNLOCKED', 'TOUS LES BIOMES · RÉDUCTION MAXIMALE') + ' <span style="color:rgba(94,207,183,0.95)">−75%</span></div>';
+  } else if (filledCount === 1) {
+    msgHtml = '<div class="fh-cart-msg">' + _t('Add a <strong>2nd biome</strong> to unlock ', 'Ajoutez un <strong>2ème biome</strong> pour débloquer ') + '<span class="fh-hl-t2">−25%</span>' + _t(' on it!', ' dessus !') + '</div>';
+  } else if (filledCount === 2) {
+    msgHtml = '<div class="fh-cart-msg">' + _t('Add a <strong>3rd biome</strong> for ', 'Ajoutez un <strong>3ème biome</strong> pour ') + '<span class="fh-hl-t3">−50%</span>' + _t(' off!', ' de réduction !') + '</div>';
+  } else if (filledCount === 3) {
+    msgHtml = '<div class="fh-cart-msg">' + _t('Add the <strong>4th biome</strong> for ', 'Ajoutez le <strong>4ème biome</strong> pour ') + '<span class="fh-hl-t4">−75%</span>' + _t(' — maximum discount!', ' — réduction maximale !') + '</div>';
+  }
+
+  return '<div class="fh-cart-widget">' +
+    '<div class="fh-cart-hdr"><span class="fh-cart-icon">❄</span>' +
+    '<span class="fh-cart-title">' + _t('Frosthölm Biome Bundle', 'Bundle Biome Frosthölm') + '</span></div>' +
+    biomeSectionsHtml +
+    '<div class="fh-cart-discount-sep"></div>' +
+    '<div class="fh-biome-steps">' + stepsHtml + '</div>' +
+    msgHtml +
+  '</div>';
+}
+
+/* ── Render cart drawer contents ── */
+function renderCart() {
+  var emptyEl      = document.getElementById('cart-empty');
+  var itemsEl      = document.getElementById('cart-items');
+  var footerEl     = document.getElementById('cart-footer');
+  var crossEl      = document.getElementById('cart-cross');
+  var countEl      = document.getElementById('cart-hdr-count');
+  var totalEl      = document.getElementById('cart-total-amt');
+  var origRowEl    = document.getElementById('cart-total-orig-row');
+  var origEl       = document.getElementById('cart-total-orig');
+  var savingsRowEl = document.getElementById('cart-savings-row');
+  var savingsAmtEl = document.getElementById('cart-savings-amt');
+  var bundleWrap   = document.getElementById('bundle-widget-wrap');
+  if (!itemsEl) return;
+
+  /* Item count in header */
+  var totalItems = cart.length + cartBundles.length + frostholmBundles.length;
+  if (countEl) countEl.textContent = totalItems + (totalItems === 1 ? ' item' : ' items');
+
+  if (cart.length === 0 && cartBundles.length === 0 && frostholmBundles.length === 0) {
     emptyEl.style.display  = '';
     itemsEl.style.display  = 'none';
     footerEl.style.display = 'none';
     crossEl.style.display  = 'none';
+    if (bundleWrap) bundleWrap.innerHTML = '';
+    var arcticWrapEmpty = document.getElementById('arctic-cart-widget-wrap');
+    if (arcticWrapEmpty) arcticWrapEmpty.innerHTML = '';
+    var fhWrapEmpty = document.getElementById('fh-cart-widget-wrap');
+    if (fhWrapEmpty) fhWrapEmpty.innerHTML = '';
     return;
   }
 
@@ -2687,55 +4066,204 @@ function renderCart() {
   itemsEl.style.display  = '';
   footerEl.style.display = '';
 
-  // Build items HTML
-  var total = 0;
-  var html = '';
-  cart.forEach(function(id) {
-    var p = PRODUCTS.find(function(x){ return x.id === id; });
-    if (!p) return;
-    total += p.p;
-    var metaParts = [];
-    if (p.col) metaParts.push(p.col);
-    if (p.st)  metaParts.push(p.st);
-    html +=
-      '<div class="cart-item">' +
-        '<img class="cart-item-img" src="' + p.th + '" alt="" loading="lazy">' +
-        '<div class="cart-item-info">' +
-          '<div class="cart-item-name">' + p.t + '</div>' +
-          '<div class="cart-item-meta">' + metaParts.join(' · ') + '</div>' +
-          '<div class="cart-item-price">' + formatProductPrice(p.p) + '</div>' +
-        '</div>' +
-        '<button class="cart-item-remove" onclick="removeFromCart(\'' + id + '\')" title="Remove">✕</button>' +
-      '</div>';
+  /* ── Compute pricing for all cart items ── */
+  var pricing = computeCartPricing();
+
+  /* ── Collection labels (bilingual) ── */
+  var COL_HDR = {
+    frostholm: { en:'Frosthölm Collection', fr:'Collection Frosthölm' },
+    '8k':      { en:'8K Terrain Packs',    fr:'Packs Terrain 8K'     },
+    arctic:    { en:'Complete Landscapes',  fr:'Paysages Complets'     },
+  };
+  var volMap = {};
+  VOL_8K.forEach(function(vd) {
+    vd.slots.forEach(function(s) { if (s.id) volMap[s.id] = vd; });
   });
-  itemsEl.innerHTML = html;
 
-  // Total
-  if (totalEl) totalEl.textContent = formatProductPrice(total);
+  /* ── Group pricing items by collection, preserving cart order ── */
+  var colGroups = {};   /* col → [pricingItem] */
+  var colOrder  = [];   /* order of first appearance */
+  pricing.forEach(function(it) {
+    var col = it.product.col;
+    if (!colGroups[col]) { colGroups[col] = []; colOrder.push(col); }
+    colGroups[col].push(it);
+  });
 
-  // Savings hint (only if multi-item)
-  if (savingsEl) {
-    if (cart.length > 1) {
-      savingsEl.textContent = cart.length + ' packs selected — bundle pricing available at checkout';
-      savingsEl.style.display = '';
-    } else {
-      savingsEl.style.display = 'none';
+  /* Show section headers when there are multiple collection types visible
+     (counting arctic bundles as an "arctic" section if no arctic product is in cart) */
+  var hasBundleOnlySection = cartBundles.length > 0 && !colGroups['arctic'];
+  var hasFhBundleOnlySection = frostholmBundles.length > 0 && !colGroups['frostholm'];
+  var visibleSections = colOrder.length + (hasBundleOnlySection ? 1 : 0) + (hasFhBundleOnlySection ? 1 : 0);
+  var showHeaders = visibleSections > 1 || (colOrder.length === 1 && (cartBundles.length > 0 || frostholmBundles.length > 0));
+
+  /* Helper: build a single product item row */
+  function _buildCartItemHtml(it) {
+    var p = it.product;
+    var metaParts = [];
+    if (p.col === '8k') {
+      var vd8 = volMap[p.id.substring(0,8)];
+      metaParts = vd8 ? ['Vol.' + vd8.v + ' · ' + vd8.name] : [];
+    } else if (p.st) {
+      metaParts = [p.st.charAt(0).toUpperCase() + p.st.slice(1)];
     }
+    var origFmt    = formatProductPrice(p.p);
+    var finalFmt   = formatFinalPrice(it.finalPrice, it.isFree);
+    var tagHtml    = '<span class="discount-tag ' + it.tierClass + '">' + it.label + '</span>';
+    var priceClass = 'cart-item-price-final' + (it.isFree ? ' is-free' : '');
+    return '<div class="cart-item">' +
+      '<img class="cart-item-img" src="' + p.th + '" alt="" loading="lazy">' +
+      '<div class="cart-item-info">' +
+        '<div class="cart-item-name">' + p.t + '</div>' +
+        (metaParts.length ? '<div class="cart-item-meta">' + metaParts.join(' · ') + '</div>' : '') +
+        '<div class="cart-item-pricing">' +
+          '<span class="cart-item-price-orig">' + origFmt + '</span>' +
+          '<span class="' + priceClass + '">' + finalFmt + '</span>' +
+          tagHtml +
+        '</div>' +
+      '</div>' +
+      '<button class="cart-item-remove" onclick="removeFromCart(\'' + it.id + '\')" title="Remove">✕</button>' +
+    '</div>';
   }
 
-  // ── Cross-sell: smart suggestions per collection type ──
-  var suggestions = getCartSuggestions(cart);
+  /* Helper: build an arctic bundle line item */
+  function _buildBundleItemHtml(b) {
+    var label = b.type === 'master'
+      ? _t('❄️ Master Access · All Styles', '❄️ Master Access · Tous les styles')
+      : _t('🔓 Essentials Access', '🔓 Essentials Access');
+    var meta  = _t('Arctic Landscapes · Bundle', 'Paysages Arctiques · Bundle');
+    var rmLbl = _t('Remove', 'Retirer');
+    return '<div class="cart-item arctic-bundle-cart-item">' +
+      '<div class="cart-item-info">' +
+        '<div class="cart-item-name">' + label + '</div>' +
+        '<div class="cart-item-meta">' + meta + '</div>' +
+        '<div class="cart-item-pricing">' +
+          '<span class="cart-item-price-final">+€' + b.price.toFixed(2) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<button class="cart-item-remove" onclick="removeArcticBundle(\'' + b.type + '\')" title="' + rmLbl + '">✕</button>' +
+    '</div>';
+  }
 
+  /* Helper: build a frostholm bundle line item */
+  function _buildFhBundleItemHtml(b) {
+    var biome = FROSTHOLM_BIOMES.find(function(bi){ return bi.id === b.biomeId; });
+    var biomeName = biome ? biome.label : b.biomeId;
+    var label = b.type === 'fh-master'
+      ? '⭐ ' + _t('Master Access · ' + biomeName, 'Master Access · ' + biomeName)
+      : '🔓 ' + _t('Essentials Access · ' + biomeName, 'Essentials Access · ' + biomeName);
+    var meta = _t('Frosthölm · Biome Bundle', 'Frosthölm · Bundle Biome');
+    var rmLbl = _t('Remove', 'Retirer');
+    var type = b.type; var biomeId = b.biomeId;
+    return '<div class="cart-item fh-bundle-cart-item">' +
+      '<div class="cart-item-info">' +
+        '<div class="cart-item-name">' + label + '</div>' +
+        '<div class="cart-item-meta">' + meta + '</div>' +
+        '<div class="cart-item-pricing">' +
+          '<span class="cart-item-price-final">+€' + b.price.toFixed(2) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<button class="cart-item-remove" onclick="removeFhBundle(\'' + biomeId + '\',\'' + type + '\')" title="' + rmLbl + '">✕</button>' +
+    '</div>';
+  }
+
+  /* ── Assemble HTML by group ── */
+  var html = '';
+  colOrder.forEach(function(col) {
+    if (showHeaders) {
+      var hdr = COL_HDR[col] || { en: col, fr: col };
+      var isArctic = col === 'arctic';
+      var isFh = col === 'frostholm';
+      html += '<div class="cart-section-hdr' + (isArctic ? ' arctic-hdr' : '') + (isFh ? ' fh-hdr' : '') + '">' + _t(hdr.en, hdr.fr) + '</div>';
+    }
+    colGroups[col].forEach(function(it) { html += _buildCartItemHtml(it); });
+    /* Bundle line items go right after arctic products */
+    if (col === 'arctic') {
+      cartBundles.forEach(function(b) { html += _buildBundleItemHtml(b); });
+    }
+    /* Frostholm bundle line items go right after frostholm products */
+    if (col === 'frostholm') {
+      frostholmBundles.forEach(function(b) { html += _buildFhBundleItemHtml(b); });
+    }
+  });
+
+  /* If no arctic products but bundles exist → add arctic section */
+  if (hasBundleOnlySection) {
+    var hdr = COL_HDR['arctic'];
+    html += '<div class="cart-section-hdr arctic-hdr">' + _t(hdr.en, hdr.fr) + '</div>';
+    cartBundles.forEach(function(b) { html += _buildBundleItemHtml(b); });
+  }
+
+  /* If no frostholm products but fh bundles exist → add frostholm section */
+  if (hasFhBundleOnlySection) {
+    var fhHdr = COL_HDR['frostholm'];
+    html += '<div class="cart-section-hdr fh-hdr">' + _t(fhHdr.en, fhHdr.fr) + '</div>';
+    frostholmBundles.forEach(function(b) { html += _buildFhBundleItemHtml(b); });
+  }
+
+  itemsEl.innerHTML = html;
+
+  /* ── Totals ── */
+  var rawTotal      = pricing.reduce(function(s,it){ return s + it.basePrice; }, 0);
+  var discountTotal = pricing.reduce(function(s,it){ return s + it.finalPrice; }, 0);
+  var saved         = rawTotal - discountTotal;
+
+  /* Bundle add-ons added directly to total (no savings offset for them) */
+  var bundleTotal = cartBundles.reduce(function(s,b){ return s + b.price; }, 0);
+  discountTotal  += bundleTotal;
+  rawTotal       += bundleTotal;
+  var fhBundleTotal = frostholmBundles.reduce(function(s,b){ return s + b.price; }, 0);
+  discountTotal  += fhBundleTotal;
+  rawTotal       += fhBundleTotal;
+
+  if (totalEl) totalEl.textContent = formatFinalPrice(discountTotal, false);
+
+  /* Show original total & savings only when there's an actual discount */
+  if (saved > 0.009) {
+    if (origEl)       origEl.textContent  = formatProductPrice(rawTotal);
+    if (origRowEl)    origRowEl.style.display = '';
+    if (savingsRowEl) savingsRowEl.style.display = '';
+    if (savingsAmtEl) savingsAmtEl.textContent  = '−' + formatFinalPrice(saved, false);
+  } else {
+    if (origRowEl)    origRowEl.style.display    = 'none';
+    if (savingsRowEl) savingsRowEl.style.display  = 'none';
+  }
+
+  /* ── Bundle upsell widget (8K) ── */
+  if (bundleWrap) bundleWrap.innerHTML = buildBundleWidget(pricing);
+
+  /* ── Arctic cart widget ── */
+  var arcticWrap = document.getElementById('arctic-cart-widget-wrap');
+  if (arcticWrap) arcticWrap.innerHTML = buildArcticCartWidget(pricing);
+
+  /* ── Frostholm cart widget ── */
+  var fhWrap = document.getElementById('fh-cart-widget-wrap');
+  if (fhWrap) fhWrap.innerHTML = buildFhCartWidget(pricing);
+
+  /* ── Cross-sell suggestions (hidden for pure arctic carts) ── */
+  var allArcticCart = cart.every(function(id){
+    var cp = PRODUCTS.find(function(x){ return x.id === id; });
+    return cp && cp.col === 'arctic';
+  });
+  var suggestions = (allArcticCart || cart.length === 0) ? [] : getCartSuggestions(cart);
   if (suggestions.length > 0) {
     crossEl.style.display = '';
+    /* For 8K items in cart, show discounted price in cross-sell */
     var crossHtml = '';
     suggestions.forEach(function(p) {
+      /* Preview: what tier would this be if added? */
+      var k8InCart = cart.filter(function(id){
+        var cp = PRODUCTS.find(function(x){ return x.id === id; });
+        return cp && cp.col === '8k' && Math.abs(cp.p - p.p) < 0.01;
+      }).length;
+      /* cycle-based preview: what tier this item would get if added now */
+      var previewTier = (p.col === '8k') ? ((k8InCart % 3) + 1) : 0;
+      var previewLabel = previewTier > 0 ? ' <span class="discount-tag ' + TIER_CLASS[previewTier] + '">' + TIER_LABEL[previewTier] + '</span>' : '';
       crossHtml +=
         '<div class="cart-cross-item">' +
           '<img src="' + p.th + '" alt="" loading="lazy">' +
           '<div class="cart-cross-info">' +
             '<div class="cart-cross-name">' + p.t + '</div>' +
-            '<div class="cart-cross-price">' + formatProductPrice(p.p) + '</div>' +
+            '<div class="cart-cross-price">' + formatProductPrice(p.p) + previewLabel + '</div>' +
           '</div>' +
           '<button class="cart-cross-add" onclick="event.stopPropagation();addToCart(\'' + p.id + '\')">+ Add</button>' +
         '</div>';
@@ -2764,16 +4292,72 @@ function closeCartDrawer() {
 }
 
 /* ── Checkout ── */
+var MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/gboxmz5ly0g9chlte7rfhoimeweqa7ff';
+
 function proceedToCheckout() {
   if (cart.length === 0) return;
-  if (cart.length === 1) {
-    // Single item → direct Fab listing
-    var p = PRODUCTS.find(function(x){ return x.id === cart[0]; });
-    if (p) window.open('https://www.fab.com/listings/' + p.id, '_blank');
-  } else {
-    // Multi-item bundle → Kalysteon Fab store
-    window.open('https://www.fab.com/sellers/Kalysteon', '_blank');
-  }
+
+  var btn = document.querySelector('.btn-checkout');
+  var originalText = btn.getAttribute('data-' + (typeof LANG !== 'undefined' ? LANG : 'en')) || btn.textContent;
+
+  var pricingItems = computeCartPricing();
+
+  var items = pricingItems.map(function(it) {
+    var priceEur = it.isFree ? 0 : it.finalPrice;
+    var priceUsd = it.isFree ? 0 : (Math.ceil(it.finalPrice * 1.15) - 0.01);
+    return {
+      id: it.id,
+      name: it.product.t,
+      unit_price_eur: Math.round(priceEur * 100) / 100,
+      unit_price_usd: Math.round(priceUsd * 100) / 100,
+      unit_price_cents: Math.round((CURRENCY === 'USD' ? priceUsd : priceEur) * 100),
+      quantity: 1,
+      discount_pct: it.discountPct,
+      is_free: it.isFree
+    };
+  });
+
+  var totalOrigEur  = pricingItems.reduce(function(s, it) { return s + it.basePrice; }, 0);
+  var totalFinalEur = pricingItems.reduce(function(s, it) { return s + (it.isFree ? 0 : it.finalPrice); }, 0);
+  var totalOrigUsd  = Math.ceil(totalOrigEur * 1.15) - 0.01;
+  var totalFinalUsd = Math.ceil(totalFinalEur * 1.15) - 0.01;
+
+  var payload = {
+    currency: CURRENCY.toLowerCase(),
+    items: items,
+    total_original_eur: Math.round(totalOrigEur * 100) / 100,
+    total_final_eur:    Math.round(totalFinalEur * 100) / 100,
+    savings_eur:        Math.round((totalOrigEur - totalFinalEur) * 100) / 100,
+    total_final_cents:  Math.round((CURRENCY === 'USD' ? totalFinalUsd : totalFinalEur) * 100),
+    customer_email: ''
+  };
+
+  btn.disabled = true;
+  btn.textContent = CURRENCY === 'USD' ? 'Connecting to payment…' : 'Connexion au paiement…';
+  btn.style.opacity = '0.65';
+
+  fetch(MAKE_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(res) {
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  })
+  .then(function(data) {
+    if (data && data.stripe_checkout_url) {
+      window.location.href = data.stripe_checkout_url;
+    } else {
+      throw new Error('No checkout URL in response');
+    }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = originalText;
+    btn.style.opacity = '';
+    alert('Erreur de connexion. Veuillez réessayer.');
+  });
 }
 
 // ── Init badge on page load ──

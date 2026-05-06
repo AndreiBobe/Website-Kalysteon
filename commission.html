@@ -68,7 +68,18 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 /* HERO */
 .hero-outer { position: relative; overflow: hidden; }
 .hero-video-bg { position: absolute; inset: 0; z-index: 0; }
-.hero-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.40; }
+.hero-video-bg iframe {
+  position: absolute;
+  top: 50%; left: 50%;
+  /* Simulate object-fit: cover for a 16:9 source */
+  width: max(100%, 177.78vh);
+  height: max(100%, 56.25vw);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border: 0;
+  opacity: 0;
+  transition: opacity 2.2s ease;
+}
 .hero-video-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 18%, rgba(5,9,15,0.60) 45%, rgba(5,9,15,0.15) 68%, transparent); }
 .hero { padding: 6rem 2.5rem 4rem; max-width: 860px; position: relative; z-index: 1; }
 .hero-content { position: relative; }
@@ -1052,11 +1063,11 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
     <div class="nav-pill">
       <a class="nav-link active nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="#configure" onclick="switchTab('terrain')" data-en="Custom Terrain" data-fr="Terrain Custom"><span class="nav-dd-icon">⛰</span>Custom Terrain</a>
-        <a class="nav-dd-item" href="#configure" onclick="switchTab('hero')" data-en="Hero Assets" data-fr="Hero Assets"><span class="nav-dd-icon">◆</span>Hero Assets</a>
+        <a class="nav-dd-item" href="#configure" onclick="switchTab('terrain')"><span class="nav-dd-icon">⛰</span><span data-en="Custom Terrain" data-fr="Terrain Custom">Custom Terrain</span></a>
+        <a class="nav-dd-item" href="#configure" onclick="switchTab('hero')"><span class="nav-dd-icon">◆</span><span data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item" href="commission.html#process" data-en="How It Works" data-fr="Comment ça marche"><span class="nav-dd-icon">↺</span>How It Works</a>
-        <a class="nav-dd-item" href="commission.html#about" data-en="FAQ" data-fr="FAQ"><span class="nav-dd-icon">?</span>FAQ</a>
+        <a class="nav-dd-item" href="commission.html#process"><span class="nav-dd-icon">↺</span><span data-en="How It Works" data-fr="Comment ça marche">How It Works</span></a>
+        <a class="nav-dd-item" href="commission.html#about"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
       </div>
     </div>
     <div class="nav-pill">
@@ -1095,11 +1106,14 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 </div>
 
 <div class="hero-outer hero-outer--split">
-  <!-- Full-bleed video -->
+  <!-- Full-bleed video (YouTube) -->
   <div class="hero-video-bg">
-    <video autoplay muted loop playsinline>
-      <source src="img/hero-reel.mp4" type="video/mp4">
-    </video>
+    <iframe id="hero-yt"
+      src="https://www.youtube.com/embed/Z8cmZkcJe-g?autoplay=1&mute=1&loop=1&start=12&playlist=Z8cmZkcJe-g&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&enablejsapi=0"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
   </div>
   <!-- Content overlay -->
   <div class="hero-split-left">
@@ -3408,6 +3422,12 @@ function setProcessType(type) {
 
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded', function() {
+  /* Hero YouTube background — fade in once the video has had time to buffer */
+  var heroYt = document.getElementById('hero-yt');
+  if (heroYt) {
+    setTimeout(function() { heroYt.style.opacity = '0.40'; }, 1400);
+  }
+
   /* Move commission form to after both service content blocks so it's
      reachable whether terrain or hero is the active service */
   var form = document.getElementById('commission-form-section');
