@@ -4295,7 +4295,7 @@ function closeCartDrawer() {
 var MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/go8t7dskekf0ptqmsfajs6xprjk8cc3j';
 
 function proceedToCheckout() {
-  if (cart.length === 0) return;
+  if (cart.length === 0 && cartBundles.length === 0 && frostholmBundles.length === 0) return;
 
   var btn = document.querySelector('.btn-checkout');
   var originalText = btn.getAttribute('data-' + (typeof LANG !== 'undefined' ? LANG : 'en')) || btn.textContent;
@@ -4317,15 +4317,75 @@ function proceedToCheckout() {
     };
   });
 
-  var totalOrigEur  = pricingItems.reduce(function(s, it) { return s + it.basePrice; }, 0);
-  var totalFinalEur = pricingItems.reduce(function(s, it) { return s + (it.isFree ? 0 : it.finalPrice); }, 0);
+  var productIds = pricingItems.map(function(it) { return it.id; });
+
+  var allArcticIds = [
+    '897b47f0-8d34-4b40-a45a-0c73a2315849',
+    '5e439f0f-f6f2-4104-873a-245a60aec3ff',
+    '14e34309-cb57-4901-be0e-11e60494cc56',
+    '3d96a640-b331-4bd8-ab4f-1b7d01fd3ace',
+    'af813c5f-5482-4d22-8e4a-90ac4e1d83eb'
+  ];
+
+  cartBundles.forEach(function(b) {
+    var priceEur = b.price;
+    var priceUsd = Math.ceil(priceEur * 1.15) - 0.01;
+    if (b.type === 'master') {
+      items.push({
+        id: 'arctic-master-bundle',
+        name: 'Arctic Master Access (All 5 Styles)',
+        unit_price_eur: priceEur,
+        unit_price_usd: priceUsd,
+        unit_price_cents: Math.round((CURRENCY === 'USD' ? priceUsd : priceEur) * 100),
+        quantity: 1, discount_pct: 0, is_free: false
+      });
+      allArcticIds.forEach(function(id) { productIds.push(id); });
+    } else if (b.type === 'legacy') {
+      items.push({
+        id: 'arctic-legacy-bundle',
+        name: 'Arctic Essentials Access',
+        unit_price_eur: priceEur,
+        unit_price_usd: priceUsd,
+        unit_price_cents: Math.round((CURRENCY === 'USD' ? priceUsd : priceEur) * 100),
+        quantity: 1, discount_pct: 0, is_free: false
+      });
+    }
+  });
+
+  frostholmBundles.forEach(function(b) {
+    var biome = FROSTHOLM_BIOMES.find(function(bi){ return bi.id === b.biomeId; });
+    if (!biome) return;
+    var priceEur = b.price;
+    var priceUsd = Math.ceil(priceEur * 1.15) - 0.01;
+    items.push({
+      id: b.type + '-' + b.biomeId,
+      name: biome.displayName + (b.type === 'fh-master' ? ' Master Access' : ' Unlock'),
+      unit_price_eur: priceEur,
+      unit_price_usd: priceUsd,
+      unit_price_cents: Math.round((CURRENCY === 'USD' ? priceUsd : priceEur) * 100),
+      quantity: 1, discount_pct: 0, is_free: false
+    });
+    if (b.type === 'fh-master') {
+      biome.styles.forEach(function(s) {
+        var prod = PRODUCTS.find(function(p){ return p.id.substring(0,8) === s.id; });
+        if (prod) productIds.push(prod.id);
+      });
+    }
+  });
+
+  var totalOrigEur  = pricingItems.reduce(function(s, it) { return s + it.basePrice; }, 0)
+    + cartBundles.reduce(function(s, b) { return s + b.price; }, 0)
+    + frostholmBundles.reduce(function(s, b) { return s + b.price; }, 0);
+  var totalFinalEur = pricingItems.reduce(function(s, it) { return s + (it.isFree ? 0 : it.finalPrice); }, 0)
+    + cartBundles.reduce(function(s, b) { return s + b.price; }, 0)
+    + frostholmBundles.reduce(function(s, b) { return s + b.price; }, 0);
   var totalOrigUsd  = Math.ceil(totalOrigEur * 1.15) - 0.01;
   var totalFinalUsd = Math.ceil(totalFinalEur * 1.15) - 0.01;
 
   var payload = {
     currency: CURRENCY.toLowerCase(),
     items: items,
-    product_ids: items.map(function(i) { return i.id; }).join(','),
+    product_ids: productIds.join(','),
     total_original_eur: Math.round(totalOrigEur * 100) / 100,
     total_final_eur:    Math.round(totalFinalEur * 100) / 100,
     savings_eur:        Math.round((totalOrigEur - totalFinalEur) * 100) / 100,
