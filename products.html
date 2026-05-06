@@ -4166,7 +4166,7 @@ function renderCart() {
     '</div>';
   }
 
-  /* ── Assemble HTML by group ── */
+  /* ── Assemble HTML by group — widgets injected inline after their collection ── */
   var html = '';
   colOrder.forEach(function(col) {
     if (showHeaders) {
@@ -4176,28 +4176,36 @@ function renderCart() {
       html += '<div class="cart-section-hdr' + (isArctic ? ' arctic-hdr' : '') + (isFh ? ' fh-hdr' : '') + '">' + _t(hdr.en, hdr.fr) + '</div>';
     }
     colGroups[col].forEach(function(it) { html += _buildCartItemHtml(it); });
-    /* Bundle line items go right after arctic products */
+    /* 8K bundle widget right after 8K items */
+    if (col === '8k') {
+      html += buildBundleWidget(pricing);
+    }
+    /* Arctic bundle line items + widget right after arctic products */
     if (col === 'arctic') {
       cartBundles.forEach(function(b) { html += _buildBundleItemHtml(b); });
+      html += buildArcticCartWidget(pricing);
     }
-    /* Frostholm bundle line items go right after frostholm products */
+    /* Frostholm bundle line items + widget right after frostholm products */
     if (col === 'frostholm') {
       frostholmBundles.forEach(function(b) { html += _buildFhBundleItemHtml(b); });
+      html += buildFhCartWidget(pricing);
     }
   });
 
-  /* If no arctic products but bundles exist → add arctic section */
+  /* If no arctic products but bundles exist → add arctic section + widget */
   if (hasBundleOnlySection) {
     var hdr = COL_HDR['arctic'];
     html += '<div class="cart-section-hdr arctic-hdr">' + _t(hdr.en, hdr.fr) + '</div>';
     cartBundles.forEach(function(b) { html += _buildBundleItemHtml(b); });
+    html += buildArcticCartWidget(pricing);
   }
 
-  /* If no frostholm products but fh bundles exist → add frostholm section */
+  /* If no frostholm products but fh bundles exist → add frostholm section + widget */
   if (hasFhBundleOnlySection) {
     var fhHdr = COL_HDR['frostholm'];
     html += '<div class="cart-section-hdr fh-hdr">' + _t(fhHdr.en, fhHdr.fr) + '</div>';
     frostholmBundles.forEach(function(b) { html += _buildFhBundleItemHtml(b); });
+    html += buildFhCartWidget(pricing);
   }
 
   itemsEl.innerHTML = html;
@@ -4228,16 +4236,12 @@ function renderCart() {
     if (savingsRowEl) savingsRowEl.style.display  = 'none';
   }
 
-  /* ── Bundle upsell widget (8K) ── */
-  if (bundleWrap) bundleWrap.innerHTML = buildBundleWidget(pricing);
-
-  /* ── Arctic cart widget ── */
+  /* Widgets are now injected inline — clear the legacy wrap divs */
+  if (bundleWrap) bundleWrap.innerHTML = '';
   var arcticWrap = document.getElementById('arctic-cart-widget-wrap');
-  if (arcticWrap) arcticWrap.innerHTML = buildArcticCartWidget(pricing);
-
-  /* ── Frostholm cart widget ── */
+  if (arcticWrap) arcticWrap.innerHTML = '';
   var fhWrap = document.getElementById('fh-cart-widget-wrap');
-  if (fhWrap) fhWrap.innerHTML = buildFhCartWidget(pricing);
+  if (fhWrap) fhWrap.innerHTML = '';
 
   /* ── Cross-sell suggestions (hidden for pure arctic carts) ── */
   var allArcticCart = cart.every(function(id){
