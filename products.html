@@ -4349,9 +4349,15 @@ function proceedToCheckout() {
         unit_price_cents: Math.round((CURRENCY === 'USD' ? priceUsd : priceEur) * 100),
         quantity: 1, discount_pct: 0, is_free: false
       });
-      // Legacy unlock gives access to all arctic products not already in cart
+      // Unlocks all arctic styles cheaper than the cheapest arctic style already in cart
+      var arcticMinPrice = allArcticIds.reduce(function(min, id) {
+        if (cart.indexOf(id) === -1) return min;
+        var p = PRODUCTS.find(function(x){ return x.id === id; });
+        return (p && p.p < min) ? p.p : min;
+      }, Infinity);
       allArcticIds.forEach(function(id) {
-        if (cart.indexOf(id) === -1) productIds.push(id);
+        var p = PRODUCTS.find(function(x){ return x.id === id; });
+        if (p && p.p < arcticMinPrice) productIds.push(id);
       });
     }
   });
