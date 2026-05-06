@@ -4297,6 +4297,12 @@ var MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/go8t7dskekf0ptqmsfajs6xprjk8cc
 function proceedToCheckout() {
   if (cart.length === 0) return;
 
+  var email = prompt(LANG === 'fr' ? 'Entrez votre email pour recevoir les liens de téléchargement :' : 'Enter your email to receive download links:');
+  if (!email || !email.includes('@')) {
+    alert(LANG === 'fr' ? 'Email invalide.' : 'Invalid email.');
+    return;
+  }
+
   var btn = document.querySelector('.btn-checkout');
   var originalText = btn.getAttribute('data-' + (typeof LANG !== 'undefined' ? LANG : 'en')) || btn.textContent;
 
@@ -4330,7 +4336,7 @@ function proceedToCheckout() {
     total_final_eur:    Math.round(totalFinalEur * 100) / 100,
     savings_eur:        Math.round((totalOrigEur - totalFinalEur) * 100) / 100,
     total_final_cents:  Math.round((CURRENCY === 'USD' ? totalFinalUsd : totalFinalEur) * 100),
-    customer_email: ''
+    customer_email: email
   };
 
   btn.disabled = true;
