@@ -4292,7 +4292,7 @@ function closeCartDrawer() {
 }
 
 /* ── Checkout ── */
-var MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/gboxmz5ly0g9chlte7rfhoimeweqa7ff';
+var MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/go8t7dskekf0ptqmsfajs6xprjk8cc3j';
 
 function proceedToCheckout() {
   if (cart.length === 0) return;
@@ -4336,12 +4336,17 @@ function proceedToCheckout() {
   btn.textContent = CURRENCY === 'USD' ? 'Connecting to payment…' : 'Connexion au paiement…';
   btn.style.opacity = '0.65';
 
+  var controller = new AbortController();
+  var timeout = setTimeout(function() { controller.abort(); }, 20000);
+
   fetch(MAKE_WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    signal: controller.signal
   })
   .then(function(res) {
+    clearTimeout(timeout);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     return res.json();
   })
@@ -4352,11 +4357,15 @@ function proceedToCheckout() {
       throw new Error('No checkout URL in response');
     }
   })
-  .catch(function() {
+  .catch(function(err) {
+    clearTimeout(timeout);
     btn.disabled = false;
     btn.textContent = originalText;
     btn.style.opacity = '';
-    alert('Erreur de connexion. Veuillez réessayer.');
+    var msg = err && err.name === 'AbortError'
+      ? 'Le paiement prend trop de temps. Vérifiez votre connexion et réessayez.'
+      : 'Erreur de connexion. Veuillez réessayer.';
+    alert(msg);
   });
 }
 
