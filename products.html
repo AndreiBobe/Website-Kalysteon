@@ -824,6 +824,10 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 .na-price { font-family: var(--mono); font-size: 0.88rem; color: var(--gold-bright); font-weight: 500; }
 .na-icon { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(201,168,76,0.22); color: rgba(201,168,76,0.50); font-size: 0.65rem; transition: color 0.22s, border-color 0.22s, box-shadow 0.22s, background 0.22s; flex-shrink: 0; }
 .na-card:hover .na-icon { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,0.42); background: rgba(201,168,76,0.10); }
+.na-add-btn { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(201,168,76,0.22); background: transparent; color: rgba(201,168,76,0.55); font-size: 1rem; font-weight: 200; line-height: 26px; cursor: pointer; transition: color 0.22s, border-color 0.22s, box-shadow 0.22s, background 0.22s, transform 0.15s; flex-shrink: 0; padding: 0; }
+.na-add-btn:hover:not(.in-cart) { color: var(--gold-bright); border-color: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,0.42); background: rgba(201,168,76,0.10); transform: scale(1.12); }
+.na-add-btn.added { color: rgba(94,207,183,0.95); border-color: rgba(94,207,183,0.55); background: rgba(94,207,183,0.10); box-shadow: 0 0 12px rgba(94,207,183,0.30); transform: scale(1.08); }
+.na-add-btn.in-cart { color: rgba(94,207,183,0.75); border-color: rgba(94,207,183,0.38); background: rgba(94,207,183,0.07); cursor: default; }
 .na-nav { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: -0.35rem; }
 .na-nav-btn { width: 28px; height: 28px; border-radius: 50%; background: rgba(9,27,50,0.7); border: 1px solid var(--border-mid); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.18s; font-size: 0.8rem; flex-shrink: 0; }
 .na-nav-btn:hover { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.08); }
@@ -1363,6 +1367,7 @@ function _t(en, fr) {
 }
 
 function setLang(lang) {
+  localStorage.setItem('kalysteon-lang', lang);
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-en]').forEach(function(el) {
     var txt = el.getAttribute('data-' + lang);
@@ -1370,13 +1375,14 @@ function setLang(lang) {
   });
   document.querySelectorAll('.lang-toggle .lang-btn').forEach(function(b){ b.classList.toggle('active', b.id === 'lang-btn-' + lang); });
   /* Re-render dynamic content that contains bilingual strings */
-  if (cart.length > 0 || cartBundles.length > 0 || frostholmBundles.length > 0) renderCart();
+  if (cart && cartBundles && frostholmBundles && (cart.length > 0 || cartBundles.length > 0 || frostholmBundles.length > 0)) renderCart();
   var pid = document.getElementById('drawer-btn-add-cart') ? document.getElementById('drawer-btn-add-cart').getAttribute('data-product-id') : null;
   if (pid) { var dp = PRODUCTS.find(function(x){ return x.id === pid; }); if (dp && dp.col === 'arctic') _refreshDrawerArctic(); }
   if (pid) { var dp2 = PRODUCTS.find(function(x){ return x.id === pid; }); if (dp2 && dp2.col === 'frostholm') _refreshDrawerFh(); }
   /* Re-render Frostholm store grid so bilingual vol-section titles update */
   if (typeof _col !== 'undefined' && _col === 'frostholm' && typeof FROSTHOLM_BIOMES !== 'undefined') renderStore();
 }
+setLang(localStorage.getItem('kalysteon-lang') || 'en');
 
 /* ═══ PRODUCT DATA ═══ */
 var PRODUCTS = [
@@ -1830,6 +1836,114 @@ var PRODUCT_SPECS = {
     {k:'Assets',     v:'3 Savannah Trees \u00b7 3 Grass types'},
     {k:'Textures',   v:'25 terrain \u00b7 1024\u20132048px PBR'},
     {k:'Materials',  v:'Grass \u00b7 Dirt \u00b7 Soil \u00b7 Sand'}
+  ],
+  '7e198e93': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'5 environments · 8×8km each'},
+    {k:'Levels',     v:'5 Demo Levels + 1 Zoo Level'},
+    {k:'Cliffs',     v:'Procedural · PCG'},
+    {k:'Meshes',     v:'3 Mountain · 2 Field · 1 Valley · 3 Rock · 9 Cliff types'},
+    {k:'Rendering',  v:'Nanite · Lumen · RVT · PCG'},
+    {k:'Textures',   v:'5 satmaps · 8K terrain · 4K rock & cliff'}
+  ],
+  '4e30dcd7': [
+    {k:'Engine',     v:'UE 5.0 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'4 Grass · 7 Rocks · Procedural foliage'},
+    {k:'Textures',   v:'6 terrain · 4096px PBR · 8K satmaps'},
+    {k:'Rendering',  v:'Lumen · Water terrain'}
+  ],
+  '6f4c30ac': [
+    {k:'Engine',     v:'UE 5.0 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'2 Birch · 3 Trees · 5 Grass · 3 Bush · 3 Rocks'},
+    {k:'Textures',   v:'6 terrain · 4096px PBR · 8K satmaps'},
+    {k:'Rendering',  v:'Lumen'}
+  ],
+  'fa24aee0': [
+    {k:'Engine',     v:'UE 5.5 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'5 environments'},
+    {k:'Levels',     v:'5 Demo Levels + 2 Zoo Levels'},
+    {k:'Vegetation', v:'3 Trees · 5 Grass · 2 Bush · 2 Leaves · 2 Flower'},
+    {k:'Meshes',     v:'3 Range · 2 Plain · 1 Mountain · 1 Rock'},
+    {k:'Textures',   v:'5 satmaps · 8K terrain · 4K vegetation'},
+    {k:'Rendering',  v:'Nanite · Lumen · Virtual Textures'}
+  ],
+  '964ab5d7': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'5 environments'},
+    {k:'Levels',     v:'5 Demo Levels + 2 Zoo Levels'},
+    {k:'Vegetation', v:'3 Cactus · 3 Grass · 2 Bush · 2 Pebbles'},
+    {k:'Meshes',     v:'3 Mountain · 2 Valley · 1 Range · 4 Cliff · 4 Rock'},
+    {k:'Textures',   v:'5 satmaps · 8K terrain · 4K vegetation'},
+    {k:'Rendering',  v:'Nanite · Lumen · Water Plugin'}
+  ],
+  '7177546c': [
+    {k:'Engine',     v:'UE 5.2 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'2 Tall · 2 Big · 1 Giant · 1 Liana Tree · 2 Bush · 2 Grass'},
+    {k:'Meshes',     v:'3 Cliff · 1 Rock · Procedural foliage'},
+    {k:'Textures',   v:'2 terrain · 4096px PBR · 8K satmaps'},
+    {k:'Rendering',  v:'Nanite · Lumen'}
+  ],
+  '0529cee3': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'5 environments'},
+    {k:'Levels',     v:'5 Demo Levels + 2 Zoo Levels'},
+    {k:'Vegetation', v:'3 Palm · 7 Trees · 5 Bush · 2 Leaves'},
+    {k:'Meshes',     v:'3 Mountain · 2 Field · 1 Plates · 2 Rock · 3 Cliff'},
+    {k:'Textures',   v:'5 satmaps · 8K terrain · 4K vegetation'},
+    {k:'Rendering',  v:'Nanite · Lumen'}
+  ],
+  '9c46865c': [
+    {k:'Engine',     v:'UE 5.3 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'5 environments'},
+    {k:'Levels',     v:'5 Demo Levels + 2 Zoo Levels'},
+    {k:'Vegetation', v:'3 Baobab · 4 Trees · 3 Grass · 5 Bush'},
+    {k:'Meshes',     v:'3 Mountain · 2 Range · 1 Rocky · 3 Boulder · 3 Cliff'},
+    {k:'Textures',   v:'5 satmaps · 8K terrain · 4K vegetation'},
+    {k:'Rendering',  v:'Nanite · Lumen · Virtual Textures'}
+  ],
+  'ce9c9f49': [
+    {k:'Engine',     v:'UE 5.2 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments · 8×8km each'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'Procedural · Grass Layers'},
+    {k:'Assets',     v:'4 Tall Trees · 3 Trees · 5 Grass · 1 Bush · 3 Rocks'},
+    {k:'Textures',   v:'6 terrain · 4096px PBR · 8K satmaps'},
+    {k:'Rendering',  v:'Nanite · Lumen'}
+  ],
+  'dab7957e': [
+    {k:'Engine',     v:'UE 5.0 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments · 8×8km each'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'Procedural · Grass Layers'},
+    {k:'Assets',     v:'6 Rocks · 3 Grass · 3 Bushes'},
+    {k:'Textures',   v:'6 terrain · 4096px PBR'},
+    {k:'Materials',  v:'Snow · Rock · Grass · Gravel · Bush'}
+  ],
+  '3dda2235': [
+    {k:'Engine',     v:'UE 5.0 to 5.7'},
+    {k:'Platform',   v:'Windows 64-bit'},
+    {k:'Landscapes', v:'10 environments \u00b7 8\u00d78km each'},
+    {k:'Levels',     v:'10 Demo Levels + 1 Zoo Level'},
+    {k:'Vegetation', v:'Procedural \u00b7 Grass Layers'},
+    {k:'Assets',     v:'4 Pines \u00b7 4 Trees \u00b7 1 Bush \u00b7 1 Plant \u00b7 1 Rock'},
+    {k:'Textures',   v:'5 terrain \u00b7 4096px PBR'},
+    {k:'Materials',  v:'Grass \u00b7 Pine \u00b7 Gravel \u00b7 Rock \u00b7 Lavender'}
   ]
 };
 
@@ -1865,7 +1979,18 @@ var GALLERY = {
   'c862c4eb': ['https://media.fab.com/image_previews/gallery_images/0145b873-fc5f-417b-9f89-aa76bdc5ebcd/9a1323bb-38f4-4a5b-bf68-d43dd42ba5c1.jpg','https://media.fab.com/image_previews/gallery_images/a67695a5-5dec-47fb-bdb8-204515fb9bbc/f0fda6a1-033d-4e7c-a819-d78866693406.jpg','https://media.fab.com/image_previews/gallery_images/c08cb5b7-dbef-477b-9abc-4754603c8f75/2bb3d31f-8679-4c7c-97fa-2001ce421dd6.jpg','https://media.fab.com/image_previews/gallery_images/7e8e3231-28f8-4f7b-9cf7-3d576f732408/21b4d427-7c03-4f54-a6c2-5f4f281a5988.jpg','https://media.fab.com/image_previews/gallery_images/43d1c98c-7a01-462b-8f62-f743953009ca/55fdbbd5-68b1-4aa4-ab2f-fed70e10b022.jpg','https://media.fab.com/image_previews/gallery_images/66482ebb-8fb0-4976-8af5-7fd6979c954c/ede96034-ffbb-4613-ad44-4cfdd6d7615f.jpg','https://media.fab.com/image_previews/gallery_images/a7253dec-6ded-4d55-bc49-3ce4de339b46/9b2a8aca-ccc8-44c2-8fb4-dfdf9134ee4c.jpg','https://media.fab.com/image_previews/gallery_images/aa96cd77-76b4-4661-afbe-18187545dd90/4cf23e08-ae90-47f3-a8d7-882eeeb40373.jpg','https://media.fab.com/image_previews/gallery_images/6f67bc84-6538-4dc5-a458-dbb8be1073a1/2a2bfdcb-0bb6-4d74-95eb-f5993cbb8a34.jpg','https://media.fab.com/image_previews/gallery_images/9a6d619d-6a90-462f-9372-a822cb9b7d7c/fe49460d-5fc6-4e56-8280-c4e1cefaff9c.jpg','https://media.fab.com/image_previews/gallery_images/0198aaf9-1878-4db1-97fd-4593474c2c03/6309f87e-2b28-465c-bc4f-c8ea99ba2ac6.jpg','https://media.fab.com/image_previews/gallery_images/f17a10ac-f133-4782-aee1-5b0a114ad311/9579a4ef-d10f-4297-a1cd-ab3f91baf233.jpg','https://media.fab.com/image_previews/gallery_images/617fc8a5-0ab1-41bd-8fae-a8990c861cbc/c99e8a46-5a27-46ce-8a5c-4e2d67d676d7.jpg','https://media.fab.com/image_previews/gallery_images/2d05d3d5-5cf3-46ad-8fde-491ed7b6f691/41113d41-20f3-4008-98d6-2a8d414362a1.jpg','https://media.fab.com/image_previews/gallery_images/b52273fa-a3fd-462c-b6b8-a82a7553f484/f949b219-5f6d-4871-9a95-af6a4efab29d.jpg','https://media.fab.com/image_previews/gallery_images/b463f0bd-673d-4c33-9443-514423e9a270/54e34ef7-f345-42fc-93d9-959bd6f06dbf.jpg'],
   '6baa964b': ['https://media.fab.com/image_previews/gallery_images/b55c0253-b513-4881-b30b-5388fde8eea7/cfd595c0-7464-41a1-b41a-d2525845e10e.jpg','https://media.fab.com/image_previews/gallery_images/e0ce921b-d699-4a88-83c1-82e468b38ada/d3373e3f-3eac-49a1-a98b-9626106c0ead.jpg','https://media.fab.com/image_previews/gallery_images/d65b2488-c22e-4b33-bf93-470156e847e9/3962005e-5a0f-4450-b9a3-f066081a87a0.jpg','https://media.fab.com/image_previews/gallery_images/13f8bf56-880a-4be0-9e0c-b811c4d61cf6/5721887c-e279-4d57-a520-f9a6f11bab42.jpg','https://media.fab.com/image_previews/gallery_images/552c4773-7c7e-4aa0-ae07-33215ae5f4f2/b5d01d1b-66d6-47fb-bc2e-c1913a4e1b47.jpg','https://media.fab.com/image_previews/gallery_images/d9d0b320-6cc8-49e6-a0e1-865672067d92/c1e36ead-39df-4f55-b3cf-1664eb673331.jpg','https://media.fab.com/image_previews/gallery_images/4d685bf5-8e78-4d24-b10e-b0ef6e21da5c/e4b8ebed-b3b4-4925-8685-afd7961d77fc.jpg','https://media.fab.com/image_previews/gallery_images/cb6de61f-595f-4c13-94ad-3ba5667e6a40/5be9c0a3-ab57-482f-a80f-092b4c8cdccc.jpg','https://media.fab.com/image_previews/gallery_images/1ef68f67-5d0f-4859-982a-b08d95a60323/98cb8988-7db6-4dc8-b7f2-013015c10c89.jpg','https://media.fab.com/image_previews/gallery_images/78a73d37-df8a-4174-a481-36ec689624ad/345b2e6f-38e1-4393-9718-4596d79fcf41.jpg','https://media.fab.com/image_previews/gallery_images/5293fc45-799f-43dc-b383-01763a060ce7/9f8ebe73-2b62-42d5-93f4-fcd1b9163318.jpg','https://media.fab.com/image_previews/gallery_images/470898e1-7556-401a-86ba-666df53507a0/33f0f1b4-66ab-44db-9038-3664ccf30ca4.jpg','https://media.fab.com/image_previews/gallery_images/2e92e57a-0e6c-4a9b-8f6a-4909fcaa88bf/7392d79f-8d8f-4313-b99c-8dd3ec22328a.jpg','https://media.fab.com/image_previews/gallery_images/df6d8e21-7671-4fb3-883b-c03de97b2222/7aee3218-255d-4631-8c2a-f263134ff2c3.jpg','https://media.fab.com/image_previews/gallery_images/234c8468-eea9-4198-aeae-453fd810fba5/1ad8030f-f0c1-405b-9932-0effb8f79b87.jpg','https://media.fab.com/image_previews/gallery_images/6ab8b782-0506-42d8-b16b-65a8fe04a7fe/18c26889-6173-44fb-b077-3a6536862c7f.jpg','https://media.fab.com/image_previews/gallery_images/dfe940d6-dcd2-4ea5-a268-599376a0252e/ffc508b0-e48b-4db2-a3b5-a7d81d76f111.jpg','https://media.fab.com/image_previews/gallery_images/5f13ca7f-4c01-498e-bd38-e4e1177e4fd7/2576d0eb-4c8f-4f9f-a7cf-00838983b838.jpg','https://media.fab.com/image_previews/gallery_images/f8364dc0-f072-484f-8861-6fcbd0e184bd/898485d2-a54c-4d26-bc2f-3ac82ece616d.jpg','https://media.fab.com/image_previews/gallery_images/b47d05fb-d674-497b-9303-57c29e0ac5f4/08afb4dc-feaf-4554-8c98-a0a7a41b24e4.jpg','https://media.fab.com/image_previews/gallery_images/34bebb93-0822-4956-a480-026faa79c021/a0dd379f-9e81-446f-9b84-d0306d70f0d4.jpg'],
   '3e2f982b': ['https://media.fab.com/image_previews/gallery_images/95c2dbfa-25d6-4f26-8523-233cc0c3503c/eca59899-e760-48ab-b36f-cde46293b544.jpg','https://media.fab.com/image_previews/gallery_images/038aecce-d7c4-4003-9f45-8f07a9e80721/70d2c6db-656e-4559-b945-bb1f62ab8c30.jpg','https://media.fab.com/image_previews/gallery_images/f498e82c-673c-43bf-9ae5-9cd446c157ad/549972e9-7d2d-4802-8532-97b987d12823.jpg','https://media.fab.com/image_previews/gallery_images/cf0f9b7d-7325-4196-81c3-751d02410efd/1f638c82-9095-49a4-b376-66e447d68286.jpg','https://media.fab.com/image_previews/gallery_images/9c1b188a-4605-4792-84ba-6e4bc1bb71b0/4124042f-9cf8-4304-b1d4-ab91083a3d33.jpg','https://media.fab.com/image_previews/gallery_images/9851a2fe-216a-4ab6-accf-78256222ba14/ffa93024-5086-483b-99f9-190b51d954a7.jpg','https://media.fab.com/image_previews/gallery_images/dd0746c4-064f-49cc-89cf-322e04beec7c/e3396eba-6ace-4fcd-b63a-ba642bdf88f4.jpg','https://media.fab.com/image_previews/gallery_images/edb96cbd-63b0-4120-9c88-ca6a5da76902/91c8510f-a592-4270-82bb-eeac7fd50f78.jpg','https://media.fab.com/image_previews/gallery_images/42236a20-64a6-4a8b-9fbb-52e5032c724c/3e3baedb-7242-4384-80dd-d87421def84a.jpg','https://media.fab.com/image_previews/gallery_images/3bdd8fd9-b041-434a-ad86-6dbdca0b15ed/df8de49a-487e-4c76-a1da-57456f18aa0e.jpg','https://media.fab.com/image_previews/gallery_images/27831917-2daf-4b89-8f6d-9e4b5460c28e/0102893d-7e5f-4efd-bb89-c62344c6f8d4.jpg','https://media.fab.com/image_previews/gallery_images/7cc4cfef-37e6-4807-b01f-53128480bbdf/6de1b4fb-1245-436c-b909-ea5859a62167.jpg','https://media.fab.com/image_previews/gallery_images/f8771bfd-0330-47dc-862e-e0ba5ab36f38/74cc9d3e-312f-461d-a063-7167e9bc4603.jpg','https://media.fab.com/image_previews/gallery_images/f99bb753-c4ea-4c71-8a40-de12632df44e/6193ffe0-dcb0-4a71-b45e-b33f88e689ee.jpg','https://media.fab.com/image_previews/gallery_images/ac318dc6-b3aa-4d16-8b35-1d1fb217584c/3bc86f98-0ebe-4823-b890-51b91dd242d0.jpg','https://media.fab.com/image_previews/gallery_images/25e82ace-6a93-43da-b090-0e1439583e65/fb99751d-06d8-40d9-b9af-08b262ae85cf.jpg','https://media.fab.com/image_previews/gallery_images/12d677f5-4d56-40ca-bd82-0a9a0d7cc9a5/aa385954-3635-4beb-9af9-23acd4d002b7.jpg','https://media.fab.com/image_previews/gallery_images/66d8eb6a-bde7-41e4-af9e-256bdb2d22a9/79aa458f-7796-458b-bc85-e80fc707b8f1.jpg','https://media.fab.com/image_previews/gallery_images/5255fccd-2339-43b7-9edd-ca9dab2d29b1/02d0fd00-fb3e-4352-9243-49e8dc2c2368.jpg','https://media.fab.com/image_previews/gallery_images/68f9ad20-e5ff-425f-afb9-74b91d42f3bf/3c5151ff-6133-42bc-b070-2eda4c0c2c98.jpg','https://media.fab.com/image_previews/gallery_images/4e0be1ec-305b-47f2-b060-2db4d0af2cfa/f2766e0e-2122-4b61-871a-782dd64b37d7.jpg'],
-  '386fc789': ['https://media.fab.com/image_previews/gallery_images/9c0222e7-97c6-48e4-857b-cfbeb1ca7414/943321cb-aab3-4ef4-9de8-1955aa08b382.jpg','https://media.fab.com/image_previews/gallery_images/f00934ee-bec5-4d43-b2bf-40be117b39e1/3e4708c3-135c-411d-8f19-d442e27c6827.jpg','https://media.fab.com/image_previews/gallery_images/8c7bd9c9-4674-46fd-9009-c79c77199b92/e5c32d83-0c4e-4194-bd8e-156bfe7c04f5.jpg','https://media.fab.com/image_previews/gallery_images/0705887b-1462-4839-b0a1-23e2187bf2cb/2cb69bac-7ef3-4b62-b003-64792d663488.jpg','https://media.fab.com/image_previews/gallery_images/98df298e-50ba-4701-b113-999c9d9c2d78/879d7b6d-0ffe-4dc4-8b12-501ec5c1c8ed.jpg','https://media.fab.com/image_previews/gallery_images/1fe52468-0b47-4262-bb85-8773f7eebb34/81e60ed7-3000-4558-920a-1bba03c7ae1c.jpg','https://media.fab.com/image_previews/gallery_images/369779ad-01eb-466e-b7a6-0612dfd25363/4ffdeb79-d501-4eb5-8f52-ca1afaafb926.jpg','https://media.fab.com/image_previews/gallery_images/522c80e8-aa13-41a6-b165-d9aa03018820/3216b9bb-9827-472a-8d4e-5374764180ce.jpg','https://media.fab.com/image_previews/gallery_images/46f1af0d-de8d-43cb-8085-b4aff713e2b1/9eb4cf6a-1884-41d9-8983-a7a65c007ad9.jpg','https://media.fab.com/image_previews/gallery_images/2b30925a-82ed-4bea-b2eb-39a1b8e24ae0/5f919961-8455-4182-98d9-a96082b8b231.jpg','https://media.fab.com/image_previews/gallery_images/9cfa3eb6-e92d-4bfe-b4d4-158e7ccbe384/951f1f50-30a8-4c87-9af9-8eb90528ce58.jpg','https://media.fab.com/image_previews/gallery_images/2a038ef6-a60b-450e-82b5-aab9fa988f98/0f25e817-189c-4752-be64-e6271f28833c.jpg','https://media.fab.com/image_previews/gallery_images/a96ea590-a533-4ed2-8278-2864143490ee/5f90f409-c5d6-4151-991a-26e7414487a7.jpg']
+  '386fc789': ['https://media.fab.com/image_previews/gallery_images/9c0222e7-97c6-48e4-857b-cfbeb1ca7414/943321cb-aab3-4ef4-9de8-1955aa08b382.jpg','https://media.fab.com/image_previews/gallery_images/f00934ee-bec5-4d43-b2bf-40be117b39e1/3e4708c3-135c-411d-8f19-d442e27c6827.jpg','https://media.fab.com/image_previews/gallery_images/8c7bd9c9-4674-46fd-9009-c79c77199b92/e5c32d83-0c4e-4194-bd8e-156bfe7c04f5.jpg','https://media.fab.com/image_previews/gallery_images/0705887b-1462-4839-b0a1-23e2187bf2cb/2cb69bac-7ef3-4b62-b003-64792d663488.jpg','https://media.fab.com/image_previews/gallery_images/98df298e-50ba-4701-b113-999c9d9c2d78/879d7b6d-0ffe-4dc4-8b12-501ec5c1c8ed.jpg','https://media.fab.com/image_previews/gallery_images/1fe52468-0b47-4262-bb85-8773f7eebb34/81e60ed7-3000-4558-920a-1bba03c7ae1c.jpg','https://media.fab.com/image_previews/gallery_images/369779ad-01eb-466e-b7a6-0612dfd25363/4ffdeb79-d501-4eb5-8f52-ca1afaafb926.jpg','https://media.fab.com/image_previews/gallery_images/522c80e8-aa13-41a6-b165-d9aa03018820/3216b9bb-9827-472a-8d4e-5374764180ce.jpg','https://media.fab.com/image_previews/gallery_images/46f1af0d-de8d-43cb-8085-b4aff713e2b1/9eb4cf6a-1884-41d9-8983-a7a65c007ad9.jpg','https://media.fab.com/image_previews/gallery_images/2b30925a-82ed-4bea-b2eb-39a1b8e24ae0/5f919961-8455-4182-98d9-a96082b8b231.jpg','https://media.fab.com/image_previews/gallery_images/9cfa3eb6-e92d-4bfe-b4d4-158e7ccbe384/951f1f50-30a8-4c87-9af9-8eb90528ce58.jpg','https://media.fab.com/image_previews/gallery_images/2a038ef6-a60b-450e-82b5-aab9fa988f98/0f25e817-189c-4752-be64-e6271f28833c.jpg','https://media.fab.com/image_previews/gallery_images/a96ea590-a533-4ed2-8278-2864143490ee/5f90f409-c5d6-4151-991a-26e7414487a7.jpg'],
+  '4e30dcd7': ['https://media.fab.com/image_previews/gallery_images/0085a584-ca3a-46af-aa33-e395f238549a/d0cb9956-2fd0-4e2c-afc9-a6af561cb8ed.jpg','https://media.fab.com/image_previews/gallery_images/c1b88222-3d66-4169-aee1-50e8b494c9dd/39203200-43a2-45ea-9049-9bfa2f62dada.jpg','https://media.fab.com/image_previews/gallery_images/c4b34638-ecac-4010-af15-451bfe883be3/acd1aee3-32f7-41cd-bffa-6b4320798796.jpg','https://media.fab.com/image_previews/gallery_images/48862dbb-03a9-47f8-91c0-88e47aea2b3b/1125ca26-64c8-45d8-902e-89b33692262a.jpg','https://media.fab.com/image_previews/gallery_images/07a40abc-882c-45e5-8f16-c4048fcc10be/49f83566-0569-49e1-b2f5-28252f0dac91.jpg','https://media.fab.com/image_previews/gallery_images/183fda2c-ac2e-451f-b7dd-e7c67e6eae34/01fc8388-4860-44db-8783-ae8abbf67480.jpg','https://media.fab.com/image_previews/gallery_images/ab6ee9e7-8456-44f2-b64e-14c0587b0bdc/b91bee94-3699-4213-b1a2-f497c7077479.jpg','https://media.fab.com/image_previews/gallery_images/16d18355-97ae-4eed-91d9-cdc2bf2d5f1d/499e331b-e064-496f-ab68-46a3ec4c0edc.jpg','https://media.fab.com/image_previews/gallery_images/4c748b0c-7dba-4b90-99a4-094341f8b964/7614b043-e807-42be-9fb7-be44c577ada2.jpg','https://media.fab.com/image_previews/gallery_images/268c7cdb-ec18-4573-b5ac-1d4c7665fbd3/bf6988e1-bc58-4e23-989b-8043fbb3dfb5.jpg','https://media.fab.com/image_previews/gallery_images/98c261b4-409b-4330-a021-ebe5810b124a/fb6402ec-ae87-4ecd-a371-ef614c79b863.jpg','https://media.fab.com/image_previews/gallery_images/ca0a3040-0646-4993-944c-b43b4106c7b2/4b13390e-be6f-4ea1-8280-33c028629fbe.jpg','https://media.fab.com/image_previews/gallery_images/31ace55d-ac2f-4d01-b479-e2a6dd81ed1f/6d00195c-87a2-46b1-8b19-a84b3612906a.jpg','https://media.fab.com/image_previews/gallery_images/a65c873d-bb8b-4630-9ad3-dbac2e027e07/07b48bc5-116d-4f8c-951d-2b5effa68c07.jpg','https://media.fab.com/image_previews/gallery_images/b4b0ee07-ca2a-44e0-bf81-9f0506187cbb/ef2249bf-8c40-48ac-8480-2bd7e46c3890.jpg','https://media.fab.com/image_previews/gallery_images/458ce6c1-8a97-4123-93b1-a8a06a5e717a/c9ba916c-76ba-4cbc-a583-0801326768ee.jpg','https://media.fab.com/image_previews/gallery_images/79d4b9a6-2d2b-4df6-8dad-59a9c5d018b6/1e90b02f-ac64-4994-96be-53d8e65fb3cf.jpg'],
+  '6f4c30ac': ['https://media.fab.com/image_previews/gallery_images/94a900e5-8fda-441c-ae01-d28de08b43a1/82113395-64f1-45e1-852c-da985ef323ec.jpg','https://media.fab.com/image_previews/gallery_images/c682114d-e99a-4c45-9cda-4a4821b45d5d/6dad54e1-e962-417e-986f-cafa9c4ad3cd.jpg','https://media.fab.com/image_previews/gallery_images/ae4719fa-22e6-49f1-a268-a5637e9b1f0a/760d00f9-6cdd-4c10-8777-5d6c7ca8f617.jpg','https://media.fab.com/image_previews/gallery_images/506daf7d-58b9-4cb9-a25c-6fbfeb1228f2/2a2bf60a-4dc3-4eaf-bc51-668cae66390e.jpg','https://media.fab.com/image_previews/gallery_images/f60c18fe-d7c9-4aed-8439-59e96158fb95/1eef1b00-e904-4f55-8366-3f456433578b.jpg','https://media.fab.com/image_previews/gallery_images/953b0906-1f27-436b-a546-f532dfa4fa0c/c18a5356-188c-4eea-b925-120e6d31c6ec.jpg','https://media.fab.com/image_previews/gallery_images/4c0b41e4-9807-45d5-a8ec-81b6ef90a85b/95f6d140-2a1c-4342-ac8d-2b88ea793e17.jpg','https://media.fab.com/image_previews/gallery_images/527fe191-1530-4607-a400-2b11ef728a68/5407fefe-2ea3-4027-89a9-f26f2b933b8a.jpg','https://media.fab.com/image_previews/gallery_images/647e6886-bd66-4ed0-acc0-7f218a4761cd/434d36fd-f048-45f0-8c6b-96f68a2435b0.jpg','https://media.fab.com/image_previews/gallery_images/b9d27379-6ccd-4b7e-9c65-f3807a340e65/d8ed0a62-eddf-47a5-9074-0ea3ac26b906.jpg','https://media.fab.com/image_previews/gallery_images/564b0859-97dd-4fde-921e-b05e943a502b/8917d942-8cc0-41e9-b91b-37f918ace976.jpg','https://media.fab.com/image_previews/gallery_images/8b1663d6-d8ae-4572-bd57-9cc4e81bf131/38119d49-6f27-4584-8aa1-194b6ee0f0c1.jpg','https://media.fab.com/image_previews/gallery_images/d4d1cf59-9aab-4a36-a1a0-90a5abc24d0e/1241f8dd-0d3b-4918-824e-cae955dc901c.jpg','https://media.fab.com/image_previews/gallery_images/d59361ac-d484-4f15-9e34-672eaecf86cc/61bb0526-6551-48b3-9edd-9abbae12092f.jpg','https://media.fab.com/image_previews/gallery_images/b546106a-bc8a-4c95-b22a-97d3e077c272/29d6d88e-6b9f-4e56-9f4e-3b4e55511cc2.jpg','https://media.fab.com/image_previews/gallery_images/03f605ef-c006-4f92-a993-d5b2ce7a8638/6cefe3b3-769b-430c-a862-d86b142aa1f3.jpg','https://media.fab.com/image_previews/gallery_images/6d54cbf8-2cd8-4181-bc45-148bb1e43661/d7fb2c05-aa18-44c3-8d4b-fe77ed44e1c6.jpg'],
+  'fa24aee0': ['https://media.fab.com/image_previews/gallery_images/4a3abe90-29f8-4920-b28b-baa66127c81a/58d064ce-2376-46df-9279-4fd151a6d9ff.jpg','https://media.fab.com/image_previews/gallery_images/7be7a2d4-d007-40ec-8fb6-c507772a2956/b5690d1d-f0f3-4612-b96f-f97cf55c919b.jpg','https://media.fab.com/image_previews/gallery_images/09aeea6a-2e08-461b-a73d-60e8474450f4/025b20ca-9984-46c6-ade4-a889fafdf71d.jpg','https://media.fab.com/image_previews/gallery_images/d6346087-23cc-4eb7-aea1-5efd98936fba/3c8e09b3-f1f8-4f09-9591-d5566252b484.jpg','https://media.fab.com/image_previews/gallery_images/dcbced01-3055-45bd-a2e6-3aee227c5b56/86a18941-dac0-4b0d-8ecf-c3084828e895.jpg','https://media.fab.com/image_previews/gallery_images/447ce02c-332d-4028-825b-7641c10aaf28/c7382d42-3972-4ab8-b898-7889175735cf.jpg','https://media.fab.com/image_previews/gallery_images/d3016105-207e-4493-a158-ed7b918a6539/c7e4c25d-b100-4ba8-9f0f-47f131602522.jpg','https://media.fab.com/image_previews/gallery_images/72b5e3ac-001e-4512-90c0-e0ed5b072c37/06ac4348-512e-4bfd-9420-b398c26c5a6a.jpg','https://media.fab.com/image_previews/gallery_images/b5bd7d16-49f2-4766-94e2-21541e75aee8/c729112e-39a9-437f-aa9f-f931cf23b50c.jpg','https://media.fab.com/image_previews/gallery_images/4d738c55-c292-44ed-9a12-7d21996e9e4d/367497b8-3cab-4945-b2e8-080104f27729.jpg','https://media.fab.com/image_previews/gallery_images/e15d1ff8-78d9-44e2-8bb4-273491a0ced7/a41879d4-63fd-4b8a-91d8-492f823ca903.jpg','https://media.fab.com/image_previews/gallery_images/317b780b-301b-4b36-a1f4-b2a8ebe2fe41/ab82a3fe-4211-4f9c-8276-45136594dc59.jpg','https://media.fab.com/image_previews/gallery_images/78601774-cf97-49de-8125-ae85c605cc05/bf81acb7-ba7d-4da0-bf7f-637114a9c7df.jpg'],
+  '964ab5d7': ['https://media.fab.com/image_previews/gallery_images/00b9308e-405b-4d8f-bc4d-4f051f99a9b6/f93e2646-aeea-47f0-a8ea-6238da7bdf27.jpg','https://media.fab.com/image_previews/gallery_images/58acb2ba-2f11-489c-a03f-ea82c12547e8/99b51718-048e-404d-bee7-c5dae9c5ff3b.jpg','https://media.fab.com/image_previews/gallery_images/e714dd83-0cbe-420b-8587-16bca5a3d203/e03d0604-eed7-4b0a-b131-6aa331d30f89.jpg','https://media.fab.com/image_previews/gallery_images/c40b1498-0b93-4a7f-8cbc-9cb43ee734a4/3872d2b7-2655-4142-917f-961f15229bd8.jpg','https://media.fab.com/image_previews/gallery_images/be34b2f4-1910-4ec4-b07f-3fdb241c6835/90646105-e3c4-4c33-b90a-ac467fbcb1db.jpg','https://media.fab.com/image_previews/gallery_images/819f5a51-3c4a-4b10-8208-c6985cb36693/13f9c378-db7b-475d-bf77-65216d52d097.jpg','https://media.fab.com/image_previews/gallery_images/1849f826-e94a-4671-8e81-07860fc3bd12/31324562-2db7-45c7-b557-34b22ff3c1a4.jpg','https://media.fab.com/image_previews/gallery_images/12f4dcac-f106-4cd1-b251-63d012976c86/bfc899c1-3c40-45ac-8544-f8f493779d16.jpg','https://media.fab.com/image_previews/gallery_images/9d7f11af-70f7-45b4-9742-0cb353bb79a4/91055100-f084-4e21-a0be-5c6487f8e19a.jpg','https://media.fab.com/image_previews/gallery_images/f2c0fb8e-8f20-452d-951b-6814e1825fde/b4401f04-4d03-4128-9b9b-3eccc0da0cf7.jpg','https://media.fab.com/image_previews/gallery_images/a7ff9ab4-874d-436d-8f7e-cfa54b84ca11/b93dc595-042d-4ac6-9516-040db86279bd.jpg','https://media.fab.com/image_previews/gallery_images/18ca5b8c-e68d-4a8b-855b-c5c0b6e2660a/7c121ab8-fcfd-4812-abdb-bf31b47eed88.jpg','https://media.fab.com/image_previews/gallery_images/bc4595d0-8035-41c6-b818-a1a285e7957b/c1520768-a5e5-45ae-9a17-2556979dd64e.jpg'],
+  '7177546c': ['https://media.fab.com/image_previews/gallery_images/ecd8a06a-5404-4625-a1e2-f55ce4c4fb4b/4caaa7a7-c0ec-4e59-b2cd-c31eb24fc17f.jpg','https://media.fab.com/image_previews/gallery_images/9f6c486b-a1ba-40a5-9c5a-27ddc955e6df/c6ffc083-d05d-4adc-b1dd-47faf6f28ef2.jpg','https://media.fab.com/image_previews/gallery_images/ff8a1f13-1f6b-4e96-8636-12197f3f147c/8ea0e5e3-5379-4bff-b04b-a44df9c02d82.jpg','https://media.fab.com/image_previews/gallery_images/f89fbc6a-9e7c-42a5-a881-263eb3d45fea/00957ca9-5f10-478f-81d2-613db4db7346.jpg','https://media.fab.com/image_previews/gallery_images/41c83b73-9cfc-46b4-b0ea-e3ba35bff07b/e6b5bc3d-45db-4e9b-b231-6116656e1f66.jpg','https://media.fab.com/image_previews/gallery_images/d0e93c3c-a6a5-4412-b1c8-95c62cb4e683/7570b09e-bddc-42c1-84fa-3f26cd6a944a.jpg','https://media.fab.com/image_previews/gallery_images/5f563fca-6d74-46d1-bb2f-be9866e81008/4ca8000d-e65c-49c3-a9b1-3d516c9fe795.jpg','https://media.fab.com/image_previews/gallery_images/2d0d5585-ed8b-436b-908d-1a3697047b59/938e7887-04ab-4c30-88e8-8c2b0d019d01.jpg','https://media.fab.com/image_previews/gallery_images/fd78b36c-68d9-45de-acc9-77c604cbe37a/8f1d0443-bf54-46dc-9cbc-005bc4c4c6db.jpg','https://media.fab.com/image_previews/gallery_images/7cd6f3c3-b29a-4ff4-8b6a-e663398e56ae/63d9c586-192c-47ee-88a1-761ce65faec6.jpg','https://media.fab.com/image_previews/gallery_images/c579596b-dd0f-45a8-a825-31b89093c0f1/ec463027-c68c-4b4f-8117-ed42086f600b.jpg','https://media.fab.com/image_previews/gallery_images/141d90ae-5ff8-482c-9958-65633b353a4a/8225ca96-0d82-45ac-9526-164df3ee7fc4.jpg','https://media.fab.com/image_previews/gallery_images/c87ef4d3-4863-49ed-984d-fcefc8889bed/0428d9ee-4a75-4595-a304-379f0af9213e.jpg','https://media.fab.com/image_previews/gallery_images/e906859a-6c83-4847-835b-d9f8d6dd52ce/f9acc723-e8e5-4269-9826-3ddc2e35c784.jpg','https://media.fab.com/image_previews/gallery_images/e5ccf5e0-e52e-432d-8d93-c4dcc5360612/9e42ded5-0ee3-48d1-9c85-746e06a38756.jpg','https://media.fab.com/image_previews/gallery_images/b2e40ee4-fd0f-4bc9-b6ea-c15936b2b3de/9f9154cc-45ca-401d-bc85-0305a677cba2.jpg','https://media.fab.com/image_previews/gallery_images/29bda059-5c27-4bc7-97ba-33f7bb1c5d4e/be543163-a09f-4501-80bb-a2340a56a799.jpg'],
+  '0529cee3': ['https://media.fab.com/image_previews/gallery_images/f95071b9-eda6-4ec5-b63f-48c45584f79a/8c414be6-cf6c-4d52-95a5-8d56ac67c2c2.jpg','https://media.fab.com/image_previews/gallery_images/b758545a-436b-4cb3-87ab-c1f4f234f324/52d0d31f-0250-44a8-b6f4-6c8a8339525e.jpg','https://media.fab.com/image_previews/gallery_images/867a908c-c021-4107-b4b1-6860c5737d20/7a5e48b0-0283-40bb-bcc3-24d72683120d.jpg','https://media.fab.com/image_previews/gallery_images/3f5e9618-1358-4359-a65b-1e413490e31b/3ae8b3f9-37fd-46ac-b4ec-2af0e22d4068.jpg','https://media.fab.com/image_previews/gallery_images/2bce9224-bd27-4110-9d3f-851b8d6e37a1/62c6312d-c577-49ff-8c9b-fa80574406eb.jpg','https://media.fab.com/image_previews/gallery_images/56f97722-eb0a-42d4-a1c8-09cf54eca98f/d6b0dde3-36d2-4b99-b577-05cf680d383f.jpg','https://media.fab.com/image_previews/gallery_images/d7e75acb-fe51-4ed9-ac97-8a24c2618397/e0eb1ad5-7980-4dfa-8c10-163d947dbfaf.jpg','https://media.fab.com/image_previews/gallery_images/28a0c62d-c774-485d-8084-6c26f40f892d/dc4efefd-8952-40c5-ad41-5af3fe31da96.jpg','https://media.fab.com/image_previews/gallery_images/5aaa0434-a95e-40b3-b6f8-f77eb227eb53/e27750bd-6cc0-43fb-9089-849e3788251b.jpg','https://media.fab.com/image_previews/gallery_images/0205644c-7f49-4356-947d-074b0ea16f7e/144b2ba6-be31-4515-b8ed-ad447a0364fd.jpg','https://media.fab.com/image_previews/gallery_images/100b48ab-b52f-41ed-85c5-a092eca28828/c4315acb-65e9-4684-b154-7253a7190f06.jpg','https://media.fab.com/image_previews/gallery_images/f21ae3b0-6952-4cfd-b302-ad1e30cbd613/26f18bfe-3cc7-492f-9c54-6c7c9daa81c3.jpg','https://media.fab.com/image_previews/gallery_images/daf07ad7-78d8-4c83-82bb-f5ecbf238943/7022a1db-77ec-4cbb-82a3-6baf4513a25e.jpg'],
+  '9c46865c': ['https://media.fab.com/image_previews/gallery_images/a9d3abbb-3a03-41a8-bd7b-d9d4c4c45599/71fa7ecf-61e1-4d8f-9691-d768fe9f57e8.jpg','https://media.fab.com/image_previews/gallery_images/67d78146-b191-494c-a119-eb07a4f6237d/a7f5cd3d-82ca-41bf-afe3-546cb7a2932e.jpg','https://media.fab.com/image_previews/gallery_images/1163b6d3-c87b-4e45-8a62-b01a6f6aead8/7ed05957-b465-4b68-86b9-99a03e7543a9.jpg','https://media.fab.com/image_previews/gallery_images/942530a9-f50d-42a2-88c4-5c876bbf4bf9/8691d69c-1e1c-4c08-b8ab-4d826d3a96fb.jpg','https://media.fab.com/image_previews/gallery_images/015f5066-dff8-46b9-a059-413f6470d954/efe333f8-2e06-4804-b25c-7212048f2080.jpg','https://media.fab.com/image_previews/gallery_images/063d4b34-d284-4ce5-a062-293ea3e7ea7e/f79eda2d-a587-4611-8610-321411d3e4f4.jpg','https://media.fab.com/image_previews/gallery_images/7674e411-1340-435b-8183-d9096249ca6c/ae2b5d37-a443-4948-81f8-4c27da28d321.jpg','https://media.fab.com/image_previews/gallery_images/940ff2e4-43a5-4db8-b99c-2638dfdcda13/77e27e97-b878-4396-bb33-09b30727722d.jpg','https://media.fab.com/image_previews/gallery_images/7e83786f-6d15-47f6-adf8-368ff24983f0/9050d637-a227-412f-a08e-856b6f24a14a.jpg','https://media.fab.com/image_previews/gallery_images/650479e2-863c-4e79-b1a2-99a0f4a1ee8b/a6b9cc48-6e66-4967-9a37-9342d70f4bb2.jpg','https://media.fab.com/image_previews/gallery_images/29a02a44-8cdc-49ed-bf4d-04dc936ab37b/5dc93bb0-33e3-4d17-b429-afaa45d62a5a.jpg','https://media.fab.com/image_previews/gallery_images/f42de357-23dc-4ed4-ae43-3ca001ffbe7f/ac57d5e0-74ed-4d76-ae4c-54823fb0ea62.jpg','https://media.fab.com/image_previews/gallery_images/f2c73e5d-321c-4641-a3f2-b2dd2ef30a3b/8834ff03-a3de-45be-822a-5e0644186081.jpg'],
+  'ce9c9f49': ['https://media.fab.com/image_previews/gallery_images/af5910bc-4134-44c9-858e-145ff8ee4f3a/34ba8cdf-4709-40eb-930a-c2ffc70e0229.jpg','https://media.fab.com/image_previews/gallery_images/5e27447f-dfbd-4592-8f76-5ad2c4569f5b/c04ec282-b727-43b5-a071-208c6b776bc1.jpg','https://media.fab.com/image_previews/gallery_images/b395d4c4-7ccb-4156-b055-f1718f709dec/cb23e83b-a2ea-444f-b698-a582fc05b7f0.jpg','https://media.fab.com/image_previews/gallery_images/6fc6433b-6bb8-408b-834f-3195dd6e0215/5dd5dfca-01a3-4b47-9432-fa58ffff87dd.jpg','https://media.fab.com/image_previews/gallery_images/bd4a181b-77fe-498b-bd0e-d1e04e5e4918/0fe5e104-8d92-442d-92e8-50dfb5dbece2.jpg','https://media.fab.com/image_previews/gallery_images/a7e19db1-fbb0-493d-bf1f-d7e91ab38ba6/261c155a-971d-4ecf-81af-6cba5f2cf849.jpg','https://media.fab.com/image_previews/gallery_images/9043f003-840c-4785-bc5a-8458be50b4d4/c145778d-03a8-4d1a-aed6-3496c4d4c907.jpg','https://media.fab.com/image_previews/gallery_images/4ddea8c8-5360-4dfc-9f97-580f997a7aa0/48369a54-f4f1-468b-a7d2-6cfdd8faeb0f.jpg','https://media.fab.com/image_previews/gallery_images/ca35b09f-3ebb-4542-b95a-4c835af43e8b/588739dc-cb9d-4e13-865d-b33257cda93a.jpg','https://media.fab.com/image_previews/gallery_images/34c18908-afba-4223-adc0-6b1a20cda5e4/d48706d5-2998-4733-b00d-dfa8752d6877.jpg','https://media.fab.com/image_previews/gallery_images/d0bb8c8d-aae9-451a-aa5f-b623d8be28fc/1a2911a6-6e9c-4912-b9a2-82f23e5f2b7a.jpg','https://media.fab.com/image_previews/gallery_images/5758b485-de43-41af-9df6-4d2f67367565/94860b40-9424-4843-a0e9-914ccd0334ac.jpg','https://media.fab.com/image_previews/gallery_images/228ccb74-ae2d-4129-b3e3-4c029ed21567/e2b4f9fd-261f-4c5d-b109-484ac658bc79.jpg','https://media.fab.com/image_previews/gallery_images/657dfda7-0e35-48f1-9c06-74e7dd8d48f0/363f6093-6ed5-4fb9-bd09-92baaee2ed15.jpg','https://media.fab.com/image_previews/gallery_images/b81f1ddd-84ef-470b-8a79-c8c956706ccb/51538813-e15d-44ab-b764-fd85164b9500.jpg','https://media.fab.com/image_previews/gallery_images/7f79d1fa-bd4c-4e93-8beb-4b4a39d85516/d8a81f89-69ec-489d-8793-903f85bdd850.jpg','https://media.fab.com/image_previews/gallery_images/6a75cfd9-b762-47ba-9654-2a482fd86fd7/5eda8888-8a40-43ff-9cf2-3a26b08fff1b.jpg'],
+  'dab7957e': ['https://media.fab.com/image_previews/gallery_images/8df790cd-845f-4166-8cbc-55d66ed36daa/cf6cc72f-4a08-4e6c-bc32-315ee3de1a6e.jpg','https://media.fab.com/image_previews/gallery_images/86f9a788-0790-4662-847e-774d3f77e673/90368685-139d-4be7-9138-e115c5df06d6.jpg','https://media.fab.com/image_previews/gallery_images/61f29e76-7af1-49d4-b4de-6a0b516cbe83/c68b84fe-6f5d-49a2-beae-2f143e492042.jpg','https://media.fab.com/image_previews/gallery_images/ae7f4b95-44db-4853-8e26-5235294c63c3/e677834f-a989-4e3e-8a31-0945dd52c60a.jpg','https://media.fab.com/image_previews/gallery_images/1a945ac3-4c9a-4db4-a2ec-3ec935a623ee/8bd5458f-8952-4ffd-b682-1435fe8210b0.jpg','https://media.fab.com/image_previews/gallery_images/ef961c9b-a28a-4f31-b82f-8ea05d6a245b/a85574de-241e-4071-9d11-7d233de684a2.jpg','https://media.fab.com/image_previews/gallery_images/d121f485-a5ec-4a0a-a74c-2627a2c87b5a/ab45c47c-4d10-4676-ac91-5a258d5949e9.jpg','https://media.fab.com/image_previews/gallery_images/897433c4-2080-4c09-abe2-aef430282c99/e06467ca-5989-42b2-972e-8879fa2f71d8.jpg','https://media.fab.com/image_previews/gallery_images/29bab8a2-9257-41bc-bfbf-e2b5664b72a5/3296c9f8-d6c8-4b9d-9732-2ba80b8c0942.jpg','https://media.fab.com/image_previews/gallery_images/303a2912-c619-4fa5-aedc-6ab245488d9e/206b6be9-c2cf-443c-b15e-0927f6a9279c.jpg','https://media.fab.com/image_previews/gallery_images/01c79757-a0d1-4c52-b86d-3b49e303a1ac/01fbdeb1-5129-4f91-ada4-eeb019860298.jpg','https://media.fab.com/image_previews/gallery_images/1cd7450f-f11e-4098-9672-7a45605d7a3f/5f9dc5a0-59cd-49df-89c7-acdc21764306.jpg','https://media.fab.com/image_previews/gallery_images/97b14fb6-c093-4b3b-abc9-d5398d76d5be/77d757ba-056c-40ab-a700-47c8f9580a41.jpg','https://media.fab.com/image_previews/gallery_images/9b835994-b007-4695-82d9-29c0bb122df6/ca1764ab-8e40-4fac-9df4-8a00fa65e5a8.jpg','https://media.fab.com/image_previews/gallery_images/d6d8ac4a-78c7-4c53-a602-4a8b44df534a/29dc5d79-6f63-4c61-8e4f-cd918ea9d60d.jpg','https://media.fab.com/image_previews/gallery_images/eac65dcd-ec92-4942-be67-6ec7f0864273/8a522e0d-dd2b-402c-aec5-78d787059f50.jpg','https://media.fab.com/image_previews/gallery_images/ac0dd09c-7736-4f03-b8c9-cb5fb10a585a/78663530-7e2a-461b-9df0-37fff2bcbe12.jpg'],
+  '7e198e93': ['https://media.fab.com/image_previews/gallery_images/bc0e2c77-fa5b-4fb7-b52a-82e20eef76e5/e36bdb6e-6279-4d58-8561-0b8ba9c8629a.jpg','https://media.fab.com/image_previews/gallery_images/778aaec9-adc9-4a76-9537-c0e3e2359a4a/848213eb-a376-4b35-b879-6f65e5182539.jpg','https://media.fab.com/image_previews/gallery_images/54496177-aa08-498d-a298-772d509c4806/0524d9a2-05f3-412c-8a2a-2425f9406bc4.jpg','https://media.fab.com/image_previews/gallery_images/7a1b6bc8-d44e-4a6a-b6ce-6ab54d41b852/a7d8c6d2-678a-4ce9-83ca-863f204eb8b2.jpg','https://media.fab.com/image_previews/gallery_images/8d99598f-9c28-4f06-aacc-bd4aed91d436/21fdac13-cd5a-4df0-8cad-e6ba439fcb86.jpg','https://media.fab.com/image_previews/gallery_images/9c6a38f9-cbed-456f-9e3f-facd7b89b1d6/c5b8f479-3ca5-4544-be53-3d88c6b96190.jpg','https://media.fab.com/image_previews/gallery_images/0f4ab4d4-27f9-4a3e-9119-a298cb0f9f7d/b4af3985-03c5-48c8-8fa7-d0e7f304b9ff.jpg','https://media.fab.com/image_previews/gallery_images/4b6d29a5-1dfb-46d8-9b79-404ebc6b3efe/c3abcca8-c214-4643-925c-67996167bc6d.jpg','https://media.fab.com/image_previews/gallery_images/04c0c36f-85a6-4a4e-98ca-ebbf3a2eca02/8b614231-9f51-441a-a64e-ec48e6f0784e.jpg','https://media.fab.com/image_previews/gallery_images/89895f11-7620-42c4-bfb1-e9559eede9e1/9f2326c3-a57e-4c88-bd51-8587fa49dabf.jpg','https://media.fab.com/image_previews/gallery_images/032de7b9-5cc3-4fbd-8006-adeb86e1734c/e5ab051c-a061-411f-8b7f-1f8035c0c67b.jpg','https://media.fab.com/image_previews/gallery_images/ba1ba04f-8609-4e0f-ae52-d7a2c77349b2/f731f445-8e7a-4b7e-ba3e-03a2f4b5890a.jpg','https://media.fab.com/image_previews/gallery_images/e00fed35-9e51-4b9c-971a-d260f064c01a/71315607-cf8e-478e-8026-da60b09a7cba.jpg'],
+  '3dda2235': ['https://media.fab.com/image_previews/gallery_images/ba0d742d-a8a1-4253-a1b8-794219e7972f/0a047fbf-05d5-4591-8503-af64498cdec5.jpg','https://media.fab.com/image_previews/gallery_images/d13148c2-04da-4bfc-b67b-b8634e095ea4/8ffeeead-653a-472e-bcb0-716d554831f8.jpg','https://media.fab.com/image_previews/gallery_images/fc3ffaf3-4288-48a3-8a53-dd9751e04821/b8268f7a-54ce-4d09-848b-343a37741b5f.jpg','https://media.fab.com/image_previews/gallery_images/ff60ec6a-d8c5-47a7-907c-41ab56360103/48831413-7d40-41a0-a7b7-1056855bce48.jpg','https://media.fab.com/image_previews/gallery_images/d9b0ffbd-0da3-4343-8c65-ad6a28861c59/6415a1e8-b9f9-4741-a96e-7471be26ebaa.jpg','https://media.fab.com/image_previews/gallery_images/87c208a3-6a90-4f9f-a1f1-612e510297bf/a04170d7-ff9f-4637-8e09-c6160a27a36b.jpg','https://media.fab.com/image_previews/gallery_images/1b37587e-6250-46fa-8195-2e383985c804/769e0d5a-811d-44da-8289-b703288b8090.jpg','https://media.fab.com/image_previews/gallery_images/14274f10-a93f-4c19-9296-5e7eba436df0/93e317ea-16dd-4a01-a4a8-644911d21f6f.jpg','https://media.fab.com/image_previews/gallery_images/d41e6dd1-49f4-4e9f-a788-043355f89ec1/a916ac60-4e44-4803-b4c1-4aa4b84ca6cc.jpg','https://media.fab.com/image_previews/gallery_images/72427da0-9e8c-4bdc-9ba6-af682e5a89a0/b8e6c34d-c484-41ed-94c9-71790e4d3366.jpg','https://media.fab.com/image_previews/gallery_images/e278142a-cc8a-4327-b3ad-4b4aa4d259dc/8fb55de9-c1d9-4ff2-9a93-8916c15e40f5.jpg','https://media.fab.com/image_previews/gallery_images/2e0b20bd-0499-4454-9bf7-aae9afc874ac/4e5fac90-ce8f-4969-8013-af80980ead50.jpg','https://media.fab.com/image_previews/gallery_images/0f6ec52f-656c-4972-877a-36e0bd337938/1c4337f0-6096-4824-a395-8aa171060b9c.jpg','https://media.fab.com/image_previews/gallery_images/cee03b14-3a7d-475b-a88b-b880d0e6b5ad/cc91c5b1-afed-41cc-9b5b-4da896b11fb6.jpg','https://media.fab.com/image_previews/gallery_images/7388c7d7-a023-47cd-9b19-00fbd45ea1be/d5501614-6b22-4cd9-8d38-64fbd12bdeaf.jpg','https://media.fab.com/image_previews/gallery_images/8c886c0f-5456-4088-861c-2c6102167543/994527d2-43f6-4e24-82a1-f253cb702028.jpg']
 };
 
 var BIOME_LABEL = { m:'Mountain', a:'Arid', c:'Cold', l:'Lush' };
@@ -2783,6 +2908,238 @@ var PRODUCT_RICH_DESC = {
       '</div>',
     '</div>',
   ].join(''),
+  '7e198e93': [
+    '<p class="rdesc-intro">Inspired by the harshest barren wastelands, with <b>stark rocky terrain</b>, arid plains and dramatic cliff formations. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>5 unique landscapes</b> of 64km² each with procedural PCG cliffs and full Nanite support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">64km² Terrain</span>',
+        '<span class="rdesc-feature">5 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">PCG Cliffs</span>',
+        '<span class="rdesc-feature">Lumen · RVT</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>5 unique desolate landscapes at 8×8km · 5 Demo Levels + 1 Zoo Level</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 4 controllable PBR functions · 24 material instances</div>',
+        '<div class="rdesc-mat"><b>Meshes</b>3 Mountain · 2 Field · 1 Valley · 3 Rock · 5 Terrain Cliffs · 4 Rock Cliffs · 1 Pebbles</div>',
+        '<div class="rdesc-mat"><b>Cliffs</b>Procedural generation via PCG · density and distance fully configurable</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '4e30dcd7': [
+    '<p class="rdesc-intro">Inspired by the vast open <b>Scottish Highlands</b>, with sweeping moorlands, dramatic ridgelines, rocky outcrops and integrated water terrain. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> with Lumen support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">8K Satmaps</span>',
+        '<span class="rdesc-feature">Water Terrain</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique highland landscapes · 10 Demo Levels + 1 Zoo Level · 10 colour &amp; normal satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 6 material functions · 6 terrain textures at 4096px · integrated water</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>4 Grass types · 7 Rock meshes · procedural density via Grass Layers</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '6f4c30ac': [
+    '<p class="rdesc-intro">Inspired by the dramatic gorge landscapes of <b>Garni, Armenia</b>, with basalt column cliffs, birch forests, rocky river valleys and open highland meadows. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> with Lumen support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">8K Satmaps</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique Garni landscapes · 10 Demo Levels + 1 Zoo Level · 10 colour satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 6 material functions · 6 terrain textures at 4096px</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>2 Birch · 3 Trees · 5 Grass · 3 Bush · 3 Rocks · procedural density via Grass Layers</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  'fa24aee0': [
+    '<p class="rdesc-intro">Inspired by the gentle rolling <b>hills and plains of northern Europe</b>, with lush meadows, scattered trees, wildflowers and soft rocky outcrops. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>5 unique landscapes</b> with Nanite, Lumen and Virtual Texture support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">5 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">Virtual Textures</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>5 unique hill landscapes · 5 Demo Levels + 2 Zoo Levels · 5 terrain satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Meshes</b>3 Range · 2 Plain · 1 Mountain · 1 Rock · 6 material functions · 123 textures total</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>3 Trees · 5 Grass · 2 Bush · 2 Leaves · 2 Flower types · 4096px PBR textures</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '964ab5d7': [
+    '<p class="rdesc-intro">Inspired by the surreal salt flats and arid highlands of the <b>Bolivian Altiplano</b>, with vast cracked terrain, towering cacti, rocky cliffs and desert mountains. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>5 unique landscapes</b> with Nanite, Lumen and Water Plugin support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">5 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">Water Plugin</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>5 unique salar landscapes · 5 Demo Levels + 2 Zoo Levels · 5 terrain satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Meshes</b>3 Mountain · 2 Valley · 1 Range · 4 Cliff · 4 Rock · 7 material functions · 32 material instances</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>3 Cactus · 3 Grass · 2 Bush · 2 Pebbles meshes · 4096px PBR textures</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '7177546c': [
+    '<p class="rdesc-intro">Inspired by the legendary pillar mountains of <b>Zhangjiajie, China</b> — the real-world inspiration for Avatar\'s Hallelujah Mountains — with towering stone columns, dense jungle canopies and misty valleys. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> with Nanite &amp; Lumen support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">8K Satmaps</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique Zhangjiajie landscapes · 10 Demo Levels + 1 Zoo Level · 10 colour &amp; normal satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Meshes</b>3 Cliff types · 1 Rock · 2 material functions · 2 terrain textures at 4096px</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>2 Tall Trees · 2 Big Trees · 1 Giant Tree · 1 Liana Tree · 1 Thin Tree · 1 Dead Branch · 2 Bush · 2 Grass (4096px)</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '0529cee3': [
+    '<p class="rdesc-intro">Inspired by the dense jungles of the <b>Amazon rainforest</b>, with towering tropical trees, winding rivers, rocky cliffs and lush valley floors. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>5 unique landscapes</b> with full Nanite &amp; Lumen support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">5 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">180 Textures</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>5 unique Amazon landscapes · 5 Demo Levels + 2 Zoo Levels · 5 terrain satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Meshes</b>3 Mountain · 2 Field · 1 Plates · 2 Rock · 3 Cliff types · 22 materials · 180 textures total</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>3 Palm · 7 Trees · 5 Bush · 2 Leaves · 3 Cliff types · 4096px PBR textures</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '9c46865c': [
+    '<p class="rdesc-intro">Inspired by the wild landscapes of <b>sub-Saharan Africa</b>, with iconic baobab trees, sun-scorched savanna, rocky cliffs and desert mountains. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>5 unique landscapes</b> with full Nanite, Lumen and Virtual Texture support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">5 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">Virtual Textures</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>5 unique African landscapes · 5 Demo Levels + 2 Zoo Levels · Water Plugin support</div>',
+        '<div class="rdesc-mat"><b>Meshes</b>3 Mountain · 2 Range · 1 Rocky · 3 Boulder · 3 Cliff types · 5 terrain satmaps at 8K</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>3 Baobab · 4 Trees · 3 Grass · 5 Bush · 22 materials · 141 textures at 4096px</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  'ce9c9f49': [
+    '<p class="rdesc-intro">Inspired by the vast wilderness of <b>Argentine Patagonia</b>, with dense jungle vegetation, glacial lakes and sweeping mountain horizons. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> of 64km² each with procedural foliage and full Nanite &amp; Lumen support.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">64km² Terrain</span>',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">Nanite</span>',
+        '<span class="rdesc-feature">Lumen</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique Patagonian landscapes at 8×8km · 10 Demo Levels + 1 Zoo Level · integrated water terrain</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 6 material functions · 6 terrain textures at 4096px · 8K colour &amp; normal satmaps</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>4 Tall Trees · 3 Trees · 5 Grass · 1 Bush · 3 Rocks (4096px) · Procedural density via Grass Layers</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  'dab7957e': [
+    '<p class="rdesc-intro">Inspired by Pakistan\'s legendary Karakoram range, with <b>towering snow-capped peaks</b>, massive rocky slopes and high-altitude river valleys. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> of 64km² each with procedural vegetation.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">64km² Terrain</span>',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Procedural Foliage</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique Karakoram landscapes at 8×8km · 10 Demo Levels + 1 Zoo Level</div>',
+        '<div class="rdesc-mat"><b>Materials</b>6 material functions · 6 terrain textures at 4096px · Snow · Rock · Grass · Gravel · Bush</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>3 Grass · 3 Bushes · 6 Rocks (4096px) · Procedural density via Grass Layers</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
+  '3dda2235': [
+    '<p class="rdesc-intro">Inspired by the sun-drenched landscapes of southern France, with <b>lavender fields</b>, scattered pine forests and rocky Provençal slopes. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> of 64km² each with procedural vegetation.</p>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Highlights</div>',
+      '<div class="rdesc-features">',
+        '<span class="rdesc-feature">64km² Terrain</span>',
+        '<span class="rdesc-feature">10 Environments</span>',
+        '<span class="rdesc-feature">PBR</span>',
+        '<span class="rdesc-feature">Procedural Foliage</span>',
+        '<span class="rdesc-feature">UE5 Ready</span>',
+      '</div>',
+    '</div>',
+    '<div class="rdesc-block">',
+      '<div class="rdesc-label">Package Contents</div>',
+      '<div class="rdesc-mats">',
+        '<div class="rdesc-mat"><b>Terrain</b>10 unique provençal landscapes at 8×8km · 10 Demo Levels + 1 Zoo Level</div>',
+        '<div class="rdesc-mat"><b>Materials</b>1 terrain material · 5 controllable PBR functions · Grass · Pine · Gravel · Rock</div>',
+        '<div class="rdesc-mat"><b>Vegetation</b>4 Pines · 2 Tall Trees · 2 Thin Trees · 1 Bush · 1 Plant · 1 Small Tree · 2 Grass · Procedural density via Grass Layers</div>',
+      '</div>',
+    '</div>',
+  ].join(''),
   '3e2f982b': [
     '<p class="rdesc-intro">Inspired by the vast open plains of sub-Saharan Africa, with <b>golden grasslands</b>, scattered acacia trees and sun-baked terrain. A <span style="color:var(--gold-bright)">production-ready environment pack</span> delivering <b>10 unique landscapes</b> of 64km² each with procedural vegetation.</p>',
     '<div class="rdesc-block">',
@@ -3697,6 +4054,7 @@ function removeFromCart(productId) {
   renderCart();
   syncDrawerCartBtn(productId);
   _refreshDrawerFh();
+  refreshNaButtons();
 }
 
 /* ── Sync the "Add to Cart" button in the product drawer ── */
@@ -4481,12 +4839,18 @@ window.addEventListener('hashchange', function() {
 // 3. Intercept clicks on nav dropdown collection items:
 //    — prevents browser default scroll-to-anchor
 //    — calls openCollection() directly, works whether picker is visible or not
+//    — scrolls to store-inner after the transition (nav is at top, store may be below fold)
 document.querySelectorAll('.nav-dd-item').forEach(function(link) {
   var href = link.getAttribute('href');
   if (href && _hashToCol[href]) {
     link.addEventListener('click', function(e) {
       e.preventDefault();
       openCollection(_hashToCol[href]);
+      /* Wait for openCollection's 160ms transition, then scroll store into view */
+      setTimeout(function() {
+        var inner = document.getElementById('store-inner');
+        if (inner) inner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
     });
   }
 });
@@ -4660,7 +5024,11 @@ function renderNewArrivals() {
           (sub ? '<div class="na-sub">' + sub + '</div>' : '') +
           '<div class="na-meta">' +
             '<span class="na-price" data-eur="' + p.p + '">' + formatProductPrice(p.p) + '</span>' +
-            '<span class="na-icon">◆</span>' +
+            '<button class="na-add-btn' + (cart.includes(p.id) ? ' in-cart' : '') + '" ' +
+              'title="' + (cart.includes(p.id) ? 'In cart' : 'Add to cart') + '" ' +
+              'onclick="event.stopPropagation(); naQuickAdd(this, \'' + p.id + '\')">' +
+              (cart.includes(p.id) ? '✓' : '+') +
+            '</button>' +
           '</div>' +
         '</div>' +
       '</div>'
@@ -4677,6 +5045,34 @@ function renderNewArrivals() {
   slider.addEventListener('scroll', naCenterTrack, { passive: true });
   naCenterTrack();
   initNaDrag(slider);
+}
+
+function naQuickAdd(btn, productId) {
+  if (cart.includes(productId)) return; /* already in cart */
+  addToCart(productId);
+  /* Visual feedback: flash ✓ green, then settle into in-cart state */
+  btn.textContent = '✓';
+  btn.classList.add('added');
+  setTimeout(function() {
+    btn.classList.remove('added');
+    btn.classList.add('in-cart');
+    btn.title = 'In cart';
+  }, 900);
+}
+
+/* Sync all NA quick-add buttons against current cart state (called after remove) */
+function refreshNaButtons() {
+  document.querySelectorAll('#na-slider .na-add-btn').forEach(function(btn) {
+    var card = btn.closest('.na-card');
+    if (!card) return;
+    var p = PRODUCTS[parseInt(card.dataset.gidx, 10)];
+    if (!p) return;
+    var inCart = cart.includes(p.id);
+    btn.textContent = inCart ? '✓' : '+';
+    btn.title = inCart ? 'In cart' : 'Add to cart';
+    btn.classList.toggle('in-cart', inCart);
+    btn.classList.remove('added');
+  });
 }
 
 function naCardOpen(card) {

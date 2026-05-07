@@ -741,6 +741,7 @@ footer {
 <script>
 // Langue
 function setLang(lang) {
+  localStorage.setItem('kalysteon-lang', lang);
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-en]').forEach(el => {
     let txt = el.getAttribute('data-' + lang);
@@ -748,7 +749,7 @@ function setLang(lang) {
   });
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.id === 'lang-btn-' + lang));
 }
-document.addEventListener('DOMContentLoaded', () => setLang('en'));
+document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem('kalysteon-lang') || 'en'));
 
 // FONDU VIDÉO
 window.addEventListener('load', function() {
@@ -826,32 +827,35 @@ document.querySelectorAll('.choice-card').forEach(card => {
 
 // DONNÉES TÉMOIGNAGES
 const testimonialsRaw = [
-  { rating: 5, stars: "★★★★★", text: "Amazing and realistic. Looking forward to the rest of the series.", author: "EmpireLion4u", date: "Last year" },
-  { rating: 5, stars: "★★★★★", text: "Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.", author: "jonius12", date: "Last year" },
-  { rating: 4, stars: "★★★★☆", text: "I corrected my review, in UE5 it works perfectly - the developer helped quickly - the heightmaps are great! A full 4.27 release would be cool.", author: "hm-hesse", date: "3 years ago" },
-  { rating: 4, stars: "★★★★☆", text: "I learned a lot with your heightmaps! Thank you for your support, you answer all my questions.", author: "GildardHache", date: "4 years ago" },
-  { rating: 4, stars: "★★★★☆", text: "I had some issues at the start with the map. But after looking at it for a while I manage to get it working for now. -Updated!", author: "Lil Freeze4U", date: "4 years ago" },
-  { rating: 5, stars: "★★★★★", text: "These terrains are truly made for high tier performance and depth of details are amazing for any project. Thank you", author: "Amor2point0", date: "4 years ago" },
-  { rating: 4, stars: "★★★★☆", text: ">> Update: • Thank you for your quick Feedback, the PostProcessVolume advised fixed it partially, I've ended up changing the Exposure Compensation.• In regards to the collision it's a shame as stones and trees need to be removed from the grass layer to get some collision.• The Z,X,Y was in regards to GAEA (8K Tiled Output).", author: "PureYuki", date: "3 years ago" },
-  { rating: 5, stars: "★★★★★", text: "A really great pack with everything you need to make a good environment, the 8k textures are really realistic.", author: "NikausDraw", date: "Last year" },
-  { rating: 5, stars: "★★★★★", text: "You can tell this author puts a lot of meticulous energy and attention into assembling these kits. They match or surpass similar kits around the market in quality and go more than step beyond in providing a vast selection of landscapes to work with. Not just some random satelite heightmaps like most others but each map has key features and dynamic layouts to function for different gaming centric purposes one would be seeking such kits for which ive yet to see any other heightmap collection authors do so well even if they stay on theme they usually feel like a collected bunch of 'this is kinda cool and works' but these feel like 'wow 20 thoughtfully selected maps with various geographic considerations for the types of zones I'll need be that a network of interesting terrain with interconnected roads that create a network between sites leveled properly for building infrastructure, or a centrel geographic feature that I can use as the basis of this zone in a way it will feel cool and distinctly memeroable - a product of intent not a product of well lets mess around and see what we get' So I'm quite pleased ill be collecting the rest of the kits now without hesitation even if I only use the biomes once or not at all these are genuinely creme of the crop heightmaps with meticulous effort going into their compilations. Not only all that but being made available to us at half the cost of the discernably lacking in areas these arent while not surpassing in any others (why beat around it they're inferior) peers/competitors. Thats enough ranting but these just give me a sense that the artist does this work as passion not as labor and is spreading that in a way it can be accessible to anyone which is the essence of what I find so enamouring and inspiring with this field/pursuit/work so thanks mate.", author: "psychohacktive", date: "Last year" },
-  { rating: 5, stars: "★★★★★", text: "Very nice", author: "EmpireLion4u", date: "Last year" },
-  { rating: 5, stars: "★★★★★", text: "True Beauty", author: "Amor2point0", date: "4 years ago" },
-  { rating: 4, stars: "★★★★☆", text: "It's Okay, I had some issues at the start but now it works.", author: "Lil Freeze4U", date: "4 years ago" }
+  { rating: 5, stars: "★★★★★", text: "Amazing and realistic. Looking forward to the rest of the series.", text_fr: "Incroyable et réaliste. J'attends la suite de la série avec impatience.", author: "EmpireLion4u", date: "Last year", date_fr: "L'an dernier" },
+  { rating: 5, stars: "★★★★★", text: "Great quality. Thank you for making this beautiful stuff. But it will be great if there is some blueprint assets that are combined as set not only just a static mesh.", text_fr: "Excellente qualité. Merci pour ce travail magnifique. Ce serait encore mieux si certains assets Blueprint étaient regroupés en sets, pas seulement des meshes statiques.", author: "jonius12", date: "Last year", date_fr: "L'an dernier" },
+  { rating: 4, stars: "★★★★☆", text: "I corrected my review, in UE5 it works perfectly - the developer helped quickly - the heightmaps are great! A full 4.27 release would be cool.", text_fr: "J'ai corrigé mon avis — sous UE5 ça fonctionne parfaitement, le développeur a répondu très vite. Les heightmaps sont excellentes ! Une version complète pour 4.27 serait top.", author: "hm-hesse", date: "3 years ago", date_fr: "Il y a 3 ans" },
+  { rating: 4, stars: "★★★★☆", text: "I learned a lot with your heightmaps! Thank you for your support, you answer all my questions.", text_fr: "J'ai beaucoup appris grâce à vos heightmaps ! Merci pour votre support, vous répondez à toutes mes questions.", author: "GildardHache", date: "4 years ago", date_fr: "Il y a 4 ans" },
+  { rating: 4, stars: "★★★★☆", text: "I had some issues at the start with the map. But after looking at it for a while I manage to get it working for now. -Updated!", text_fr: "J'ai eu quelques problèmes au début avec la carte, mais après quelques recherches j'ai réussi à la faire fonctionner. — Mis à jour !", author: "Lil Freeze4U", date: "4 years ago", date_fr: "Il y a 4 ans" },
+  { rating: 5, stars: "★★★★★", text: "These terrains are truly made for high tier performance and depth of details are amazing for any project. Thank you", text_fr: "Ces terrains sont vraiment conçus pour les performances haut de gamme et le niveau de détail est bluffant pour n'importe quel projet. Merci.", author: "Amor2point0", date: "4 years ago", date_fr: "Il y a 4 ans" },
+  { rating: 4, stars: "★★★★☆", text: ">> Update: • Thank you for your quick Feedback, the PostProcessVolume advised fixed it partially, I've ended up changing the Exposure Compensation.• In regards to the collision it's a shame as stones and trees need to be removed from the grass layer to get some collision.• The Z,X,Y was in regards to GAEA (8K Tiled Output).", text_fr: "Mise à jour : Merci pour votre retour rapide — le PostProcessVolume conseillé a partiellement résolu le problème, j'ai finalement modifié l'Exposure Compensation. Concernant les collisions, c'est dommage que pierres et arbres doivent être retirés de la couche d'herbe. Les Z,X,Y concernaient GAEA (Sortie Tuilée 8K).", author: "PureYuki", date: "3 years ago", date_fr: "Il y a 3 ans" },
+  { rating: 5, stars: "★★★★★", text: "A really great pack with everything you need to make a good environment, the 8k textures are really realistic.", text_fr: "Un excellent pack avec tout ce qu'il faut pour créer un bel environnement. Les textures 8K sont vraiment réalistes.", author: "NikausDraw", date: "Last year", date_fr: "L'an dernier" },
+  { rating: 5, stars: "★★★★★", text: "You can tell this author puts a lot of meticulous energy and attention into assembling these kits. They match or surpass similar kits around the market in quality and go more than step beyond in providing a vast selection of landscapes to work with. Not just some random satelite heightmaps like most others but each map has key features and dynamic layouts to function for different gaming centric purposes one would be seeking such kits for which ive yet to see any other heightmap collection authors do so well even if they stay on theme they usually feel like a collected bunch of 'this is kinda cool and works' but these feel like 'wow 20 thoughtfully selected maps with various geographic considerations for the types of zones I'll need be that a network of interesting terrain with interconnected roads that create a network between sites leveled properly for building infrastructure, or a centrel geographic feature that I can use as the basis of this zone in a way it will feel cool and distinctly memeroable - a product of intent not a product of well lets mess around and see what we get' So I'm quite pleased ill be collecting the rest of the kits now without hesitation even if I only use the biomes once or not at all these are genuinely creme of the crop heightmaps with meticulous effort going into their compilations. Not only all that but being made available to us at half the cost of the discernably lacking in areas these arent while not surpassing in any others (why beat around it they're inferior) peers/competitors. Thats enough ranting but these just give me a sense that the artist does this work as passion not as labor and is spreading that in a way it can be accessible to anyone which is the essence of what I find so enamouring and inspiring with this field/pursuit/work so thanks mate.", text_fr: "On voit que l'auteur met une énergie et une attention méticuleuses dans l'assemblage de ces kits. Ils égalent ou surpassent les produits similaires en qualité et vont bien au-delà en proposant une vaste sélection de paysages. Pas de simples heightmaps satellites génériques — chaque carte a des caractéristiques distinctes et une structure dynamique. Ces maps donnent l'impression d'avoir été sélectionnées avec intention : 20 cartes réfléchies avec diverses considérations géographiques, des réseaux interconnectés, des éléments géographiques mémorables. Le tout à moitié prix de concurrents clairement inférieurs. Ces assets témoignent d'un travail fait par passion, accessible à tous. Merci.", author: "psychohacktive", date: "Last year", date_fr: "L'an dernier" },
+  { rating: 5, stars: "★★★★★", text: "Very nice", text_fr: "Très beau.", author: "EmpireLion4u", date: "Last year", date_fr: "L'an dernier" },
+  { rating: 5, stars: "★★★★★", text: "True Beauty", text_fr: "Une vraie beauté.", author: "Amor2point0", date: "4 years ago", date_fr: "Il y a 4 ans" },
+  { rating: 4, stars: "★★★★☆", text: "It's Okay, I had some issues at the start but now it works.", text_fr: "C'est bien. J'ai eu quelques soucis au départ mais maintenant ça fonctionne.", author: "Lil Freeze4U", date: "4 years ago", date_fr: "Il y a 4 ans" }
 ];
 
 function createTestimonialCard(t) {
   const card = document.createElement('div');
   card.className = 'testimonial-card';
+  const textEn = t.text.replace(/"/g, '&quot;');
+  const textFr = (t.text_fr || t.text).replace(/"/g, '&quot;');
+  const dateFr = t.date_fr || t.date;
   card.innerHTML = `
     <div class="testimonial-header">
       <span class="testimonial-stars">${t.stars}</span>
       <span class="testimonial-rating">${t.rating}/5</span>
     </div>
-    <div class="testimonial-text">${t.text.replace(/"/g, '&quot;')}</div>
+    <div class="testimonial-text" data-en="${textEn}" data-fr="${textFr}">${textEn}</div>
     <div class="testimonial-author">
       <span class="author-name">${t.author}</span>
-      <span class="author-date">${t.date}</span>
+      <span class="author-date" data-en="${t.date}" data-fr="${dateFr}">${t.date}</span>
     </div>
   `;
   return card;
