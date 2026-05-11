@@ -176,7 +176,11 @@ main {
   animation: slideUpFade 0.7s 0.2s var(--transition-smooth) forwards;
 }
 .hero-logo { margin-bottom: 0.5rem; }
-.mountain-svg {
+.hero-logo-img {
+  width: 110px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
   filter: drop-shadow(0 0 10px rgba(212,175,55,0.7));
   transition: filter 0.3s;
   width: 72px;
@@ -668,17 +672,7 @@ footer {
 <main>
   <div class="hero-block">
     <div class="hero-logo">
-      <svg class="mountain-svg" width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M28 56 L40 32 L52 56 L44 56 L40 48 L36 56 L28 56Z" fill="#D4AF37" stroke="#F5D76E" stroke-width="0.8"/>
-        <path d="M18 58 L40 22 L62 58 L52 58 L40 40 L28 58 L18 58Z" fill="url(#mountainGrad)" stroke="#D4AF37" stroke-width="0.6"/>
-        <path d="M32 58 L40 46 L48 58 L44 58 L40 52 L36 58 L32 58Z" fill="#F5D76E" fill-opacity="0.7"/>
-        <defs>
-          <linearGradient id="mountainGrad" x1="20" y1="40" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#D4AF37"/>
-            <stop offset="1" stop-color="#F5D76E"/>
-          </linearGradient>
-        </defs>
-      </svg>
+      <img src="img/logo.png" alt="Kalysteon" class="hero-logo-img">
     </div>
     <div class="eyebrow" data-en="ENVIRONMENT STUDIO" data-fr="STUDIO D'ENVIRONNEMENTS">ENVIRONMENT STUDIO</div>
     <h1 class="hero-title">KALYS<em>T</em>EON</h1>
