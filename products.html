@@ -616,6 +616,25 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 .cart-savings-amt { font-family: var(--mono); font-size: 0.66rem; font-weight: 600; color: rgba(94,207,183,0.95); }
 
 /* ── BUNDLE WIDGET ── */
+/* ── Cart toggle (collapsible widget) ── */
+.cart-toggle-wrap { margin: 0.3rem 0 0.1rem; }
+.cart-toggle-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.65rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 5px; cursor: pointer; color: var(--text-dim); font-family: var(--mono); font-size: 0.60rem; letter-spacing: 0.14em; text-transform: uppercase; transition: background 0.18s, border-color 0.18s, color 0.18s; }
+.cart-toggle-btn:hover { background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.25); color: rgba(201,168,76,0.85); }
+.cart-toggle--open .cart-toggle-btn { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.22); color: rgba(201,168,76,0.80); }
+.cart-toggle-icon { font-size: 0.90rem; color: var(--gold); opacity: 0.65; transition: transform 0.22s cubic-bezier(0.4,0,0.2,1); }
+.cart-toggle--open .cart-toggle-icon { transform: rotate(45deg); opacity: 1; }
+.cart-toggle-body { overflow: hidden; }
+/* merged row: active badge(s) + expand */
+.cart-toggle-merged { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 5px; padding: 0.32rem 0.5rem 0.32rem 0.65rem; }
+.cart-toggle--open .cart-toggle-merged { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.22); }
+.cart-toggle-badges { display: flex; flex-wrap: wrap; gap: 0.3rem; flex: 1; }
+.cart-toggle-badge { display: flex; align-items: center; gap: 0.28rem; background: rgba(91,164,245,0.10); border: 1px solid rgba(91,164,245,0.22); border-radius: 4px; padding: 0.22rem 0.42rem; }
+.cart-toggle-badge-label { font-size: 0.68rem; color: rgba(170,205,245,0.90); }
+.cart-toggle-badge-price { font-family: var(--mono); font-size: 0.60rem; color: rgba(140,185,235,0.65); }
+.cart-toggle-badge-rm { background: none; border: none; cursor: pointer; color: rgba(170,205,245,0.40); font-size: 0.62rem; padding: 0 0 0 0.18rem; line-height: 1; transition: color 0.15s; }
+.cart-toggle-badge-rm:hover { color: rgba(255,90,90,0.80); }
+.cart-toggle-expand { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 0.28rem; flex-shrink: 0; padding: 0.2rem 0.3rem; transition: color 0.18s; }
+.cart-toggle-expand:hover, .cart-toggle-merged:hover .cart-toggle-expand { color: rgba(201,168,76,0.85); }
 .bundle-widget { background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, rgba(201,168,76,0.02) 100%); border: 1px solid rgba(201,168,76,0.20); border-radius: var(--radius-sm); padding: 0.85rem 1rem 0.9rem; margin-bottom: 0.55rem; display: flex; flex-direction: column; gap: 0.6rem; }
 .bundle-widget-hdr { display: flex; align-items: center; gap: 0.55rem; }
 .bundle-widget-icon { font-size: 0.75rem; flex-shrink: 0; }
@@ -3674,8 +3693,8 @@ function getFhActiveBiomes() {
 }
 
 /* Returns sorted biome rank array: [{biomeId, rank, pct, label, tierClass, info}] biome rank 1 = most expensive */
-var FH_TIERS  = {1:10,    2:25,    3:50,    4:75};
-var FH_LABELS = {1:'-10%',2:'-25%',3:'-50%',4:'-75%'};
+var FH_TIERS  = {1:10,    2:20,    3:30,    4:45};
+var FH_LABELS = {1:'-10%',2:'-20%',3:'-30%',4:'-45%'};
 var FH_CLASSES= {1:'tier1',2:'tier2',3:'tier3',4:'tier4'};
 function getFhBiomeRanks() {
   var map = getFhActiveBiomes();
@@ -4117,7 +4136,7 @@ function removeFromCart(productId) {
       return cp && cp.col === 'arctic';
     });
     if (!arcticLeft) {
-      cartBundles = cartBundles.filter(function(b){ return b.type !== 'legacy'; });
+      cartBundles = [];
       saveBundles();
     }
   }
@@ -4229,9 +4248,9 @@ function getCartSuggestions(cartIds) {
                    get escalating tiers: -10% / -20% / -50% / FREE
    Rounding      : ceil(base × (1-pct)) − 0.01  → always ends in .99
 ════════════════════════════════════════════════════════════════════ */
-/* 3-tier bundle: -10% / -25% / -50% cycling every 3 packs */
-var TIER_PCT   = { 1:10,    2:25,    3:50    };
-var TIER_LABEL = { 1:'-10%',2:'-25%',3:'-50%'};
+/* 3-tier bundle: -10% / -20% / -30% cycling every 3 packs */
+var TIER_PCT   = { 1:10,    2:20,    3:30    };
+var TIER_LABEL = { 1:'-10%',2:'-20%',3:'-30%'};
 var TIER_CLASS = { 1:'tier1',2:'tier2',3:'tier3'};
 
 function computeCartPricing() {
@@ -4307,8 +4326,8 @@ function buildBundleWidget(pricingItems) {
   /* Progress bar — 3 steps, filled up to posInCycle (or all if trilogy complete) */
   var steps = [
     { pct:'-10%', cls:'tier1' },
-    { pct:'-25%', cls:'tier2' },
-    { pct:'-50%', cls:'tier3' },
+    { pct:'-20%', cls:'tier2' },
+    { pct:'-30%', cls:'tier3' },
   ];
   var progressHtml = steps.map(function(s, idx) {
     var filled = trilogyComplete ? true : (idx < posInCycle);
@@ -4442,7 +4461,7 @@ function buildFhCartWidget(pricingItems) {
   var ranks = getFhBiomeRanks();
   var filledCount = ranks.length;
   var tierColors = ['tier1','tier2','tier3','tier4'];
-  var discounts = ['-10%','-25%','-50%','-75%'];
+  var discounts = ['-10%','-20%','-30%','-45%'];
   var stepsHtml = '';
   for (var i = 0; i < 4; i++) {
     var isFilled = i < filledCount;
@@ -4455,13 +4474,13 @@ function buildFhCartWidget(pricingItems) {
   }
   var msgHtml = '';
   if (filledCount >= 4) {
-    msgHtml = '<div class="fh-cart-complete">' + _t('ALL BIOMES · MAX DISCOUNT UNLOCKED', 'TOUS LES BIOMES · RÉDUCTION MAXIMALE') + ' <span style="color:rgba(94,207,183,0.95)">−75%</span></div>';
+    msgHtml = '<div class="fh-cart-complete">' + _t('ALL BIOMES · MAX DISCOUNT UNLOCKED', 'TOUS LES BIOMES · RÉDUCTION MAXIMALE') + ' <span style="color:rgba(94,207,183,0.95)">−45%</span></div>';
   } else if (filledCount === 1) {
-    msgHtml = '<div class="fh-cart-msg">' + _t('Add a <strong>2nd biome</strong> to unlock ', 'Ajoutez un <strong>2ème biome</strong> pour débloquer ') + '<span class="fh-hl-t2">−25%</span>' + _t(' on it!', ' dessus !') + '</div>';
+    msgHtml = '<div class="fh-cart-msg">' + _t('Add a <strong>2nd biome</strong> to unlock ', 'Ajoutez un <strong>2ème biome</strong> pour débloquer ') + '<span class="fh-hl-t2">−20%</span>' + _t(' on it!', ' dessus !') + '</div>';
   } else if (filledCount === 2) {
-    msgHtml = '<div class="fh-cart-msg">' + _t('Add a <strong>3rd biome</strong> for ', 'Ajoutez un <strong>3ème biome</strong> pour ') + '<span class="fh-hl-t3">−50%</span>' + _t(' off!', ' de réduction !') + '</div>';
+    msgHtml = '<div class="fh-cart-msg">' + _t('Add a <strong>3rd biome</strong> for ', 'Ajoutez un <strong>3ème biome</strong> pour ') + '<span class="fh-hl-t3">−30%</span>' + _t(' off!', ' de réduction !') + '</div>';
   } else if (filledCount === 3) {
-    msgHtml = '<div class="fh-cart-msg">' + _t('Add the <strong>4th biome</strong> for ', 'Ajoutez le <strong>4ème biome</strong> pour ') + '<span class="fh-hl-t4">−75%</span>' + _t(' — maximum discount!', ' — réduction maximale !') + '</div>';
+    msgHtml = '<div class="fh-cart-msg">' + _t('Add the <strong>4th biome</strong> for ', 'Ajoutez le <strong>4ème biome</strong> pour ') + '<span class="fh-hl-t4">−45%</span>' + _t(' — maximum discount!', ' — réduction maximale !') + '</div>';
   }
 
   return '<div class="fh-cart-widget">' +
@@ -4622,34 +4641,50 @@ function renderCart() {
     colGroups[col].forEach(function(it) { html += _buildCartItemHtml(it); });
     /* 8K bundle widget right after 8K items */
     if (col === '8k') {
-      html += buildBundleWidget(pricing);
+      html += wrapCartToggle('cart-widget-8k', _t('Bundle deals ⚡', 'Offres bundle ⚡'), buildBundleWidget(pricing));
     }
-    /* Arctic bundle line items + widget right after arctic products */
+    /* Arctic: bundles as badges + widget */
     if (col === 'arctic') {
-      cartBundles.forEach(function(b) { html += _buildBundleItemHtml(b); });
-      html += buildArcticCartWidget(pricing);
+      var arcBadges = cartBundles.map(function(b) {
+        return { label: b.type === 'master' ? '❄️ Master Access' : '🔓 Essentials Access',
+                 price: '+' + formatProductPrice(b.price),
+                 removeCall: "removeArcticBundle('" + b.type + "')" };
+      });
+      html += wrapCartToggle('cart-widget-arctic', _t('options', 'options'), buildArcticCartWidget(pricing), arcBadges);
     }
-    /* Frostholm bundle line items + widget right after frostholm products */
+    /* Frostholm: bundles as badges + widget */
     if (col === 'frostholm') {
-      frostholmBundles.forEach(function(b) { html += _buildFhBundleItemHtml(b); });
-      html += buildFhCartWidget(pricing);
+      var fhBadges = frostholmBundles.map(function(b) {
+        var bio = FROSTHOLM_BIOMES.find(function(bi){ return bi.id === b.biomeId; });
+        var bname = bio ? bio.label : b.biomeId;
+        return { label: (b.type === 'fh-master' ? '⭐ Master' : '🔓 Essentials') + ' · ' + bname,
+                 price: '+' + formatProductPrice(b.price),
+                 removeCall: "removeFhBundle('" + b.biomeId + "','" + b.type + "')" };
+      });
+      html += wrapCartToggle('cart-widget-fh', _t('options', 'options'), buildFhCartWidget(pricing), fhBadges);
     }
   });
 
-  /* If no arctic products but bundles exist → add arctic section + widget */
+  /* If no arctic products but bundles exist → add arctic section + item rows */
   if (hasBundleOnlySection) {
     var hdr = COL_HDR['arctic'];
     html += '<div class="cart-section-hdr arctic-hdr">' + _t(hdr.en, hdr.fr) + '</div>';
+    /* Render each bundle as a proper removable cart row */
     cartBundles.forEach(function(b) { html += _buildBundleItemHtml(b); });
-    html += buildArcticCartWidget(pricing);
+    /* Optional: expand to see access detail */
+    var arcWidget = buildArcticCartWidget(pricing);
+    if (arcWidget) html += wrapCartToggle('cart-widget-arctic', _t('Access detail', 'Détail accès'), arcWidget);
   }
 
-  /* If no frostholm products but fh bundles exist → add frostholm section + widget */
+  /* If no frostholm products but fh bundles exist → add frostholm section + item rows */
   if (hasFhBundleOnlySection) {
     var fhHdr = COL_HDR['frostholm'];
     html += '<div class="cart-section-hdr fh-hdr">' + _t(fhHdr.en, fhHdr.fr) + '</div>';
+    /* Render each bundle as a proper removable cart row */
     frostholmBundles.forEach(function(b) { html += _buildFhBundleItemHtml(b); });
-    html += buildFhCartWidget(pricing);
+    /* Optional: expand to see biome detail */
+    var fhWidget = buildFhCartWidget(pricing);
+    if (fhWidget) html += wrapCartToggle('cart-widget-fh', _t('Biome detail', 'Détail biome'), fhWidget);
   }
 
   itemsEl.innerHTML = html;
@@ -5160,6 +5195,52 @@ function renderNewArrivals() {
   slider.addEventListener('scroll', naCenterTrack, { passive: true });
   naCenterTrack();
   initNaDrag(slider);
+}
+
+function wrapCartToggle(id, label, innerHtml, activeBadges) {
+  if (!innerHtml && (!activeBadges || !activeBadges.length)) return '';
+  var hasBody = !!innerHtml;
+  var hasBadges = activeBadges && activeBadges.length > 0;
+  var toggleCall = hasBody ? 'toggleCartWidget(\'' + id + '\')' : '';
+
+  var hdrHtml;
+  if (hasBadges) {
+    var badgesHtml = activeBadges.map(function(ab) {
+      return '<span class="cart-toggle-badge">' +
+        '<span class="cart-toggle-badge-label">' + ab.label + '</span>' +
+        '<span class="cart-toggle-badge-price">' + ab.price + '</span>' +
+        (ab.removeCall ? '<button class="cart-toggle-badge-rm" onclick="event.stopPropagation();' + ab.removeCall + '" title="Retirer">✕</button>' : '') +
+      '</span>';
+    }).join('');
+    hdrHtml = '<div class="cart-toggle-merged"' + (toggleCall ? ' onclick="' + toggleCall + '" style="cursor:pointer"' : '') + '>' +
+      '<div class="cart-toggle-badges">' + badgesHtml + '</div>' +
+      (hasBody ? '<button class="cart-toggle-expand" onclick="event.stopPropagation();' + toggleCall + '">' +
+        label + ' <span class="cart-toggle-icon">+</span>' +
+      '</button>' : '') +
+    '</div>';
+  } else {
+    hdrHtml = '<button class="cart-toggle-btn" onclick="' + toggleCall + '">' +
+      '<span>' + label + '</span>' +
+      '<span class="cart-toggle-icon">+</span>' +
+    '</button>';
+  }
+
+  return '<div class="cart-toggle-wrap" id="' + id + '">' +
+    hdrHtml +
+    (hasBody ? '<div class="cart-toggle-body" style="display:none">' + innerHtml + '</div>' : '') +
+  '</div>';
+}
+
+function toggleCartWidget(id) {
+  var wrap = document.getElementById(id);
+  if (!wrap) return;
+  var body = wrap.querySelector('.cart-toggle-body');
+  var icon = wrap.querySelector('.cart-toggle-icon');
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : '';
+  if (icon) icon.textContent = open ? '+' : '−';
+  wrap.classList.toggle('cart-toggle--open', !open);
 }
 
 function toggleDrawerPanel(id) {
