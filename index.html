@@ -55,9 +55,15 @@ body {
 .video-wrapper {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  transition: opacity 2.5s ease-out;
   pointer-events: none;
+}
+.video-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(1, 6, 15);
+  pointer-events: none;
+  transition: opacity 1.5s ease;
 }
 .bg-video iframe {
   position: absolute;
@@ -75,6 +81,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 2;
   background: radial-gradient(ellipse at center, transparent 30%, rgba(1,6,15,0.75) 90%);
   backdrop-filter: blur(2px);
   z-index: 1;
@@ -621,6 +628,7 @@ footer {
             title="">
     </iframe>
   </div>
+  <div class="video-cover"></div>
 </div>
 
 <header>
@@ -743,27 +751,31 @@ function setLang(lang) {
 }
 document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem('kalysteon-lang') || 'en'));
 
-// VIDEO DE FOND — fond d'écran animé sans artefact lecteur
+// VIDEO DE FOND — couverture opaque masquant l'init YouTube
 (function() {
-  var wrapper = document.querySelector('.video-wrapper');
-  if (!wrapper) return;
-  var hasFadedIn = false;
+  var cover = document.querySelector('.video-cover');
+  if (!cover) return;
+  var revealed = false;
+
+  function reveal() {
+    cover.style.transition = 'opacity 1.5s ease';
+    cover.style.opacity = '0';
+    revealed = true;
+  }
+
+  function hide() {
+    cover.style.transition = 'none';
+    cover.style.opacity = '1';
+  }
 
   window.addEventListener('load', function() {
-    setTimeout(function() {
-      wrapper.style.opacity = '1';
-      hasFadedIn = true;
-    }, 2500);
+    setTimeout(reveal, 3000);
   });
 
   document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && hasFadedIn) {
-      wrapper.style.transition = 'none';
-      wrapper.style.opacity = '0';
-      setTimeout(function() {
-        wrapper.style.transition = 'opacity 1s ease-out';
-        wrapper.style.opacity = '1';
-      }, 350);
+    if (!document.hidden && revealed) {
+      hide();
+      setTimeout(reveal, 350);
     }
   });
 })();
