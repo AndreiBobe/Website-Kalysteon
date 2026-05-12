@@ -183,8 +183,6 @@ main {
   margin: 0 auto;
   filter: drop-shadow(0 0 10px rgba(212,175,55,0.7));
   transition: filter 0.3s;
-  width: 72px;
-  height: auto;
 }
 .eyebrow {
   font-family: 'Inter', sans-serif;
@@ -617,10 +615,10 @@ footer {
 <canvas id="particle-canvas"></canvas>
 <div class="bg-video">
   <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/PkkmyndfI2Y?autoplay=1&mute=1&loop=1&playlist=PkkmyndfI2Y&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&enablejsapi=1&start=111&quality=high" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen>
+    <iframe src="https://www.youtube.com/embed/PkkmyndfI2Y?autoplay=1&mute=1&loop=1&playlist=PkkmyndfI2Y&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&playsinline=1&iv_load_policy=3&start=111"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            title="">
     </iframe>
   </div>
 </div>
@@ -745,15 +743,30 @@ function setLang(lang) {
 }
 document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem('kalysteon-lang') || 'en'));
 
-// FONDU VIDÉO
-window.addEventListener('load', function() {
-  const videoWrapper = document.querySelector('.video-wrapper');
-  if (videoWrapper) {
-    setTimeout(() => {
-      videoWrapper.style.opacity = '1';
-    }, 100);
-  }
-});
+// VIDEO DE FOND — fond d'écran animé sans artefact lecteur
+(function() {
+  var wrapper = document.querySelector('.video-wrapper');
+  if (!wrapper) return;
+  var hasFadedIn = false;
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      wrapper.style.opacity = '1';
+      hasFadedIn = true;
+    }, 2500);
+  });
+
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && hasFadedIn) {
+      wrapper.style.transition = 'none';
+      wrapper.style.opacity = '0';
+      setTimeout(function() {
+        wrapper.style.transition = 'opacity 1s ease-out';
+        wrapper.style.opacity = '1';
+      }, 350);
+    }
+  });
+})();
 
 // PARTICULES DORÉES
 (function() {
