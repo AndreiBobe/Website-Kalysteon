@@ -55,15 +55,9 @@ body {
 .video-wrapper {
   position: absolute;
   inset: 0;
+  opacity: 0;
+  transition: opacity 2.5s ease-out;
   pointer-events: none;
-}
-.video-cover {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: rgb(1, 6, 15);
-  pointer-events: none;
-  transition: opacity 1.5s ease;
 }
 .bg-video iframe {
   position: absolute;
@@ -81,7 +75,6 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 2;
   background: radial-gradient(ellipse at center, transparent 30%, rgba(1,6,15,0.75) 90%);
   backdrop-filter: blur(2px);
   z-index: 1;
@@ -242,200 +235,205 @@ main {
   margin-top: 0.2rem;
 }
 
-/* ══ CHOICE CARDS — Two distinct portals ══ */
-.choices {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
+/* ══ NEWS SLIDER ══ */
+.news-slider {
+  position: relative;
   width: 100%;
   max-width: 1100px;
-  margin-top: 0.5rem;
-}
-
-/* Base card */
-.choice-card {
-  position: relative;
-  flex: 1;
-  min-width: 300px;
-  max-width: 520px;
-  min-height: 360px;
-  text-decoration: none;
+  height: 440px;
   border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.28);
+  box-shadow: 0 16px 60px -12px rgba(0,0,0,0.75), 0 0 0 1px rgba(201,168,76,0.05) inset;
+  animation: slideUpFade 0.7s 0.25s var(--transition-smooth) backwards;
+  background: #030E1F;
+}
+.ns-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.80s cubic-bezier(0.23,1,0.32,1);
+  will-change: transform;
+}
+.ns-slide {
+  position: relative;
+  min-width: 100%;
+  height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  cursor: pointer;
-  animation: slideUpFade 0.7s var(--transition-smooth) backwards;
-  transition: transform 0.4s var(--transition-smooth), box-shadow 0.35s;
 }
-.choice-card:hover { transform: translateY(-10px) scale(1.02); }
-
-/* Background layer */
-.choice-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center 30%;
-  transition: transform 0.55s cubic-bezier(0.23,1,0.32,1);
-  z-index: 0;
-}
-.choice-card:hover .choice-bg { transform: scale(1.06); }
-
-/* Overlay gradient — bottom-heavy for legibility */
-.choice-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  transition: opacity 0.3s;
-}
-
-/* Shimmer sweep on hover */
-.choice-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 0.55s ease;
-  z-index: 3;
-  pointer-events: none;
-}
-.choice-card:hover::after { transform: translateX(120%); }
-
-/* Mouse-track spotlight — color-dodge bloom */
-.choice-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle 130px at var(--mouse-x,50%) var(--mouse-y,50%),
-      rgba(212,175,55,0.28) 0%,
-      rgba(212,175,55,0.10) 50%,
-      transparent 100%),
-    radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
-      rgba(212,175,55,0.06) 0%,
-      transparent 100%);
-  mix-blend-mode: color-dodge;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  z-index: 2;
-  pointer-events: none;
-}
-.choice-card:hover::before { opacity: 1; }
-
-/* Content */
-.choice-body {
-  position: relative;
-  z-index: 4;
-  padding: 2rem 2rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-.choice-tag {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  width: fit-content;
-  padding: 0.2rem 0.75rem;
-  border-radius: 20px;
-  margin-bottom: 0.1rem;
-}
-.choice-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
-  letter-spacing: 0.09em;
-  color: #fff;
-  line-height: 1;
-}
-.choice-stats {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-top: 1.4rem;
-}
-.choice-stat {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.18rem 0.6rem;
-  border-radius: 4px;
-  border: 1px solid;
-}
-.choice-cta {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  margin-top: 0.4rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: gap 0.2s;
-  padding-bottom: 0.15rem;
-  border-bottom: 1px solid currentColor;
-  width: fit-content;
-}
-.choice-card:hover .choice-cta { gap: 0.6rem; }
-
-/* ── BOTH CARDS — unified dark-blue + gold schematic ── */
-.choice-products,
-.choice-commission {
-  background: linear-gradient(145deg, #0C1E3C 0%, #071626 55%, #030E1F 100%);
-  border: 1px solid rgba(201,168,76,0.28);
-  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,168,76,0.05) inset;
-}
-.choice-products:hover,
-.choice-commission:hover {
-  border-color: rgba(201,168,76,0.60);
-  box-shadow: 0 28px 55px -12px rgba(0,0,0,0.75), 0 0 44px rgba(201,168,76,0.16);
-}
-
-/* Blueprint schematic image */
-.choice-schematic {
+/* Ken Burns sur l'image de fond */
+.ns-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.65;
-  z-index: 1;
-  transition: opacity 0.45s ease;
-  pointer-events: none;
   object-fit: cover;
-  filter: brightness(1.15) contrast(1.08);
+  filter: brightness(1.1) contrast(1.05);
+  transform: scale(1.0);
+  transition: transform 7s cubic-bezier(0.23,1,0.32,1);
 }
-.choice-card:hover .choice-schematic { opacity: 0.80; }
-
-/* Scrim texte — garantit la lisibilité quelle que soit l'intensité du spotlight */
-.choice-products .choice-body,
-.choice-commission .choice-body {
-  background: linear-gradient(to top,
-    rgba(3,10,22,0.92) 0%,
-    rgba(3,10,22,0.70) 55%,
-    transparent 100%);
-  border-radius: 0 0 26px 26px;
+.ns-slide.active .ns-bg { transform: scale(1.06); }
+/* Double scrim : côté gauche pour le texte, bas pour légibilité */
+.ns-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(3,10,22,0.82) 0%, rgba(3,10,22,0.35) 55%, transparent 100%),
+    linear-gradient(to top,   rgba(3,10,22,0.88) 0%, rgba(3,10,22,0.30) 50%, transparent 100%);
+  z-index: 1;
 }
-
-/* Unified gold tags, stats, CTAs */
-.choice-products .choice-tag,
-.choice-commission .choice-tag {
-  background: rgba(201,168,76,0.11);
-  border: 1px solid rgba(201,168,76,0.30);
+/* Shimmer sweep au changement de slide */
+.news-slider::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+  transform: translateX(-120%);
+  z-index: 5;
+  pointer-events: none;
+  transition: transform 0s;
+}
+.news-slider.shimmer::after { transform: translateX(120%); transition: transform 0.55s ease; }
+/* Contenu */
+.ns-content {
+  position: relative;
+  z-index: 2;
+  padding: 2.4rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-width: 580px;
+}
+.ns-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  width: fit-content;
+  padding: 0.22rem 0.8rem;
+  border-radius: 20px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.35);
   color: #F2D777;
 }
-.choice-products .choice-stat,
-.choice-commission .choice-stat {
-  background: rgba(201,168,76,0.08);
-  border-color: rgba(201,168,76,0.24);
-  color: rgba(242,215,119,0.80);
+.ns-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  letter-spacing: 0.08em;
+  color: #fff;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.65s 0.05s ease, transform 0.65s 0.05s ease;
 }
-.choice-products .choice-cta,
-.choice-commission .choice-cta { color: #F2D777; }
+.ns-slide.active .ns-title { opacity: 1; transform: translateY(0); }
+.ns-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.90rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.68);
+  max-width: 440px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.65s 0.15s ease, transform 0.65s 0.15s ease;
+}
+.ns-slide.active .ns-sub { opacity: 1; transform: translateY(0); }
+.ns-cta {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #F2D777;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid rgba(242,215,119,0.45);
+  width: fit-content;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.65s 0.25s ease, transform 0.65s 0.25s ease, gap 0.2s, border-color 0.2s;
+}
+.ns-slide.active .ns-cta { opacity: 1; transform: translateY(0); }
+.ns-cta:hover { gap: 0.75rem; border-color: #F2D777; }
+/* Compteur */
+.ns-counter {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.6rem;
+  z-index: 4;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: rgba(242,215,119,0.50);
+}
+/* Flèches */
+.ns-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  background: rgba(3,10,22,0.55);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: rgba(242,215,119,0.75);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.22s, border-color 0.22s, color 0.22s, transform 0.22s;
+  line-height: 1;
+}
+.ns-arrow:hover {
+  background: rgba(201,168,76,0.15);
+  border-color: rgba(201,168,76,0.65);
+  color: #F2D777;
+  box-shadow: 0 0 18px rgba(212,175,55,0.25);
+  transform: translateY(-50%) scale(1.10);
+}
+.ns-arrow-prev { left: 1.2rem; }
+.ns-arrow-next { right: 1.2rem; }
+/* Points de navigation */
+.ns-dots {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.ns-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.28);
+  border: 1px solid rgba(201,168,76,0.18);
+  cursor: pointer;
+  transition: background 0.35s, width 0.35s, border-radius 0.35s;
+}
+.ns-dot.active { background: #D4AF37; width: 24px; border-radius: 4px; border-color: rgba(212,175,55,0.5); }
+/* Barre de progression */
+.ns-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #D4AF37, #F5D76E);
+  z-index: 4;
+  width: 0%;
+  box-shadow: 0 0 10px rgba(212,175,55,0.65);
+}
 
 /* SECTION TÉMOIGNAGES - FONDU LATÉRAL ADOUCI */
 .testimonials-section {
@@ -622,13 +620,12 @@ footer {
 <canvas id="particle-canvas"></canvas>
 <div class="bg-video">
   <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/PkkmyndfI2Y?autoplay=1&mute=1&loop=1&playlist=PkkmyndfI2Y&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&playsinline=1&iv_load_policy=3&start=111"
+    <iframe src="https://www.youtube.com/embed/PkkmyndfI2Y?autoplay=1&mute=1&loop=1&playlist=PkkmyndfI2Y&controls=0&modestbranding=1&rel=0&showinfo=0&disablekb=1&enablejsapi=1&start=111&quality=high"
             frameborder="0"
             allow="autoplay; encrypted-media"
-            title="">
+            allowfullscreen>
     </iframe>
   </div>
-  <div class="video-cover"></div>
 </div>
 
 <header>
@@ -685,39 +682,72 @@ footer {
     <p class="hero-sub" data-en="3D ASSETS · ENVIRONMENTS · COMMISSIONS" data-fr="ASSETS 3D · ENVIRONNEMENTS · COMMISSIONS">3D ASSETS · ENVIRONMENTS · COMMISSIONS</p>
   </div>
 
-  <div class="choices">
+  <!-- ══════════════════════════════════════════
+       NEWS SLIDER
+       • Add slides below — duplicate a .ns-slide block
+       • ns-bg src  = background image for that slide
+       • data-en / data-fr = bilingual text
+  ══════════════════════════════════════════ -->
+  <div class="news-slider" id="newsSlider">
 
-    <!-- ── PRODUCTS portal ── -->
-    <a class="choice-card choice-products" href="products.html" style="animation-delay:0.25s">
-      <img class="choice-schematic" src="img/card-products-bg.jpg" alt="" aria-hidden="true">
-      <div class="choice-body">
-        <div class="choice-tag" data-en="Asset Store" data-fr="Boutique Assets">Asset Store</div>
-        <div class="choice-title" data-en="PRODUCTS" data-fr="PRODUITS">PRODUCTS</div>
-        <div class="choice-stats">
-          <span class="choice-stat" data-en="42 packs" data-fr="42 packs">42 packs</span>
-          <span class="choice-stat" data-en="3 collections" data-fr="3 collections">3 collections</span>
-          <span class="choice-stat">UE5 · Unity · Fab</span>
+    <div class="ns-track" id="nsTrack">
+
+      <!-- ── SLIDE 1 : Frosthölm Collection ── -->
+      <div class="ns-slide active">
+        <img class="ns-bg" src="img/card-products-bg.jpg" alt="">
+        <div class="ns-overlay"></div>
+        <div class="ns-content">
+          <div class="ns-badge" data-en="New Release" data-fr="Nouvelle Sortie">New Release</div>
+          <div class="ns-title" data-en="FROSTHÖLM COLLECTION" data-fr="COLLECTION FROSTHÖLM">FROSTHÖLM COLLECTION</div>
+          <div class="ns-sub" data-en="8K Nordic mountain terrain — UE5 · Unity · Fab" data-fr="Terrain nordique 8K — UE5 · Unity · Fab">8K Nordic mountain terrain — UE5 · Unity · Fab</div>
+          <a class="ns-cta" href="products.html" data-en="Discover the pack →" data-fr="Découvrir le pack →">Discover the pack →</a>
         </div>
-        <div class="choice-cta" data-en="Browse the store →" data-fr="Parcourir la boutique →">Browse the store →</div>
       </div>
-    </a>
 
-    <!-- ── COMMISSION portal ── -->
-    <a class="choice-card choice-commission" href="commission.html" style="animation-delay:0.42s">
-      <img class="choice-schematic" src="img/card-commission-bg.jpg" alt="" aria-hidden="true">
-      <div class="choice-body">
-        <div class="choice-tag" data-en="Bespoke Production" data-fr="Production Sur-Mesure">Bespoke Production</div>
-        <div class="choice-title" data-en="COMMISSION" data-fr="COMMISSION">COMMISSION</div>
-        <div class="choice-stats">
-          <span class="choice-stat" data-en="100% Custom" data-fr="100% Sur-Mesure">100% Custom</span>
-          <span class="choice-stat" data-en="Full production" data-fr="Production complète">Full production</span>
-          <span class="choice-stat" data-en="3–12 weeks" data-fr="3–12 semaines">3–12 weeks</span>
+      <!-- ── SLIDE 2 : Custom Commissions ── -->
+      <div class="ns-slide">
+        <img class="ns-bg" src="img/card-commission-bg.jpg" alt="">
+        <div class="ns-overlay"></div>
+        <div class="ns-content">
+          <div class="ns-badge" data-en="Bespoke Production" data-fr="Production Sur-Mesure">Bespoke Production</div>
+          <div class="ns-title" data-en="CUSTOM COMMISSIONS" data-fr="COMMISSIONS SUR-MESURE">CUSTOM COMMISSIONS</div>
+          <div class="ns-sub" data-en="Your world, built to spec — 3 to 12 weeks delivery" data-fr="Votre monde, conçu sur-mesure — 3 à 12 semaines">Your world, built to spec — 3 to 12 weeks delivery</div>
+          <a class="ns-cta" href="commission.html" data-en="Start your project →" data-fr="Lancer votre projet →">Start your project →</a>
         </div>
-        <div class="choice-cta" data-en="Start your project →" data-fr="Lancer votre projet →">Start your project →</div>
       </div>
-    </a>
 
-  </div>
+      <!-- ── SLIDE 3 : 8K Terrain Packs ── -->
+      <div class="ns-slide">
+        <img class="ns-bg" src="img/card-products-bg.jpg" alt="">
+        <div class="ns-overlay"></div>
+        <div class="ns-content">
+          <div class="ns-badge" data-en="Asset Store" data-fr="Boutique Assets">Asset Store</div>
+          <div class="ns-title" data-en="8K TERRAIN PACKS" data-fr="PACKS TERRAINS 8K">8K TERRAIN PACKS</div>
+          <div class="ns-sub" data-en="42 packs · 3 collections · UE5 · Unity · Fab" data-fr="42 packs · 3 collections · UE5 · Unity · Fab">42 packs · 3 collections · UE5 · Unity · Fab</div>
+          <a class="ns-cta" href="products.html" data-en="Browse the store →" data-fr="Parcourir la boutique →">Browse the store →</a>
+        </div>
+      </div>
+
+    </div><!-- /ns-track -->
+
+    <!-- counter -->
+    <div class="ns-counter"><span id="nsCurrent">1</span> / <span id="nsTotal">3</span></div>
+
+    <!-- arrows -->
+    <button class="ns-arrow ns-arrow-prev" id="nsArrowPrev" aria-label="Previous">&#8592;</button>
+    <button class="ns-arrow ns-arrow-next" id="nsArrowNext" aria-label="Next">&#8594;</button>
+
+    <!-- dots -->
+    <div class="ns-dots" id="nsDots">
+      <button class="ns-dot active" data-idx="0" aria-label="Slide 1"></button>
+      <button class="ns-dot" data-idx="1" aria-label="Slide 2"></button>
+      <button class="ns-dot" data-idx="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- progress bar -->
+    <div class="ns-progress" id="nsProgress"></div>
+
+  </div><!-- /news-slider -->
 
   <div class="testimonials-section">
     <div class="section-label" data-en="WHAT MY CLIENTS SAY" data-fr="CE QUE MES CLIENTS DISENT">WHAT MY CLIENTS SAY</div>
@@ -751,34 +781,15 @@ function setLang(lang) {
 }
 document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem('kalysteon-lang') || 'en'));
 
-// VIDEO DE FOND — couverture opaque masquant l'init YouTube
-(function() {
-  var cover = document.querySelector('.video-cover');
-  if (!cover) return;
-  var revealed = false;
-
-  function reveal() {
-    cover.style.transition = 'opacity 1.5s ease';
-    cover.style.opacity = '0';
-    revealed = true;
+// FONDU VIDÉO
+window.addEventListener('load', function() {
+  const videoWrapper = document.querySelector('.video-wrapper');
+  if (videoWrapper) {
+    setTimeout(() => {
+      videoWrapper.style.opacity = '1';
+    }, 100);
   }
-
-  function hide() {
-    cover.style.transition = 'none';
-    cover.style.opacity = '1';
-  }
-
-  window.addEventListener('load', function() {
-    setTimeout(reveal, 3000);
-  });
-
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && revealed) {
-      hide();
-      setTimeout(reveal, 350);
-    }
-  });
-})();
+});
 
 // PARTICULES DORÉES
 (function() {
@@ -811,38 +822,112 @@ document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem
   animate();
 })();
 
-// Mouse tracking avec lerp — spotlight ultra-fluide
-document.querySelectorAll('.choice-card').forEach(card => {
-  let tx = 50, ty = 50, cx = 50, cy = 50;
-  let raf = null, active = false;
-  const LERP = 0.07;
+// ══════════════════════════════════════════
+//  NEWS SLIDER
+// ══════════════════════════════════════════
+(function() {
+  const slider   = document.getElementById('newsSlider');
+  const track    = document.getElementById('nsTrack');
+  const slides   = Array.from(track.querySelectorAll('.ns-slide'));
+  const dots     = Array.from(document.querySelectorAll('#nsDots .ns-dot'));
+  const progress = document.getElementById('nsProgress');
+  const counter  = document.getElementById('nsCurrent');
+  const total    = document.getElementById('nsTotal');
+  const btnPrev  = document.getElementById('nsArrowPrev');
+  const btnNext  = document.getElementById('nsArrowNext');
 
-  function lerp(a, b, t) { return a + (b - a) * t; }
+  if (!slider || slides.length === 0) return;
 
-  function tick() {
-    cx = lerp(cx, tx, LERP);
-    cy = lerp(cy, ty, LERP);
-    card.style.setProperty('--mouse-x', `${cx}%`);
-    card.style.setProperty('--mouse-y', `${cy}%`);
-    const done = !active && Math.abs(cx - tx) < 0.05 && Math.abs(cy - ty) < 0.05;
-    raf = done ? null : requestAnimationFrame(tick);
+  const AUTOPLAY_MS = 5000;
+  let current = 0;
+  let timer   = null;
+  let progTimer = null;
+
+  total.textContent = slides.length;
+
+  function goTo(idx) {
+    // wrap
+    idx = ((idx % slides.length) + slides.length) % slides.length;
+    if (idx === current) return;
+
+    // update slide classes
+    slides[current].classList.remove('active');
+    slides[idx].classList.add('active');
+
+    // move track
+    track.style.transform = `translateX(-${idx * 100}%)`;
+
+    // dots
+    dots[current]?.classList.remove('active');
+    dots[idx]?.classList.add('active');
+
+    // counter
+    counter.textContent = idx + 1;
+
+    // shimmer sweep
+    slider.classList.remove('shimmer');
+    void slider.offsetWidth;
+    slider.classList.add('shimmer');
+    setTimeout(() => slider.classList.remove('shimmer'), 600);
+
+    current = idx;
+    restartProgress();
   }
 
-  card.addEventListener('mouseenter', () => { active = true; });
+  function restartProgress() {
+    if (progTimer) clearTimeout(progTimer);
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+    // force reflow
+    void progress.offsetWidth;
+    progress.style.transition = `width ${AUTOPLAY_MS}ms linear`;
+    progress.style.width = '100%';
+  }
 
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    tx = ((e.clientX - r.left) / r.width)  * 100;
-    ty = ((e.clientY - r.top)  / r.height) * 100;
-    if (!raf) raf = requestAnimationFrame(tick);
+  function startAutoplay() {
+    stopAutoplay();
+    timer = setInterval(() => goTo(current + 1), AUTOPLAY_MS);
+    restartProgress();
+  }
+
+  function stopAutoplay() {
+    if (timer) { clearInterval(timer); timer = null; }
+    if (progress) {
+      progress.style.transition = 'none';
+      progress.style.width = '0%';
+    }
+  }
+
+  // arrows
+  btnPrev?.addEventListener('click', () => { goTo(current - 1); startAutoplay(); });
+  btnNext?.addEventListener('click', () => { goTo(current + 1); startAutoplay(); });
+
+  // dots
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => { goTo(+dot.dataset.idx); startAutoplay(); });
   });
 
-  card.addEventListener('mouseleave', () => {
-    active = false;
-    tx = 50; ty = 50;
-    if (!raf) raf = requestAnimationFrame(tick);
+  // pause on hover
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
+
+  // keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { goTo(current - 1); startAutoplay(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1); startAutoplay(); }
   });
-});
+
+  // touch / swipe
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  slider.addEventListener('touchend', e => {
+    const delta = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(delta) > 40) { goTo(current + (delta < 0 ? 1 : -1)); startAutoplay(); }
+  }, { passive: true });
+
+  // boot
+  startAutoplay();
+})();
 
 // DONNÉES TÉMOIGNAGES
 const testimonialsRaw = [
