@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,7 +6,7 @@
 <title>Kalysteon — Thank You</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -17,7 +17,7 @@
   --accent-dim: rgba(201,168,76,0.09); --accent-glow: rgba(201,168,76,0.18);
   --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
   --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
-  --display: 'Bebas Neue', sans-serif;
+  --display: 'Rajdhani', sans-serif;
 }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
@@ -39,7 +39,7 @@ header {
   background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%);
   backdrop-filter: blur(20px);
 }
-.logo { font-family: var(--display); font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text); text-decoration: none; }
+.logo { font-family: var(--display); font-weight: 700; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text); text-decoration: none; }
 .logo span { color: var(--accent); }
 .main {
   flex: 1; display: flex; align-items: center; justify-content: center;
@@ -67,7 +67,7 @@ header {
 }
 .tag::before, .tag::after { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold-dark); }
 h1 {
-  font-family: var(--display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.8rem);
   letter-spacing: 0.06em; line-height: 1; color: var(--text);
   margin-bottom: 1.25rem;
 }
@@ -89,7 +89,7 @@ h1 em {
 }
 .info-box strong { color: var(--text); }
 .btn {
-  display: inline-block; font-family: var(--display); font-size: 0.95rem;
+  display: inline-block; font-family: var(--display); font-weight: 700; font-size: 0.95rem;
   letter-spacing: 0.14em; text-transform: uppercase;
   padding: 0.85rem 2.2rem; border-radius: 10px;
   background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%);
@@ -127,3 +127,5 @@ footer {
 <footer>© KALYSTEON STUDIO — ALL RIGHTS RESERVED</footer>
 </body>
 </html>
+
+

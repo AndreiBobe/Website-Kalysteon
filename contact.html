@@ -6,7 +6,7 @@
 <title>Kalysteon</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -60,7 +60,7 @@ header {
   box-shadow: 0 1px 30px rgba(212,175,55,0.07), 0 4px 20px rgba(0,0,0,0.5);
   animation: fadeInDown 0.8s var(--transition-smooth) forwards;
 }
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text-light); text-decoration: none; }
+.logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text-light); text-decoration: none; }
 .logo span { color: var(--gold); }
 /* NAV PILLS */
 .header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
@@ -127,7 +127,7 @@ section.visible, .page-hero.visible { opacity: 1; transform: translateY(0); }
   margin-bottom: 1rem;
 }
 .page-hero h1 {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
   font-size: clamp(3rem, 7vw, 5.5rem);
   letter-spacing: 0.04em;
   line-height: 0.9;
@@ -165,7 +165,7 @@ section.visible, .page-hero.visible { opacity: 1; transform: translateY(0); }
 }
 .contact-card:hover { transform: translateY(-4px); border-color: var(--gold-border-hover); }
 .contact-card-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
-.contact-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; color: var(--text-light); }
+.contact-card-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: 0.05em; color: var(--text-light); }
 .contact-card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
 .btn-contact {
   display: inline-flex;
@@ -345,6 +345,7 @@ footer.visible { opacity: 1; transform: translateY(0); }
 
 <script>
 function setLang(lang) {
+  localStorage.setItem('kalysteon-lang', lang);
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-en]').forEach(function(el) {
     var txt = el.getAttribute('data-' + lang);
@@ -354,7 +355,7 @@ function setLang(lang) {
     btn.classList.toggle('active', btn.id === 'lang-btn-' + lang);
   });
 }
-setLang('en');
+setLang(localStorage.getItem('kalysteon-lang') || 'en');
 
 (function() {
   var canvas = document.getElementById('particle-canvas');
@@ -389,3 +390,5 @@ document.getElementById('hero')?.classList.add('visible');
 </script>
 </body>
 </html>
+
+

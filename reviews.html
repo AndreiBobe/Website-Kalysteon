@@ -6,7 +6,7 @@
 <title>Kalysteon</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -61,7 +61,7 @@ header {
   box-shadow: 0 1px 30px rgba(212,175,55,0.07), 0 4px 20px rgba(0,0,0,0.5);
   animation: fadeInDown 0.8s var(--transition-smooth) forwards;
 }
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text-light); text-decoration: none; }
+.logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--text-light); text-decoration: none; }
 .logo span { color: var(--gold); }
 
 /* NAV PILLS */
@@ -141,7 +141,7 @@ main { position: relative; z-index: 10; flex: 1; }
   opacity: 0.7;
 }
 .reviews-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
   font-size: clamp(3.5rem, 9vw, 7.5rem);
   letter-spacing: 0.04em;
   line-height: 0.92;
@@ -179,7 +179,7 @@ main { position: relative; z-index: 10; flex: 1; }
   text-align: center;
 }
 .stat-value {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
   font-size: 2.4rem;
   letter-spacing: 0.04em;
   background: linear-gradient(135deg, var(--gold), var(--gold-bright));
@@ -383,7 +383,7 @@ footer {
   gap: 1.5rem;
   flex-wrap: wrap;
 }
-.footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.1em; color: var(--text-dim); }
+.footer-brand { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.1em; color: var(--text-dim); }
 .footer-brand span { color: var(--gold); }
 .footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-dim); }
 .footer-links { display: flex; gap: 1.2rem; }
@@ -687,3 +687,5 @@ applyLang(localStorage.getItem('kalysteon-lang') || 'en');
 </script>
 </body>
 </html>
+
+
