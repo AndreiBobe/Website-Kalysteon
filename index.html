@@ -955,8 +955,10 @@ window.addEventListener('load', function() {
 
   const AUTOPLAY_MS = 6000;
   let current   = 0;
-  let timer     = null;
-  let isPaused  = false;
+  let timer        = null;
+  let isPaused     = false;
+  let isHoverPaused = false;
+  let slideStartTime = Date.now();
 
   const btnPP = document.getElementById('nsPlayPause');
   total.textContent = slides.length;
@@ -976,6 +978,7 @@ window.addEventListener('load', function() {
     slider.classList.add('shimmer');
     setTimeout(() => slider.classList.remove('shimmer'), 600);
     current = idx;
+    slideStartTime = Date.now();
     if (!isPaused) restartProgress();
   }
 
@@ -990,17 +993,30 @@ window.addEventListener('load', function() {
   function freezeProgress() {
     const w = getComputedStyle(progress).width;
     progress.style.transition = 'none';
-    progress.style.width = w;      // fige à la position actuelle
+    progress.style.width = w;
+  }
+  function resumeProgress(remainingMs) {
+    void progress.offsetWidth;
+    progress.style.transition = `width ${remainingMs}ms linear`;
+    progress.style.width = '100%';
   }
 
   /* ── autoplay ── */
   function startAutoplay() {
-    if (timer) clearInterval(timer);
+    if (timer) { clearTimeout(timer); clearInterval(timer); timer = null; }
+    slideStartTime = Date.now();
     timer = setInterval(() => goTo(current + 1), AUTOPLAY_MS);
     restartProgress();
   }
   function stopAutoplay() {
-    if (timer) { clearInterval(timer); timer = null; }
+    if (timer) { clearTimeout(timer); clearInterval(timer); timer = null; }
+  }
+  function resumeAutoplay() {
+    if (timer) { clearTimeout(timer); clearInterval(timer); timer = null; }
+    const elapsed = Date.now() - slideStartTime;
+    const remaining = Math.max(300, AUTOPLAY_MS - elapsed);
+    resumeProgress(remaining);
+    timer = setTimeout(() => { goTo(current + 1); startAutoplay(); }, remaining);
   }
 
   /* ── pause / play ── */
@@ -1026,8 +1042,12 @@ window.addEventListener('load', function() {
   });
 
   /* ── hover : pause uniquement si pas en pause manuelle ── */
-  slider.addEventListener('mouseenter', () => { if (!isPaused) stopAutoplay(); });
-  slider.addEventListener('mouseleave', () => { if (!isPaused) startAutoplay(); });
+  slider.addEventListener('mouseenter', () => {
+    if (!isPaused) { isHoverPaused = true; stopAutoplay(); freezeProgress(); }
+  });
+  slider.addEventListener('mouseleave', () => {
+    if (!isPaused && isHoverPaused) { isHoverPaused = false; resumeAutoplay(); }
+  });
 
   /* ── flèches ── */
   btnPrev?.addEventListener('click', e => { e.stopPropagation(); goTo(current - 1); if (!isPaused) startAutoplay(); });
