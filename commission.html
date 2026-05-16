@@ -602,8 +602,12 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .preset-card[data-preset="hero-structure"]  .preset-specs li::before { background-color: rgba(184,202,216,0.85); }
 .preset-card[data-preset="hero-climate"]    .preset-specs li::before { background-color: rgba(157,107,224,0.90); }
 /* CTA colour on hover */
-.preset-card[data-preset="hero-landscape"]:hover  .preset-cta { color: #F2D777; }
-.preset-card[data-preset="hero-vegetation"]:hover .preset-cta { color: #E8A060; }
+/* Hero CTA — base filled state */
+.preset-card[data-preset="hero-landscape"]  .preset-cta { border-color: rgba(201,168,76,0.60);  background: linear-gradient(135deg, rgba(201,168,76,0.18),  rgba(201,168,76,0.10));  color: rgba(201,168,76,1.0);  box-shadow: 0 2px 10px rgba(201,168,76,0.12),  inset 0 1px 0 rgba(201,168,76,0.12); }
+.preset-card[data-preset="hero-vegetation"] .preset-cta { border-color: rgba(212,135,58,0.60);  background: linear-gradient(135deg, rgba(212,135,58,0.18),  rgba(212,135,58,0.10));  color: rgba(212,135,58,1.0);  box-shadow: 0 2px 10px rgba(212,135,58,0.12),  inset 0 1px 0 rgba(212,135,58,0.12); }
+/* Hero CTA — hover */
+.preset-card[data-preset="hero-landscape"]:hover  .preset-cta { background: linear-gradient(135deg, rgba(201,168,76,0.30),  rgba(201,168,76,0.18));  border-color: rgba(201,168,76,0.85);  color: #F2D777; box-shadow: 0 4px 18px rgba(201,168,76,0.22),  inset 0 1px 0 rgba(201,168,76,0.20); }
+.preset-card[data-preset="hero-vegetation"]:hover .preset-cta { background: linear-gradient(135deg, rgba(212,135,58,0.28),  rgba(212,135,58,0.16));  border-color: rgba(212,135,58,0.80);  color: #E8A060; box-shadow: 0 4px 18px rgba(212,135,58,0.20),  inset 0 1px 0 rgba(212,135,58,0.18); }
 .preset-card[data-preset="hero-structure"]:hover  .preset-cta { color: #C0CCDA; }
 .preset-card[data-preset="hero-climate"]:hover    .preset-cta { color: #C0A0F0; }
 /* ID badge markers */
@@ -1040,16 +1044,16 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .preset-card[data-preset="terrain-l"]  .preset-price { background: linear-gradient(135deg, #A0B0C0, #D4DDE6); -webkit-background-clip: text; background-clip: text; }
 .preset-price-note { font-family: var(--mono); font-size: 0.55rem; color: var(--text-dim); margin-top: 0.1rem; opacity: 0.6; }
 .preset-card:hover .preset-price { filter: brightness(1.15); }
-.preset-cta { margin-top: 0.75rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.13em; color: rgba(201,168,76,0.72); text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.22s; padding: 0.5rem 0; border: 1px solid rgba(201,168,76,0.30); border-radius: var(--radius-xs); background: rgba(201,168,76,0.07); }
+.preset-cta { margin-top: 0.75rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.13em; color: rgba(201,168,76,1.0); text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.22s; padding: 0.65rem 1rem; border: 1px solid rgba(201,168,76,0.60); border-radius: var(--radius-xs); background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.10)); box-shadow: 0 2px 10px rgba(201,168,76,0.12), inset 0 1px 0 rgba(201,168,76,0.12); }
 .preset-cta::after { content: '→'; font-size: 0.7rem; transition: transform 0.2s; }
-.preset-card[data-preset="terrain-s"]  .preset-cta { border-color: rgba(100,180,240,0.30); background: rgba(100,180,240,0.07); color: rgba(100,180,240,0.78); }
-.preset-card[data-preset="terrain-l"]  .preset-cta { border-color: rgba(200,212,222,0.28); background: rgba(200,212,222,0.07); color: rgba(200,212,222,0.72); }
-.preset-card[data-preset="terrain-xl"] .preset-cta { border-color: rgba(29,201,122,0.30); background: rgba(29,201,122,0.07); }
-.preset-card:hover .preset-cta { background: rgba(201,168,76,0.10); border-color: rgba(201,168,76,0.45); color: var(--gold-bright); gap: 0.8rem; }
-.preset-card[data-preset="terrain-s"]:hover  .preset-cta { background: rgba(100,180,240,0.10); border-color: rgba(100,180,240,0.45); color: #90CCEE; }
-.preset-card[data-preset="terrain-l"]:hover  .preset-cta { background: rgba(200,212,222,0.10); border-color: rgba(200,212,222,0.45); color: #D4DDE6; }
-.preset-card[data-preset="terrain-xl"]:hover .preset-cta { background: rgba(29,201,122,0.10); border-color: rgba(29,201,122,0.45); color: var(--jade-bright); }
-.preset-card:hover .preset-cta::after { transform: translateX(3px); }
+.preset-card[data-preset="terrain-s"]  .preset-cta { border-color: rgba(100,180,240,0.60); background: linear-gradient(135deg, rgba(100,180,240,0.18), rgba(100,180,240,0.10)); color: rgba(100,180,240,1.0); box-shadow: 0 2px 10px rgba(100,180,240,0.12), inset 0 1px 0 rgba(100,180,240,0.12); }
+.preset-card[data-preset="terrain-l"]  .preset-cta { border-color: rgba(200,212,222,0.55); background: linear-gradient(135deg, rgba(200,212,222,0.16), rgba(200,212,222,0.08)); color: rgba(200,212,222,1.0); box-shadow: 0 2px 10px rgba(200,212,222,0.10), inset 0 1px 0 rgba(200,212,222,0.10); }
+.preset-card[data-preset="terrain-xl"] .preset-cta { border-color: rgba(29,201,122,0.60); background: linear-gradient(135deg, rgba(29,201,122,0.18), rgba(29,201,122,0.10)); color: rgba(29,201,122,1.0); box-shadow: 0 2px 10px rgba(29,201,122,0.12), inset 0 1px 0 rgba(29,201,122,0.12); }
+.preset-card:hover .preset-cta { background: linear-gradient(135deg, rgba(201,168,76,0.30), rgba(201,168,76,0.18)); border-color: rgba(201,168,76,0.85); color: var(--gold-bright); gap: 0.8rem; box-shadow: 0 4px 18px rgba(201,168,76,0.22), inset 0 1px 0 rgba(201,168,76,0.20); }
+.preset-card[data-preset="terrain-s"]:hover  .preset-cta { background: linear-gradient(135deg, rgba(100,180,240,0.28), rgba(100,180,240,0.16)); border-color: rgba(100,180,240,0.80); color: #90CCEE; box-shadow: 0 4px 18px rgba(100,180,240,0.20), inset 0 1px 0 rgba(100,180,240,0.18); }
+.preset-card[data-preset="terrain-l"]:hover  .preset-cta { background: linear-gradient(135deg, rgba(200,212,222,0.24), rgba(200,212,222,0.14)); border-color: rgba(200,212,222,0.75); color: #D4DDE6; box-shadow: 0 4px 18px rgba(200,212,222,0.16), inset 0 1px 0 rgba(200,212,222,0.16); }
+.preset-card[data-preset="terrain-xl"]:hover .preset-cta { background: linear-gradient(135deg, rgba(29,201,122,0.28), rgba(29,201,122,0.16)); border-color: rgba(29,201,122,0.80); color: var(--jade-bright); box-shadow: 0 4px 18px rgba(29,201,122,0.22), inset 0 1px 0 rgba(29,201,122,0.18); }
+.preset-card:hover .preset-cta::after { transform: translateX(4px); }
 
 @media (max-width: 900px) {
   .hero-outer--split { grid-template-columns: 1fr; }
@@ -1249,7 +1253,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>2 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-s">1.999,99 €</div>
+    <div class="preset-price" id="price-s">2.499,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1268,7 +1272,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>2 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-m">2.799,99 €</div>
+    <div class="preset-price" id="price-m">3.499,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1286,7 +1290,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>3 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-l">4.499,99 €</div>
+    <div class="preset-price" id="price-l">5.499,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1772,11 +1776,11 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
                   <div class="excl-desc" data-en="Authorises you to include and ship this asset in a commercial product · game, film, or application. Kalysteon retains authorship; raw asset sub-licensing is excluded." data-fr="Vous autorise à inclure et distribuer cet asset dans un produit commercial · jeu, film, application. Kalysteon conserve la paternité ; la sous-licence de l'asset brut est exclue.">Authorises you to include and ship this asset in a commercial product · game, film, or application. Kalysteon retains authorship; raw asset sub-licensing is excluded.</div>
                 </div>
                 <label class="toggle-wrap">
-                  <input type="checkbox" name="com_license" id="coml-toggle" value="yes" checked>
+                  <input type="checkbox" name="com_license" id="coml-toggle" value="yes">
                   <span class="toggle-track"><span class="toggle-thumb"></span></span>
                 </label>
               </div>
-              <div class="excl-note on" id="coml-note">Ship License included · ×1.5 rate.</div>
+              <div class="excl-note" id="coml-note">Personal use only · no commercial shipping.</div>
             </div>
 
             <!-- CONTACT & CONTEXT -->
@@ -2110,16 +2114,18 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         <div class="preset-soon-chip">Soon</div>
         <div class="preset-id">01 / Hero</div>
         <div class="preset-title">VEGETATION</div>
-        <div class="preset-target" data-en="Foliage &amp; biome assets" data-fr="Foliage &amp; assets de biome">Foliage &amp; biome assets</div>
-        <div class="preset-desc" data-en="Hero trees, dense undergrowth, procedural biome systems." data-fr="Arbres héroïques, sous-bois denses, systèmes de biome procéduraux.">Hero trees, dense undergrowth, procedural biome systems.</div>
+        <div class="preset-target" data-en="Standalone hero tree" data-fr="Arbre hero standalone">Standalone hero tree</div>
+        <div class="preset-desc" data-en="Single hero tree · full LOD chain, wind-ready · engine-delivered." data-fr="Arbre hero unique · LODs complets, prêt pour le vent · livré moteur.">Single hero tree · full LOD chain, wind-ready · engine-delivered.</div>
         <ul class="preset-specs">
-          <li>Any scale</li>
-          <li>Ultra-detailed</li>
-          <li>Timeline on call</li>
-          <li>Unlimited revisions</li>
+          <li>≤ 2m to 20m+ scale</li>
+          <li>Wind-ready shading</li>
+          <li>~2–4 weeks standard</li>
+          <li>2 revision rounds</li>
         </ul>
-        <div class="preset-price">On request</div>
-        <div class="preset-price-note">quote after scoping call</div>
+        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
+        <div class="preset-price">2.799,99 €</div>
+        <div class="preset-price-note" data-en="excl. VAT · Prop to Landmark" data-fr="HT · Prop à Landmark">excl. VAT · Prop to Landmark</div>
+        <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
         <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
     </div>
@@ -2130,16 +2136,17 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         <div class="preset-popular-badge">◆ Signature</div>
         <div class="preset-id">02 / Hero</div>
         <div class="preset-title">LANDSCAPE</div>
-        <div class="preset-target" data-en="Hero landscape asset" data-fr="Asset paysage héroïque">Hero landscape asset</div>
-        <div class="preset-desc" data-en="Giant terrain or singular landmark · scope defined on call." data-fr="Terrain géant ou paysage singulier · périmètre défini à l'appel.">Giant terrain or singular landmark · scope defined on call.</div>
+        <div class="preset-target" data-en="Standalone hero mesh" data-fr="Mesh hero standalone">Standalone hero mesh</div>
+        <div class="preset-desc" data-en="Sculpted mesh asset · cliff, peak or floating island · triplanar, engine-ready." data-fr="Mesh sculpté · falaise, sommet ou île flottante · triplanaire, prêt moteur.">Sculpted mesh asset · cliff, peak or floating island · triplanar, engine-ready.</div>
         <ul class="preset-specs">
-          <li>Any scale</li>
-          <li>Ultra-detailed</li>
-          <li>Timeline on call</li>
-          <li>Unlimited revisions</li>
+          <li>≤ 2m to 20m+ scale</li>
+          <li>Triplanar texturing</li>
+          <li>~6–10 weeks standard</li>
+          <li>2–3 revision rounds</li>
         </ul>
-        <div class="preset-price">On request</div>
-        <div class="preset-price-note">quote after scoping call</div>
+        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
+        <div class="preset-price">3.199,99 €</div>
+        <div class="preset-price-note" data-en="excl. VAT · Prop to Landmark" data-fr="HT · Prop à Landmark">excl. VAT · Prop to Landmark</div>
         <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
       </div>
     </div>
@@ -2150,16 +2157,17 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         <div class="preset-soon-chip">Soon</div>
         <div class="preset-id">03 / Hero</div>
         <div class="preset-title">STRUCTURE</div>
-        <div class="preset-target" data-en="Buildings, villages &amp; castles" data-fr="Bâtiments, villages &amp; châteaux">Buildings, villages &amp; castles</div>
-        <div class="preset-desc" data-en="Modular or monolithic architecture · house to fortress scale." data-fr="Architecture modulaire ou monolithique · de la maison à la forteresse.">Modular or monolithic architecture · house to fortress scale.</div>
+        <div class="preset-target" data-en="Standalone architectural mesh" data-fr="Mesh architectural standalone">Standalone architectural mesh</div>
+        <div class="preset-desc" data-en="Sculpted building, ruin or fortress · hero-quality standalone mesh · engine-ready." data-fr="Bâtiment sculpté, ruine ou forteresse · mesh standalone hero · prêt moteur.">Sculpted building, ruin or fortress · hero-quality standalone mesh · engine-ready.</div>
         <ul class="preset-specs">
-          <li>Any scale</li>
-          <li>Ultra-detailed</li>
-          <li>Timeline on call</li>
-          <li>Unlimited revisions</li>
+          <li>≤ 2m to 20m+ scale</li>
+          <li>Full LOD chain</li>
+          <li>~8–12 weeks standard</li>
+          <li>3 revision rounds</li>
         </ul>
-        <div class="preset-price">On request</div>
-        <div class="preset-price-note">quote after scoping call</div>
+        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
+        <div class="preset-price">5.699,99 €</div>
+        <div class="preset-price-note" data-en="excl. VAT · Prop to Landmark" data-fr="HT · Prop à Landmark">excl. VAT · Prop to Landmark</div>
         <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
     </div>
@@ -2171,16 +2179,17 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         <div class="preset-badge--specialist">★ Specialist</div>
         <div class="preset-id">04 / Hero</div>
         <div class="preset-title">ATMOSPHERICS</div>
-        <div class="preset-target" data-en="Waterfalls, mist &amp; weather" data-fr="Cascades, brume &amp; météo">Waterfalls, mist &amp; weather</div>
-        <div class="preset-desc" data-en="Cinematic atmosphere · waterfalls, storms, mist &amp; embers." data-fr="Atmosphère cinématographique · cascades, tempêtes, brume &amp; braises.">Cinematic atmosphere · waterfalls, storms, mist &amp; embers.</div>
+        <div class="preset-target" data-en="FX &amp; atmospheric shader pack" data-fr="Pack FX &amp; shaders atmosphériques">FX &amp; atmospheric shader pack</div>
+        <div class="preset-desc" data-en="Niagara particles + atmospheric shaders · waterfall, mist, embers · engine-ready." data-fr="Particules Niagara + shaders atmosphériques · cascade, brume, braises · prêt moteur.">Niagara particles + atmospheric shaders · waterfall, mist, embers · engine-ready.</div>
         <ul class="preset-specs">
-          <li>Any scale</li>
-          <li>Ultra-detailed</li>
-          <li>Timeline on call</li>
-          <li>Unlimited revisions</li>
+          <li>Niagara + shaders</li>
+          <li>Full atmosphere pack</li>
+          <li>~3–6 weeks standard</li>
+          <li>2–3 revision rounds</li>
         </ul>
-        <div class="preset-price">On request</div>
-        <div class="preset-price-note">quote after scoping call</div>
+        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
+        <div class="preset-price">3.399,99 €</div>
+        <div class="preset-price-note" data-en="excl. VAT · simple to full system" data-fr="HT · simple à système complet">excl. VAT · simple to full system</div>
         <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
     </div>
@@ -2369,6 +2378,22 @@ var PRESET_BASE    = { s:3200, m:4800, l:9000, xl:null };
 var HERO_BASE          = { 'Prop':3200, 'Character':5900, 'Structure':10900, 'Landmark':18600 };
 var HERO_SCOPE_PCT     = { 'Mesh Only':0, 'Mesh + Props':0.28, 'Mesh + FX':0.20, 'Full Kit':0.52, 'To Discuss':null };
 var HERO_EXCL_REDUCTION= { 'Prop':0.12, 'Character':0.18, 'Structure':0.22, 'Landmark':0.25 };
+/* ── Hero Landscape (standalone mesh) pricing ── */
+var LANDSCAPE_BASE          = { 'Prop':3000, 'Character':5000, 'Structure':7500, 'Landmark':11000 };
+var LANDSCAPE_EXCL_REDUCTION = { 'Prop':0.15, 'Character':0.18, 'Structure':0.22, 'Landmark':0.25 };
+var LANDSCAPE_FLOOR         = { 'Prop':2500, 'Character':4000, 'Structure':6000, 'Landmark':9000 };
+/* ── Hero Vegetation (standalone hero tree) pricing ── */
+var VEGETATION_BASE          = { 'Prop':2500, 'Character':4000, 'Structure':5500, 'Landmark':7500 };
+var VEGETATION_EXCL_REDUCTION = { 'Prop':0.12, 'Character':0.15, 'Structure':0.18, 'Landmark':0.22 };
+var VEGETATION_FLOOR         = { 'Prop':2000, 'Character':3200, 'Structure':4500, 'Landmark':6000 };
+/* ── Hero Structure (standalone architectural mesh) pricing ── */
+var STRUCTURE_BASE           = { 'Prop':5000, 'Character':7500, 'Structure':10000, 'Landmark':14000 };
+var STRUCTURE_EXCL_REDUCTION = { 'Prop':0.12, 'Character':0.15, 'Structure':0.20,  'Landmark':0.22  };
+var STRUCTURE_FLOOR          = { 'Prop':4000, 'Character':6000, 'Structure':8000,  'Landmark':11000 };
+/* ── Hero Atmospherics (FX + shader pack) pricing ── */
+var ATMOSPHERICS_BASE           = { 'Prop':3000, 'Character':5000, 'Structure':7000, 'Landmark':10000 };
+var ATMOSPHERICS_EXCL_REDUCTION = { 'Prop':0.15, 'Character':0.18, 'Structure':0.20, 'Landmark':0.22  };
+var ATMOSPHERICS_FLOOR          = { 'Prop':2500, 'Character':4000, 'Structure':6000, 'Landmark':8000  };
 var VIZ_HERO = {
   'Prop':      { slide:'hviz-slide-prop',   legsq:'vlegsq-prop',   legtxt:'vlegtext-prop'   },
   'Character': { slide:'hviz-slide-char',   legsq:'vlegsq-char',   legtxt:'vlegtext-char'   },
@@ -2382,8 +2407,8 @@ var SIZE_MULT = {
   xl: {}
 };
 var ENGINE_MULT   = { 'Unreal Engine 5':1.0, 'Unity':0.90, 'RAW':0.78 };
-var STYLE_MULT    = { 'Realistic':1.0,'Stylized':0.95,'Polygonal':0.90,'Cartoon':0.88,'Retro':0.85 };
-var ASSET_PCT     = { 'Terrain only':0,'Terrain + Assets':0.30,'Terrain + FX':0.22,'Full Environment':0.58,'To discuss':null };
+var STYLE_MULT    = { 'Realistic':1.0,'Stylized':1.0,'Polygonal':1.0,'Cartoon':1.0,'Retro':1.0 };
+var ASSET_PCT     = { 'Terrain only':0,'Terrain + Assets':0.30,'Terrain + FX':0.30,'Full Environment':0.58,'To discuss':null };
 var DELIVERY_MULT  = { 'Standard':1.0,'Express':1.32,'Rush':1.60 };
 var QUANTITY_MULT  = { '1':1.0, '2':1.75, '3':2.40, 'custom':null };
 var EXCL_REDUCTION = { s:0.15, m:0.20, l:0.30, xl:null };
@@ -2445,7 +2470,7 @@ var panelTimer      = null;
 var LANG            = 'en';
 var CURRENCY        = 'EUR';
 var hasScrolledOnce = false;
-var PRESET_STARTING = { s: 2000, m: 2800, l: 4500 };
+var PRESET_STARTING = { s: 2500, m: 3500, l: 5500 };
 
 /* ═══ PRICE FORMATTER ═══ */
 function formatPrice(n) {
@@ -2871,8 +2896,19 @@ function recalcPrice() {
 
   /* ── HERO ASSET PRICING ── */
   if (currentPreset.startsWith('hero-')) {
+    var HERO_DATA = {
+      'hero-landscape':  { base: LANDSCAPE_BASE,    excl: LANDSCAPE_EXCL_REDUCTION,    floor: LANDSCAPE_FLOOR,    label: 'Landscape'    },
+      'hero-vegetation': { base: VEGETATION_BASE,   excl: VEGETATION_EXCL_REDUCTION,   floor: VEGETATION_FLOOR,   label: 'Vegetation'   },
+      'hero-structure':  { base: STRUCTURE_BASE,    excl: STRUCTURE_EXCL_REDUCTION,    floor: STRUCTURE_FLOOR,    label: 'Structure'    },
+      'hero-climate':    { base: ATMOSPHERICS_BASE, excl: ATMOSPHERICS_EXCL_REDUCTION, floor: ATMOSPHERICS_FLOOR, label: 'Atmospherics' }
+    };
+    var hData       = HERO_DATA[currentPreset] || { base: HERO_BASE, excl: HERO_EXCL_REDUCTION, floor: null, label: 'Hero Asset' };
+    var hBaseTable  = hData.base;
+    var hExclTable  = hData.excl;
+    var hFloorTable = hData.floor;
     var scale   = getRadio('object_scale') || 'Prop';
-    var hBase   = HERO_BASE[scale] || 0;
+    var hRawBase = hBaseTable[scale] || 0;
+    var hBase   = hRawBase;
     var hLines  = [];
     var hEngine = getRadio('engine') || 'Unreal Engine 5';
     var hEngMul = ENGINE_MULT[hEngine] || 1.0;
@@ -2895,15 +2931,17 @@ function recalcPrice() {
     if (getRadio('h_modular')      === 'yes') hSub *= 1.25;
     var hExclCb = document.getElementById('excl-toggle');
     var hExclOn = hExclCb ? hExclCb.checked : true;
-    if (!hExclOn && HERO_EXCL_REDUCTION[scale]) hSub *= (1 - HERO_EXCL_REDUCTION[scale]);
+    if (!hExclOn && hExclTable[scale]) hSub *= (1 - hExclTable[scale]);
     var hComlCb = document.getElementById('coml-toggle');
-    var hComlOn = hComlCb ? hComlCb.checked : true;
+    var hComlOn = hComlCb ? hComlCb.checked : false;
     if (hComlOn) hSub *= 1.5;
     var hQty = getRadio('quantity') || '1';
     var hQtyMul = QUANTITY_MULT[hQty];
     var hQtyCustom = (hQtyMul === null);
     if (!hQtyCustom && hQtyMul) hSub *= hQtyMul;
     var hResult = Math.round(hSub / 100) * 100;
+    /* Price floor per scale */
+    if (hFloorTable) hResult = Math.max(hResult, hFloorTable[scale] || 0);
     setPrice(amountEl, hResult, null, false);
     /* Always store EUR in estimated_price regardless of selected currency */
     var hEurAdj = Math.floor(hResult) - 0.01;
@@ -2918,21 +2956,22 @@ function recalcPrice() {
     var hUsdEl = document.getElementById('hidden-price-usd'); if (hUsdEl) hUsdEl.value = '$' + hUsdParts[0] + '.' + hUsdParts[1];
     /* Hero breakdown fields for devis */
     var hfh = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
-    hfh('hidden-price-base', formatPrice(Math.round((HERO_BASE[scale] || 0) * hEngMul / 100) * 100));
+    hfh('hidden-price-base', formatPrice(Math.round(hRawBase * hEngMul / 100) * 100));
     hfh('hidden-price-assets', hScopeCustom ? 'À définir' : (hScopePct > 0 ? formatPrice(Math.round(hScopeAdd / 100) * 100) : 'Inclus'));
     hfh('hidden-price-style', hStylMul < 1.0 ? formatPrice(Math.round((hBase + hScopeAdd) * (hStylMul - 1.0) / 100) * 100) : 'Inclus');
     hfh('hidden-price-delivery', 'Inclus');
     hfh('hidden-price-coml', hComlOn ? formatPrice(Math.round(hSub / 1.5 * 0.5 / 100) * 100) : '—');
-    hfh('hidden-price-excl', hExclOn ? 'Inclus' : '−' + Math.round((HERO_EXCL_REDUCTION[scale] || 0) * 100) + '%');
+    hfh('hidden-price-excl', hExclOn ? 'Inclus' : '−' + Math.round((hExclTable[scale] || 0) * 100) + '%');
     var hQtyMulFinal = (!hQtyCustom && hQtyMul) ? hQtyMul : 1;
     hfh('hidden-price-quantity', hQtyMulFinal > 1 ? '×' + hQtyMulFinal : 'Inclus');
-    hfh('hidden-commission-type', 'Hero Asset · ' + scale);
+    var hLabel = hData.label;
+    hfh('hidden-commission-type', hLabel + ' · ' + scale);
     hfh('hidden-currency', CURRENCY);
-    hLines.push('Hero ' + scale + ' · ' + hEngine);
+    hLines.push(hLabel + ' ' + scale + ' · ' + hEngine);
     if (hStyle !== 'Realistic') hLines.push('Style ' + hStyle + ' · ×' + hStylMul.toFixed(2));
     if (hScopePct > 0) hLines.push(hScope + ' · +' + Math.round(hScopePct*100) + '%');
     if (hScopeCustom) hLines.push('<span class="hi">Scope: custom · TBD on call</span>');
-    if (!hExclOn && HERO_EXCL_REDUCTION[scale]) hLines.push('No Sole Rights · −' + Math.round(HERO_EXCL_REDUCTION[scale]*100) + '%');
+    if (!hExclOn && hExclTable[scale]) hLines.push('No Sole Rights · −' + Math.round(hExclTable[scale]*100) + '%');
     if (hComlOn) hLines.push('Ship License · ×1.5');
     if (hQty !== '1' && !hQtyCustom) hLines.push('Qty ×' + hQty + ' · ×' + hQtyMul.toFixed(2));
     if (hQtyCustom) hLines.push('<span class="hi">Qty: custom · scope on call</span>');
@@ -3005,7 +3044,8 @@ function recalcPrice() {
   }
   if (!isQtyCustom && qtyMul !== null) subtotal *= qtyMul;
 
-  var result = Math.round(subtotal / 100) * 100;
+  var TIER_FLOOR = { s: 1400, m: 2500, l: 4500 };
+  var result = Math.max(Math.round(subtotal / 100) * 100, TIER_FLOOR[tier] || 0);
   setPrice(amountEl, result, null, false);
   /* Sync hidden fields for Make */
   var hf = function(id, v) { var el = document.getElementById(id); if (el) el.value = v; };
