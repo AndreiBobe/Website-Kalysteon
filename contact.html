@@ -407,20 +407,13 @@ document.getElementById('hero')?.classList.add('visible');
     btn.disabled = true;
     btn.textContent = '...';
     var lang = localStorage.getItem('kalysteon-lang') || 'en';
-    Promise.all([
-      fetch('https://hook.eu1.make.com/rtz1wnhvskyf6v9grinjc9vfohw8bfrj', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'newsletter', email: email, lang: lang, source: 'newsletter-form' })
-      }),
-      fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'api-key': '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' },
-        body: JSON.stringify({ email: email, updateEnabled: true, attributes: { LANGUE: lang } })
-      })
-    ])
-    .then(function(responses) {
-      if (responses[0].ok || responses[1].ok) {
+    fetch('https://hook.eu1.make.com/rtz1wnhvskyf6v9grinjc9vfohw8bfrj', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'newsletter', email: email, lang: lang, source: 'newsletter-form' })
+    })
+    .then(function(r) {
+      if (r.ok) {
         btn.textContent = '✓';
         btn.style.background = 'linear-gradient(135deg,#4caf50,#66bb6a)';
         input.value = '';
