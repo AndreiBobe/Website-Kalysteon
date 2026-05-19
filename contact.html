@@ -255,6 +255,12 @@ footer.visible { opacity: 1; transform: translateY(0); }
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
     </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum — Pipeline Tool" data-fr="Stratum — Outil Pipeline">Stratum — Pipeline Tool</span></a>
+      </div>
+    </div>
         <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
@@ -308,9 +314,9 @@ footer.visible { opacity: 1; transform: translateY(0); }
         <div class="contact-card-label" data-en="Stay updated" data-fr="Restez informé">Stay updated</div>
         <div class="contact-card-title" data-en="NEWSLETTER" data-fr="NEWSLETTER">NEWSLETTER</div>
         <p class="contact-card-desc" data-en="New pack releases, behind-the-scenes breakdowns, workflow tips and exclusive discounts. No spam, ever." data-fr="Nouveautés, making-of, conseils workflow et réductions exclusives. Aucun spam.">New pack releases, behind-the-scenes breakdowns, workflow tips and exclusive discounts. No spam, ever.</p>
-        <form class="newsletter-form" action="#" method="post">
-          <input type="email" class="newsletter-input" placeholder="your@email.com" required>
-          <button type="submit" class="newsletter-btn" data-en="Subscribe" data-fr="S'abonner">Subscribe</button>
+        <form class="newsletter-form" id="newsletter-form" action="#" method="post">
+          <input type="email" class="newsletter-input" id="newsletter-email" placeholder="your@email.com" required>
+          <button type="submit" class="newsletter-btn" id="newsletter-btn" data-en="Subscribe" data-fr="S'abonner">Subscribe</button>
         </form>
         <div class="newsletter-note" data-en="We respect your inbox. Unsubscribe anytime." data-fr="Nous respectons votre boîte mail. Désabonnez-vous à tout moment.">We respect your inbox. Unsubscribe anytime.</div>
       </div>
@@ -387,6 +393,52 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 document.querySelectorAll('section, footer, .page-hero').forEach(el => observer.observe(el));
 document.getElementById('hero')?.classList.add('visible');
+
+// Newsletter
+(function() {
+  var form = document.getElementById('newsletter-form');
+  var btn  = document.getElementById('newsletter-btn');
+  var input = document.getElementById('newsletter-email');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = input.value.trim();
+    if (!email) return;
+    btn.disabled = true;
+    btn.textContent = '...';
+    var lang = localStorage.getItem('kalysteon-lang') || 'en';
+    Promise.all([
+      fetch('https://hook.eu1.make.com/rtz1wnhvskyf6v9grinjc9vfohw8bfrj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'newsletter', email: email, lang: lang, source: 'newsletter-form' })
+      }),
+      fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'api-key': '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' },
+        body: JSON.stringify({ email: email, updateEnabled: true, attributes: { LANGUE: lang } })
+      })
+    ])
+    .then(function(responses) {
+      if (responses[0].ok || responses[1].ok) {
+        btn.textContent = '✓';
+        btn.style.background = 'linear-gradient(135deg,#4caf50,#66bb6a)';
+        input.value = '';
+        input.placeholder = 'Subscribed!';
+        input.disabled = true;
+      } else { throw new Error(); }
+    })
+    .catch(function() {
+      btn.textContent = '✗';
+      btn.style.background = 'linear-gradient(135deg,#e53935,#ef5350)';
+      setTimeout(function() {
+        btn.textContent = lang === 'fr' ? "S'abonner" : 'Subscribe';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 2500);
+    });
+  });
+})();
 </script>
 </body>
 </html>
