@@ -67,9 +67,15 @@ header {
 /* NAV PILLS */
 .header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
 .nav-pill { position: relative; display: flex; align-items: center; }
-.nav-link { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.45rem 0.9rem; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.025); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.04); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
 .nav-link:hover, .nav-pill:hover > .nav-link { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); box-shadow: 0 0 14px rgba(201,168,76,0.18), inset 0 0 10px rgba(201,168,76,0.07); transform: scale(1.05); }
 .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.08); }
+/* ── Per-nav color accents ── */
+.header-nav .nav-pill:nth-child(1) > .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.50); box-shadow: 0 0 14px rgba(201,168,76,0.25), inset 0 0 10px rgba(201,168,76,0.10); background: rgba(201,168,76,0.09); }
+.header-nav .nav-pill:nth-child(2) > .nav-link.active { color: #5DEFD5; border-color: rgba(93,239,213,0.40); box-shadow: 0 0 14px rgba(93,239,213,0.20), inset 0 0 10px rgba(93,239,213,0.08); background: rgba(93,239,213,0.06); }
+.header-nav .nav-pill:nth-child(3) > .nav-link.active { color: #C084FC; border-color: rgba(168,85,247,0.40); box-shadow: 0 0 14px rgba(168,85,247,0.20), inset 0 0 10px rgba(168,85,247,0.08); background: rgba(168,85,247,0.06); }
+.header-nav .nav-pill:nth-child(4) > .nav-link.active { color: #A3E635; border-color: rgba(163,230,53,0.40); box-shadow: 0 0 14px rgba(163,230,53,0.20), inset 0 0 10px rgba(163,230,53,0.08); background: rgba(163,230,53,0.06); }
+.header-nav .nav-pill:nth-child(5) > .nav-link.active { color: #FF7A45; border-color: rgba(255,122,69,0.40); box-shadow: 0 0 14px rgba(255,122,69,0.20), inset 0 0 10px rgba(255,122,69,0.08); background: rgba(255,122,69,0.06); }
 .nav-dropdown-trigger::after { content: ' ▾'; font-size: 0.5rem; opacity: 0.65; }
 .nav-dd-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(6,14,32,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(201,168,76,0.28); border-radius: 16px; padding: 0.5rem; min-width: 210px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 0 24px rgba(201,168,76,0.06); }
 .nav-dd-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
@@ -412,6 +418,12 @@ footer {
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
     </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum" data-fr="Stratum">Stratum</span></a>
+      </div>
+    </div>
         <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
@@ -430,9 +442,16 @@ footer {
         <div class="nav-dd-divider"></div>
         <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
         <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
         <a class="nav-dd-item" href="contact.html#socials"><span class="nav-dd-icon">@</span><span data-en="Socials" data-fr="Réseaux">Socials</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="faq.html" data-en="Support" data-fr="Support">Support</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="faq.html"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
       </div>
     </div>
   </nav>

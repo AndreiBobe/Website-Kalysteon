@@ -48,9 +48,15 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 /* NAV PILLS */
 .header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
 .nav-pill { position: relative; display: flex; align-items: center; }
-.nav-link { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.45rem 0.9rem; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.025); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.04); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
 .nav-link:hover, .nav-pill:hover > .nav-link { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); box-shadow: 0 0 14px rgba(201,168,76,0.18), inset 0 0 10px rgba(201,168,76,0.07); transform: scale(1.05); }
 .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.08); }
+/* ── Per-nav color accents ── */
+.header-nav .nav-pill:nth-child(1) > .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.50); box-shadow: 0 0 14px rgba(201,168,76,0.25), inset 0 0 10px rgba(201,168,76,0.10); background: rgba(201,168,76,0.09); }
+.header-nav .nav-pill:nth-child(2) > .nav-link.active { color: #5DEFD5; border-color: rgba(93,239,213,0.40); box-shadow: 0 0 14px rgba(93,239,213,0.20), inset 0 0 10px rgba(93,239,213,0.08); background: rgba(93,239,213,0.06); }
+.header-nav .nav-pill:nth-child(3) > .nav-link.active { color: #C084FC; border-color: rgba(168,85,247,0.40); box-shadow: 0 0 14px rgba(168,85,247,0.20), inset 0 0 10px rgba(168,85,247,0.08); background: rgba(168,85,247,0.06); }
+.header-nav .nav-pill:nth-child(4) > .nav-link.active { color: #A3E635; border-color: rgba(163,230,53,0.40); box-shadow: 0 0 14px rgba(163,230,53,0.20), inset 0 0 10px rgba(163,230,53,0.08); background: rgba(163,230,53,0.06); }
+.header-nav .nav-pill:nth-child(5) > .nav-link.active { color: #FF7A45; border-color: rgba(255,122,69,0.40); box-shadow: 0 0 14px rgba(255,122,69,0.20), inset 0 0 10px rgba(255,122,69,0.08); background: rgba(255,122,69,0.06); }
 .nav-dropdown-trigger::after { content: ' ▾'; font-size: 0.5rem; opacity: 0.65; }
 .nav-dd-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(6,14,32,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(201,168,76,0.28); border-radius: 16px; padding: 0.5rem; min-width: 210px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 0 24px rgba(201,168,76,0.06); }
 .nav-dd-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
@@ -938,6 +944,12 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
     </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum" data-fr="Stratum">Stratum</span></a>
+      </div>
+    </div>
         <div class="nav-pill">
       <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
@@ -956,9 +968,16 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <div class="nav-dd-divider"></div>
         <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
         <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
         <a class="nav-dd-item" href="contact.html#socials"><span class="nav-dd-icon">@</span><span data-en="Socials" data-fr="Réseaux">Socials</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="faq.html" data-en="Support" data-fr="Support">Support</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="faq.html"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
       </div>
     </div>
   </nav>
@@ -1207,6 +1226,73 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 </div>
 </section>
 
+<!-- ══ FAQ ══ -->
+<style>
+.pfaq-wrap { max-width: 780px; margin: 0 auto; padding: 5rem 2.5rem 4rem; }
+.pfaq-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.26em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.6rem; opacity: 0.7; }
+.pfaq-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.5rem; }
+.pfaq-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 3rem; }
+.pfaq-sub a { color: var(--gold); text-decoration: none; }
+.pfaq-sub a:hover { color: var(--gold-bright); text-decoration: underline; }
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { border-top: 1px solid rgba(201,168,76,0.10); overflow: hidden; }
+.faq-item:last-child { border-bottom: 1px solid rgba(201,168,76,0.10); }
+.faq-question { display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 0; cursor: pointer; user-select: none; }
+.faq-question:hover .faq-question-text { color: var(--text); }
+.faq-question-text { font-family: var(--sans); font-size: 0.92rem; color: var(--text-muted); line-height: 1.4; transition: color 0.2s; }
+.faq-item.open .faq-question-text { color: var(--text); }
+.faq-chevron { font-size: 0.7rem; color: var(--gold); flex-shrink: 0; margin-left: 1rem; transition: transform 0.25s; opacity: 0.6; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); opacity: 1; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; font-family: var(--sans); font-size: 0.88rem; color: var(--text-muted); line-height: 1.85; }
+.faq-item.open .faq-answer { max-height: 400px; padding: 0 0 1.5rem; }
+.faq-answer a { color: var(--gold); text-decoration: none; }
+.faq-answer a:hover { color: var(--gold-bright); }
+.pfaq-cta-link { display: inline-block; margin-top: 2.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #010810; background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); border-radius: 40px; padding: 0.65rem 1.8rem; text-decoration: none; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); }
+.pfaq-cta-link:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
+</style>
+<div style="border-top: 1px solid rgba(201,168,76,0.12);">
+  <div class="pfaq-wrap">
+    <div class="pfaq-eyebrow" data-en="Support" data-fr="Support">Support</div>
+    <div class="pfaq-title" data-en="Frequently Asked Questions" data-fr="Questions fréquentes">Frequently Asked Questions</div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaqP(this)">
+          <span class="faq-question-text" data-en="What formats are included in the packs?" data-fr="Quels formats sont inclus dans les packs ?">What formats are included in the packs?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Depending on your selection at checkout: a complete Unreal Engine 5 pack (.uasset), a Unity 6 package, or raw organized folders." data-fr="Selon votre sélection : un pack Unreal Engine 5 (.uasset), un package Unity 6, ou des dossiers organisés bruts.">Depending on your selection at checkout: a complete Unreal Engine 5 pack (.uasset), a Unity 6 package, or raw organized folders.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaqP(this)">
+          <span class="faq-question-text" data-en="I didn't receive my download links. What do I do?" data-fr="Je n'ai pas reçu mes liens de téléchargement, que faire ?">I didn't receive my download links. What do I do?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Check your spam folder first. If nothing shows up within 10 minutes, contact us at contact@kalysteon.com with your order email." data-fr="Vérifiez d'abord votre dossier spam. Si rien n'apparaît dans les 10 minutes, contactez-nous à contact@kalysteon.com.">Check your spam folder first. If nothing shows up within 10 minutes, contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a>.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaqP(this)">
+          <span class="faq-question-text" data-en="Are updates free? Can I use assets on multiple projects?" data-fr="Les mises à jour sont-elles gratuites ? Puis-je utiliser sur plusieurs projets ?">Are updates free? Can I use assets on multiple projects?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Yes to both. Updates are free for existing customers. Your license covers unlimited projects under a single-user license." data-fr="Oui aux deux. Les mises à jour sont gratuites pour les clients existants. Votre licence couvre des projets illimités sous une licence mono-utilisateur.">Yes to both. Updates are free for existing customers. Your license covers unlimited projects under a single-user license.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaqP(this)">
+          <span class="faq-question-text" data-en="Do you offer refunds?" data-fr="Proposez-vous des remboursements ?">Do you offer refunds?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="All sales are final. No refunds once download links are delivered. For serious technical issues, contact us at contact@kalysteon.com." data-fr="Toutes les ventes sont définitives. Pour tout problème technique sérieux, contactez-nous à contact@kalysteon.com.">All sales are final. No refunds once download links are delivered. For serious technical issues, contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a>.</div>
+      </div>
+
+    </div>
+    <a href="faq.html" class="pfaq-cta-link" data-en="View full Support Center ↗" data-fr="Voir le centre d'aide complet ↗">View full Support Center ↗</a>
+  </div>
+</div>
+
 <footer>
   <span class="footer-copy">© 2026 Kalysteon — Andrei Bobe</span>
   <div class="footer-links">
@@ -1422,7 +1508,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       <span class="cart-savings-amt" id="cart-savings-amt"></span>
     </div>
     <button class="btn-checkout" onclick="proceedToCheckout()" data-en="Proceed to Checkout →" data-fr="Procéder au paiement →">Proceed to Checkout →</button>
-    <div class="cart-note" data-en="Direct checkout integration in progress. Currently redirects to your preferred store." data-fr="Intégration paiement direct en cours. Redirige vers votre boutique préférée.">Direct checkout integration in progress. Currently redirects to your preferred store.</div>
+    <div class="cart-note" data-en="All sales are final. Digital products are non-refundable once download links are delivered." data-fr="Vente définitive. Les produits numériques ne sont pas remboursables une fois les liens livrés.">All sales are final. Digital products are non-refundable once download links are delivered.</div>
   </div>
 </div>
 
@@ -4924,6 +5010,14 @@ function proceedToCheckout() {
 
 // ── Init badge on page load ──
 updateCartBadge();
+
+// ── FAQ accordion (products page) ──
+function toggleFaqP(btn) {
+  var item = btn.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el){ el.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
 
 // ── Reset checkout button when browser restores page from bfcache ──
 window.addEventListener('pageshow', function(e) {

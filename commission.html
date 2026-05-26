@@ -45,9 +45,15 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 /* NAV PILLS */
 .header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
 .nav-pill { position: relative; display: flex; align-items: center; }
-.nav-link { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 0.45rem 0.9rem; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.025); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.04); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
 .nav-link:hover, .nav-pill:hover > .nav-link { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); box-shadow: 0 0 14px rgba(201,168,76,0.18), inset 0 0 10px rgba(201,168,76,0.07); transform: scale(1.05); }
 .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.08); font-weight: 700; }
+/* ── Per-nav color accents ── */
+.header-nav .nav-pill:nth-child(1) > .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.50); box-shadow: 0 0 14px rgba(201,168,76,0.25), inset 0 0 10px rgba(201,168,76,0.10); background: rgba(201,168,76,0.09); }
+.header-nav .nav-pill:nth-child(2) > .nav-link.active { color: #5DEFD5; border-color: rgba(93,239,213,0.40); box-shadow: 0 0 14px rgba(93,239,213,0.20), inset 0 0 10px rgba(93,239,213,0.08); background: rgba(93,239,213,0.06); }
+.header-nav .nav-pill:nth-child(3) > .nav-link.active { color: #C084FC; border-color: rgba(168,85,247,0.40); box-shadow: 0 0 14px rgba(168,85,247,0.20), inset 0 0 10px rgba(168,85,247,0.08); background: rgba(168,85,247,0.06); }
+.header-nav .nav-pill:nth-child(4) > .nav-link.active { color: #A3E635; border-color: rgba(163,230,53,0.40); box-shadow: 0 0 14px rgba(163,230,53,0.20), inset 0 0 10px rgba(163,230,53,0.08); background: rgba(163,230,53,0.06); }
+.header-nav .nav-pill:nth-child(5) > .nav-link.active { color: #FF7A45; border-color: rgba(255,122,69,0.40); box-shadow: 0 0 14px rgba(255,122,69,0.20), inset 0 0 10px rgba(255,122,69,0.08); background: rgba(255,122,69,0.06); }
 .nav-dropdown-trigger::after { content: ' ▾'; font-size: 0.5rem; opacity: 0.65; }
 .nav-dd-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(6,14,32,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(201,168,76,0.28); border-radius: 16px; padding: 0.5rem; min-width: 210px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 0 24px rgba(201,168,76,0.06); }
 .nav-dd-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
@@ -536,6 +542,10 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); cursor: pointer; letter-spacing: 0.2em; text-transform: uppercase; }
 .lightbox-close:hover { color: var(--text); }
 
+/* ── PARTICLE CANVAS ── */
+#ptx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+header, section, .divider, .footer-cta-new, footer { position: relative; z-index: 1; }
+
 /* FOOTER */
 footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 .footer-copy { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--text-dim); }
@@ -640,8 +650,13 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 .about-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--text-dim); border: 1px solid var(--border-mid); padding: 0.25rem 0.6rem; border-radius: 20px; text-transform: uppercase; }
 
 /* FAQ · centered & clean */
-#about { padding: 4rem 2.5rem 4rem; max-width: none; margin: 0; }
-.about-faq-only { max-width: 780px; margin: 0 auto; }
+#about { padding: 0; max-width: none; margin: 0; border-top: 1px solid rgba(201,168,76,0.12); }
+.about-faq-only { max-width: 780px; margin: 0 auto; padding: 5rem 2.5rem 4rem; }
+.pfaq-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.26em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.6rem; opacity: 0.7; }
+.pfaq-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.5rem; }
+.pfaq-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 3rem; }
+.pfaq-cta-link { display: inline-block; margin-top: 2.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #010810; background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); border-radius: 40px; padding: 0.65rem 1.8rem; text-decoration: none; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); }
+.pfaq-cta-link:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
 .faq-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: 0.05em; color: var(--text); margin-bottom: 2.5rem; }
 .faq-list { display: flex; flex-direction: column; gap: 0; }
 .faq-item { border: none; border-top: 1px solid rgba(201,168,76,0.10); border-radius: 0; overflow: hidden; transition: border-color 0.2s; background: transparent; }
@@ -1089,6 +1104,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 </head>
 <body>
 
+<canvas id="ptx"></canvas>
+
 <header>
   <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
 
@@ -1104,13 +1121,18 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       </div>
     </div>
     <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum" data-fr="Stratum">Stratum</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
       <a class="nav-link active nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
       <div class="nav-dd-menu">
         <a class="nav-dd-item" href="#configure" onclick="switchTab('terrain')"><span class="nav-dd-icon">⛰</span><span data-en="Custom Terrain" data-fr="Terrain Custom">Custom Terrain</span></a>
         <a class="nav-dd-item" href="#configure" onclick="switchTab('hero')"><span class="nav-dd-icon">◆</span><span data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span></a>
         <div class="nav-dd-divider"></div>
         <a class="nav-dd-item" href="commission.html#process"><span class="nav-dd-icon">↺</span><span data-en="How It Works" data-fr="Comment ça marche">How It Works</span></a>
-        <a class="nav-dd-item" href="commission.html#about"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
       </div>
     </div>
     <div class="nav-pill">
@@ -1121,9 +1143,16 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
         <div class="nav-dd-divider"></div>
         <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
         <div class="nav-dd-divider"></div>
-        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
         <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
         <a class="nav-dd-item" href="contact.html#socials"><span class="nav-dd-icon">@</span><span data-en="Socials" data-fr="Réseaux">Socials</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="faq.html" data-en="Support" data-fr="Support">Support</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="faq.html"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
       </div>
     </div>
   </nav>
@@ -2282,58 +2311,45 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 <section id="about">
   <div class="about-faq-only">
     <div>
-      <div class="faq-title" data-en="FAQ" data-fr="Questions fréquentes">FAQ</div>
+      <div class="pfaq-eyebrow" data-en="Support" data-fr="Support">Support</div>
+      <div class="pfaq-title" data-en="Frequently Asked Questions" data-fr="Questions fréquentes">Frequently Asked Questions</div>
+      <div class="pfaq-sub" data-en="Common questions about commissions, process, and deliverables." data-fr="Questions fréquentes sur les commissions, le processus et les livrables.">Common questions about commissions, process, and deliverables.</div>
       <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-question-text" data-en="What types of commissions do you accept?" data-fr="Quels types de commissions acceptez-vous ?">What types of commissions do you accept?</span>
+            <span class="faq-chevron">▾</span>
+          </div>
+          <div class="faq-answer" data-en="We specialize in 3D environment art — landscapes, terrain, atmospheric scenes, and hero assets. Both real-time (Unreal Engine 5 / Unity) and offline render deliveries are available." data-fr="Nous sommes spécialisés dans l'art d'environnement 3D : paysages, terrains, scènes atmosphériques et hero assets. Les livraisons temps réel (UE5 / Unity) et rendu offline sont disponibles.">We specialize in 3D environment art — landscapes, terrain, atmospheric scenes, and hero assets. Both real-time (Unreal Engine 5 / Unity) and offline render deliveries are available.</div>
+        </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
             <span class="faq-question-text" data-en="How does the commission process work?" data-fr="Comment se déroule le processus de commission ?">How does the commission process work?</span>
             <span class="faq-chevron">▾</span>
           </div>
-          <div class="faq-answer" data-en="You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, I send a contract and invoice. Work begins after deposit." data-fr="Vous remplissez le brief ci-dessus en choisissant votre preset, moteur, style et périmètre. Je réponds sous 48h avec un devis précis. Une fois le périmètre et le prix validés, j'envoie un contrat et une facture. Le travail commence après acompte.">You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, I send a contract and invoice. Work begins after deposit.</div>
+          <div class="faq-answer" data-en="You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, full payment is required upfront before work begins." data-fr="Vous remplissez le brief ci-dessus en choisissant votre preset, moteur, style et périmètre. Je réponds sous 48h avec un devis précis. Une fois validés, le paiement intégral est requis avant le début des travaux.">You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, full payment is required upfront before work begins.</div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span class="faq-question-text" data-en="What deliverables do I receive?" data-fr="Quels sont les livrables ?">What deliverables do I receive?</span>
+            <span class="faq-question-text" data-en="What are the payment terms?" data-fr="Quelles sont les conditions de paiement ?">What are the payment terms?</span>
             <span class="faq-chevron">▾</span>
           </div>
-          <div class="faq-answer" data-en="You receive a fully configured project file for your engine (UE5 or Unity), including all terrain assets, materials, and technical setup. RAW delivery includes source exports (heightmaps, splat maps, textures) ready for your own integration." data-fr="Vous recevez un projet entièrement configuré pour votre moteur (UE5 ou Unity), incluant tous les assets de terrain, matériaux et configuration technique. La livraison RAW inclut les exports source (heightmaps, splat maps, textures) prêts pour votre intégration.">You receive a fully configured project file for your engine (UE5 or Unity), including all terrain assets, materials, and technical setup. RAW delivery includes source exports (heightmaps, splat maps, textures) ready for your own integration.</div>
+          <div class="faq-answer" data-en="Full payment is required upfront before work begins. This applies to all commission types and sizes." data-fr="Le paiement intégral est requis à l'avance avant le début des travaux. Cela s'applique à tous les types et tailles de commissions.">Full payment is required upfront before work begins. This applies to all commission types and sizes.</div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span class="faq-question-text" data-en="Do you offer revisions?" data-fr="Des révisions sont-elles incluses ?">Do you offer revisions?</span>
+            <span class="faq-question-text" data-en="What file formats do you deliver?" data-fr="Quels formats de fichiers livrez-vous ?">What file formats do you deliver?</span>
             <span class="faq-chevron">▾</span>
           </div>
-          <div class="faq-answer" data-en="Yes. Terrain S and M include 2 revision rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief · major scope changes are quoted separately." data-fr="Oui. Terrain S et M incluent 2 tours de révision, Terrain L en inclut 3, et Terrain XL inclut des révisions illimitées. Les révisions sont limitées aux modifications dans le cadre du brief convenu · les changements majeurs sont devisés séparément.">Yes. Terrain S and M include 2 revision rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief · major scope changes are quoted separately.</div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            <span class="faq-question-text" data-en="Can I use the terrain commercially?" data-fr="Puis-je utiliser le terrain à des fins commerciales ?">Can I use the terrain commercially?</span>
-            <span class="faq-chevron">▾</span>
-          </div>
-          <div class="faq-answer" data-en="By default, commissions include a single-project commercial license. Exclusivity (full IP transfer) is available as an add-on and is reflected in the pricing estimator above." data-fr="Par défaut, les commissions incluent une licence commerciale pour un seul projet. L'exclusivité (transfert complet des droits) est disponible en option et se reflète dans l'estimateur de prix ci-dessus.">By default, commissions include a single-project commercial license. Exclusivity (full IP transfer) is available as an add-on and is reflected in the pricing estimator above.</div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            <span class="faq-question-text" data-en="What if my project doesn't fit a preset?" data-fr="Et si mon projet ne correspond à aucun preset ?">What if my project doesn't fit a preset?</span>
-            <span class="faq-chevron">▾</span>
-          </div>
-          <div class="faq-answer" data-en="Use the Terrain XL preset or select 'Custom' in the quantity selector to describe your scope. I'll review your brief and come back with a tailored quote after a short scoping call." data-fr="Utilisez le preset Terrain XL ou sélectionnez 'Custom' dans le sélecteur de quantité pour décrire votre périmètre. Je reviendrai avec un devis personnalisé après un court appel de cadrage.">Use the Terrain XL preset or select 'Custom' in the quantity selector to describe your scope. I'll review your brief and come back with a tailored quote after a short scoping call.</div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question" onclick="toggleFaq(this)">
-            <span class="faq-question-text" data-en="What payment methods do you accept?" data-fr="Quels moyens de paiement acceptez-vous ?">What payment methods do you accept?</span>
-            <span class="faq-chevron">▾</span>
-          </div>
-          <div class="faq-answer" data-en="Bank transfer (IBAN) and PayPal. A 30% deposit is required to begin, with the remainder invoiced on delivery. For XL-scope projects, a milestone-based payment schedule is agreed during scoping." data-fr="Virement bancaire (IBAN) et PayPal. Un acompte de 30% est requis pour démarrer, le solde étant facturé à la livraison. Pour les projets de grande échelle, un calendrier de paiement par jalons est convenu lors du cadrage.">Bank transfer (IBAN) and PayPal. A 30% deposit is required to begin, with the remainder invoiced on delivery. For XL-scope projects, a milestone-based payment schedule is agreed during scoping.</div>
+          <div class="faq-answer" data-en="You receive everything you need — terrain files, FBX meshes, and PNG textures — depending on your selection. Raw software source files are not included unless specifically agreed upon." data-fr="Vous recevez tout ce dont vous avez besoin : fichiers de terrain, meshes FBX et textures PNG. Les fichiers source bruts ne sont pas inclus sauf accord spécifique.">You receive everything you need — terrain files, FBX meshes, and PNG textures — depending on your selection. Raw software source files are not included unless specifically agreed upon.</div>
         </div>
 
       </div>
+      <a href="faq.html" class="pfaq-cta-link" data-en="View full Support Center ↗" data-fr="Voir le centre d'aide complet ↗">View full Support Center ↗</a>
     </div>
   </div>
 </section>
@@ -3565,6 +3581,54 @@ function toggleFaq(btn) {
     });
     card.addEventListener('mouseleave', function() { spot.style.opacity = '0'; });
   });
+})();
+
+/* ── Background Particle System ── */
+(function () {
+  var cvs = document.getElementById('ptx');
+  if (!cvs) return;
+  var ctx = cvs.getContext('2d');
+  var W, H, frame = 0;
+  var pts = [];
+  var N = 54;
+
+  function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function mkGold(atRandom) {
+    return {
+      x: rnd(0, W),
+      y: atRandom ? rnd(0, H) : H + rnd(0, 30),
+      r: rnd(0.6, 1.9),
+      vx: rnd(-0.10, 0.10), vy: rnd(-0.18, -0.44),
+      ba: rnd(0.12, 0.48), oa: rnd(0.06, 0.16),
+      f: rnd(0.010, 0.026), ph: rnd(0, 6.28)
+    };
+  }
+
+  for (var i = 0; i < N; i++) pts.push(mkGold(true));
+
+  function tick() {
+    requestAnimationFrame(tick);
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.ph += p.f;
+      p.x  += p.vx;
+      p.y  += p.vy;
+      if (p.y < -6) { pts[i] = mkGold(false); continue; }
+      var a = Math.max(0, Math.min(1, p.ba + Math.sin(p.ph) * p.oa));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.fillStyle = 'rgba(201,168,76,' + a.toFixed(2) + ')';
+      ctx.fill();
+    }
+  }
+  tick();
 })();
 </script>
 </body>

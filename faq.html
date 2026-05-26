@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support & FAQ · Kalysteon</title>
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #010810; --surface: #051322; --surface2: #091B32; --surface3: #0E2240;
+  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
+  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22); --border-dark: rgba(0,3,10,0.90);
+  --accent: #C9A84C; --accent-bright: #F2D777;
+  --accent-dim: rgba(201,168,76,0.09); --accent-glow: rgba(201,168,76,0.18);
+  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
+  --jade: #1DC97A; --jade-bright: #2FEDA0; --jade-dark: #0A8C48;
+  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px; --radius-xs: 6px;
+  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+  --display: 'Rajdhani', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background-color: #020A16;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(10,30,80,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(6,20,55,0.45) 0%, transparent 50%);
+  color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
+.logo { font-family: var(--display); font-weight: 700; font-size: 1.8rem; letter-spacing: 0.08em; line-height: normal; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 1.5rem; }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-btn.active { color: var(--accent); }
+
+/* ── NAV ── */
+.header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-pill { position: relative; display: flex; align-items: center; }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.04); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
+.nav-link:hover, .nav-pill:hover > .nav-link { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); box-shadow: 0 0 14px rgba(201,168,76,0.18), inset 0 0 10px rgba(201,168,76,0.07); transform: scale(1.05); }
+.nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.08); }
+/* ── Per-nav color accents ── */
+.header-nav .nav-pill:nth-child(1) > .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.50); box-shadow: 0 0 14px rgba(201,168,76,0.25), inset 0 0 10px rgba(201,168,76,0.10); background: rgba(201,168,76,0.09); }
+.header-nav .nav-pill:nth-child(2) > .nav-link.active { color: #5DEFD5; border-color: rgba(93,239,213,0.40); box-shadow: 0 0 14px rgba(93,239,213,0.20), inset 0 0 10px rgba(93,239,213,0.08); background: rgba(93,239,213,0.06); }
+.header-nav .nav-pill:nth-child(3) > .nav-link.active { color: #C084FC; border-color: rgba(168,85,247,0.40); box-shadow: 0 0 14px rgba(168,85,247,0.20), inset 0 0 10px rgba(168,85,247,0.08); background: rgba(168,85,247,0.06); }
+.header-nav .nav-pill:nth-child(4) > .nav-link.active { color: #A3E635; border-color: rgba(163,230,53,0.40); box-shadow: 0 0 14px rgba(163,230,53,0.20), inset 0 0 10px rgba(163,230,53,0.08); background: rgba(163,230,53,0.06); }
+.header-nav .nav-pill:nth-child(5) > .nav-link.active { color: #FF7A45; border-color: rgba(255,122,69,0.40); box-shadow: 0 0 14px rgba(255,122,69,0.20), inset 0 0 10px rgba(255,122,69,0.08); background: rgba(255,122,69,0.06); }
+.nav-dropdown-trigger::after { content: ' ▾'; font-size: 0.5rem; opacity: 0.65; }
+.nav-dd-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(6,14,32,0.92); backdrop-filter: blur(18px); border: 1px solid rgba(201,168,76,0.28); border-radius: 16px; padding: 0.5rem; min-width: 210px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 0 24px rgba(201,168,76,0.06); }
+.nav-dd-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
+.nav-pill:hover .nav-dd-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.nav-dd-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.85rem; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+.nav-dd-item:hover { color: var(--gold-bright); background: rgba(201,168,76,0.09); }
+.nav-dd-icon { font-size: 0.9rem; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-dd-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 0.3rem 0.5rem; }
+.nav-dd-reviews { color: rgba(212,175,55,0.85); }
+.nav-dd-reviews:hover { color: var(--gold-bright); background: rgba(201,168,76,0.12); }
+@media (max-width: 768px) { .header-nav { display: none; } }
+
+/* ── HERO ── */
+.faq-hero { padding: 5rem 2.5rem 4rem; text-align: center; border-bottom: 1px solid rgba(201,168,76,0.10); position: relative; overflow: hidden; }
+.faq-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
+.faq-hero-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; opacity: 0.8; }
+.faq-hero-title { font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: 0.06em; color: var(--text); line-height: 1; margin-bottom: 1rem; }
+.faq-hero-title span { color: var(--gold); }
+.faq-hero-rule { width: 48px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 1.4rem; }
+.faq-hero-sub { font-family: var(--sans); font-size: 0.95rem; color: var(--text-muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+.faq-hero-counts { display: flex; justify-content: center; align-items: center; gap: 0; margin-top: 2.8rem; }
+.faq-hero-count { text-align: center; padding: 0 2.5rem; }
+.faq-hero-count + .faq-hero-count { border-left: 1px solid rgba(201,168,76,0.20); }
+.faq-hero-count-num { font-family: var(--display); font-size: 2.2rem; font-weight: 700; color: var(--gold-bright); line-height: 1; }
+.faq-hero-count-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem; }
+
+/* ── TABS ── */
+.faq-tabs-wrap { display: flex; justify-content: center; padding: 2.5rem 2.5rem 0; gap: 0.5rem; }
+.faq-tab-btn { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); background: rgba(255,255,255,0.02); border: 1px solid rgba(201,168,76,0.18); border-radius: 20px; padding: 0.55rem 1.6rem; cursor: pointer; transition: all 0.25s; backdrop-filter: blur(8px); }
+.faq-tab-btn:hover { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); background: rgba(201,168,76,0.05); }
+.faq-tab-btn.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.50); background: rgba(201,168,76,0.09); box-shadow: 0 0 18px rgba(201,168,76,0.15), inset 0 0 12px rgba(201,168,76,0.06); }
+
+/* ── FAQ CONTENT ── */
+.faq-body { max-width: 780px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+.faq-section { display: none; }
+.faq-section.visible { display: block; }
+.faq-section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7; }
+.faq-section-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 2.5vw, 2.2rem); letter-spacing: 0.05em; color: var(--text); margin-bottom: 2.5rem; }
+
+/* ── ACCORDION ── */
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item { border: none; border-top: 1px solid rgba(201,168,76,0.10); overflow: hidden; transition: border-color 0.2s; background: transparent; }
+.faq-item:last-child { border-bottom: 1px solid rgba(201,168,76,0.10); }
+.faq-question { display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 0; cursor: pointer; background: transparent; user-select: none; }
+.faq-question:hover .faq-question-text { color: var(--text); }
+.faq-question-text { font-family: var(--sans); font-size: 0.92rem; letter-spacing: 0.01em; color: var(--text-muted); line-height: 1.4; transition: color 0.2s; }
+.faq-item.open .faq-question-text { color: var(--text); }
+.faq-chevron { font-size: 0.7rem; color: var(--gold); flex-shrink: 0; margin-left: 1rem; transition: transform 0.25s; opacity: 0.6; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); opacity: 1; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; padding: 0; font-family: var(--sans); font-size: 0.88rem; color: var(--text-muted); line-height: 1.85; }
+.faq-item.open .faq-answer { max-height: 400px; padding: 0 0 1.5rem; }
+.faq-answer a { color: var(--gold); text-decoration: none; }
+.faq-answer a:hover { color: var(--gold-bright); text-decoration: underline; }
+
+/* ── CONTACT CTA ── */
+.faq-cta { border-top: 1px solid rgba(201,168,76,0.15); background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); padding: 4rem 2.5rem; text-align: center; }
+.faq-cta-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; opacity: 0.7; }
+.faq-cta-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.8rem; }
+.faq-cta-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; }
+.faq-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #010810; background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); border: none; border-radius: 40px; padding: 0.75rem 2rem; text-decoration: none; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); cursor: pointer; }
+.faq-cta-btn:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
+
+/* ── PARTICLES ── */
+#ptx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+/* ── FADE IN ── */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+header { animation: fadeInDown 0.8s cubic-bezier(0.2,0.9,0.4,1.1) forwards; }
+.fade-in-up { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.fade-in-up.visible { opacity: 1; transform: none; }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--text-dim); }
+.footer-copy a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.footer-copy a:hover { color: var(--accent); }
+.footer-response { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem; }
+.dot { width: 6px; height: 6px; background: #2ECC71; border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+@media (max-width: 600px) { footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; } .faq-tabs-wrap { flex-wrap: wrap; } }
+</style>
+</head>
+<body>
+
+<canvas id="ptx"></canvas>
+
+<header>
+  <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
+  <nav class="header-nav">
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="products.html#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Complete Landscapes" data-fr="Paysages Complets">Complete Landscapes</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum" data-fr="Stratum">Stratum</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="commission.html#configure"><span class="nav-dd-icon">⛰</span><span data-en="Custom Terrain" data-fr="Terrain Custom">Custom Terrain</span></a>
+        <a class="nav-dd-item" href="commission.html#configure"><span class="nav-dd-icon">◆</span><span data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="commission.html#process"><span class="nav-dd-icon">↺</span><span data-en="How It Works" data-fr="Comment ça marche">How It Works</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="about.html" data-en="Studio" data-fr="Studio">Studio</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="about.html#bio"><span class="nav-dd-icon">▸</span><span data-en="Narrative" data-fr="Récit">Narrative</span></a>
+        <a class="nav-dd-item" href="about.html#namelore"><span class="nav-dd-icon">Ω</span><span data-en="Etymology" data-fr="Étymologie">Etymology</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link active nav-dropdown-trigger" href="faq.html" data-en="Support" data-fr="Support">Support</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="faq.html"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" id="lang-btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="faq-hero fade-in-up">
+  <div class="faq-hero-eyebrow" data-en="Kalysteon Studio · Support Center" data-fr="Kalysteon Studio · Centre d'aide">Kalysteon Studio · Support Center</div>
+  <h1 class="faq-hero-title" data-en="FAQ" data-fr="FAQ">F<span>A</span>Q</h1>
+  <div class="faq-hero-rule"></div>
+  <p class="faq-hero-sub" data-en="Answers to the most common questions about our products, software, and commissions." data-fr="Réponses aux questions les plus fréquentes sur nos produits, logiciels et commissions.">Answers to the most common questions about our products, software, and commissions.</p>
+</div>
+
+<!-- TABS -->
+<div class="faq-tabs-wrap fade-in-up">
+  <button class="faq-tab-btn active" onclick="showTab('products', this)" data-en="Products" data-fr="Produits">Products</button>
+  <button class="faq-tab-btn" onclick="showTab('software', this)" data-en="Software" data-fr="Logiciels">Software</button>
+  <button class="faq-tab-btn" onclick="showTab('commissions', this)" data-en="Commissions" data-fr="Commissions">Commissions</button>
+</div>
+
+<div class="faq-body fade-in-up">
+
+  <!-- ── PRODUCTS ── -->
+  <div class="faq-section visible" id="faq-products">
+    <div class="faq-section-label" data-en="Digital Assets" data-fr="Assets numériques">Digital Assets</div>
+    <div class="faq-section-title" data-en="Products" data-fr="Produits">Products</div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What formats are included in the packs?" data-fr="Quels formats sont inclus dans les packs ?">What formats are included in the packs?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Depending on your selection at checkout: a complete Unreal Engine 5 pack (.uasset), a Unity 6 package, or raw organized folders. You choose the format that fits your pipeline." data-fr="Selon votre sélection au moment du paiement : un pack Unreal Engine 5 complet (.uasset), un package Unity 6, ou des dossiers organisés bruts. Vous choisissez le format adapté à votre pipeline.">Depending on your selection at checkout: a complete Unreal Engine 5 pack (.uasset), a Unity 6 package, or raw organized folders. You choose the format that fits your pipeline.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Which software versions are compatible?" data-fr="Quelles versions logicielles sont compatibles ?">Which software versions are compatible?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Our assets are built and tested for Unreal Engine 5 and Unity 6. Compatibility with significantly older versions is not guaranteed." data-fr="Nos assets sont conçus et testés pour Unreal Engine 5 et Unity 6. La compatibilité avec des versions nettement plus anciennes n'est pas garantie.">Our assets are built and tested for Unreal Engine 5 and Unity 6. Compatibility with significantly older versions is not guaranteed.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Can I use these assets in commercial projects?" data-fr="Puis-je utiliser ces assets dans des projets commerciaux ?">Can I use these assets in commercial projects?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="A commercial license is available but not activated by default. If your annual revenue exceeds $100,000, you are required to activate the commercial license option at checkout. Personal and indie use is covered by the standard license." data-fr="Une licence commerciale est disponible mais non activée par défaut. Si votre chiffre d'affaires annuel dépasse 100 000 $, vous devez activer l'option de licence commerciale lors du paiement. L'utilisation personnelle et indépendante est couverte par la licence standard.">A commercial license is available but not activated by default. If your annual revenue exceeds $100,000, you are required to activate the commercial license option at checkout. Personal and indie use is covered by the standard license.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="I didn't receive my download links. What do I do?" data-fr="Je n'ai pas reçu mes liens de téléchargement, que faire ?">I didn't receive my download links. What do I do?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Check your spam or junk folder first — automated emails sometimes end up there. If nothing shows up within 10 minutes of purchase, contact us at contact@kalysteon.com with your order email and we'll sort it out manually." data-fr="Vérifiez d'abord vos dossiers spam ou courrier indésirable. Si rien n'apparaît dans les 10 minutes suivant l'achat, contactez-nous à contact@kalysteon.com avec votre email de commande.">Check your spam or junk folder first — automated emails sometimes end up there. If nothing shows up within 10 minutes of purchase, contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a> with your order email and we'll sort it out manually.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Are updates included after purchase?" data-fr="Les mises à jour sont-elles incluses après l'achat ?">Are updates included after purchase?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Yes. When a pack is updated, existing customers receive the new version at no extra cost. Update notifications are sent by email." data-fr="Oui. Lorsqu'un pack est mis à jour, les clients existants reçoivent la nouvelle version sans frais supplémentaires. Les notifications de mise à jour sont envoyées par email.">Yes. When a pack is updated, existing customers receive the new version at no extra cost. Update notifications are sent by email.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Can I use the assets across multiple projects?" data-fr="Puis-je utiliser les assets sur plusieurs projets ?">Can I use the assets across multiple projects?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Yes. Your license covers unlimited personal and commercial projects under a single-user license. The assets cannot be shared with other users or redistributed." data-fr="Oui. Votre licence couvre des projets personnels et commerciaux illimités dans le cadre d'une licence mono-utilisateur. Les assets ne peuvent pas être partagés avec d'autres utilisateurs ni redistribués.">Yes. Your license covers unlimited personal and commercial projects under a single-user license. The assets cannot be shared with other users or redistributed.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Do you offer refunds?" data-fr="Proposez-vous des remboursements ?">Do you offer refunds?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="All sales are final. Due to the digital nature of our products, no refunds are issued once download links have been delivered. If you experience a serious technical issue with a product, contact us at contact@kalysteon.com and we'll do our best to help." data-fr="Toutes les ventes sont définitives. En raison de la nature numérique de nos produits, aucun remboursement n'est accordé une fois les liens livrés. En cas de problème technique sérieux, contactez-nous à contact@kalysteon.com.">All sales are final. Due to the digital nature of our products, no refunds are issued once download links have been delivered. If you experience a serious technical issue, contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a> and we'll do our best to help.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SOFTWARE ── -->
+  <div class="faq-section" id="faq-software">
+    <div class="faq-section-label" data-en="Pipeline Tool" data-fr="Outil Pipeline">Pipeline Tool</div>
+    <div class="faq-section-title" data-en="Stratum" data-fr="Stratum">Stratum</div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What software do I need to run Stratum?" data-fr="De quel logiciel ai-je besoin pour utiliser Stratum ?">What software do I need to run Stratum?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Stratum is a pipeline tool built for Gaea → Houdini → Unreal Engine / Unity workflows. You will need the relevant software for your stage of the pipeline. It is not a standalone application." data-fr="Stratum est un outil pipeline conçu pour les flux Gaea → Houdini → Unreal Engine / Unity. Vous aurez besoin du logiciel correspondant à votre étape du pipeline. Ce n'est pas une application autonome.">Stratum is a pipeline tool built for Gaea → Houdini → Unreal Engine / Unity workflows. You will need the relevant software for your stage of the pipeline. It is not a standalone application.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Which versions of Houdini, Unreal, and Unity are supported?" data-fr="Quelles versions de Houdini, Unreal et Unity sont supportées ?">Which versions of Houdini, Unreal, and Unity are supported?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Stratum is designed to support current and widely-used versions of Houdini, Unreal Engine, and Unity. Compatibility issues are extremely rare. If you encounter one, contact us and we'll investigate." data-fr="Stratum est conçu pour supporter les versions actuelles et largement utilisées de Houdini, Unreal Engine et Unity. Les problèmes de compatibilité sont extrêmement rares. Si vous en rencontrez un, contactez-nous.">Stratum is designed to support current and widely-used versions of Houdini, Unreal Engine, and Unity. Compatibility issues are extremely rare. If you encounter one, contact us and we'll investigate.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="How do I receive updates?" data-fr="Comment recevoir les mises à jour ?">How do I receive updates?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Contact us at contact@kalysteon.com with your original order confirmation and we'll send you the latest version directly. A more streamlined update system is in development." data-fr="Contactez-nous à contact@kalysteon.com avec votre confirmation de commande originale et nous vous enverrons directement la dernière version. Un système de mise à jour plus fluide est en cours de développement.">Contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a> with your original order confirmation and we'll send you the latest version directly. A more streamlined update system is in development.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Is commercial use allowed?" data-fr="L'utilisation commerciale est-elle autorisée ?">Is commercial use allowed?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="A commercial license is available but not active by default. The Free tier is limited to personal and non-commercial use. Indie and Studio licenses include full commercial use rights. If your annual revenue exceeds $100,000, the commercial license option is required." data-fr="Une licence commerciale est disponible mais non active par défaut. Le tier Free est limité à un usage personnel et non commercial. Les licences Indie et Studio incluent des droits d'utilisation commerciale complets.">A commercial license is available but not active by default. The Free tier is limited to personal and non-commercial use. Indie and Studio licenses include full commercial use rights. If your annual revenue exceeds $100,000, the commercial license option is required.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What if I find a bug or something doesn't work?" data-fr="Que faire si je trouve un bug ou si quelque chose ne fonctionne pas ?">What if I find a bug or something doesn't work?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Contact us at contact@kalysteon.com with a description of the issue and your system setup (OS, software versions, steps to reproduce). We take bug reports seriously and aim to respond within 48 hours." data-fr="Contactez-nous à contact@kalysteon.com avec une description du problème et votre configuration système. Nous prenons les rapports de bugs au sérieux et visons une réponse sous 48h.">Contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a> with a description of the issue and your system setup (OS, software versions, steps to reproduce). We aim to respond within 48 hours.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Is there documentation or tutorials?" data-fr="Y a-t-il de la documentation ou des tutoriels ?">Is there documentation or tutorials?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Full documentation is currently in preparation and will be made available shortly after launch. In the meantime, feel free to reach out directly. We're happy to help you get set up." data-fr="Une documentation complète est en cours de préparation et sera disponible prochainement après le lancement. En attendant, n'hésitez pas à nous contacter directement.">Full documentation is currently in preparation and will be made available shortly after launch. In the meantime, feel free to reach out directly. We're happy to help you get set up.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Can I use Stratum in a studio pipeline with multiple artists?" data-fr="Puis-je utiliser Stratum dans un pipeline studio avec plusieurs artistes ?">Can I use Stratum in a studio pipeline with multiple artists?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="The Studio license covers team use within a single studio. For larger deployments or custom arrangements, contact us at contact@kalysteon.com to discuss volume licensing." data-fr="La licence Studio couvre l'utilisation en équipe au sein d'un seul studio. Pour des déploiements plus importants ou des arrangements personnalisés, contactez-nous à contact@kalysteon.com.">The Studio license covers team use within a single studio. For larger deployments or custom arrangements, contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a>.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── COMMISSIONS ── -->
+  <div class="faq-section" id="faq-commissions">
+    <div class="faq-section-label" data-en="Custom Work" data-fr="Travail sur mesure">Custom Work</div>
+    <div class="faq-section-title" data-en="Commissions" data-fr="Commissions">Commissions</div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What types of commissions do you accept?" data-fr="Quels types de commissions acceptez-vous ?">What types of commissions do you accept?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="We specialize in 3D environment art: landscapes, terrain, atmospheric scenes, and hero assets. Both real-time (Unreal Engine 5 / Unity) and offline render deliveries are available." data-fr="Nous sommes spécialisés dans l'art d'environnement 3D : paysages, terrains, scènes atmosphériques et hero assets. Les livraisons temps réel (UE5 / Unity) et rendu offline sont disponibles.">We specialize in 3D environment art: landscapes, terrain, atmospheric scenes, and hero assets. Both real-time (Unreal Engine 5 / Unity) and offline render deliveries are available.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="How long does a project typically take?" data-fr="Combien de temps prend un projet en général ?">How long does a project typically take?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Most commissions range from 1 to 4 weeks depending on scope. The exact timeline is confirmed during the brief phase before any work begins, not after." data-fr="La plupart des commissions durent de 1 à 4 semaines selon le périmètre. Le calendrier exact est confirmé lors de la phase de brief, avant tout démarrage du travail.">Most commissions range from 1 to 4 weeks depending on scope. The exact timeline is confirmed during the brief phase before any work begins, not after.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="How many revision rounds are included?" data-fr="Combien de tours de révision sont inclus ?">How many revision rounds are included?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="The number of revision rounds depends on the package selected. Terrain S and M include 2 rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to changes within the agreed brief — major scope changes are quoted separately." data-fr="Le nombre de tours de révision dépend du package sélectionné. Terrain S et M incluent 2 tours, Terrain L en inclut 3, et Terrain XL inclut des révisions illimitées. Les révisions restent dans le cadre du brief convenu.">The number of revision rounds depends on the package selected. Terrain S and M include 2 rounds, Terrain L includes 3, and Terrain XL includes unlimited revisions. Revisions are scoped to the agreed brief. Major scope changes are quoted separately.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What do I need to provide to get started?" data-fr="Que dois-je fournir pour commencer ?">What do I need to provide to get started?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="A detailed brief including references, desired mood and style, technical requirements (engine, polygon budget, texture resolution) and your deadline. The more detail you provide, the better and faster the result." data-fr="Un brief détaillé incluant des références, l'ambiance et le style souhaités, les contraintes techniques (moteur, budget polygones, résolution textures) et votre délai. Plus vous fournissez de détails, meilleur et plus rapide sera le résultat.">A detailed brief including references, desired mood and style, technical requirements (engine, polygon budget, texture resolution) and your deadline. The more detail you provide, the better and faster the result.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What are the payment terms?" data-fr="Quelles sont les conditions de paiement ?">What are the payment terms?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Full payment is required upfront before work begins. This applies to all commission types and sizes. Payment can be made by bank transfer or card via our secure checkout." data-fr="Le paiement intégral est requis à l'avance avant le début des travaux. Cela s'applique à tous les types et tailles de commissions. Le paiement peut être effectué par virement bancaire ou carte.">Full payment is required upfront before work begins. This applies to all commission types and sizes.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="What file formats do you deliver?" data-fr="Quels formats de fichiers livrez-vous ?">What file formats do you deliver?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="You receive everything you need: terrain files, FBX meshes, and PNG textures, depending on your selection. Raw software source files (Houdini scenes, Gaea projects) are not included unless specifically requested and agreed upon." data-fr="Vous recevez tout ce dont vous avez besoin : fichiers de terrain, meshes FBX et textures PNG, selon votre sélection. Les fichiers source bruts des logiciels ne sont pas inclus sauf demande et accord spécifiques.">You receive everything you need: terrain files, FBX meshes, and PNG textures, depending on your selection. Raw software source files are not included unless specifically agreed upon.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text" data-en="Do you work with studios or teams?" data-fr="Travaillez-vous avec des studios ou des équipes ?">Do you work with studios or teams?</span>
+          <span class="faq-chevron">▾</span>
+        </div>
+        <div class="faq-answer" data-en="Yes. We work with indie studios and larger teams on both one-off and recurring projects. For high-volume or long-term collaborations, contact us at contact@kalysteon.com to discuss a custom arrangement." data-fr="Oui. Nous travaillons avec des studios indépendants et de grandes équipes sur des projets ponctuels et récurrents. Pour des collaborations à volume élevé ou long terme, contactez-nous à contact@kalysteon.com.">Yes. We work with indie studios and larger teams on both one-off and recurring projects. For high-volume or long-term collaborations, contact us at <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a>.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTACT CTA -->
+<div class="faq-cta fade-in-up">
+  <div class="faq-cta-eyebrow" data-en="Still have questions?" data-fr="Vous avez encore des questions ?">Still have questions?</div>
+  <div class="faq-cta-title" data-en="We're one email away." data-fr="Nous sommes à un email.">We're one email away.</div>
+  <p class="faq-cta-sub" data-en="Can't find what you're looking for? Reach out directly and we'll get back to you within 48 hours." data-fr="Vous ne trouvez pas ce que vous cherchez ? Contactez-nous directement, nous répondrons sous 48h.">Can't find what you're looking for? Reach out directly and we'll get back to you within 48 hours.</p>
+  <a class="faq-cta-btn" href="mailto:contact@kalysteon.com">✉ contact@kalysteon.com</a>
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 Kalysteon · <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a></div>
+  <div class="footer-response"><span class="dot"></span><span data-en="Response within 48h" data-fr="Réponse sous 48h">Response within 48h</span></div>
+</footer>
+
+<script>
+// ── Particles ──
+(function() {
+  var canvas = document.getElementById('ptx');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [], w, h;
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  for (var i = 0; i < 70; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      r: Math.random() * 1.2 + 0.3,
+      vx: (Math.random() - 0.5) * 0.16, vy: (Math.random() - 0.5) * 0.16,
+      a: Math.random() * 0.4 + 0.1, da: (Math.random() > 0.5 ? 1 : -1) * 0.002
+    });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (var p of particles) {
+      p.x += p.vx; p.y += p.vy; p.a += p.da;
+      if (p.a < 0.08) p.da = Math.abs(p.da);
+      if (p.a > 0.45) p.da = -Math.abs(p.da);
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(212,175,55,' + p.a.toFixed(3) + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── Fade-in observer ──
+(function() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in-up').forEach(function(el) { obs.observe(el); });
+})();
+
+var LANG = 'en';
+
+function setLang(lang) {
+  localStorage.setItem('kalysteon-lang', lang);
+  LANG = lang;
+  document.querySelectorAll('[data-' + lang + ']').forEach(function(el) {
+    var val = el.getAttribute('data-' + lang);
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = val;
+    } else {
+      el.innerHTML = val;
+    }
+  });
+  document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-btn-fr').classList.toggle('active', lang === 'fr');
+  document.documentElement.lang = lang;
+}
+setLang(localStorage.getItem('kalysteon-lang') || 'en');
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.faq-section').forEach(function(s) { s.classList.remove('visible'); });
+  document.querySelectorAll('.faq-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('faq-' + tab).classList.add('visible');
+  btn.classList.add('active');
+  // Close all open accordions on tab switch
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+}
+
+function toggleFaq(btn) {
+  var item = btn.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+
+</body>
+</html>
