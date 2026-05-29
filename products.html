@@ -926,8 +926,79 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 .na-dots { display: flex; justify-content: center; gap: 0.4rem; align-items: center; }
 .na-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-mid); transition: all 0.25s; cursor: pointer; }
 .na-dot.na-dot-active { background: var(--gold); width: 14px; border-radius: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE REFINEMENTS — products page (≤768px). Desktop untouched.
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* ── Hero banner ── */
+  .page-banner { padding: 1.9rem 1.1rem 1.4rem; }
+  /* Decorative 3D schematic clutters the small viewport — hide it */
+  .banner-schematic { display: none; }
+  /* Stats read left-aligned when stacked under the title */
+  .banner-stat { text-align: left; align-items: flex-start; }
+  .banner-stat-row { justify-content: flex-start; }
+  .banner-stat-engines { text-align: left; }
+
+  /* ── Collection tabs: one swipeable row instead of cramped wrap ── */
+  .store-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .store-tabs::-webkit-scrollbar { display: none; }
+  .store-tab { flex-shrink: 0; font-size: 0.7rem; padding: 0.75rem 1rem; }
+
+  /* ── Filter pill groups: breathing room + swipeable single row ── */
+  .store-filters, .vol-8k-tabs {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 5px;
+    scrollbar-width: none;
+  }
+  .store-filters::-webkit-scrollbar, .vol-8k-tabs::-webkit-scrollbar { display: none; }
+  .filter-pill, .vol-tab-8k, .vol-tab-arctic, .vol-tab-fh {
+    flex-shrink: 0;
+    font-size: 0.66rem;
+    padding: 0.6rem 0.95rem;   /* taller, comfortable tap target */
+  }
+
+  /* Frostholm filter row: stack vertically; grid toggle is pointless
+     at one column on mobile, so hide it to declutter */
+  #fh-filter-row { flex-direction: column; align-items: stretch !important; gap: 0.85rem !important; }
+  .fh-view-toggle { display: none !important; }
+
+  /* ── Volume section header: stack title + bundle CTA (no overlap) ── */
+  .fh-vol-hdr { flex-direction: column; align-items: stretch; gap: 0.9rem; }
+  .fh-vol-master-btn { width: 100%; min-width: 0; }
+
+  /* ════ PRODUCT DETAIL DRAWER ════
+     On phones the drawer is 98vw. Two-column layouts inside it crushed
+     text into one-word-per-line columns. Give the body more width and
+     stack the description + media + asset cards vertically. */
+  .drawer-body { padding: 1.2rem 1.05rem 2rem; }
+
+  /* Description: media slot was a 195px vertical video stealing half the
+     width — drop it below the text, full text width restored. */
+  .drawer-desc-row { flex-direction: column; gap: 0.9rem; }
+  .drawer-ambient-slot {
+    width: 100%;
+    max-width: 220px;
+    aspect-ratio: 16/10;
+    align-self: center;
+  }
+
+  /* Asset type cards + materials: single column so labels/descriptions
+     read on full lines instead of wrapping per word. */
+  .rdesc-types { grid-template-columns: 1fr; }
+  .rdesc-cta-row { grid-template-columns: 1fr; }
+  .drawer-specs-grid { grid-template-columns: 1fr; }
+
+  /* Drag-to-dismiss: while a horizontal swipe is in progress the drawer
+     follows the finger (transition suppressed by .dragging). */
+  .drawer.dragging { transition: none; }
+}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="stylesheet" href="mobile-nav.css">
 </head>
 <body>
 <canvas id="ptx"></canvas>
@@ -3627,6 +3698,52 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeDrawer();
 });
 
+/* ═══ SWIPE-TO-DISMISS (mobile) ═══
+   The product drawer is 98vw on phones and only had a thin overlay sliver
+   to tap-close. Let a horizontal swipe dismiss it: the drawer follows the
+   finger and closes past an 80px threshold. Vertical scroll and the
+   horizontal gallery strip are left untouched. */
+(function () {
+  var drawer = document.getElementById('drawer');
+  if (!drawer) return;
+  var startX = 0, startY = 0, dx = 0, dragging = false, decided = false, horizontal = false;
+
+  drawer.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) return;
+    // Don't hijack swipes that begin on horizontally scrollable elements.
+    if (e.target.closest('.drawer-gallery-strip')) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    dx = 0; dragging = true; decided = false; horizontal = false;
+  }, { passive: true });
+
+  drawer.addEventListener('touchmove', function (e) {
+    if (!dragging) return;
+    var mx = e.touches[0].clientX - startX;
+    var my = e.touches[0].clientY - startY;
+    if (!decided) {
+      if (Math.abs(mx) < 8 && Math.abs(my) < 8) return;
+      decided = true;
+      horizontal = Math.abs(mx) > Math.abs(my);
+      if (horizontal) drawer.classList.add('dragging');
+    }
+    if (!horizontal) return;
+    dx = mx;
+    drawer.style.transform = 'translateX(' + dx + 'px)';
+  }, { passive: true });
+
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    drawer.classList.remove('dragging');
+    drawer.style.transform = '';
+    if (horizontal && Math.abs(dx) > 80) closeDrawer();
+    dx = 0; decided = false; horizontal = false;
+  }
+  drawer.addEventListener('touchend', end);
+  drawer.addEventListener('touchcancel', end);
+})();
+
 /* ═══ RDESC TYPE TOOLTIP ═══ */
 (function() {
   var tip = null, tipImg = null;
@@ -5515,6 +5632,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <div id="rdesc-type-tooltip" class="rdesc-type-tooltip"><img id="rdesc-type-tooltip-img" src="" alt=""></div>
+  <script src="mobile-nav.js"></script>
 </body>
 </html>
 

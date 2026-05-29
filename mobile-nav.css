@@ -1,0 +1,181 @@
+/* ════════════════════════════════════════════════════════════════
+   KALYSTEON — Mobile Navigation (hamburger + fullscreen overlay)
+   Shared across all pages. Desktop (>768px) is never affected:
+   everything here lives inside @media (max-width:768px).
+   ════════════════════════════════════════════════════════════════ */
+
+/* Hamburger button — hidden on desktop, injected into <header> */
+.mnav-toggle {
+  display: none;
+  position: relative;
+  z-index: 2002;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 0.5px solid rgba(201,168,76,0.30);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mnav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gold-bright, #e7c96b);
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+.mnav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mnav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.mnav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Fullscreen overlay */
+.mnav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2001;
+  background: rgba(8,10,14,0.97);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0s linear 0.28s;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 90px 22px 48px;
+}
+.mnav-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0s;
+}
+
+.mnav-close {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  width: 42px;
+  height: 42px;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--text-muted, #9aa0aa);
+  background: rgba(255,255,255,0.04);
+  border: 0.5px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mnav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.mnav-group {
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+.mnav-row {
+  display: flex;
+  align-items: stretch;
+}
+.mnav-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  padding: 0 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f3f0e8;
+  text-decoration: none;
+}
+.mnav-link:active { color: var(--gold-bright, #e7c96b); }
+
+.mnav-exp {
+  width: 54px;
+  min-height: 54px;
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  color: var(--gold-bright, #e7c96b);
+  font-size: 22px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mnav-exp span { transition: transform 0.3s ease; display: inline-block; }
+.mnav-group.open .mnav-exp span { transform: rotate(45deg); }
+
+.mnav-sub {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.mnav-group.open .mnav-sub { grid-template-rows: 1fr; }
+.mnav-sub > div { overflow: hidden; }
+.mnav-sub-inner {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0 12px 6px;
+}
+.mnav-subitem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted, #aeb3bd);
+  text-decoration: none;
+}
+.mnav-subitem:active { color: var(--gold-bright, #e7c96b); }
+.mnav-subitem .nav-dd-icon {
+  width: 20px;
+  text-align: center;
+  opacity: 0.85;
+  flex: 0 0 auto;
+}
+.mnav-subitem .nav-dd-divider { display: none; }
+
+/* Currency + language toggles relocated into the overlay (mobile only) */
+.mnav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  max-width: 480px;
+  margin: 0 auto 26px;
+}
+
+/* Activate only at mobile breakpoint */
+@media (max-width: 768px) {
+  .mnav-toggle { display: flex; }
+  /* Unify: hide the desktop inline nav across every page at this width */
+  header .header-nav { display: none !important; }
+  /* Tighten header padding so logo + cart + hamburger fit comfortably */
+  header { padding-left: 16px !important; padding-right: 16px !important; }
+  /* Safety net: currency + language live in the overlay on mobile. The JS
+     relocates them there; this guarantees they never overflow the header
+     even if relocation didn't run (e.g. desktop loaded then resized). */
+  header .curr-toggle, header .lang-toggle { display: none !important; }
+}
+@media (min-width: 769px) {
+  .mnav-overlay { display: none; }
+}

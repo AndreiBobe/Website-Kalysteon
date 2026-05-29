@@ -694,8 +694,22 @@ footer {
   .header-nav { display: none; }
   .hero-title { font-size: 3rem; }
 }
+/* Mobile background video: keep the 16:9 ratio but size it to fully cover
+   the (portrait) viewport so YouTube never letterboxes it into a band. */
+@media (max-width: 768px) {
+  .bg-video iframe {
+    /* Oversize generously on both axes so YouTube's own internal letterbox
+       padding is pushed off-screen — no black bands at any portrait ratio. */
+    width: 177.78vh;       /* 100vh * 16/9 → covers full height */
+    min-width: 100vw;      /* never narrower than the screen */
+    height: 56.25vw;       /* 100vw * 9/16 → covers full width */
+    min-height: 100vh;     /* never shorter than the screen */
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="stylesheet" href="mobile-nav.css">
 </head>
 <body>
 
@@ -1201,5 +1215,6 @@ if (dragContainer) {
   }, { passive: true });
 }
 </script>
+  <script src="mobile-nav.js"></script>
 </body>
 </html>

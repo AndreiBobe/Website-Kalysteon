@@ -1100,8 +1100,65 @@ footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: fle
 header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; }
 .hero-split-left { animation: pgSlideUp 0.8s 0.12s cubic-bezier(0.2,0.9,0.4,1.1) both; }
 
+/* ════════════════════════════════════════════════════════════════
+   MOBILE (≤768px) — Round 3 fixes. Phone-only, desktop untouched.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* (1) Background hero video — overscan so YouTube's own internal
+     letterbox padding is pushed off-screen (no black bands). */
+  .hero-video-bg iframe {
+    width: max(100vw, 177.78vh);
+    height: max(100vh, 56.25vw);
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+
+  /* (2) "Commission Open / Commission Ouverte" pill on one line. */
+  .commission-status.open {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    padding: 0.45rem 0.9rem;
+    white-space: nowrap;
+  }
+  .commission-status { white-space: nowrap; }
+
+  /* (3) "Technical Environment Artist / Artiste Environnement Technique"
+     eyebrow on one line — shrink type + bar, allow wrap-free fit. */
+  .hero-eyebrow {
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+  .hero-eyebrow::before { width: 18px; }
+
+  /* (4) Presets — rectangular full-width cards instead of squished
+     2-up columns. Overrides the repeat(2,1fr) set by smaller queries. */
+  .presets,
+  .hero-presets { grid-template-columns: 1fr !important; gap: 0.85rem; padding: 0 1rem; }
+
+  /* (5) CRITICAL: the project form is pinned to a fixed 780px basis
+     (--form-w), so it overflowed off both sides on phones. Make it
+     fluid full-width. recap-mode used 860px — same fix. */
+  .form-outer { padding: 1.5rem 1rem 3rem; gap: 1.5rem; }
+  .form-wrap,
+  .form-outer.recap-mode .form-wrap {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1.4rem 1.1rem;
+  }
+
+  /* (6) "Configure your terrain" option rows (Engine etc.) — shrink the
+     segmented radio so all options fit side-by-side without squishing. */
+  .radio-group label { padding: 0.55rem 0.3rem; font-size: 0.6rem; letter-spacing: 0.04em; }
+
+  /* Belt-and-braces: nothing in the form may push horizontal scroll. */
+  #commission-form-section { overflow-x: hidden; }
+}
+
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="stylesheet" href="mobile-nav.css">
 </head>
 <body>
 
@@ -3632,6 +3689,7 @@ function toggleFaq(btn) {
   tick();
 })();
 </script>
+  <script src="mobile-nav.js"></script>
 </body>
 </html>
 
