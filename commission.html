@@ -266,6 +266,9 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 .yn-cell input[type="radio"]:checked + label { border-color: var(--accent); background: var(--accent); }
 .yn-cell input[type="radio"]:checked + label::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--bg); }
 .yn-row.locked { opacity: 0.3; pointer-events: none; }
+.yn-namecol { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.yn-tiernote { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.04em; line-height: 1.3; color: rgba(201,168,76,0.72); }
+.yn-tiernote:empty { display: none; }
 .asset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: transparent; border: 1px solid rgba(201,168,76,0.22); border-radius: var(--radius-md); padding: 6px; box-shadow: 0 2px 16px rgba(0,0,0,0.40); }
 .asset-grid input[type="radio"] { display: none; }
 .asset-card { padding: 1rem 1.1rem; background: linear-gradient(145deg, #0C1C36 0%, #060F1E 100%); cursor: pointer; transition: all 0.20s; display: flex; flex-direction: column; gap: 0.3rem; position: relative; overflow: hidden; border-radius: var(--radius-sm); border: 1px solid transparent; }
@@ -467,6 +470,11 @@ h1 em { background: linear-gradient(135deg, #C9A84C 0%, #F0D990 50%, #C9A84C 100
 }
 /* S preset · hide complexity section (irrelevant at indie scale) */
 .form-wrap.preset-s .preset-s-hide { display: none; }
+/* S + M presets · hide features reserved for higher tiers (e.g. Full Environment) */
+.form-wrap.preset-s .preset-sm-hide,
+.form-wrap.preset-m .preset-sm-hide { display: none; }
+/* S preset · when the Technical Features block is hidden, let the Materials table span full width */
+.form-wrap.preset-s .form-row-tables.terrain-only { grid-template-columns: 1fr; }
 /* Hero vs Terrain section toggling */
 .form-wrap.preset-hero .terrain-only { display: none; }
 .form-wrap:not(.preset-hero) .hero-only { display: none; }
@@ -1335,12 +1343,12 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
     <div class="preset-desc" data-en="Game level · small prototype · game jam" data-fr="Niveau de jeu · prototype · game jam">Game level · small prototype · game jam</div>
     <ul class="preset-specs">
       <li>256m² – 2km²</li>
+      <li>Single biome · procedural</li>
       <li>Textures 2K</li>
-      <li>~3 weeks standard</li>
       <li>2 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-s">2.499,99 €</div>
+    <div class="preset-price" id="price-s">1.799,99 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1354,9 +1362,9 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
     <div class="preset-desc" data-en="Open level · arch-viz · serious game" data-fr="Niveau ouvert · arch-viz · serious game">Open level · arch-viz · serious game</div>
     <ul class="preset-specs">
       <li>2km² – 8km²</li>
+      <li>Up to 2 biomes · water</li>
       <li>Textures 4K</li>
-      <li>~6 weeks standard</li>
-      <li>2 revision rounds</li>
+      <li>3 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
     <div class="preset-price" id="price-m">3.499,99 €</div>
@@ -1372,9 +1380,9 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
     <div class="preset-desc" data-en="Open world · driving sim · flight sim" data-fr="Monde ouvert · sim conduite · sim vol">Open world · driving sim · flight sim</div>
     <ul class="preset-specs">
       <li>8km² – 32km² (tiled)</li>
+      <li>Up to 4 biomes · full env</li>
       <li>Textures 4–8K</li>
-      <li>~10 weeks standard</li>
-      <li>3 revision rounds</li>
+      <li>4 revision rounds</li>
     </ul>
     <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
     <div class="preset-price" id="price-l">5.499,99 €</div>
@@ -1607,7 +1615,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 
             <!-- TECHNICAL + MATERIALS -->
             <div class="form-row-tables xl-hide terrain-only">
-              <div>
+              <div class="preset-s-hide">
                 <div class="form-section-title" data-en="Technical Features" data-fr="Fonctionnalités techniques">Technical Features <span class="engine-note">UE5 only</span></div>
                 <div class="yn-table">
                   <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
@@ -1622,7 +1630,10 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
                     <div class="yn-cell"><input type="radio" name="hlod" id="hlod-n" value="no"><label for="hlod-n"></label></div>
                   </div>
                   <div class="yn-row" id="row-wp" data-fname="World Partition" data-fdesc="Splits the world into streaming cells. Required for tiled terrains above ~4km². Enables seamless open world streaming in UE5." data-fimg="img/feat-wp.webp">
-                    <span class="yn-name f-hover">World Partition</span>
+                    <div class="yn-namecol">
+                      <span class="yn-name f-hover">World Partition</span>
+                      <span class="yn-tiernote" id="note-wp"></span>
+                    </div>
                     <div class="yn-cell"><input type="radio" name="wp" id="wp-y" value="yes" checked><label for="wp-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="wp" id="wp-n" value="no"><label for="wp-n"></label></div>
                   </div>
@@ -1632,7 +1643,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
                 <div class="form-section-title" data-en="Terrain Materials" data-fr="Matériaux terrain">Terrain Materials</div>
                 <div class="yn-table">
                   <div class="yn-header"><span></span><span>Yes</span><span>No</span></div>
-                  <div class="yn-row" id="row-disp" data-fname="Material Displacement" data-fdesc="Tessellates the terrain mesh using height data · rock edges and ground relief become physically accurate 3D geometry." data-fimg="img/feat-displacement.webp">
+                  <div class="yn-row preset-s-hide" id="row-disp" data-fname="Material Displacement" data-fdesc="Tessellates the terrain mesh using height data · rock edges and ground relief become physically accurate 3D geometry." data-fimg="img/feat-displacement.webp">
                     <span class="yn-name f-hover">Displacement</span>
                     <div class="yn-cell"><input type="radio" name="displacement" id="disp-y" value="yes" checked><label for="disp-y"></label></div>
                     <div class="yn-cell"><input type="radio" name="displacement" id="disp-n" value="no"><label for="disp-n"></label></div>
@@ -1708,12 +1719,18 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
                   <div class="yn-cell"><input type="radio" name="specific_map" id="sm-n" value="no" checked><label for="sm-n"></label></div>
                 </div>
                 <div class="yn-row" data-fname="Multiple Biomes" data-fdesc="Several distinct ecological zones · desert, forest, tundra, wetland. Each biome requires its own material set and transition work." data-fimg="img/feat-biomes.webp">
-                  <span class="yn-name f-hover">Multiple Biomes</span>
+                  <div class="yn-namecol">
+                    <span class="yn-name f-hover">Multiple Biomes</span>
+                    <span class="yn-tiernote" id="note-biomes"></span>
+                  </div>
                   <div class="yn-cell"><input type="radio" name="biomes" id="bio-y" value="yes"><label for="bio-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="biomes" id="bio-n" value="no" checked><label for="bio-n"></label></div>
                 </div>
                 <div class="yn-row" data-fname="Lake / River / Sea" data-fdesc="Water bodies integrated into the terrain · shoreline sculpting, water shader setup, river flow, foam and caustics." data-fimg="img/feat-water.webp">
-                  <span class="yn-name f-hover">Lake / River / Sea</span>
+                  <div class="yn-namecol">
+                    <span class="yn-name f-hover">Lake / River / Sea</span>
+                    <span class="yn-tiernote" id="note-water"></span>
+                  </div>
                   <div class="yn-cell"><input type="radio" name="water" id="wat-y" value="yes"><label for="wat-y"></label></div>
                   <div class="yn-cell"><input type="radio" name="water" id="wat-n" value="no" checked><label for="wat-n"></label></div>
                 </div>
@@ -1760,13 +1777,13 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
                   <div class="asset-card-desc">Procedurally scattered assets, driven by terrain data.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-fx" value="Terrain + FX">
-                <label for="ast-fx" class="asset-card" data-fname="Terrain + FX" data-fdesc="Terrain with atmospheric FX · wind, mist layers, waterfall particles, volumetric atmosphere. Focused on visual mood." data-fimg="img/asset-fx.webp">
+                <label for="ast-fx" class="asset-card preset-s-hide" data-fname="Terrain + FX" data-fdesc="Terrain with atmospheric FX · wind, mist layers, waterfall particles, volumetric atmosphere. Focused on visual mood." data-fimg="img/asset-fx.webp">
                   <div class="asset-card-title">TERRAIN + FX</div>
                   <div class="asset-card-tags">(wind · mist · atmosphere)</div>
                   <div class="asset-card-desc">Atmospheric effects for mood and visual depth.</div>
                 </label>
                 <input type="radio" name="assets" id="ast-full" value="Full Environment">
-                <label for="ast-full" class="asset-card" data-fname="Full Environment" data-fdesc="Complete scene · terrain, assets, FX, skybox and water shaders integrated. Ready to drop into production." data-fimg="img/asset-full.webp">
+                <label for="ast-full" class="asset-card preset-sm-hide" data-fname="Full Environment" data-fdesc="Complete scene · terrain, assets, FX, skybox and water shaders integrated. Ready to drop into production." data-fimg="img/asset-full.webp">
                   <div class="asset-card-title">FULL ENVIRONMENT</div>
                   <div class="asset-card-tags">(assets · FX · skybox · water)</div>
                   <div class="asset-card-desc">Complete production scene, ready to use as-is.</div>
@@ -2387,7 +2404,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
             <span class="faq-question-text" data-en="How does the commission process work?" data-fr="Comment se déroule le processus de commission ?">How does the commission process work?</span>
             <span class="faq-chevron">▾</span>
           </div>
-          <div class="faq-answer" data-en="You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, full payment is required upfront before work begins." data-fr="Vous remplissez le brief ci-dessus en choisissant votre preset, moteur, style et périmètre. Je réponds sous 48h avec un devis précis. Une fois validés, le paiement intégral est requis avant le début des travaux.">You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, full payment is required upfront before work begins.</div>
+          <div class="faq-answer" data-en="You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, a 50% deposit secures your slot and starts the work — the remaining 50% is due on final delivery." data-fr="Vous remplissez le brief ci-dessus en choisissant votre preset, moteur, style et périmètre. Je réponds sous 48h avec un devis précis. Une fois validés, un acompte de 50% réserve votre créneau et lance les travaux — les 50% restants sont réglés à la livraison finale.">You fill out the brief above, selecting your preset, engine, style, and scope. I reply within 48 hours with a precise quote. Once we align on scope and price, a 50% deposit secures your slot and starts the work — the remaining 50% is due on final delivery.</div>
         </div>
 
         <div class="faq-item">
@@ -2395,7 +2412,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
             <span class="faq-question-text" data-en="What are the payment terms?" data-fr="Quelles sont les conditions de paiement ?">What are the payment terms?</span>
             <span class="faq-chevron">▾</span>
           </div>
-          <div class="faq-answer" data-en="Full payment is required upfront before work begins. This applies to all commission types and sizes." data-fr="Le paiement intégral est requis à l'avance avant le début des travaux. Cela s'applique à tous les types et tailles de commissions.">Full payment is required upfront before work begins. This applies to all commission types and sizes.</div>
+          <div class="faq-answer" data-en="Work runs in two stages: a 50% deposit confirms the project and reserves your slot, and the remaining 50% is paid on final delivery. This applies to all commission types and sizes." data-fr="Le travail se déroule en deux temps : un acompte de 50% confirme le projet et réserve votre créneau, et les 50% restants sont réglés à la livraison finale. Cela s'applique à tous les types et tailles de commissions.">Work runs in two stages: a 50% deposit confirms the project and reserves your slot, and the remaining 50% is paid on final delivery. This applies to all commission types and sizes.</div>
         </div>
 
         <div class="faq-item">
@@ -2544,7 +2561,7 @@ var panelTimer      = null;
 var LANG            = 'en';
 var CURRENCY        = 'EUR';
 var hasScrolledOnce = false;
-var PRESET_STARTING = { s: 2500, m: 3500, l: 5500 };
+var PRESET_STARTING = { s: 1800, m: 3500, l: 5500 };
 
 /* ═══ PRICE FORMATTER ═══ */
 function formatPrice(n) {
@@ -2642,6 +2659,37 @@ function switchTab(type) {
 function selectService(type) { switchTab(type); }
 
 /* ═══ PRESET SELECT ═══ */
+/* ═══ TIER ENTITLEMENT NOTES (under Biomes / Water toggles) ═══ */
+var TIER_NOTES = {
+  m: {
+    biomes: ['Terrain M · up to 2 biomes',                'Terrain M · jusqu’à 2 biomes'],
+    water:  ['Terrain M · lakes & rivers',                 'Terrain M · lac & rivière'],
+    wp:     ['Terrain M · tiled streaming',                'Terrain M · streaming par tuiles']
+  },
+  l: {
+    biomes: ['Terrain L · up to 4 biomes',                'Terrain L · jusqu’à 4 biomes'],
+    water:  ['Terrain L · full hydrology (sea + networks)','Terrain L · hydrologie complète (mer + réseaux)'],
+    wp:     ['Terrain L · open-world streaming + optimization','Terrain L · streaming open-world + optimisation']
+  }
+};
+function updateTierNotes(preset) {
+  var tier = (preset || '').replace('terrain-', '');
+  ['biomes', 'water', 'wp'].forEach(function(key) {
+    var el = document.getElementById('note-' + key);
+    if (!el) return;
+    var d = TIER_NOTES[tier] && TIER_NOTES[tier][key];
+    if (d) {
+      el.setAttribute('data-en', d[0]);
+      el.setAttribute('data-fr', d[1]);
+      el.innerHTML = (LANG === 'fr') ? d[1] : d[0];
+    } else {
+      el.removeAttribute('data-en');
+      el.removeAttribute('data-fr');
+      el.innerHTML = '';
+    }
+  });
+}
+
 function selectPreset(card) {
   document.querySelectorAll('.preset-card').forEach(function(c){ c.classList.remove('active'); });
   card.classList.add('active');
@@ -2660,6 +2708,7 @@ function selectPreset(card) {
   updateDeliverySelect(currentPreset);
   applyPresetClass(currentPreset);
   highlightTier(presetTier[currentPreset]);
+  updateTierNotes(currentPreset);
 
   var fs = document.getElementById('commission-form-section');
   fs.classList.add('open');
@@ -2713,10 +2762,10 @@ function applyPresetDefaults(preset) {
     if (astA) { astA.checked = true; toggleAssetNote('Terrain + Assets'); }
     updateDeliverySelect(preset, 'Terrain + Assets');
   } else if (preset === 'terrain-l') {
-    ['rvt-n','wp-n','disp-n'].forEach(function(id){
+    ['rvt-n','wp-n'].forEach(function(id){
       var el = document.getElementById(id); if (el) el.checked = true;
     });
-    ['hlod-y','mt-y','pt-y'].forEach(function(id){
+    ['hlod-y','mt-y','pt-y','disp-y'].forEach(function(id){
       var el = document.getElementById(id); if (el) el.checked = true;
     });
     var fullEnv = document.getElementById('ast-full');
@@ -2743,6 +2792,8 @@ function applyPresetClass(preset) {
   fw.className = fw.className.replace(/\bpreset-\S+/g,'').trim();
   var isHero = preset && preset.startsWith('hero-');
   if (preset === 'terrain-s') fw.className += ' preset-s';
+  if (preset === 'terrain-m') fw.className += ' preset-m';
+  if (preset === 'terrain-l') fw.className += ' preset-l';
   if (isHero) {
     fw.className += ' preset-hero';
     /* If Retro was selected, fall back to Realistic (not available for hero) */
@@ -3118,7 +3169,7 @@ function recalcPrice() {
   }
   if (!isQtyCustom && qtyMul !== null) subtotal *= qtyMul;
 
-  var TIER_FLOOR = { s: 1400, m: 2500, l: 4500 };
+  var TIER_FLOOR = { s: 1800, m: 2500, l: 4500 };
   var result = Math.max(Math.round(subtotal / 100) * 100, TIER_FLOOR[tier] || 0);
   setPrice(amountEl, result, null, false);
   /* Sync hidden fields for Make */
