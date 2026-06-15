@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutorials · Kalysteon</title>
+<meta name="description" content="Video tutorials for Kalysteon terrains, asset packs and the Stratum pipeline. Get up and running in Unreal Engine, Unity, Houdini, Gaea and Substance.">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #010810; --surface: #051322; --surface2: #091B32; --surface3: #0E2240;
+  --gold: #C9A84C; --gold-bright: #F2D777; --gold-dark: #8B6914;
+  --border: rgba(201,168,76,0.35); --border-mid: rgba(201,168,76,0.22); --border-dark: rgba(0,3,10,0.90);
+  --accent: #C9A84C; --accent-bright: #F2D777;
+  --accent-dim: rgba(201,168,76,0.09); --accent-glow: rgba(201,168,76,0.18);
+  --text: #EEE8D6; --text-muted: #7085A0; --text-dim: #364860;
+  --jade: #1DC97A; --jade-bright: #2FEDA0; --jade-dark: #0A8C48;
+  --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px; --radius-xs: 6px;
+  --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+  --display: 'Rajdhani', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background-color: #020A16;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(10,30,80,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(6,20,55,0.45) 0%, transparent 50%);
+  color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 2.5rem; border-bottom: 1px solid rgba(201,168,76,0.55); position: sticky; top: 0; background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); backdrop-filter: blur(20px); z-index: 100; box-shadow: 0 1px 30px rgba(201,168,76,0.08), 0 4px 20px rgba(0,0,0,0.6); }
+.logo { font-family: var(--display); font-weight: 700; font-size: 1.8rem; letter-spacing: 0.08em; line-height: normal; color: var(--text); text-decoration: none; }
+.logo span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 1.5rem; }
+.lang-sep { color: var(--text-dim); font-size: 0.7rem; }
+.lang-toggle { display: flex; align-items: center; gap: 0.4rem; border: 1px solid rgba(201,168,76,0.45); border-radius: 40px; padding: 0.2rem 0.8rem; background: rgba(0,0,0,0.3); }
+.lang-btn { background: none; border: none; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0.2rem 0.4rem; transition: color 0.15s; text-transform: uppercase; }
+.lang-btn.active { color: var(--accent); }
+
+/* ── NAV ── */
+.header-nav { display: flex; align-items: center; gap: 0.3rem; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-pill { position: relative; display: flex; align-items: center; }
+.nav-link { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 30px; border: 0.5px solid transparent; background: rgba(255,255,255,0.04); transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; white-space: nowrap; }
+.nav-link:hover, .nav-pill:hover > .nav-link { color: var(--gold-bright); border-color: rgba(201,168,76,0.40); box-shadow: 0 0 14px rgba(201,168,76,0.18), inset 0 0 10px rgba(201,168,76,0.07); transform: scale(1.05); }
+.nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.08); }
+.header-nav .nav-pill:nth-child(1) > .nav-link.active { color: var(--gold-bright); border-color: rgba(201,168,76,0.50); box-shadow: 0 0 14px rgba(201,168,76,0.25), inset 0 0 10px rgba(201,168,76,0.10); background: rgba(201,168,76,0.09); }
+.header-nav .nav-pill:nth-child(2) > .nav-link.active { color: #5DEFD5; border-color: rgba(93,239,213,0.40); box-shadow: 0 0 14px rgba(93,239,213,0.20), inset 0 0 10px rgba(93,239,213,0.08); background: rgba(93,239,213,0.06); }
+.header-nav .nav-pill:nth-child(3) > .nav-link.active { color: #C084FC; border-color: rgba(168,85,247,0.40); box-shadow: 0 0 14px rgba(168,85,247,0.20), inset 0 0 10px rgba(168,85,247,0.08); background: rgba(168,85,247,0.06); }
+.header-nav .nav-pill:nth-child(4) > .nav-link.active { color: #A3E635; border-color: rgba(163,230,53,0.40); box-shadow: 0 0 14px rgba(163,230,53,0.20), inset 0 0 10px rgba(163,230,53,0.08); background: rgba(163,230,53,0.06); }
+.header-nav .nav-pill:nth-child(5) > .nav-link.active { color: #FF7A45; border-color: rgba(255,122,69,0.40); box-shadow: 0 0 14px rgba(255,122,69,0.20), inset 0 0 10px rgba(255,122,69,0.08); background: rgba(255,122,69,0.06); }
+.nav-dropdown-trigger::after { content: ' ▾'; font-size: 0.5rem; opacity: 0.65; }
+.nav-dd-menu { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(6,14,32,0.92); backdrop-filter: blur(18px); border: 1px solid rgba(201,168,76,0.28); border-radius: 16px; padding: 0.5rem; min-width: 210px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 16px 48px rgba(0,0,0,0.75), 0 0 24px rgba(201,168,76,0.06); }
+.nav-dd-menu::before { content: ''; position: absolute; top: -10px; left: 0; right: 0; height: 10px; }
+.nav-pill:hover .nav-dd-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.nav-dd-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.85rem; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+.nav-dd-item:hover { color: var(--gold-bright); background: rgba(201,168,76,0.09); }
+.nav-dd-item.current { color: var(--gold-bright); background: rgba(201,168,76,0.08); }
+.nav-dd-icon { font-size: 0.9rem; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-dd-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 0.3rem 0.5rem; }
+.nav-dd-reviews { color: rgba(212,175,55,0.85); }
+.nav-dd-reviews:hover { color: var(--gold-bright); background: rgba(201,168,76,0.12); }
+@media (max-width: 768px) { .header-nav { display: none; } }
+
+/* ── HERO ── */
+.tut-hero { padding: 5rem 2.5rem 3rem; text-align: center; border-bottom: 1px solid rgba(201,168,76,0.10); position: relative; overflow: hidden; }
+.tut-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
+.tut-hero-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; opacity: 0.8; }
+.tut-hero-title { font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: 0.06em; color: var(--text); line-height: 1; margin-bottom: 1rem; }
+.tut-hero-title span { color: var(--gold); }
+.tut-hero-rule { width: 48px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 1.4rem; }
+.tut-hero-sub { font-family: var(--sans); font-size: 0.95rem; color: var(--text-muted); max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+/* ── FEATURED SPOTLIGHT (latest / next tutorial) ── */
+.tut-featured { max-width: 1200px; margin: 2.6rem auto 0; padding: 0 2.5rem; }
+.tut-feat-card { display: grid; grid-template-columns: 1.25fr 1fr; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--tc-soft); background: linear-gradient(135deg, rgba(9,27,50,0.75) 0%, rgba(5,19,34,0.85) 100%); box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 34px var(--tc-dim); }
+.tut-feat-thumb { position: relative; align-self: stretch; aspect-ratio: 16 / 9; width: 100%; border: none; padding: 0; cursor: pointer; overflow: hidden; background: radial-gradient(circle at 50% 38%, var(--tc-dim) 0%, transparent 62%), linear-gradient(155deg, #0B1D38 0%, #061226 100%); }
+.tut-feat-thumb img { object-position: center; }
+/* Stack the featured card before the two columns get cramped enough to crop the thumbnail. */
+@media (max-width: 900px) { .tut-feat-card { grid-template-columns: 1fr; } .tut-feat-body { padding: 1.6rem 1.8rem; } }
+.tut-feat-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.tut-feat-thumb:hover img { transform: scale(1.04); }
+.tut-feat-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 55%, rgba(5,19,34,0.55) 100%); pointer-events: none; }
+.tut-feat-thumb.tut-thumb-ph { cursor: default; }
+.tut-feat-thumb.tut-thumb-ph::after { display: none; }
+.tut-feat-thumb .tut-play { width: 66px; height: 66px; }
+.tut-feat-thumb .tut-play svg { width: 24px; height: 24px; }
+.tut-feat-body { padding: 2.2rem 2.4rem; display: flex; flex-direction: column; justify-content: center; }
+.tut-feat-badge { display: inline-flex; align-items: center; gap: 0.55rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--tc-bright); margin-bottom: 1rem; }
+.tut-feat-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--tc-bright); animation: featPulse 1.8s infinite; }
+.tut-feat-badge.soon { color: var(--text-muted); }
+.tut-feat-badge.soon .tut-feat-pulse { animation: none; background: var(--tc-soft); }
+@keyframes featPulse { 0% { box-shadow: 0 0 0 0 var(--tc-soft); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.tut-feat-tool { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tc-bright); margin-bottom: 0.7rem; }
+.tut-feat-tool span:first-child { display: flex; }
+.tut-feat-tool svg { width: 16px; height: 16px; }
+.tut-feat-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem, 2.4vw, 2.1rem); letter-spacing: 0.02em; line-height: 1.15; color: var(--text); margin-bottom: 0.8rem; }
+.tut-feat-desc { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── LEGEND / FILTER (the 6-tool roadmap) ── */
+.tut-legend { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; max-width: 1080px; margin: 2.4rem auto 0; padding: 0 2.5rem; }
+.tut-legend-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.95rem; border-radius: 30px; border: 1px solid var(--tc-soft); background: rgba(255,255,255,0.02); cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.tut-legend-item:hover { transform: translateY(-1px); border-color: var(--tc-bright); box-shadow: 0 0 14px var(--tc-dim); }
+.tut-legend-ic { display: flex; align-items: center; width: 15px; height: 15px; color: var(--tc-bright); }
+.tut-legend-ic svg { width: 15px; height: 15px; }
+.tut-legend-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tc-bright); flex-shrink: 0; }
+.tut-legend-name { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; color: var(--text-muted); transition: color 0.2s; }
+.tut-legend-count { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.06em; color: var(--text-dim); }
+.tut-legend-item.active { background: var(--tc-dim); border-color: var(--tc-bright); }
+.tut-legend-item.active .tut-legend-name { color: var(--tc-bright); }
+
+/* ── GRID ── */
+.tut-wrap { max-width: 1200px; margin: 0 auto; padding: 2.4rem 2.5rem 5rem; }
+.tut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
+.tut-filter-empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 0.9rem; }
+
+.tut-card { display: flex; flex-direction: column; background: linear-gradient(160deg, rgba(9,27,50,0.55) 0%, rgba(5,19,34,0.55) 100%); border: 1px solid var(--tc-soft, rgba(201,168,76,0.14)); border-radius: var(--radius-md); overflow: hidden; transition: transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1), border-color 0.3s, box-shadow 0.3s; }
+.tut-card:hover { transform: translateY(-5px); border-color: var(--tc-bright, rgba(201,168,76,0.38)); box-shadow: 0 14px 40px rgba(0,0,0,0.45), 0 0 22px var(--tc-soft, rgba(201,168,76,0.08)); }
+
+/* Thumbnail (lite embed: image only until clicked) */
+.tut-thumb { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: none; cursor: pointer; overflow: hidden; background: linear-gradient(135deg, #0A1E38 0%, #06122A 55%, #0E2240 100%); }
+.tut-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease, opacity 0.3s; }
+.tut-card:hover .tut-thumb img { transform: scale(1.05); }
+.tut-thumb.no-img img { display: none; }
+.tut-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(2,8,20,0.55) 100%); pointer-events: none; }
+.tut-thumb-fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-family: var(--display); font-weight: 700; font-size: 2.4rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.30); }
+.tut-thumb.no-img .tut-thumb-fallback { display: flex; }
+
+/* Placeholder thumbnail — coming-soon videos with no real YouTube id yet */
+.tut-thumb-ph { cursor: default; background: radial-gradient(circle at 50% 36%, var(--tc-dim) 0%, transparent 62%), linear-gradient(155deg, #0B1D38 0%, #061226 100%); }
+.tut-thumb-ph::after { display: none; }
+.tut-ph-tag { position: absolute; top: 8px; left: 8px; z-index: 3; font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--tc-bright); background: rgba(2,8,20,0.7); border: 1px solid var(--tc-soft); border-radius: 6px; padding: 0.24rem 0.55rem; }
+.tut-thumb-ph .tut-play { opacity: 0.4; }
+.tut-card:hover .tut-thumb-ph .tut-play { transform: translate(-50%,-50%); background: rgba(4,10,22,0.5); box-shadow: 0 6px 22px rgba(0,0,0,0.45); }
+.tut-card:hover .tut-thumb-ph .tut-play svg { fill: var(--tc-bright, #F2D777); }
+
+/* NEW badge for freshly published videos */
+.tut-new { position: absolute; top: 8px; left: 8px; z-index: 3; display: inline-flex; align-items: center; font-family: var(--mono); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #04101A; background: var(--tc-bright); border-radius: 6px; padding: 0.26rem 0.55rem; box-shadow: 0 2px 10px var(--tc-soft); }
+
+.tut-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56px; height: 56px; border-radius: 50%; background: rgba(4,10,22,0.5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border: 1.5px solid var(--tc-bright, #F2D777); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 22px rgba(0,0,0,0.45); transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; z-index: 2; }
+.tut-play svg { width: 20px; height: 20px; margin-left: 3px; fill: var(--tc-bright, #F2D777); transition: fill 0.25s ease; }
+.tut-card:hover .tut-play { transform: translate(-50%,-50%) scale(1.08); background: var(--tc-bright, #F2D777); box-shadow: 0 8px 28px rgba(0,0,0,0.55), 0 0 0 7px var(--tc-soft, rgba(201,168,76,0.20)); }
+.tut-card:hover .tut-play svg { fill: #04101A; }
+
+.tut-duration { position: absolute; bottom: 8px; right: 8px; z-index: 2; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.05em; color: var(--text); background: rgba(2,8,20,0.82); border: 1px solid rgba(201,168,76,0.18); border-radius: 6px; padding: 0.2rem 0.5rem; }
+
+.tut-iframe { width: 100%; aspect-ratio: 16 / 9; border: none; display: block; background: #000; }
+
+.tut-info { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; flex: 1; }
+.tut-card-tool { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tc-bright); margin-bottom: 0.55rem; }
+.tut-card-tool span:first-child { display: flex; }
+.tut-card-tool svg { width: 13px; height: 13px; }
+.tut-title { font-family: var(--display); font-weight: 600; font-size: 1.18rem; letter-spacing: 0.02em; color: var(--text); line-height: 1.25; margin-bottom: 0.5rem; }
+.tut-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tut-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid rgba(201,168,76,0.10); }
+.tut-date { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--text-dim); text-transform: uppercase; }
+.tut-yt-link { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+.tut-yt-link:hover { color: var(--gold-bright); }
+
+/* Empty state (no tutorials at all) */
+.tut-empty { text-align: center; padding: 4rem 1.5rem; }
+.tut-empty-icon { font-size: 2.4rem; color: rgba(201,168,76,0.35); margin-bottom: 1rem; }
+.tut-empty-title { font-family: var(--display); font-weight: 600; font-size: 1.5rem; color: var(--text); margin-bottom: 0.6rem; letter-spacing: 0.04em; }
+.tut-empty-sub { font-size: 0.9rem; color: var(--text-muted); max-width: 420px; margin: 0 auto; }
+
+/* ── CTA ── */
+.tut-cta { border-top: 1px solid rgba(201,168,76,0.15); background: linear-gradient(135deg, rgba(2,8,20,0.98) 0%, rgba(6,18,50,0.98) 40%, rgba(10,28,65,0.98) 65%, rgba(2,8,20,0.98) 100%); padding: 4rem 2.5rem; text-align: center; }
+.tut-cta-eyebrow { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; opacity: 0.7; }
+.tut-cta-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: 0.06em; color: var(--text); margin-bottom: 0.8rem; }
+.tut-cta-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; }
+.tut-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.tut-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #010810; background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-bright) 100%); border: none; border-radius: 40px; padding: 0.75rem 2rem; text-decoration: none; font-weight: 700; transition: all 0.2s; box-shadow: 0 4px 20px rgba(201,168,76,0.30); cursor: pointer; }
+.tut-cta-btn:hover { box-shadow: 0 6px 28px rgba(201,168,76,0.50); transform: translateY(-1px); filter: brightness(1.08); }
+.tut-cta-btn.secondary { color: var(--gold-bright); background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.35); box-shadow: none; }
+.tut-cta-btn.secondary:hover { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.55); }
+
+/* ── VIDEO MODAL (lightbox) ── */
+.tut-modal { position: fixed; inset: 0; z-index: 1000; display: none; }
+.tut-modal.open { display: block; }
+.tut-modal-backdrop { position: absolute; inset: 0; background: rgba(2,6,14,0.82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); animation: tmFade 0.25s ease; }
+@keyframes tmFade { from { opacity: 0; } to { opacity: 1; } }
+.tut-modal-card { position: relative; top: 50%; transform: translateY(-50%); width: min(860px, calc(100% - 3rem)); max-height: calc(100vh - 3rem); margin: 0 auto; display: flex; flex-direction: column; background: linear-gradient(160deg, #08182E 0%, #050F1F 100%); border: 1px solid var(--tc-soft, var(--border)); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.65), 0 0 40px var(--tc-dim); animation: tmPop 0.3s cubic-bezier(0.2,0.9,0.4,1.1); }
+@keyframes tmPop { from { opacity: 0; transform: translateY(-50%) scale(0.96); } to { opacity: 1; transform: translateY(-50%) scale(1); } }
+.tut-modal.closing .tut-modal-backdrop { animation: tmFadeOut 0.22s ease forwards; }
+.tut-modal.closing .tut-modal-card { animation: tmPopOut 0.22s cubic-bezier(0.4,0,0.6,1) forwards; }
+@keyframes tmFadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes tmPopOut { from { opacity: 1; transform: translateY(-50%) scale(1); } to { opacity: 0; transform: translateY(-50%) scale(0.96); } }
+.tut-modal-close { position: absolute; top: 10px; right: 12px; z-index: 5; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: rgba(2,8,20,0.6); color: var(--text); font-size: 22px; line-height: 1; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.tut-modal-close:hover { background: rgba(2,8,20,0.92); transform: scale(1.08); }
+.tut-modal-video { position: relative; aspect-ratio: 16 / 9; background: #000; flex-shrink: 0; }
+.tut-modal-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.tut-modal-poster { position: absolute; inset: 0; display: block; cursor: pointer; overflow: hidden; }
+.tut-modal-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.tut-modal-poster:hover img { transform: scale(1.04); }
+.tut-modal-poster::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(2,8,20,0.55) 100%); }
+.tut-modal-poster .tut-play { z-index: 2; }
+.tut-modal-yt { position: absolute; bottom: 10px; right: 10px; z-index: 2; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); background: rgba(2,8,20,0.78); border: 1px solid var(--tc-soft); border-radius: 6px; padding: 0.28rem 0.6rem; }
+.tut-modal-body { padding: 1.6rem 1.8rem 1.8rem; overflow-y: auto; }
+.tut-modal-tool { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tc-bright); margin-bottom: 0.6rem; }
+.tut-modal-tool span:first-child { display: flex; }
+.tut-modal-tool svg { width: 14px; height: 14px; }
+.tut-modal-title { font-family: var(--display); font-weight: 700; font-size: 1.5rem; letter-spacing: 0.02em; line-height: 1.2; color: var(--text); margin-bottom: 0.9rem; }
+.tut-modal-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; white-space: pre-line; }
+.tut-modal-links { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.1rem; }
+.tut-modal-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tc-bright); text-decoration: none; border: 1px solid var(--tc-soft); border-radius: 30px; padding: 0.5rem 1rem; transition: background 0.2s, border-color 0.2s; }
+.tut-modal-link:hover { background: var(--tc-dim); border-color: var(--tc-bright); }
+.tut-modal-link.primary { color: #04101A; background: var(--tc-bright); border-color: var(--tc-bright); font-weight: 700; }
+.tut-modal-link.primary:hover { background: var(--tc-bright); filter: brightness(1.08); }
+
+/* Gated download */
+.tut-modal-download { margin-top: 1.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(201,168,76,0.14); text-align: center; }
+.tut-dl-btn { display: inline-flex; align-items: center; gap: 0.55rem; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #04101A; background: var(--tc-bright); border: none; border-radius: 40px; padding: 0.8rem 1.8rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, filter 0.2s; box-shadow: 0 4px 20px var(--tc-soft); text-decoration: none; }
+.tut-dl-btn:hover { transform: translateY(-1px); filter: brightness(1.08); box-shadow: 0 6px 26px var(--tc-soft); }
+.tut-dl-btn:disabled { opacity: 0.6; cursor: default; transform: none; filter: none; }
+.tut-dl-head { font-family: var(--display); font-weight: 600; font-size: 1.1rem; color: var(--text); margin-bottom: 0.3rem; letter-spacing: 0.02em; }
+.tut-dl-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem; }
+.tut-dl-form { display: flex; flex-direction: column; align-items: center; gap: 0.85rem; max-width: 460px; margin: 0 auto; }
+.tut-dl-input { width: 100%; font-family: var(--sans); font-size: 0.9rem; color: var(--text); background: rgba(2,8,20,0.5); border: 1px solid var(--border-mid); border-radius: var(--radius-sm); padding: 0.7rem 0.9rem; outline: none; transition: border-color 0.2s; }
+.tut-dl-input:focus { border-color: var(--tc-bright); }
+.tut-dl-input::placeholder { color: var(--text-dim); }
+.tut-dl-check { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; cursor: pointer; text-align: left; }
+.tut-dl-check input { margin-top: 0.15rem; width: 16px; height: 16px; accent-color: var(--tc-bright); flex-shrink: 0; cursor: pointer; }
+.tut-dl-check b { color: var(--text); font-weight: 600; }
+.tut-dl-privacy { font-size: 0.68rem; color: var(--text-dim); line-height: 1.5; }
+.tut-dl-msg { font-size: 0.82rem; }
+.tut-dl-msg.error { color: #FF8E7A; }
+.tut-dl-success { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.tut-dl-success .tut-dl-head { color: var(--tc-bright); }
+.tut-dl-success .tut-dl-btn { margin-top: 0.5rem; }
+
+/* Optional newsletter invite (separate from the free download) */
+.tut-nl { margin-top: 1.5rem; padding: 1.2rem 1.3rem; border: 1px solid var(--border-mid); border-radius: var(--radius-md); background: rgba(255,255,255,0.02); text-align: center; }
+.tut-nl-head { font-family: var(--display); font-weight: 600; font-size: 1.02rem; letter-spacing: 0.02em; color: var(--text); margin-bottom: 0.35rem; }
+.tut-nl-sub { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; max-width: 440px; margin: 0 auto 0.95rem; }
+.tut-nl-form { display: flex; gap: 0.5rem; max-width: 420px; margin: 0 auto; }
+.tut-nl-input { flex: 1; min-width: 0; font-family: var(--sans); font-size: 0.88rem; color: var(--text); background: rgba(2,8,20,0.5); border: 1px solid var(--border-mid); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; outline: none; transition: border-color 0.2s; }
+.tut-nl-input:focus { border-color: var(--tc-bright); }
+.tut-nl-input::placeholder { color: var(--text-dim); }
+.tut-nl-btn { flex-shrink: 0; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--tc-bright); background: var(--tc-dim); border: 1px solid var(--tc-bright); border-radius: var(--radius-sm); padding: 0 1.2rem; cursor: pointer; transition: background 0.2s; }
+.tut-nl-btn:hover { background: var(--tc-soft); }
+.tut-nl-btn:disabled { opacity: 0.6; cursor: default; }
+.tut-nl-msg { font-size: 0.8rem; margin-top: 0.65rem; color: var(--tc-bright); }
+.tut-nl-msg.error { color: #FF8E7A; }
+@media (max-width: 480px) { .tut-nl-form { flex-direction: column; } .tut-nl-btn { padding: 0.6rem; } }
+@media (max-width: 600px) { .tut-modal-body { padding: 1.3rem 1.2rem 1.5rem; } .tut-modal-title { font-size: 1.25rem; } }
+
+/* ── PARTICLES ── */
+#ptx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.tut-hero, .tut-featured, .tut-legend, .tut-wrap, .tut-cta, footer { position: relative; z-index: 1; }
+
+/* ── FADE IN ── */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+header { animation: fadeInDown 0.8s cubic-bezier(0.2,0.9,0.4,1.1) forwards; }
+.fade-in-up { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.fade-in-up.visible { opacity: 1; transform: none; }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--text-dim); }
+.footer-copy a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.footer-copy a:hover { color: var(--accent); }
+.footer-response { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem; }
+.dot { width: 6px; height: 6px; background: #2ECC71; border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+@media (max-width: 768px) {
+  .tut-featured { padding: 0 1.25rem; margin-top: 1.6rem; }
+  .tut-feat-card { grid-template-columns: 1fr; }
+  .tut-feat-body { padding: 1.5rem 1.4rem; }
+  .tut-legend { padding: 0 1rem; margin-top: 1.8rem; gap: 0.4rem; }
+  .tut-wrap { padding: 1.8rem 1.25rem 4rem; }
+  .tut-grid { grid-template-columns: 1fr; gap: 1.3rem; }
+}
+@media (max-width: 600px) { footer { padding: 1.5rem 1.25rem; flex-direction: column; align-items: flex-start; } }
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+  <link rel="stylesheet" href="mobile-nav.css">
+</head>
+<body>
+
+<canvas id="ptx"></canvas>
+
+<header>
+  <a href="index.html" class="logo">KALYS<span>T</span>EON</a>
+  <nav class="header-nav">
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="products.html" data-en="Products" data-fr="Produits">Products</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="products.html#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Complete Landscapes" data-fr="Paysages Complets">Complete Landscapes</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum" data-fr="Stratum">Stratum</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="commission.html" data-en="Commission" data-fr="Commission">Commission</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="commission.html#configure"><span class="nav-dd-icon">⛰</span><span data-en="Custom Terrain" data-fr="Terrain Custom">Custom Terrain</span></a>
+        <a class="nav-dd-item" href="commission.html#configure"><span class="nav-dd-icon">◆</span><span data-en="Hero Assets" data-fr="Hero Assets">Hero Assets</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="commission.html#process"><span class="nav-dd-icon">↺</span><span data-en="How It Works" data-fr="Comment ça marche">How It Works</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link nav-dropdown-trigger" href="about.html" data-en="Studio" data-fr="Studio">Studio</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="about.html#bio"><span class="nav-dd-icon">▸</span><span data-en="Narrative" data-fr="Récit">Narrative</span></a>
+        <a class="nav-dd-item" href="about.html#namelore"><span class="nav-dd-icon">Ω</span><span data-en="Etymology" data-fr="Étymologie">Etymology</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="about.html#stack"><span class="nav-dd-icon">■</span><span data-en="Tech Stack" data-fr="Stack Technique">Tech Stack</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="contact.html#contact"><span class="nav-dd-icon">◉</span><span data-en="Newsletter" data-fr="Newsletter">Newsletter</span></a>
+      </div>
+    </div>
+    <div class="nav-pill">
+      <a class="nav-link active nav-dropdown-trigger" href="faq.html" data-en="Support" data-fr="Support">Support</a>
+      <div class="nav-dd-menu">
+        <a class="nav-dd-item" href="faq.html"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item current" href="tutorials.html"><span class="nav-dd-icon">▶</span><span data-en="Tutorials" data-fr="Tutoriels">Tutorials</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="mailto:contact@kalysteon.com"><span class="nav-dd-icon">✉</span><span data-en="Email Direct" data-fr="Email Direct">Email Direct</span></a>
+      </div>
+    </div>
+  </nav>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" id="lang-btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="tut-hero fade-in-up">
+  <div class="tut-hero-eyebrow" data-en="Kalysteon Studio · Support Center" data-fr="Kalysteon Studio · Centre d'aide">Kalysteon Studio · Support Center</div>
+  <h1 class="tut-hero-title" data-en="Tutori<span>a</span>ls" data-fr="Tutori<span>e</span>ls">Tutori<span>a</span>ls</h1>
+  <div class="tut-hero-rule"></div>
+  <p class="tut-hero-sub" data-en="Step-by-step video guides for our terrains, asset packs and the Stratum pipeline, from first import to advanced workflows in Unreal Engine, Unity, Houdini, Gaea and Substance." data-fr="Guides vidéo pas à pas pour nos terrains, packs d'assets et le pipeline Stratum, du premier import aux workflows avancés sous Unreal Engine, Unity, Houdini, Gaea et Substance.">Step-by-step video guides for our terrains, asset packs and the Stratum pipeline, from first import to advanced workflows in Unreal Engine, Unity, Houdini, Gaea and Substance.</p>
+</div>
+
+<!-- FEATURED : latest / next tutorial spotlight (rendered by JS) -->
+<div class="tut-featured fade-in-up" id="tut-featured"></div>
+
+<!-- LEGEND / FILTER : the 6-tool roadmap (rendered by JS) -->
+<div class="tut-legend fade-in-up" id="tut-legend"></div>
+
+<!-- GRID : all tutorials, newest first (rendered by JS) -->
+<div class="tut-wrap fade-in-up">
+  <div class="tut-grid" id="tut-grid"></div>
+  <div class="tut-empty" id="tut-empty" style="display:none;">
+    <div class="tut-empty-icon">▶</div>
+    <div class="tut-empty-title" data-en="Tutorials are on the way" data-fr="Les tutoriels arrivent">Tutorials are on the way</div>
+    <p class="tut-empty-sub" data-en="We're filming new guides right now. Subscribe on YouTube to get notified when the first ones drop." data-fr="Nous tournons de nouveaux guides en ce moment. Abonnez-vous sur YouTube pour être prévenu dès la sortie des premiers.">We're filming new guides right now. Subscribe on YouTube to get notified when the first ones drop.</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="tut-cta fade-in-up">
+  <div class="tut-cta-eyebrow" data-en="Want a tutorial on something specific?" data-fr="Vous voulez un tuto sur un sujet précis ?">Want a tutorial on something specific?</div>
+  <div class="tut-cta-title" data-en="Subscribe & request topics." data-fr="Abonnez-vous & proposez des sujets.">Subscribe &amp; request topics.</div>
+  <p class="tut-cta-sub" data-en="New guides drop regularly. Subscribe on YouTube, or email us the workflow you'd like us to cover next." data-fr="De nouveaux guides sortent régulièrement. Abonnez-vous sur YouTube, ou écrivez-nous le workflow que vous aimeriez voir abordé.">New guides drop regularly. Subscribe on YouTube, or email us the workflow you'd like us to cover next.</p>
+  <div class="tut-cta-btns">
+    <a class="tut-cta-btn" id="tut-yt-channel" href="https://www.youtube.com/@kalysteon" target="_blank" rel="noopener">▶ <span data-en="YouTube Channel" data-fr="Chaîne YouTube">YouTube Channel</span></a>
+    <a class="tut-cta-btn secondary" href="mailto:contact@kalysteon.com?subject=Tutorial%20request"><span data-en="Request a topic" data-fr="Proposer un sujet">Request a topic</span></a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 Kalysteon · <a href="mailto:contact@kalysteon.com">contact@kalysteon.com</a></div>
+  <div class="footer-response"><span class="dot"></span><span data-en="Response within 48h" data-fr="Réponse sous 48h">Response within 48h</span></div>
+</footer>
+
+<!-- VIDEO MODAL (player + description + gated download) -->
+<div class="tut-modal" id="tut-modal" aria-hidden="true">
+  <div class="tut-modal-backdrop"></div>
+  <div class="tut-modal-card" role="dialog" aria-modal="true">
+    <button class="tut-modal-close" aria-label="Close">&times;</button>
+    <div class="tut-modal-video" id="tut-modal-video"></div>
+    <div class="tut-modal-body">
+      <div class="tut-modal-tool" id="tut-modal-tool"></div>
+      <h2 class="tut-modal-title" id="tut-modal-title"></h2>
+      <div class="tut-modal-desc" id="tut-modal-desc"></div>
+      <div class="tut-modal-links" id="tut-modal-links"></div>
+      <div class="tut-modal-download" id="tut-modal-download"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   TUTORIALS DATA  —  the only block you edit to add a tutorial.
+
+   To add a video:
+     1. Copy one { ... } object below and put it at the TOP of TUTORIALS
+        (newest first → it becomes the Spotlight and gets a NEW badge).
+     2. Set `yt` to the YouTube video ID (after watch?v= , e.g. dQw4w9WgXcQ).
+     3. Set `cat` to a tool id from TOOLS (e.g. 'gaea', 'houdini', 'unreal'…).
+     4. Fill EN/FR title + description, duration and date.
+     5. Save. Spotlight, card, colour, thumbnail and click-to-play wire up
+        automatically — the thumbnail is pulled from YouTube, no upload needed.
+
+   Empty TUTORIALS ([]) → the page shows a clean "coming soon" state.
+   ════════════════════════════════════════════════════════════════════════ */
+
+// Tools / software — each has a signature colour + icon. Used by the legend,
+// the per-card colour-coding and the spotlight. `cat` must match an `id`.
+const TOOLS = [
+  { id: 'stratum',   en: 'Stratum',       fr: 'Stratum',       bright: '#22D3EE', rgb: '34,211,238'  },
+  { id: 'gaea',      en: 'Gaea',          fr: 'Gaea',          bright: '#F2C43D', rgb: '242,196,61'  },
+  { id: 'houdini',   en: 'Houdini',       fr: 'Houdini',       bright: '#FF8C42', rgb: '255,140,66'  },
+  { id: 'substance', en: 'Substance',     fr: 'Substance',     bright: '#43C97A', rgb: '67,201,122'  },
+  { id: 'unreal',    en: 'Unreal Engine', fr: 'Unreal Engine', bright: '#C084FC', rgb: '192,132,252' },
+  { id: 'unity',     en: 'Unity',         fr: 'Unity',         bright: '#5B9BFF', rgb: '91,155,255'  }
+];
+
+// Clean inline SVG glyph per tool (inherits the tool colour via `color`).
+var ICONS = {
+  stratum:   '<path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 12l9 4.5 9-4.5" opacity=".5"/><path d="M3 16.5L12 21l9-4.5" opacity=".28"/>',
+  gaea:      '<path d="M2.5 19.5h19L14 6.5l-3.2 5.6L8.6 8.6z"/>',
+  houdini:   '<g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="5.5" cy="6" r="2.1"/><circle cx="18.5" cy="9" r="2.1"/><circle cx="11" cy="18.2" r="2.1"/><path d="M7.5 6.7l9 1.7M6.5 7.9l4 8.3M16.8 10.6l-4.9 6"/></g>',
+  substance: '<rect x="3.4" y="3.4" width="7.3" height="7.3" rx="1.3"/><rect x="13.3" y="3.4" width="7.3" height="7.3" rx="1.3" opacity=".5"/><rect x="3.4" y="13.3" width="7.3" height="7.3" rx="1.3" opacity=".5"/><rect x="13.3" y="13.3" width="7.3" height="7.3" rx="1.3"/>',
+  unreal:    '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 2.7l8.4 4.7v9.2L12 21.3 3.6 16.6V7.4z"/><path d="M3.7 7.5l8.3 4.7 8.3-4.7M12 12.2v9"/></g>',
+  unity:     '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l8.5 14.8H3.5z"/><path d="M12 3v10.5M3.5 17.8L12 13.5l8.5 4.3"/></g>'
+};
+function iconHTML(id) { return '<svg viewBox="0 0 24 24" fill="currentColor">' + (ICONS[id] || '') + '</svg>'; }
+function isPlaceholder(t) { return !t.yt || /^REPLACE/i.test(t.yt); }
+
+// Your YouTube channel (CTA button).
+const YT_CHANNEL = 'https://www.youtube.com/@kalysteon';
+
+const TUTORIALS = [
+  // ── Latest real video (test link — swap for the public id when published) ──
+  {
+    yt: 'TxrujPhEFmc',
+    cat: 'gaea',
+    slug: 'why-your-gaea-mountains',
+    // download: a direct file URL → shows the gated download button in the modal.
+    // (Google Drive "view" links must be in this uc?export=download form.)
+    download: 'https://drive.google.com/uc?export=download&id=16O3iTrM3M3r-J1LNIxeXD3WrjKfkKG5m',
+    // artstation: optional process-breakdown post. Replace with the real URL.
+    artstation: 'https://www.artstation.com/artwork/lG3JYJ',
+    duration: '',
+    date_en: 'Jun 2026', date_fr: 'Juin 2026',
+    title_en: 'Why your Gaea mountains don\'t look real',
+    title_fr: 'Pourquoi vos montagnes Gaea n\'ont pas l\'air réelles',
+    desc_en: 'Your mountains look maybe too basic, let me show you why!\n\nIn this tutorial, I\'ll walk you through my complete workflow for building a photorealistic mountain in Gaea 2. From the first node to the final render without using Unreal or Blender. Just Gaea 2, doing things most people don\'t know it can do.\n\nYou\'ll learn how to structure your node graph for maximum realism, how to use erosion the right way, and the exact settings that separate a fake-looking terrain from something that could pass as a real landscape photo.',
+    desc_fr: 'Vos montagnes ont peut-être l\'air trop basiques, laissez-moi vous montrer pourquoi !\n\nDans ce tutoriel, je vous présente mon workflow complet pour créer une montagne photoréaliste dans Gaea 2. Du premier nœud au rendu final, sans utiliser Unreal ni Blender. Juste Gaea 2, en lui faisant faire des choses que la plupart des gens ignorent qu\'il peut faire.\n\nVous apprendrez à structurer votre graph de nœuds pour un réalisme maximal, à utiliser l\'érosion correctement, et les réglages exacts qui distinguent un terrain qui fait faux de quelque chose qui pourrait passer pour une vraie photo de paysage.'
+  },
+  // ── Placeholder videos: assign a real YouTube id (+ download / artstation)
+  //    when each one is published. They show as "Coming soon" until then. ──
+  {
+    yt: 'REPLACE_ID_3',
+    cat: 'houdini',
+    slug: 'houdini-rock-generator',
+    duration: '12:05',
+    date_en: 'Coming soon', date_fr: 'Bientôt',
+    title_en: 'Build your own rock generator',
+    title_fr: 'Avoir son propre générateur de rocher',
+    desc_en: 'A reusable, art-directable Houdini rock generator from scratch, geometry to UVs.',
+    desc_fr: 'Un générateur de rochers Houdini réutilisable et dirigeable artistiquement, de zéro, de la géo aux UV.'
+  },
+  {
+    yt: 'REPLACE_ID_4',
+    cat: 'unreal',
+    slug: 'unreal-insane-lighting',
+    duration: '8:30',
+    date_en: 'Coming soon', date_fr: 'Bientôt',
+    title_en: 'Insane lighting in Unreal Engine',
+    title_fr: 'Avoir un lighting de zinzin',
+    desc_en: 'Lumen, exposure and light shaping tricks to get a cinematic look out of any scene.',
+    desc_fr: 'Lumen, exposition et sculpture de lumière pour sortir un rendu cinématique de n\'importe quelle scène.'
+  }
+];
+
+/* ──────────────────────────────────────────────────────────────────────── */
+
+var LANG = 'en';
+var activeTool = 'all';
+
+function thumbUrl(id) { return 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }
+function toolById(id) { return TOOLS.filter(function (x) { return x.id === id; })[0]; }
+function tutByKey(key) { return TUTORIALS.filter(function (t) { return (t.slug || t.yt) === key; })[0]; }
+
+// Apply a tool's colour as CSS custom properties (children inherit them).
+function applyToolColor(el, tool) {
+  el.style.setProperty('--tc-bright', tool.bright);
+  el.style.setProperty('--tc-soft', 'rgba(' + tool.rgb + ',0.38)');
+  el.style.setProperty('--tc-dim',  'rgba(' + tool.rgb + ',0.10)');
+  el.style.setProperty('--tc-band', 'rgba(' + tool.rgb + ',0.22)');
+}
+
+// ── Video modal (lightbox): player + YouTube-style description + download ──
+function ytIframe(id) {
+  var f = document.createElement('iframe');
+  f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+  f.setAttribute('title', 'Tutorial');
+  f.setAttribute('frameborder', '0');
+  f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+  f.setAttribute('allowfullscreen', '');
+  return f;
+}
+
+function openModal(t, tool) {
+  tool = tool || TOOLS[0];
+  var m = document.getElementById('tut-modal');
+  applyToolColor(m.querySelector('.tut-modal-card'), tool);
+
+  // Embedded autoplay player — the video plays directly inside the popup.
+  var watchUrl = 'https://www.youtube.com/watch?v=' + t.yt;
+  var v = document.getElementById('tut-modal-video'); v.innerHTML = ''; v.appendChild(ytIframe(t.yt));
+
+  var tc = document.getElementById('tut-modal-tool');
+  tc.innerHTML = '';
+  var tci = document.createElement('span'); tci.innerHTML = iconHTML(tool.id); tc.appendChild(tci);
+  var tcn = document.createElement('span'); tcn.setAttribute('data-en', tool.en); tcn.setAttribute('data-fr', tool.fr); tcn.textContent = tool[LANG] || tool.en; tc.appendChild(tcn);
+
+  var ti = document.getElementById('tut-modal-title');
+  ti.setAttribute('data-en', t.title_en); ti.setAttribute('data-fr', t.title_fr || t.title_en); ti.textContent = t['title_' + LANG] || t.title_en;
+
+  var d = document.getElementById('tut-modal-desc');
+  d.setAttribute('data-en', t.desc_en || ''); d.setAttribute('data-fr', t.desc_fr || t.desc_en || ''); d.textContent = t['desc_' + LANG] || t.desc_en || '';
+
+  // Action links: Watch on YouTube (always) + ArtStation breakdown (if set).
+  var links = document.getElementById('tut-modal-links');
+  links.innerHTML = '';
+  var ytl = document.createElement('a'); ytl.className = 'tut-modal-link primary';
+  ytl.href = watchUrl; ytl.target = '_blank'; ytl.rel = 'noopener';
+  ytl.setAttribute('data-en', 'Watch on YouTube ↗'); ytl.setAttribute('data-fr', 'Voir sur YouTube ↗');
+  ytl.textContent = LANG === 'fr' ? 'Voir sur YouTube ↗' : 'Watch on YouTube ↗';
+  links.appendChild(ytl);
+  if (t.artstation) {
+    var as = document.createElement('a'); as.className = 'tut-modal-link';
+    as.href = t.artstation; as.target = '_blank'; as.rel = 'noopener';
+    as.setAttribute('data-en', 'Process breakdown on ArtStation ↗');
+    as.setAttribute('data-fr', 'Détail du process sur ArtStation ↗');
+    as.textContent = LANG === 'fr' ? 'Détail du process sur ArtStation ↗' : 'Process breakdown on ArtStation ↗';
+    links.appendChild(as);
+  }
+  renderDownload(t);
+
+  m.classList.add('open'); m.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+  m.querySelector('.tut-modal-body').scrollTop = 0;
+  // Reflect the open video in the URL so the link is copy-pasteable (YouTube desc).
+  if (history.replaceState) history.replaceState(null, '', '#' + (t.slug || t.yt));
+}
+
+function closeModal() {
+  var m = document.getElementById('tut-modal');
+  if (!m.classList.contains('open') || m.classList.contains('closing')) return;
+  document.getElementById('tut-modal-video').innerHTML = ''; // stop playback immediately
+  if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+  m.classList.add('closing');
+  var card = m.querySelector('.tut-modal-card');
+  var finished = false;
+  function done() {
+    if (finished) return;
+    finished = true;
+    card.removeEventListener('animationend', done);
+    m.classList.remove('open', 'closing');
+    m.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  card.addEventListener('animationend', done);
+  setTimeout(done, 300); // fallback if animationend doesn't fire
+}
+
+// Download section: free instant download + an optional newsletter invite.
+function renderDownload(t) {
+  var box = document.getElementById('tut-modal-download');
+  box.innerHTML = '';
+  if (!t.download) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+
+  // 1) Free, instant download — no email required.
+  var a = document.createElement('a');
+  a.className = 'tut-dl-btn';
+  a.href = t.download; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('download', '');
+  a.innerHTML = '<span>↓</span><span data-en="Download the project (free)" data-fr="Télécharger le projet (gratuit)">' + (LANG === 'fr' ? 'Télécharger le projet (gratuit)' : 'Download the project (free)') + '</span>';
+  box.appendChild(a);
+
+  // 2) Optional newsletter invite — fully separate from the download.
+  box.appendChild(buildNewsletterInvite(t));
+}
+
+function buildNewsletterInvite(t) {
+  var wrap = document.createElement('div'); wrap.className = 'tut-nl';
+
+  var head = document.createElement('div'); head.className = 'tut-nl-head';
+  head.setAttribute('data-en', 'Don\'t miss the next free drop');
+  head.setAttribute('data-fr', 'Ne ratez pas le prochain projet gratuit');
+  head.textContent = LANG === 'fr' ? 'Ne ratez pas le prochain projet gratuit' : 'Don\'t miss the next free drop';
+
+  var sub = document.createElement('div'); sub.className = 'tut-nl-sub';
+  sub.setAttribute('data-en', 'Optional. Drop your email and I\'ll ping you when new free projects, packs and tutorials land. No spam, leave anytime.');
+  sub.setAttribute('data-fr', 'Optionnel. Laissez votre email et je vous préviens quand de nouveaux projets, packs et tutos gratuits sortent. Pas de spam, départ quand vous voulez.');
+  sub.textContent = LANG === 'fr' ? 'Optionnel. Laissez votre email et je vous préviens quand de nouveaux projets, packs et tutos gratuits sortent. Pas de spam, départ quand vous voulez.' : 'Optional. Drop your email and I\'ll ping you when new free projects, packs and tutorials land. No spam, leave anytime.';
+
+  var form = document.createElement('form'); form.className = 'tut-nl-form';
+  var input = document.createElement('input'); input.type = 'email'; input.required = true; input.className = 'tut-nl-input';
+  input.placeholder = 'your@email.com';
+  input.setAttribute('data-en', 'your@email.com'); input.setAttribute('data-fr', 'votre@email.com');
+  var btn = document.createElement('button'); btn.type = 'submit'; btn.className = 'tut-nl-btn';
+  btn.setAttribute('data-en', 'Subscribe'); btn.setAttribute('data-fr', 'S\'abonner');
+  btn.textContent = LANG === 'fr' ? 'S\'abonner' : 'Subscribe';
+  form.appendChild(input); form.appendChild(btn);
+
+  var msg = document.createElement('div'); msg.className = 'tut-nl-msg';
+  form.addEventListener('submit', function (e) { e.preventDefault(); subscribeNewsletter(t, input.value.trim(), btn, msg, form); });
+
+  wrap.appendChild(head); wrap.appendChild(sub); wrap.appendChild(form); wrap.appendChild(msg);
+  return wrap;
+}
+
+function subscribeNewsletter(t, email, btn, msg, form) {
+  btn.disabled = true;
+  var orig = btn.textContent;
+  btn.textContent = '…';
+  msg.className = 'tut-nl-msg'; msg.textContent = '';
+
+  var lang = localStorage.getItem('kalysteon-lang') || 'en';
+  // Same Make webhook as the Studio › Newsletter form (routes to Brevo) —
+  // no extra backend to set up. See contact.html.
+  fetch('https://hook.eu1.make.com/rtz1wnhvskyf6v9grinjc9vfohw8bfrj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'newsletter', email: email, lang: lang, source: 'tutorial-modal' })
+  })
+    .then(function (r) { if (!r.ok) throw new Error('failed'); })
+    .then(function () {
+      form.style.display = 'none';
+      msg.className = 'tut-nl-msg';
+      msg.textContent = LANG === 'fr' ? 'C\'est noté, à bientôt !' : 'You\'re in. Talk soon!';
+    })
+    .catch(function () {
+      btn.disabled = false; btn.textContent = orig;
+      msg.className = 'tut-nl-msg error';
+      msg.textContent = LANG === 'fr' ? 'Oups, réessayez.' : 'Oops, try again.';
+    });
+}
+
+// ── Spotlight: the latest published tutorial (or the next planned one) ──
+function renderFeatured() {
+  var box = document.getElementById('tut-featured');
+  box.innerHTML = '';
+  if (!TUTORIALS.length) { box.style.display = 'none'; return; }
+  box.style.display = '';
+
+  var real = TUTORIALS.filter(function (t) { return !isPlaceholder(t); });
+  var t = real.length ? real[0] : TUTORIALS[0];
+  var live = !isPlaceholder(t);
+  var tool = toolById(t.cat) || TOOLS[0];
+
+  var card = document.createElement('div');
+  card.className = 'tut-feat-card';
+  applyToolColor(card, tool);
+
+  var thumb = document.createElement('button');
+  thumb.className = 'tut-feat-thumb' + (live ? '' : ' tut-thumb-ph');
+  thumb.setAttribute('aria-label', (live ? 'Play: ' : 'Coming soon: ') + (t['title_' + LANG] || t.title_en));
+  if (live) {
+    var img = document.createElement('img');
+    img.loading = 'lazy'; img.alt = '';
+    // Try maxres → hq; YouTube serves a 120×90 grey default when a thumbnail
+    // isn't public (e.g. a Private video) — treat that as "no thumbnail".
+    var triedHq = false;
+    img.onload = function () {
+      if (img.naturalWidth <= 120) {
+        if (!triedHq) { triedHq = true; img.src = thumbUrl(t.yt); }
+        else { img.remove(); }
+      }
+    };
+    img.onerror = function () {
+      if (!triedHq) { triedHq = true; img.src = thumbUrl(t.yt); }
+      else { img.remove(); }
+    };
+    img.src = 'https://i.ytimg.com/vi/' + t.yt + '/maxresdefault.jpg';
+    thumb.appendChild(img);
+  }
+  if (t.duration) {
+    var dur = document.createElement('span'); dur.className = 'tut-duration'; dur.textContent = t.duration;
+    thumb.appendChild(dur);
+  }
+  var play = document.createElement('span'); play.className = 'tut-play';
+  play.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  thumb.appendChild(play);
+  if (live) { thumb.addEventListener('click', function () { openModal(t, tool); }); }
+  else { thumb.disabled = true; }
+  card.appendChild(thumb);
+
+  var body = document.createElement('div'); body.className = 'tut-feat-body';
+
+  var badge = document.createElement('div'); badge.className = 'tut-feat-badge' + (live ? '' : ' soon');
+  var pulse = document.createElement('span'); pulse.className = 'tut-feat-pulse'; badge.appendChild(pulse);
+  var bt = document.createElement('span');
+  if (live) { bt.setAttribute('data-en', 'New tutorial'); bt.setAttribute('data-fr', 'Nouveau tuto'); bt.textContent = LANG === 'fr' ? 'Nouveau tuto' : 'New tutorial'; }
+  else { bt.setAttribute('data-en', 'Next premiere'); bt.setAttribute('data-fr', 'Prochaine vidéo'); bt.textContent = LANG === 'fr' ? 'Prochaine vidéo' : 'Next premiere'; }
+  badge.appendChild(bt); body.appendChild(badge);
+
+  var ttag = document.createElement('div'); ttag.className = 'tut-feat-tool';
+  var tic = document.createElement('span'); tic.innerHTML = iconHTML(tool.id); ttag.appendChild(tic);
+  var tnm = document.createElement('span'); tnm.setAttribute('data-en', tool.en); tnm.setAttribute('data-fr', tool.fr); tnm.textContent = tool[LANG] || tool.en; ttag.appendChild(tnm);
+  body.appendChild(ttag);
+
+  var h = document.createElement('h2'); h.className = 'tut-feat-title';
+  h.setAttribute('data-en', t.title_en); h.setAttribute('data-fr', t.title_fr || t.title_en);
+  h.textContent = t['title_' + LANG] || t.title_en; body.appendChild(h);
+
+  var p = document.createElement('p'); p.className = 'tut-feat-desc';
+  p.setAttribute('data-en', t.desc_en || ''); p.setAttribute('data-fr', t.desc_fr || t.desc_en || '');
+  p.textContent = t['desc_' + LANG] || t.desc_en || ''; body.appendChild(p);
+
+  card.appendChild(body);
+  box.appendChild(card);
+}
+
+// ── Legend / filter : all 6 tools (the roadmap), click to filter the grid ──
+function renderLegend() {
+  var box = document.getElementById('tut-legend');
+  box.innerHTML = '';
+  var all = [{ id: 'all', en: 'All', fr: 'Tout', bright: '#E9ECF2', rgb: '233,236,242' }].concat(TOOLS);
+
+  all.forEach(function (tool) {
+    var count = tool.id === 'all' ? TUTORIALS.length : TUTORIALS.filter(function (t) { return t.cat === tool.id; }).length;
+
+    var item = document.createElement('button');
+    item.className = 'tut-legend-item' + (activeTool === tool.id ? ' active' : '');
+    applyToolColor(item, tool);
+
+    if (tool.id === 'all') {
+      var d = document.createElement('span'); d.className = 'tut-legend-dot'; item.appendChild(d);
+    } else {
+      var ic = document.createElement('span'); ic.className = 'tut-legend-ic'; ic.innerHTML = iconHTML(tool.id); item.appendChild(ic);
+    }
+    var nm = document.createElement('span'); nm.className = 'tut-legend-name';
+    nm.setAttribute('data-en', tool.en); nm.setAttribute('data-fr', tool.fr); nm.textContent = tool[LANG] || tool.en;
+    item.appendChild(nm);
+
+    var ct = document.createElement('span'); ct.className = 'tut-legend-count';
+    if (count > 0 || tool.id === 'all') { ct.textContent = count; }
+    else { ct.setAttribute('data-en', 'soon'); ct.setAttribute('data-fr', 'à venir'); ct.textContent = LANG === 'fr' ? 'à venir' : 'soon'; }
+    item.appendChild(ct);
+
+    item.addEventListener('click', function () { activeTool = tool.id; renderLegend(); renderGrid(); });
+    box.appendChild(item);
+  });
+}
+
+// ── Grid : all tutorials (newest first), filtered by the active tool ──
+function renderGrid() {
+  var grid = document.getElementById('tut-grid');
+  var empty = document.getElementById('tut-empty');
+  grid.innerHTML = '';
+
+  if (!TUTORIALS.length) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  var list = activeTool === 'all' ? TUTORIALS : TUTORIALS.filter(function (t) { return t.cat === activeTool; });
+
+  if (!list.length) {
+    var msg = document.createElement('div'); msg.className = 'tut-filter-empty';
+    msg.setAttribute('data-en', 'No tutorial here yet, coming soon.');
+    msg.setAttribute('data-fr', 'Pas encore de tutoriel ici, bientôt.');
+    msg.textContent = LANG === 'fr' ? 'Pas encore de tutoriel ici, bientôt.' : 'No tutorial here yet, coming soon.';
+    grid.appendChild(msg);
+    return;
+  }
+
+  // The 2 most recent published videos get a NEW badge.
+  var liveIds = TUTORIALS.filter(function (t) { return !isPlaceholder(t); }).slice(0, 2).map(function (t) { return t.yt; });
+
+  list.forEach(function (t) {
+    var tool = toolById(t.cat) || TOOLS[0];
+    var isNew = !isPlaceholder(t) && liveIds.indexOf(t.yt) > -1;
+    grid.appendChild(buildCard(t, tool, isNew));
+  });
+}
+
+// ── Build a single video card (lite embed, colour-coded by its tool) ──
+function buildCard(t, tool, isNew) {
+  var isPh = isPlaceholder(t);
+
+  var card = document.createElement('article');
+  card.className = 'tut-card';
+  if (tool) applyToolColor(card, tool);
+
+  var thumb = document.createElement('button');
+  thumb.className = 'tut-thumb' + (isPh ? ' tut-thumb-ph' : '');
+  thumb.setAttribute('aria-label', (isPh ? 'Coming soon: ' : 'Play: ') + (t['title_' + LANG] || t.title_en));
+
+  if (!isPh) {
+    var img = document.createElement('img');
+    img.loading = 'lazy'; img.alt = '';
+    // A 120×90 load means YouTube returned its grey default (thumbnail not
+    // public, e.g. a Private video) → show the branded fallback instead.
+    img.onload = function () { if (img.naturalWidth <= 120) thumb.classList.add('no-img'); };
+    img.onerror = function () { thumb.classList.add('no-img'); };
+    img.src = thumbUrl(t.yt);
+    thumb.appendChild(img);
+    var fb = document.createElement('div'); fb.className = 'tut-thumb-fallback'; fb.textContent = 'KALYSTEON';
+    thumb.appendChild(fb);
+  }
+
+  if (isNew) {
+    var nb = document.createElement('span'); nb.className = 'tut-new';
+    nb.setAttribute('data-en', 'New'); nb.setAttribute('data-fr', 'Nouveau'); nb.textContent = LANG === 'fr' ? 'Nouveau' : 'New';
+    thumb.appendChild(nb);
+  } else if (isPh) {
+    var pt = document.createElement('span'); pt.className = 'tut-ph-tag';
+    pt.setAttribute('data-en', 'Coming soon'); pt.setAttribute('data-fr', 'À venir'); pt.textContent = LANG === 'fr' ? 'À venir' : 'Coming soon';
+    thumb.appendChild(pt);
+  }
+
+  if (t.duration) {
+    var dur = document.createElement('span'); dur.className = 'tut-duration'; dur.textContent = t.duration;
+    thumb.appendChild(dur);
+  }
+
+  var play = document.createElement('span'); play.className = 'tut-play';
+  play.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  thumb.appendChild(play);
+
+  if (isPh) { thumb.disabled = true; }
+  else { thumb.addEventListener('click', function () { openModal(t, tool); }); }
+  card.appendChild(thumb);
+
+  var info = document.createElement('div'); info.className = 'tut-info';
+
+  if (tool) {
+    var tc = document.createElement('div'); tc.className = 'tut-card-tool';
+    var tci = document.createElement('span'); tci.innerHTML = iconHTML(tool.id); tc.appendChild(tci);
+    var tcn = document.createElement('span'); tcn.setAttribute('data-en', tool.en); tcn.setAttribute('data-fr', tool.fr); tcn.textContent = tool[LANG] || tool.en; tc.appendChild(tcn);
+    info.appendChild(tc);
+  }
+
+  var h = document.createElement('h3'); h.className = 'tut-title';
+  h.setAttribute('data-en', t.title_en); h.setAttribute('data-fr', t.title_fr || t.title_en);
+  h.textContent = t['title_' + LANG] || t.title_en; info.appendChild(h);
+
+  var p = document.createElement('p'); p.className = 'tut-desc';
+  p.setAttribute('data-en', t.desc_en || ''); p.setAttribute('data-fr', t.desc_fr || t.desc_en || '');
+  p.textContent = t['desc_' + LANG] || t.desc_en || ''; info.appendChild(p);
+
+  var foot = document.createElement('div'); foot.className = 'tut-foot';
+  var date = document.createElement('span'); date.className = 'tut-date';
+  date.setAttribute('data-en', t.date_en || ''); date.setAttribute('data-fr', t.date_fr || t.date_en || '');
+  date.textContent = t['date_' + LANG] || t.date_en || ''; foot.appendChild(date);
+  if (!isPh) {
+    var link = document.createElement('a'); link.className = 'tut-yt-link';
+    link.href = 'https://www.youtube.com/watch?v=' + t.yt; link.target = '_blank'; link.rel = 'noopener';
+    link.setAttribute('data-en', 'YouTube ↗'); link.setAttribute('data-fr', 'YouTube ↗'); link.textContent = 'YouTube ↗';
+    foot.appendChild(link);
+  }
+  info.appendChild(foot);
+  card.appendChild(info);
+  return card;
+}
+
+// ── i18n ──
+function setLang(lang) {
+  localStorage.setItem('kalysteon-lang', lang);
+  LANG = lang;
+  document.querySelectorAll('[data-' + lang + ']').forEach(function (el) {
+    var val = el.getAttribute('data-' + lang);
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { el.placeholder = val; }
+    else { el.innerHTML = val; }
+  });
+  document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-btn-fr').classList.toggle('active', lang === 'fr');
+  document.documentElement.lang = lang;
+}
+
+// ── Boot ──
+(function () {
+  document.getElementById('tut-yt-channel').href = YT_CHANNEL;
+  renderFeatured();
+  renderLegend();
+  renderGrid();
+  setLang(localStorage.getItem('kalysteon-lang') || 'en');
+
+  // Modal close wiring
+  var m = document.getElementById('tut-modal');
+  m.querySelector('.tut-modal-close').addEventListener('click', closeModal);
+  m.querySelector('.tut-modal-backdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && m.classList.contains('open')) closeModal(); });
+
+  // Deep link: if the URL carries a video's #slug (e.g. from a YouTube
+  // description), open that tutorial's popup straight away.
+  var hash = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+  if (hash) {
+    var dt = tutByKey(hash);
+    if (dt && !isPlaceholder(dt)) openModal(dt, toolById(dt.cat));
+  }
+})();
+
+// ── Particles ──
+(function () {
+  var canvas = document.getElementById('ptx');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [], w, h;
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  for (var i = 0; i < 70; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      r: Math.random() * 1.2 + 0.3,
+      vx: (Math.random() - 0.5) * 0.16, vy: (Math.random() - 0.5) * 0.16,
+      a: Math.random() * 0.4 + 0.1, da: (Math.random() > 0.5 ? 1 : -1) * 0.002
+    });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (var p of particles) {
+      p.x += p.vx; p.y += p.vy; p.a += p.da;
+      if (p.a < 0.08) p.da = Math.abs(p.da);
+      if (p.a > 0.45) p.da = -Math.abs(p.da);
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(212,175,55,' + p.a.toFixed(3) + ')';
+      ctx.fill();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── Fade-in observer ──
+(function () {
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in-up').forEach(function (el) { obs.observe(el); });
+})();
+</script>
+
+  <script src="mobile-nav.js"></script>
+</body>
+</html>
