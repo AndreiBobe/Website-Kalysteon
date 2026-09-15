@@ -1,4 +1,11 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/stratum/download",
+      "destination": "https://github.com/AndreiBobe/stratum-releases/releases/latest/download/Stratum-Setup.exe",
+      "permanent": false
+    }
+  ]
 }

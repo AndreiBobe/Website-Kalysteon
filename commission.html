@@ -1187,9 +1187,15 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       </div>
     </div>
     <div class="nav-pill">
-      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Software" data-fr="Logiciels">Software</a>
+      <a class="nav-link nav-dropdown-trigger" href="stratum.html" data-en="Stratum" data-fr="Stratum">Stratum</a>
       <div class="nav-dd-menu">
-        <a class="nav-dd-item" href="stratum.html"><span class="nav-dd-icon">⬡</span><span data-en="Stratum" data-fr="Stratum">Stratum</span></a>
+        <a class="nav-dd-item" href="stratum.html#str-why"><span class="nav-dd-icon">◆</span><span data-en="What is it" data-fr="C'est quoi">What is it</span></a>
+        <a class="nav-dd-item" href="stratum.html#str-pipeline"><span class="nav-dd-icon">⇄</span><span data-en="How it works" data-fr="Fonctionnement">How it works</span></a>
+        <a class="nav-dd-item" href="stratum.html#str-features"><span class="nav-dd-icon">◈</span><span data-en="Features" data-fr="Fonctions">Features</span></a>
+        <a class="nav-dd-item" href="stratum.html#str-pricing"><span class="nav-dd-icon">$</span><span data-en="Pricing" data-fr="Tarifs">Pricing</span></a>
+        <div class="nav-dd-divider"></div>
+        <a class="nav-dd-item" href="stratum.html#str-download"><span class="nav-dd-icon">↓</span><span data-en="Download" data-fr="Télécharger">Download</span></a>
+        <a class="nav-dd-item" href="stratum.html#str-faq"><span class="nav-dd-icon">?</span><span data-en="FAQ" data-fr="FAQ">FAQ</span></a>
       </div>
     </div>
     <div class="nav-pill">
@@ -1287,7 +1293,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
           <span class="svc-duel-tag" data-en="4 Scale Presets" data-fr="4 Presets d'échelle">4 Scale Presets</span>
           <span class="svc-duel-tag">UE5 / Unity / Raw</span>
           <span class="svc-duel-tag" data-en="Vegetation Included" data-fr="Végétation incluse">Vegetation Included</span>
-          <span class="svc-duel-tag" data-en="From 1,799 €" data-fr="À partir de 1 799 €">From 1,799 €</span>
+          <span class="svc-duel-tag" data-en="Instant estimate" data-fr="Estimation immédiate">Instant estimate</span>
         </div>
         <div class="svc-duel-cta-row">
           <a href="#configure" class="btn-duel-terrain" onclick="switchTab('terrain')" data-en="Configure Your Terrain →" data-fr="Configurer votre terrain →">Configure Your Terrain →</a>
@@ -1349,8 +1355,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>Textures 2K</li>
       <li>2 revision rounds</li>
     </ul>
-    <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-s">1.799,99 €</div>
+    <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+    <div class="preset-price">~1 800 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1368,8 +1374,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>Textures 4K</li>
       <li>3 revision rounds</li>
     </ul>
-    <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-m">3.499,99 €</div>
+    <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+    <div class="preset-price">~3 500 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -1386,8 +1392,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
       <li>Textures 4–8K</li>
       <li>4 revision rounds</li>
     </ul>
-    <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-    <div class="preset-price" id="price-l">5.499,99 €</div>
+    <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+    <div class="preset-price">~5 500 €</div>
     <div class="preset-price-note" data-en="excl. VAT · all options" data-fr="HT · toutes options">excl. VAT · all options</div>
     <div class="preset-cta" data-en="Launch this project" data-fr="Lancer ce projet">Launch this project</div>
   </div>
@@ -2188,7 +2194,7 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
 
       <!-- PRICE ESTIMATE -->
       <div class="panel-price">
-        <div class="panel-price-label" data-en="Estimated price" data-fr="Estimation indicative">Estimated price</div>
+        <div class="panel-price-label" data-en="Indicative estimate" data-fr="Estimation indicative">Indicative estimate</div>
         <div class="panel-price-amount muted" id="price-amount">— €</div>
         <div class="panel-price-breakdown" id="price-breakdown">Sélectionnez un preset pour commencer.</div>
         <div class="panel-price-disclaimer" data-en="Estimate based on your selections.&#10;Precise quote confirmed within 48h." data-fr="Estimation basée sur vos sélections.&#10;Devis précis confirmé sous 48h.">Estimate based on your selections.<br>Precise quote confirmed within 48h.</div>
@@ -2228,8 +2234,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
           <li>~2–4 weeks standard</li>
           <li>2 revision rounds</li>
         </ul>
-        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-        <div class="preset-price">2.799,99 €</div>
+        <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+        <div class="preset-price">~2 800 €</div>
         <div class="preset-price-note" data-en="excl. VAT · Prop to Landmark" data-fr="HT · Prop à Landmark">excl. VAT · Prop to Landmark</div>
         <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
         <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
@@ -2250,8 +2256,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
           <li>~6–10 weeks standard</li>
           <li>2–3 revision rounds</li>
         </ul>
-        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-        <div class="preset-price">3.199,99 €</div>
+        <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+        <div class="preset-price">~3 200 €</div>
         <div class="preset-price-note" data-en="excl. VAT · Prop to Landmark" data-fr="HT · Prop à Landmark">excl. VAT · Prop to Landmark</div>
         <div class="preset-cta" data-en="Select this preset" data-fr="Choisir ce preset">Select this preset</div>
       </div>
@@ -2271,8 +2277,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
           <li>~8–12 weeks standard</li>
           <li>3 revision rounds</li>
         </ul>
-        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-        <div class="preset-price">5.699,99 €</div>
+        <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+        <div class="preset-price">~5 700 €</div>
         <div class="preset-price-note" data-en="excl. VAT · Prop to Landmark" data-fr="HT · Prop à Landmark">excl. VAT · Prop to Landmark</div>
         <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
@@ -2293,8 +2299,8 @@ header        { animation: pgSlideDown 0.7s cubic-bezier(0.2,0.9,0.4,1.1) both; 
           <li>~3–6 weeks standard</li>
           <li>2–3 revision rounds</li>
         </ul>
-        <div class="preset-price-label" data-en="Starting at" data-fr="À partir de">Starting at</div>
-        <div class="preset-price">3.399,99 €</div>
+        <div class="preset-price-label" data-en="Estimate" data-fr="Estimation">Estimate</div>
+        <div class="preset-price">~3 400 €</div>
         <div class="preset-price-note" data-en="excl. VAT · simple to full system" data-fr="HT · simple à système complet">excl. VAT · simple to full system</div>
         <div class="preset-soon-overlay"><span class="preset-soon-overlay-text">Coming Soon</span></div>
       </div>
