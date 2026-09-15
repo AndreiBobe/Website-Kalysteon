@@ -1,0 +1,3077 @@
+/* ─────────────────────────────────────────────
+   STRATUM — Design system tokens & shared styles
+   ───────────────────────────────────────────── */
+
+/* Fonts loaded via Google Fonts in index.html */
+
+:root {
+  /* Type scale */
+  /* "Malgun Gothic"/"Apple SD Gothic Neo" = fallback explicite pour le coréen
+     (Hangul) ; Manrope ne couvre que le latin. Le latin reste sur Manrope. */
+  --font-display: "Manrope", -apple-system, system-ui, "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-ui: "Manrope", -apple-system, system-ui, "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Malgun Gothic", monospace;
+
+  /* Spacing scale */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 48px;
+  --s-10: 64px;
+
+  /* Radii */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+
+  /* Brand */
+  --teal-100: #d5f5f7;
+  --teal-200: #9ce6ea;
+  --teal-300: #5ed3d8;
+  --teal-400: #2dc1c6;
+  --teal-500: #14a5b0;
+  --teal-600: #0a808d;
+  --teal-700: #0a6470;
+  --teal-800: #0a4854;
+  --teal-900: #052c36;
+
+  --coral-300: #f9b58f;
+  --coral-400: #f29870;
+  --coral-500: #e8835b;
+  --coral-600: #d96c44;
+  --coral-700: #b85433;
+
+  --sand-50: #faf6ef;
+  --sand-100: #f4ede2;
+  --sand-200: #e6dbc6;
+  --sand-300: #d2c2a4;
+
+  /* Status */
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --err: #f87171;
+}
+
+/* Japonais : polices japonaises en tete. Sinon les kanji prennent la forme
+   coreenne de Malgun Gothic, placee avant dans la pile commune. applyI18n pose
+   <html lang="ja">, c'est ce que :lang() lit. */
+html:lang(ja) {
+  --font-display: "Manrope", "Yu Gothic UI", "Meiryo", "Noto Sans JP", -apple-system, system-ui, sans-serif;
+  --font-ui: "Manrope", "Yu Gothic UI", "Meiryo", "Noto Sans JP", -apple-system, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Yu Gothic UI", "Meiryo", monospace;
+}
+
+/* ───── DARK THEME ───── */
+/* Les popups de <select>, scrollbars et widgets natifs sont dessines par
+   l'OS, pas par notre CSS : color-scheme est le seul levier pour qu'ils
+   suivent le theme. Sans lui, la liste deroulante s'ouvre en blanc. */
+.theme-dark { color-scheme: dark; }
+.theme-light { color-scheme: light; }
+
+.theme-dark {
+  --bg-deep: #050d14;
+  --bg-app: #08131c;
+  --bg-panel: #0c1e2a;
+  --bg-card: #102634;
+  --bg-card-hi: #133048;
+  --bg-input: #0a1a25;
+
+  --line: #1a3346;
+  --line-hi: #264a63;
+  --line-soft: #15293a;
+
+  /* Contrastes mesures sur le fond de carte #102634, le plus clair des trois
+     et donc le pire cas :
+       fg   13,59   fg-mid   8,02   fg-dim   4,62   fg-faint   3,13
+     Les deux derniers valaient 4,50 et 2,56. Voir tests/contrast.py. */
+  --fg: #e8f1f5;
+  --fg-mid: #a4becc;
+  --fg-dim: #7190a4;
+  --fg-faint: #547487;
+
+  --accent: var(--teal-300);
+  --accent-soft: var(--teal-700);
+  --accent-deep: var(--teal-800);
+
+  --cta: var(--coral-500);
+  --cta-hi: var(--coral-400);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px -8px rgba(0,0,0,.5);
+  --shadow-elev: 0 1px 0 rgba(255,255,255,.04) inset, 0 24px 48px -20px rgba(0,0,0,.6), 0 0 0 1px var(--line);
+
+  color: var(--fg);
+  background: var(--bg-app);
+}
+
+/* ───── LIGHT THEME ───── */
+.theme-light {
+  --bg-deep: #ece4d4;
+  --bg-app: #f4ede0;
+  --bg-panel: #faf6ed;
+  --bg-card: #ffffff;
+  --bg-card-hi: #fffdf8;
+  --bg-input: #ffffff;
+
+  --line: #e3dac8;
+  --line-hi: #c8bb9f;
+  --line-soft: #ede5d3;
+
+  /* Contrastes mesures sur le fond creme #f4ede0 (WCAG demande 4,5 pour du
+     texte courant, 3 pour un element d'interface) :
+       fg       14,00   fg-mid   5,51   fg-dim   4,61   fg-faint   3,22
+     Les deux derniers valaient 2,92 et 1,78 : illisibles. Seule la luminosite
+     a change, la teinte de la DA est conservee. */
+  --fg: #0d2230;
+  --fg-mid: #496272;
+  --fg-dim: #5b6d7a;
+  --fg-faint: #708796;
+
+  --accent: var(--teal-700);
+  --accent-soft: var(--teal-200);
+  --accent-deep: var(--teal-900);
+
+  --cta: var(--coral-600);
+  --cta-hi: var(--coral-500);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,.7) inset, 0 6px 18px -10px rgba(60,40,10,.18);
+  --shadow-elev: 0 1px 0 rgba(255,255,255,.7) inset, 0 20px 40px -22px rgba(60,40,10,.22), 0 0 0 1px var(--line);
+
+  color: var(--fg);
+  background: var(--bg-app);
+}
+
+/* Statuts lisibles sur fond clair. Le vert #4ade80 du sombre tombait vers 1,6
+   de contraste sur le creme : les pastilles des logiciels prets, en bas de la
+   barre laterale, disparaissaient. */
+.theme-light {
+  --ok: #15803d;
+  --warn: #b45309;
+  --err: #b91c1c;
+}
+
+/* ───── MIDNIGHT : sombre profond ─────
+   Porte aussi theme-dark : toutes les regles du sombre s'appliquent, seules
+   les couleurs de fond et de trait descendent vers le noir. Les textes gardent
+   ceux du sombre, leur contraste ne fait qu'augmenter. */
+.theme-midnight {
+  --bg-deep: #000000;
+  --bg-app: #03070a;
+  --bg-panel: #070d12;
+  --bg-card: #0b141b;
+  --bg-card-hi: #0f1b24;
+  --bg-input: #060c11;
+  --line: #16232d;
+  --line-hi: #22394a;
+  --line-soft: #101b23;
+}
+
+/* ───── GRAPHITE : sombre neutre ─────
+   Sans la teinte bleue de la DA, pour qui prefere un gris d'atelier. Contrastes
+   sur #22262b : fg-dim 4,9, fg-faint 3,3. */
+.theme-graphite {
+  --bg-deep: #111214;
+  --bg-app: #16181b;
+  --bg-panel: #1c1f23;
+  --bg-card: #22262b;
+  --bg-card-hi: #292e34;
+  --bg-input: #1a1d21;
+  --line: #30353c;
+  --line-hi: #3f464f;
+  --line-soft: #272b31;
+  --fg: #eceef1;
+  --fg-mid: #b3b9c2;
+  --fg-dim: #8c939d;
+  --fg-faint: #6f7680;
+}
+
+/* ───── ASH : gris moyen, facon logiciel 3D (Maya) ─────
+   Entre Graphite et Light : un fond gris moyen, des textes clairs. Contrastes
+   sur #4a4c51 : fg-dim 4,8, fg-faint 3,3, accent 5,0. */
+.theme-ash {
+  --bg-deep: #303236;
+  --bg-app: #3a3c40;
+  --bg-panel: #424448;
+  --bg-card: #4a4c51;
+  --bg-card-hi: #53565b;
+  --bg-input: #34363a;
+  --line: #5b5e63;
+  --line-hi: #6c7076;
+  --line-soft: #505358;
+  --fg: #f1f2f4;
+  --fg-mid: #d2d5d9;
+  --fg-dim: #bec2c8;
+  --fg-faint: #9a9ea5;
+}
+
+/* ───── Base ───── */
+* { box-sizing: border-box; }
+.app * { font-family: var(--font-ui); }
+/* Les modales sont montees sur <body>, hors de .app : on leur donne la
+   meme police de base (sinon fallback serif du navigateur). Les enfants
+   avec une police explicite (titres en display, mono) gardent la leur. */
+.modal-overlay { font-family: var(--font-ui); }
+
+/* ───── Guided tour (tutorial) ───── */
+.tour-overlay { position: fixed; inset: 0; z-index: 10000; pointer-events: auto; font-family: var(--font-ui); }
+.tour-spot {
+  position: fixed; border-radius: 8px; pointer-events: none;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.62);
+  transition: left .2s ease, top .2s ease, width .2s ease, height .2s ease;
+}
+.tour-bubble {
+  position: fixed; max-width: 320px; pointer-events: auto;
+  background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  max-height: calc(100vh - 24px); overflow-y: auto;
+}
+.tour-bubble .tour-step-n { font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); margin-bottom: 6px; }
+.tour-bubble .tour-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--fg); }
+.tour-bubble .tour-body { font-size: 12.5px; color: var(--fg-mid); line-height: 1.5; }
+.tour-bubble .tour-foot { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 36px 1fr;
+  overflow: hidden;
+  background: var(--bg-app);
+  color: var(--fg);
+  position: relative;
+  isolation: isolate;
+}
+
+/* ───── Window chrome ───── */
+.chrome {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 var(--s-4);
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--line-soft);
+  gap: var(--s-3);
+  user-select: none;
+  -webkit-app-region: drag;
+  position: relative;
+  z-index: 10;
+}
+.chrome-dots { display: flex; gap: 7px; }
+.chrome-dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--line-hi);
+  -webkit-app-region: no-drag;
+}
+.chrome-dot.r { background: #e87165; }
+.chrome-dot.y { background: #f0bc4e; }
+.chrome-dot.g { background: #5ec97a; }
+.chrome-title {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+  font-weight: 500;
+}
+.chrome-spacer { flex: 1; }
+.chrome-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--fg-faint);
+  letter-spacing: 0.05em;
+}
+
+/* ───── Layout ───── */
+.shell { display: grid; grid-template-columns: 232px 1fr; height: 100%; min-height: 0; }
+
+/* ───── Sidebar ───── */
+.sidebar {
+  background: var(--bg-deep);
+  border-right: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-5) var(--s-3) var(--s-3);
+  gap: var(--s-4);
+  position: relative;
+  overflow: hidden;
+}
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 22px,
+      color-mix(in oklab, var(--accent) 6%, transparent) 22px,
+      color-mix(in oklab, var(--accent) 6%, transparent) 23px
+    );
+  opacity: 0.35;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+.theme-light .sidebar::before { opacity: 0.5; }
+
+.brand {
+  display: flex; flex-direction: column; align-items: center; gap: var(--s-2);
+  padding: var(--s-3) 0 var(--s-4);
+  position: relative;
+}
+.brand-mark {
+  width: 78px; height: 78px;
+  display: grid; place-items: center;
+  position: relative;
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--accent);
+}
+.brand-tag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+  font-weight: 500;
+}
+
+.nav { display: flex; flex-direction: column; gap: 2px; margin-top: var(--s-3); position: relative; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 10px 12px 10px 18px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-mid);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s, color .15s;
+}
+.nav-item:hover { background: color-mix(in oklab, var(--accent) 8%, transparent); color: var(--fg); }
+.nav-item.active {
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 9px; bottom: 9px;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.nav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.85; }
+.nav-badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--fg) 5%, transparent);
+}
+
+.sidebar-foot {
+  margin-top: auto;
+  display: flex; flex-direction: column; gap: var(--s-1);
+  padding: var(--s-3) var(--s-3) var(--s-1);
+  border-top: 1px solid var(--line-soft);
+  position: relative;
+}
+.sidebar-foot .row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--fg-faint); }
+.sidebar-foot .row .k { font-family: var(--font-mono); }
+
+/* ───── Main column ───── */
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+  position: relative;
+  background: var(--bg-app);
+}
+
+.page-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: var(--s-7) var(--s-7) var(--s-5);
+  gap: var(--s-5);
+  position: relative;
+  z-index: 1;
+}
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-family: var(--font-display);
+}
+.page-sub {
+  font-size: 13px;
+  color: var(--fg-mid);
+  margin-top: 4px;
+}
+.page-sub .sep { color: var(--fg-faint); margin: 0 var(--s-2); }
+
+.page-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--fg-faint);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* ───── Common chips / buttons ───── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--fg-mid);
+  background: color-mix(in oklab, var(--fg) 5%, transparent);
+  border: 1px solid var(--line);
+}
+.chip.accent { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 30%, transparent); background: color-mix(in oklab, var(--accent) 8%, transparent); }
+.chip.cta { color: var(--cta); border-color: color-mix(in oklab, var(--cta) 30%, transparent); background: color-mix(in oklab, var(--cta) 8%, transparent); }
+.chip.dot::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor;
+}
+.chip.muted { color: var(--fg-dim); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  height: 32px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-md);
+  font-size: 12.5px;
+  font-weight: 600;
+  background: var(--bg-card);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.btn:hover { background: var(--bg-card-hi); border-color: var(--line-hi); }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--fg-mid); }
+.btn.ghost:hover { color: var(--fg); background: color-mix(in oklab, var(--fg) 5%, transparent); }
+.btn.primary {
+  background: linear-gradient(180deg, var(--cta-hi), var(--cta));
+  color: #fff;
+  border: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 8px 20px -10px var(--cta);
+}
+.btn.primary:hover { filter: brightness(1.08); }
+/* En light : bleu/teal car le coral passe mal sur fond beige */
+.theme-light .btn.primary {
+  background: linear-gradient(180deg, var(--teal-500), var(--teal-700));
+  box-shadow: 0 1px 0 rgba(255,255,255,.2) inset, 0 8px 20px -10px var(--teal-600);
+}
+
+/* ───── Input ───── */
+.input {
+  display: flex; align-items: center; gap: var(--s-2);
+  height: 32px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--bg-input);
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--fg);
+}
+.input.dim { color: var(--fg-mid); }
+.input input { background: none; border: 0; outline: none; color: inherit; font: inherit; flex: 1; min-width: 0; }
+.input .key { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-faint); }
+
+/* ───── Switch ───── */
+.switch {
+  width: 32px; height: 18px; border-radius: 999px;
+  background: color-mix(in oklab, var(--fg) 12%, transparent);
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .2s;
+  border: 1px solid var(--line);
+}
+.switch::after {
+  content: ""; position: absolute; top: 1px; left: 1px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--fg-dim);
+  transition: transform .2s, background .2s;
+}
+.switch.on { background: color-mix(in oklab, var(--accent) 22%, transparent); border-color: color-mix(in oklab, var(--accent) 50%, transparent); }
+.switch.on::after { transform: translateX(14px); background: var(--accent); }
+
+/* ───── Card ───── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ───── Tabs ───── */
+.tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--r-md); background: color-mix(in oklab, var(--fg) 5%, transparent); border: 1px solid var(--line); }
+.tab {
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--fg-mid);
+  cursor: pointer;
+}
+.tab.active { background: var(--bg-card); color: var(--fg); box-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 4px 8px -4px rgba(0,0,0,.25); }
+
+/* ───── Strata layer card aesthetics ───── */
+.strata-card {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: stretch;
+  gap: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.strata-rail {
+  background: linear-gradient(180deg,
+    var(--bg-card-hi),
+    color-mix(in oklab, var(--accent) 8%, var(--bg-card-hi))
+  );
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; align-items: center;
+  padding: var(--s-3) 0;
+  gap: 6px;
+  position: relative;
+}
+.strata-rail::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(0deg,
+    transparent 0,
+    transparent 5px,
+    color-mix(in oklab, var(--accent) 14%, transparent) 5px,
+    color-mix(in oklab, var(--accent) 14%, transparent) 6px
+  );
+  opacity: 0.6;
+}
+.strata-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+.strata-depth {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--fg-faint);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin-top: 6px;
+  letter-spacing: 0.18em;
+  position: relative; z-index: 1;
+}
+
+/* ── Drag handle dans le rail ─────────────────────────────────────── */
+.strata-drag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-faint);
+  cursor: grab;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -2px;
+  padding: 2px 0;
+  opacity: 0.5;
+  transition: opacity .15s, color .15s;
+}
+.strata-drag:hover { opacity: 1; color: var(--accent); }
+.strata-card { transition: transform .15s, opacity .15s, box-shadow .15s; }
+.strata-card[draggable="true"] { cursor: default; }
+.strata-card.dragging { opacity: 0.4; transform: scale(0.98); }
+
+/* ── Family zones ─────────────────────────────────────────────────── */
+.strata-zone {
+  border: 1px dashed transparent;
+  border-radius: 10px;
+  padding: 8px;
+  transition: background .15s, border-color .15s;
+}
+.strata-zone.drop-ok {
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.strata-zone.drop-bad {
+  background: color-mix(in oklab, var(--err, #ff6b6b) 5%, transparent);
+  border-color: color-mix(in oklab, var(--err, #ff6b6b) 35%, transparent);
+  cursor: not-allowed;
+}
+.zone-head {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 2px 6px 8px;
+}
+/* Titre de zone : un reperage, pas un contenu. Discret et identique pour les
+   trois familles. */
+.zone-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-dim);
+}
+.zone-body { display: flex; flex-direction: column; gap: var(--s-3); }
+.zone-empty {
+  padding: 18px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--fg-faint);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  font-style: italic;
+}
+.zone-connector {
+  min-height: 22px;
+  display: flex; justify-content: center;
+  position: relative;
+  flex: 1 1 auto;   /* absorbe l'espace dispo pour aligner avec le panneau droit */
+}
+.zone-connector::before {
+  content: "▼";
+  position: absolute;
+  font-size: 9px;
+  color: var(--fg-faint);
+  opacity: 0.55;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Pile de strates : remplir la hauteur dispo */
+#strata-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+#strata-list > .strata-zone { flex: 0 0 auto; }
+
+/* ── Add button per zone ──────────────────────────────────────────── */
+.zone-add {
+  background: transparent;
+  border: 1px dashed color-mix(in oklab, var(--accent) 40%, var(--line));
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.zone-add:hover {
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  border-color: var(--accent);
+}
+
+/* ── Remove (X) button on card ────────────────────────────────────── */
+.strata-remove {
+  background: transparent;
+  border: none;
+  color: var(--fg-faint);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  opacity: 0.5;
+  transition: opacity .15s, color .15s, background .15s;
+}
+.strata-remove:hover {
+  opacity: 1;
+  color: var(--err, #ff6b6b);
+  background: color-mix(in oklab, var(--err, #ff6b6b) 12%, transparent);
+}
+
+.strata-aside-row { display: flex; align-items: center; gap: 2px; }
+
+/* Verificateur de contrat HDA : entree + sortie. */
+.hda-contract {
+  border: 1px solid color-mix(in oklab, var(--ok) 30%, transparent);
+  background: color-mix(in oklab, var(--ok) 6%, transparent);
+  border-radius: var(--r-sm); padding: 7px 10px; margin-bottom: 10px;
+}
+.hda-contract.ko {
+  border-color: color-mix(in oklab, var(--err) 35%, transparent);
+  background: color-mix(in oklab, var(--err) 7%, transparent);
+}
+.hda-check { display: flex; align-items: baseline; gap: 8px; font-size: 11.5px; padding: 1px 0; }
+.hda-check-icon { width: 12px; flex-shrink: 0; font-weight: 700; }
+.hda-check.ok  .hda-check-icon { color: var(--ok); }
+.hda-check.ko  .hda-check-icon { color: var(--err); }
+.hda-check.warn .hda-check-icon { color: var(--warn, #ffb854); }
+.hda-check-lbl { width: 54px; flex-shrink: 0; color: var(--fg-mid); }
+.hda-check-detail { font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-dim); }
+.hda-check-fix { color: var(--err); font-size: 10.5px; }
+
+/* Contrat rempli : une seule ligne discrete, rien a corriger. */
+.hda-contract.ok-compact {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 4px 10px; font-size: 11px; color: var(--fg-dim);
+}
+.hda-contract.ok-compact .hda-check-icon { color: var(--ok); font-weight: 700; }
+.hda-contract.ok-compact .hda-check-detail { margin-left: auto; }
+
+/* Parametre numerique borne : curseur + valeur exacte. */
+.hda-slider { display: flex; align-items: center; gap: 10px; width: 100%; }
+.hda-slider input[type="range"] {
+  flex: 1; min-width: 0; height: 3px; -webkit-appearance: none; appearance: none;
+  background: var(--line); border-radius: 2px; outline: none; cursor: pointer;
+}
+.hda-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); cursor: pointer;
+  border: 2px solid var(--bg-panel);
+}
+.hda-slider input[type="range"]:hover::-webkit-slider-thumb { background: var(--fg); }
+
+/* Section Nommage, dans les reglages du projet. */
+.naming-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.naming-state { font-size: 11.5px; color: var(--fg-dim); }
+.naming-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.naming-lbl { width: 66px; flex-shrink: 0; font-size: 11.5px; color: var(--fg-faint); }
+.naming-row .input { flex: 1; min-width: 0; }
+
+/* Chaine de modificateurs Houdini : une liste ordonnee et reordonnable. Tous
+   les maillons sont egaux, y compris le premier. */
+.hou-chain-rows { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
+.hou-chain-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px; background: var(--bg-panel);
+  border: 1px solid var(--line-soft); border-radius: var(--r-sm);
+  cursor: grab; user-select: none;
+  transition: border-color .12s, opacity .12s;
+}
+.hou-chain-row:hover { border-color: color-mix(in oklab, var(--accent) 30%, transparent); }
+.hou-chain-row.dragging {
+  cursor: grabbing; opacity: 0.9;
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+/* Eteint : la ligne garde sa place et ses reglages, elle est juste sautee. */
+.hou-chain-row.off { opacity: 0.42; }
+.hou-chain-grip { color: var(--fg-faint); font-size: 11px; letter-spacing: -2px; flex-shrink: 0; }
+.hou-chain-del { height: 22px; padding: 0 7px; font-size: 11px; flex-shrink: 0; }
+.hou-chain-badge {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.08em;
+  padding: 2px 5px; border-radius: 3px; border: 1px solid; flex-shrink: 0;
+}
+.hou-chain-badge.style {
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+.hou-chain-badge.ko {
+  color: var(--err); font-weight: 700;
+  border-color: color-mix(in oklab, var(--err) 40%, transparent);
+  background: color-mix(in oklab, var(--err) 9%, transparent);
+}
+.hou-chain-empty {
+  font-size: 11px; font-style: italic; color: var(--fg-dim);
+  padding: 6px 2px 8px;
+}
+.hou-chain-num {
+  font-family: var(--font-mono); font-size: 10px; color: var(--accent);
+  min-width: 14px;
+}
+.hou-chain-path {
+  flex: 1; font-size: 11.5px; color: var(--fg);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Licence Houdini, sous la ligne d'etat de l'integration. */
+.dcc-license {
+  display: block; width: fit-content; margin-top: 4px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em;
+  padding: 1px 5px; border-radius: 3px; border: 1px solid;
+}
+.dcc-license.ok  { color: var(--ok);  border-color: color-mix(in oklab, var(--ok) 45%, transparent); }
+.dcc-license.err { color: var(--warn, #ffb854); border-color: color-mix(in oklab, var(--warn, #ffb854) 45%, transparent); }
+
+/* Petit "?" d'aide sur chaque niveau d'agencement. */
+.layout-row-info {
+  width: 14px; height: 14px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--line-soft); border-radius: 50%;
+  font-size: 9px; font-family: var(--font-mono);
+  color: var(--fg-faint); cursor: help;
+  transition: color .15s, border-color .15s;
+}
+.layout-row-info:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Bouton "actualiser" d'une strate : meme gabarit que la croix, en accent. */
+.strata-refresh {
+  background: transparent;
+  border: none;
+  color: var(--fg-faint);
+  cursor: pointer;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  opacity: 0.5;
+  transition: opacity .15s, color .15s, background .15s;
+}
+.strata-refresh:hover {
+  opacity: 1;
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+}
+.strata-refresh.spinning svg { animation: strata-spin .7s linear infinite; }
+@keyframes strata-spin { to { transform: rotate(360deg); } }
+
+/* ── Add Strata modal ─────────────────────────────────────────────── */
+/* ── Run footer (stats + narrative inline + ETA + Run polish) ──── */
+.run-footer {
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--bg-panel), color-mix(in oklab, var(--bg-panel) 92%, var(--accent)));
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 72px;
+}
+.run-footer-stats { display: flex; gap: 28px; flex-shrink: 0; }
+.run-footer-narrative {
+  flex: 1;
+  display: flex; align-items: center; justify-content: flex-end;
+  font-size: 12.5px; color: var(--fg-mid);
+  font-family: var(--font-body); line-height: 1.4;
+  text-align: right; padding-right: 8px; min-width: 0;
+}
+.run-narrative-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.run-narrative-text strong { color: var(--accent); font-weight: 700; }
+.run-footer-cta { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.run-btn {
+  height: 46px !important;
+  padding: 0 28px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em;
+  display: inline-flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 16px color-mix(in oklab, var(--cta) 35%, transparent);
+  transition: transform .15s, box-shadow .15s;
+}
+.run-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in oklab, var(--cta) 50%, transparent);
+}
+.run-btn:active { transform: translateY(0); }
+.run-btn.ready { animation: runBtnPulse 2.4s ease-in-out infinite; }
+@keyframes runBtnPulse {
+  0%, 100% { box-shadow: 0 4px 16px color-mix(in oklab, var(--cta) 35%, transparent); }
+  50%      { box-shadow: 0 6px 22px color-mix(in oklab, var(--cta) 60%, transparent); }
+}
+@media (max-width: 1300px) { .run-footer-narrative { display: none; } }
+
+/* ── ETA badge prominent ─────────────────────────────────────────── */
+.run-eta {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; border-radius: 8px;
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+  cursor: help;
+  transition: background .15s, border-color .15s;
+}
+.run-eta-icon { color: var(--accent); flex-shrink: 0; }
+.run-eta-body { display: flex; flex-direction: column; align-items: flex-end; line-height: 1; gap: 3px; }
+.run-eta-time {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: var(--fg); letter-spacing: 0.02em;
+}
+.run-eta-info {
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--fg-faint);
+}
+.run-eta[data-confidence="good"] {
+  background: color-mix(in oklab, var(--ok, #7fe6a3) 10%, transparent);
+  border-color: color-mix(in oklab, var(--ok, #7fe6a3) 40%, transparent);
+}
+.run-eta[data-confidence="good"] .run-eta-icon { color: var(--ok, #7fe6a3); }
+.run-eta[data-confidence="rough"] {
+  background: color-mix(in oklab, var(--warn, #f5d04a) 8%, transparent);
+  border-color: color-mix(in oklab, var(--warn, #f5d04a) 30%, transparent);
+}
+.run-eta[data-confidence="rough"] .run-eta-icon { color: var(--warn, #f5d04a); }
+.run-eta[data-confidence="none"] {
+  opacity: 0.4; background: transparent; border-color: var(--line);
+}
+.run-eta[data-confidence="none"] .run-eta-icon { color: var(--fg-faint); }
+
+/* ── Sidebar compactée ───────────────────────────────────────────── */
+.brand-compact { padding: 8px 0 12px; gap: 4px; }
+.brand-compact .brand-name { font-size: 12px; letter-spacing: 0.28em; }
+.brand-compact .brand-tag  { font-size: 9px; letter-spacing: 0.08em; }
+.dcc-pill {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 7px; border-radius: 6px;
+  background: color-mix(in oklab, var(--fg) 4%, transparent);
+  font-size: 10.5px; font-family: var(--font-mono);
+  color: var(--fg-faint); cursor: default;
+  transition: background .15s, color .15s;
+}
+.dcc-pill .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--fg-faint); flex-shrink: 0;
+}
+.dcc-pill[data-status="online"] {
+  color: var(--ok, #7fe6a3);
+  background: color-mix(in oklab, var(--ok, #7fe6a3) 8%, transparent);
+}
+.dcc-pill[data-status="online"] .dot {
+  background: var(--ok, #7fe6a3);
+  box-shadow: 0 0 6px color-mix(in oklab, var(--ok, #7fe6a3) 80%, transparent);
+}
+.dcc-pill .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-version {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9.5px; letter-spacing: 0.16em;
+  color: var(--fg-faint); text-transform: uppercase;
+  padding-top: 10px; margin-top: 8px;
+  border-top: 1px solid var(--line-soft);
+  opacity: 0.7;
+}
+
+/* ── Séparateur visuel Project ↔ Strata (ligne décorée) ──────────── */
+.project-strata-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 4px 18px;     /* gros air avant + après → laisse respirer */
+  user-select: none;
+}
+.project-strata-divider .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--accent) 35%, transparent) 50%,
+    transparent 100%);
+}
+.project-strata-divider .label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--accent) 55%, var(--fg-faint));
+  flex-shrink: 0;
+}
+
+/* ── Strata cards : drag handle + chip preset + clic anywhere ──── */
+.strata-card { cursor: pointer; }
+.strata-card:hover { border-color: color-mix(in oklab, var(--accent) 35%, var(--line)); }
+
+/* Bordure gauche colorée par famille (signature visuelle de la strate) */
+.strata-card[data-family="generator"] { border-left: 3px solid color-mix(in oklab, #f5d04a 60%, var(--line)); }
+.strata-card[data-family="modifier"]  { border-left: 3px solid color-mix(in oklab, #ff7a3a 55%, var(--line)); }
+.strata-card[data-family="texturer"]  { border-left: 3px solid color-mix(in oklab, #ff5a5f 55%, var(--line)); }
+.strata-card[data-family="engine"]    { border-left: 3px solid color-mix(in oklab, #a78bfa 55%, var(--line)); }
+.strata-drag {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: color-mix(in oklab, var(--accent) 60%, var(--fg-faint));
+  cursor: grab;
+  user-select: none;
+  letter-spacing: -3px;
+  padding: 4px 2px;
+  opacity: 0.7;
+  transition: opacity .15s, color .15s, transform .15s;
+}
+.strata-drag:hover { opacity: 1; color: var(--accent); transform: scale(1.15); }
+.strata-drag:active { cursor: grabbing; }
+.strata-meta .preset-chip {
+  background: color-mix(in oklab, var(--fg-faint) 8%, transparent);
+  border-color: color-mix(in oklab, var(--fg-faint) 25%, var(--line));
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+.strata-aside .strata-config-btn {
+  height: 26px;
+  padding: 0 10px;
+  font-size: 11px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* ── Info tooltip (icône ? + bulle JS-positionnée) ───────────────── */
+/* L'icône est purement décorative ; la bulle est un élément global attaché
+   au body via JS pour échapper aux containers en overflow:hidden. */
+.info-tip {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--fg-faint) 25%, transparent);
+  color: var(--fg-faint);
+  font-size: 9px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: help;
+  margin-left: 5px;
+  vertical-align: middle;
+  user-select: none;
+  transition: background .15s, color .15s;
+}
+.info-tip:hover {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  color: var(--accent);
+}
+
+/* Bulle globale (un seul nœud, réutilisé pour toutes les info-tips) */
+.info-tip-bubble {
+  position: fixed;
+  background: var(--bg-card);
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--line));
+  color: var(--fg);
+  padding: 8px 11px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: var(--font-body);
+  font-weight: normal;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-transform: none;
+  max-width: 280px;
+  z-index: 99999;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  transition: opacity .12s;
+  white-space: normal;
+  text-align: left;
+}
+.info-tip-bubble.visible { opacity: 1; }
+.info-tip-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: color-mix(in oklab, var(--accent) 30%, var(--line));
+}
+
+/* ── Layout preset description (sous le dropdown) ────────────────── */
+.layout-desc {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  padding: 6px 8px;
+  background: color-mix(in oklab, var(--accent) 4%, transparent);
+  border-radius: 4px;
+  margin-top: 4px;
+  word-break: break-all;
+  line-height: 1.5;
+  border-left: 2px solid color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: grid; place-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  min-width: 420px; max-width: 560px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+.modal-head {
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.modal-title { font-size: 14px; font-weight: 600; color: var(--fg); }
+.modal-sub   { font-size: 11px; color: var(--fg-faint); margin-top: 2px; }
+.modal-body  {
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 60vh; overflow-y: auto;
+}
+.modal-foot {
+  padding: 10px 18px 14px;
+  display: flex; justify-content: flex-end; gap: 8px;
+  border-top: 1px solid var(--line);
+}
+.add-candidate {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .15s, border-color .15s;
+}
+.add-candidate:hover {
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--line));
+}
+.add-cand-info { display: flex; flex-direction: column; gap: 2px; }
+.add-cand-title { font-size: 13px; font-weight: 600; color: var(--fg); }
+.add-cand-desc  { font-size: 11px; color: var(--fg-faint); }
+
+.strata-body { padding: var(--s-4) var(--s-5); display: flex; flex-direction: column; gap: var(--s-3); min-width: 0; }
+.strata-head { display: flex; align-items: center; gap: var(--s-3); }
+.strata-app-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.strata-title { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.strata-desc { font-size: 12px; color: var(--fg-mid); }
+.strata-meta { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-top: var(--s-1); }
+
+.strata-aside {
+  display: flex; flex-direction: column; align-items: flex-end;
+  justify-content: space-between;
+  padding: var(--s-4) var(--s-4);
+  gap: var(--s-3);
+  border-left: 1px solid var(--line-soft);
+  background: color-mix(in oklab, var(--bg-card-hi) 50%, transparent);
+  min-width: 120px;
+}
+
+/* Connector between strata */
+.strata-connector {
+  height: 14px;
+  position: relative;
+  margin: -1px 0;
+}
+.strata-connector::before {
+  content: "";
+  position: absolute;
+  left: 27px; top: 0; bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(180deg, var(--accent) 0, var(--accent) 2px, transparent 2px, transparent 5px);
+  opacity: 0.45;
+}
+.strata-connector .pulse {
+  position: absolute; left: 22px; top: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+/* ───── Logs ───── */
+.log-entry {
+  display: grid;
+  grid-template-columns: 72px 70px 1fr;
+  gap: var(--s-3);
+  padding: 4px var(--s-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  align-items: baseline;
+  border-bottom: 1px solid var(--line-soft);
+}
+.log-entry:last-child { border-bottom: 0; }
+.log-time { color: var(--fg-faint); }
+.log-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  font-size: 10px;
+  color: var(--fg-dim);
+}
+/* Memes couleurs que les badges de strate (APP_COLOR dans app.js) : la
+   console et la pile doivent designer le meme logiciel de la meme facon. */
+.log-tag.gaea { color: #f5d04a; }
+.log-tag.hou  { color: #ff7a3a; }
+.log-tag.ue   { color: #a78bfa; }
+.log-tag.uni  { color: #5ea7ff; }
+.log-tag.sys { color: var(--fg-dim); }
+.log-msg { color: var(--fg-mid); }
+.log-msg .acc { color: var(--accent); }
+.log-msg .warn { color: var(--warn); }
+.log-msg .err { color: var(--err); }
+.log-msg .ok { color: var(--ok); }
+
+/* ───── Progress bar ───── */
+.prog {
+  height: 4px; border-radius: 2px; background: var(--line-soft); overflow: hidden; position: relative;
+}
+.prog > span {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--coral-400));
+  border-radius: 2px;
+}
+
+/* ───── Mini terrain thumb (SVG-ish placeholder) ───── */
+.terrain-thumb {
+  border-radius: var(--r-md);
+  background: var(--bg-card-hi);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+}
+.terrain-thumb svg { display: block; width: 100%; height: 100%; }
+
+/* ───── Scroll containers ───── */
+.scroll { overflow: auto; min-height: 0; }
+.scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.scroll::-webkit-scrollbar-thumb { background: var(--line-hi); border-radius: 99px; border: 2px solid transparent; background-clip: padding-box; }
+.scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ───── Section labels ───── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--cta);
+  text-transform: uppercase;
+}
+
+/* ───── Stat ───── */
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat .k { font-size: 10px; color: var(--fg-faint); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.stat .v { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+.stat .v .unit { font-size: 11px; color: var(--fg-dim); margin-left: 3px; font-weight: 500; }
+
+/* ───── Misc ───── */
+.divider { height: 1px; background: var(--line-soft); }
+.vdivider { width: 1px; background: var(--line-soft); }
+.faint { color: var(--fg-faint); }
+.dim { color: var(--fg-dim); }
+.mid { color: var(--fg-mid); }
+.acc { color: var(--accent); }
+.cta-txt { color: var(--cta); }
+
+/* ── 3D Viewer toolbar ───────────────────────────── */
+.viewer-tool {
+  height: 20px;
+  min-width: 26px;
+  padding: 0 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.viewer-tool:hover {
+  background: color-mix(in oklab, var(--fg) 6%, transparent);
+  color: var(--fg);
+}
+.viewer-tool.active {
+  background: color-mix(in oklab, var(--accent) 18%, transparent);
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+/* ── Projects modal rows ───────────────────────────── */
+.proj-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  transition: background .12s, border-color .12s;
+  margin-bottom: 4px;
+}
+.proj-row:hover {
+  background: color-mix(in oklab, var(--fg) 4%, transparent);
+}
+/* Commandes gelees pendant un run : la config du run est figee, les laisser
+   cliquables ferait croire a un effet qu'elles n'ont pas. */
+body.run-locked [data-toggle],
+body.run-locked #btn-projects,
+body.run-locked #btn-export-browse {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* La ligne entiere ouvre le projet. */
+.proj-row.clickable { cursor: pointer; }
+.proj-row.clickable:hover { border-color: color-mix(in oklab, var(--accent) 30%, transparent); }
+.proj-row.current {
+  border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+/* ── 3D Viewer wrapper bg (suit le thème) ─────────── */
+.theme-dark .viewer-wrap {
+  background: linear-gradient(180deg, #0a1620, #050d14);
+}
+.theme-light .viewer-wrap {
+  background: linear-gradient(180deg, #f4ede0, #e6dbc6);
+}
+
+/* ── Strata "running" scanline effect ─────────────── */
+@keyframes stratum-sweep {
+  0%   { left: -35%; }
+  100% { left: 100%; }
+}
+@keyframes stratum-pulse {
+  /* glow contenu : pas plus large que ~6px autour de la card pour ne pas déborder visuellement sur les voisins */
+  0%, 100% { box-shadow: 0 0 0 1px var(--ok) inset, 0 0 6px -1px color-mix(in oklab, var(--ok) 30%, transparent); }
+  50%      { box-shadow: 0 0 0 1px var(--ok) inset, 0 0 10px 0   color-mix(in oklab, var(--ok) 45%, transparent); }
+}
+.strata-card.strata-running {
+  animation: stratum-pulse 2.4s ease-in-out infinite;
+}
+.strata-card.strata-running::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 35%;
+  left: -35%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--ok) 18%, transparent) 50%,
+    transparent 100%);
+  pointer-events: none;
+  animation: stratum-sweep 2.4s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* ── Assets list (compact rows par variant) ────────── */
+.asset-section + .asset-section { margin-top: 4px; }
+.asset-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 4px 6px;
+  border-bottom: 1px dashed var(--line-soft);
+  margin-bottom: 6px;
+}
+.asset-section-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  padding: 3px 8px;
+  line-height: 1.2;
+  border-radius: 4px;
+  border: 1px solid color-mix(in oklab, var(--accent) 32%, transparent);
+}
+.asset-section-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+}
+.asset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.asset-row {
+  display: grid;
+  /* Cinq colonnes pour cinq elements. Les indicateurs de maps partagent la
+     derniere : un enfant de plus passerait a la ligne et doublerait la hauteur. */
+  grid-template-columns: 6px 30px 1fr auto auto;
+  align-items: center;
+  gap: 9px;
+  padding: 4px 9px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: background .12s, border-color .12s, transform .08s;
+}
+.asset-row:hover {
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 20%, transparent);
+}
+.asset-row:active {
+  transform: scale(0.995);
+}
+.asset-row:focus-visible {
+  border-color: var(--accent);
+}
+.asset-row.selected {
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 45%, transparent);
+}
+.asset-row.loading {
+  animation: asset-row-pulse 1.2s ease-in-out infinite;
+}
+@keyframes asset-row-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 25%, transparent); }
+  50%      { box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 25%, transparent); }
+}
+.asset-row-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.asset-row-ext {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.asset-row-name {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg);
+}
+.asset-row-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+}
+.asset-row-maps {
+  display: inline-flex;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+  min-width: 22px;
+  justify-content: flex-end;
+}
+
+/* ── Files tab ──────────────────────────────────── */
+.files-row {
+  display: grid;
+  grid-template-columns: 18px 18px 32px auto 1fr auto 22px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background .12s, border-color .12s;
+}
+.files-row:hover {
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+}
+.files-row.selected {
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+}
+.files-checkbox {
+  width: 14px; height: 14px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.files-icon { font-size: 13px; line-height: 1; }
+.files-ext {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg-dim);
+}
+.files-variant-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
+}
+.files-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg);
+}
+.files-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  white-space: nowrap;
+}
+.files-action-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-xs);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--fg-dim);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.files-action-btn:hover {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+/* ── Library v2 (asset catalogue) ─────────────────── */
+.lib-cards-grid {
+  display: grid;
+  /* Largeur mini reglable par le curseur de la barre de filtres. */
+  grid-template-columns: repeat(auto-fill, minmax(var(--lib-card-min, 220px), 1fr));
+  gap: 14px;
+}
+.lib-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .12s, border-color .15s, box-shadow .15s;
+  display: flex;
+  flex-direction: column;
+}
+.lib-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  box-shadow: 0 8px 22px -10px rgba(0,0,0,0.4);
+}
+.lib-card-thumb {
+  position: relative;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--line-soft);
+}
+.lib-card-fmt {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(8, 19, 28, 0.55);
+  padding: 3px 7px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+.lib-card-tex-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 8px var(--ok);
+}
+.lib-card-body { padding: 10px 12px; }
+.lib-card-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg);
+}
+.lib-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+.lib-card-project {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.lib-card-variant {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+.lib-card-style {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+.lib-card-stats {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--fg-faint);
+  margin-top: 6px;
+}
+
+/* ── Library v2 : sections par projet ────────────────────────────── */
+.lib-project-section { margin-bottom: 24px; }
+.lib-project-section:last-child { margin-bottom: 0; }
+.lib-project-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed color-mix(in oklab, var(--accent) 22%, var(--line));
+}
+.lib-project-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: 0.02em;
+}
+.lib-project-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.lib-proj-source {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+}
+
+/* ── Library v2 : badge "from Store" sur thumb ──────────────────── */
+.lib-card-source {
+  position: absolute;
+  top: 8px;
+  right: 24px;
+  font-size: 12px;
+  background: rgba(8,19,28,0.55);
+  padding: 1px 5px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Library v2 : tags compact ──────────────────────────────────── */
+.lib-card-tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+.lib-card-tag {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--fg-faint) 12%, transparent);
+  color: var(--fg-dim);
+  border: 1px solid color-mix(in oklab, var(--fg-faint) 22%, var(--line));
+}
+.lib-card-tag-more {
+  font-size: 9px;
+  color: var(--fg-faint);
+  padding: 2px 4px;
+  align-self: center;
+}
+
+/* ── Library v2 : barre d'actions ──────────────────────────────── */
+.lib-card-actions {
+  display: flex;
+  gap: 2px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  align-items: center;
+}
+.lib-act {
+  flex: 1;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--fg-dim);
+  padding: 5px 0;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.lib-act:hover {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 25%, transparent);
+}
+.lib-act.lib-act-danger:hover {
+  background: color-mix(in oklab, var(--err, #ff6b6b) 12%, transparent);
+  color: var(--err, #ff6b6b);
+  border-color: color-mix(in oklab, var(--err, #ff6b6b) 30%, transparent);
+}
+.lib-act.lib-act-menu { flex: 0 0 28px; }
+
+/* ── Library v2 : menu "More" popover ──────────────────────────── */
+.lib-more-menu {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+}
+.lib-more-menu button {
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .12s;
+}
+.lib-more-menu button:hover {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+/* ── Pack & export : scope radio cards ────────────────────────── */
+.scope-radio {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  align-items: flex-start;
+  transition: background .15s, border-color .15s;
+}
+.scope-radio:has(input:checked) {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+.scope-radio input { margin: 2px 0 0 0; accent-color: var(--accent); flex-shrink: 0; }
+.scope-radio .scope-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg);
+}
+.scope-radio .scope-desc {
+  font-size: 10.5px;
+  color: var(--fg-faint);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* ── Store v1 ────────────────────────────────────────────────────── */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.store-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.store-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  box-shadow: 0 12px 26px -10px rgba(0,0,0,0.5);
+}
+.store-card-thumb {
+  position: relative;
+  aspect-ratio: 16/9;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-card-hi);
+  border-bottom: 1px solid var(--line-soft);
+}
+.store-card-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(8,19,28,0.7);
+  color: var(--fg);
+  backdrop-filter: blur(4px);
+}
+.store-card-badge-free {
+  background: color-mix(in oklab, var(--ok, #7fe6a3) 30%, rgba(8,19,28,0.7));
+  color: var(--ok, #7fe6a3);
+}
+.store-card-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.store-card-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.store-card-creator {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.store-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+}
+.store-card-price {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.store-card-price-free {
+  color: var(--ok, #7fe6a3);
+}
+.store-card-stats {
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+/* ── Store detail panel (slide-in right) ─────────────────────────── */
+.store-detail {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 440px;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--line);
+  box-shadow: -8px 0 28px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  animation: storeDetailIn .2s ease-out;
+}
+@keyframes storeDetailIn {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+.store-detail-head {
+  padding: 18px 22px 12px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.store-detail-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: var(--fg-faint);
+  font-size: 22px;
+  font-weight: 300;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: background .12s, color .12s;
+}
+.store-detail-close:hover {
+  background: color-mix(in oklab, var(--fg) 8%, transparent);
+  color: var(--fg);
+}
+.store-detail-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--cta);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.store-detail-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 2px;
+}
+.store-detail-creator {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.store-detail-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 22px;
+  min-height: 0;
+}
+.store-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.store-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  background: var(--bg-card-hi);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.store-stat-k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--fg-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.store-stat-v {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fg);
+}
+.store-stat-v .unit {
+  font-size: 10px;
+  color: var(--fg-faint);
+  margin-left: 3px;
+  font-weight: 500;
+}
+.store-detail-section {
+  margin-top: 14px;
+}
+.store-detail-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.store-detail-tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, var(--line));
+  font-family: var(--font-mono);
+}
+.store-detail-foot {
+  padding: 14px 22px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card-hi);
+}
+.store-detail-price {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Library drawer */
+.lib-drawer-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.lib-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  background: var(--bg-card-hi);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+}
+.lib-stat-k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+.lib-stat-v {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* Library thumb loading state */
+.lib-card-loading-dot {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: lib-thumb-pulse 1.4s ease-in-out infinite;
+}
+@keyframes lib-thumb-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50%      { opacity: 1; transform: scale(1.2); }
+}
+.lib-card .lib-card-thumb {
+  transition: filter .3s;
+}
+.lib-card:hover .lib-card-thumb {
+  filter: brightness(1.08) contrast(1.05);
+}
+
+/* ── License tier cards ───────────────────────────── */
+.lic-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.lic-card {
+  background: var(--bg-card-hi);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .2s, transform .12s;
+}
+.lic-card.current {
+  background: color-mix(in oklab, var(--accent) 6%, var(--bg-card-hi));
+}
+.lic-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.lic-tier-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+.lic-tier-label {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--fg-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+.lic-card-feat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: color-mix(in oklab, var(--fg) 3%, transparent);
+  border-radius: var(--r-sm);
+}
+.lic-card-feat > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.lic-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.lic-v { font-size: 12.5px; font-weight: 600; color: var(--fg); }
+.lic-blurb {
+  font-size: 11.5px;
+  color: var(--fg-dim);
+  line-height: 1.4;
+}
+
+/* ── Storage & shortcuts panels ─────────────────── */
+.storage-list, .sc-list { display: flex; flex-direction: column; gap: 4px; }
+.storage-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+  background: var(--bg-card-hi);
+}
+.storage-name { font-weight: 600; font-size: 13px; }
+.storage-desc { font-size: 11px; color: var(--fg-dim); margin-top: 2px; }
+.storage-path {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-faint);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 480px;
+}
+.storage-size {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg-mid);
+  white-space: nowrap;
+}
+
+.sc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.sc-row:last-child { border-bottom: 0; }
+.sc-action { font-size: 12.5px; }
+.sc-keys { display: inline-flex; gap: 4px; align-items: center; }
+.sc-keys kbd {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: var(--bg-card-hi);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  box-shadow: 0 1px 0 var(--line-soft);
+}
+
+/* ── Pipeline page : wrap quand fenêtre étroite ─────────────────── */
+@media (max-width: 1180px) {
+  .pipeline-cols {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* page-head : wrap si étroit pour que le sélecteur projet ne casse pas */
+@media (max-width: 1000px) {
+  .page-head {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+/* ───── Agencement du dossier d'export (layout designer) ───── */
+.layout-sub {
+  margin-top: 10px; margin-bottom: 5px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-faint);
+}
+.layout-rows { display: flex; flex-direction: column; gap: 4px; }
+.layout-row {
+  display: flex; align-items: center; gap: 10px; cursor: grab; user-select: none;
+  padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--bg-card-hi);
+  /* transform anime : les lignes s'ecartent en douceur pour laisser la place
+     a celle qu'on deplace. */
+  transition: opacity .15s, border-color .15s, transform .16s ease;
+  position: relative;
+}
+.layout-row.off { opacity: 0.45; }
+.layout-row.dragging {
+  /* Pas de transition sur la ligne saisie : elle doit rester collee au
+     curseur, sinon elle traine derriere la souris. */
+  transition: none;
+  /* Surtout pas d'opacite reduite ici : ca la ferait ressembler a une ligne
+     desactivee (.off) et on croirait avoir eteint le niveau en le deplacant. */
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 10%, var(--bg-card-hi));
+  box-shadow: 0 10px 22px -12px rgba(0,0,0,.7);
+  cursor: grabbing;
+}
+.layout-row-grip {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: -2px;
+  color: var(--fg-faint); cursor: grab; user-select: none;
+}
+.layout-row-grip:hover { color: var(--accent); }
+.layout-row-name { flex: 1; font-size: 12px; }
+.layout-preview-tree {
+  margin: 0; padding: 9px 11px;
+  border: 1px solid var(--line-soft); border-radius: var(--r-sm);
+  background: var(--bg-input);
+  font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;
+  color: var(--fg-mid); white-space: pre; overflow-x: auto;
+}
+.layout-eq {
+  margin-left: 8px; text-transform: none; letter-spacing: 0;
+  font-family: var(--font-ui); font-size: 11px; color: var(--fg-dim);
+}
+
+/* Liste deroulante : accord avec la DA (le rendu reste natif, seules ces
+   proprietes sont honorees par le moteur). */
+select option {
+  background: var(--bg-card);
+  color: var(--fg);
+}
+select optgroup {
+  background: var(--bg-card);
+  color: var(--fg-faint);
+  font-style: normal;
+}
+
+/* Liste deroulante custom : le popup natif ne peut pas etre arrondi ni suivre
+   la DA (rendu par l'OS), on dessine donc la notre. Voir wireSelectPopups(). */
+.sel-popup {
+  position: fixed;
+  z-index: 12000;
+  background: var(--bg-card);
+  border: 1px solid var(--line-hi);
+  border-radius: var(--r-md);
+  padding: 4px;
+  box-shadow: 0 20px 44px -14px rgba(0, 0, 0, .75);
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  animation: selPop .12s ease-out;
+}
+@keyframes selPop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.sel-opt {
+  padding: 7px 11px;
+  border-radius: var(--r-sm);
+  color: var(--fg);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.sel-opt:hover { background: color-mix(in oklab, var(--accent) 15%, transparent); }
+.sel-opt.selected { color: var(--accent); font-weight: 600; }
+.sel-opt.disabled { opacity: .4; cursor: not-allowed; }
+.sel-opt.disabled:hover { background: none; }
+.sel-group {
+  padding: 8px 11px 4px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* Reglage d'exposition dans la barre du viewer 3D */
+.viewer-range {
+  -webkit-appearance: none; appearance: none;
+  width: 66px; height: 3px; margin: 0 2px;
+  background: var(--line-hi); border-radius: 2px; cursor: pointer;
+}
+.viewer-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--accent); border: 0; cursor: grab;
+}
+.viewer-range::-webkit-slider-thumb:active { cursor: grabbing; }
+
+/* Panneau lumiere du viewer 3D */
+.light-panel {
+  position: fixed;
+  z-index: 12000;
+  min-width: 236px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-hi);
+  border-radius: var(--r-md);
+  padding: 12px 13px;
+  box-shadow: 0 20px 44px -14px rgba(0, 0, 0, .75);
+  font-family: var(--font-ui);
+  animation: selPop .12s ease-out;
+}
+.lp-title {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--cta); margin-bottom: 9px;
+}
+.lp-row { display: flex; align-items: center; gap: 9px; padding: 4px 0; }
+.lp-label { font-size: 11.5px; color: var(--fg-mid); width: 88px; flex-shrink: 0; }
+.lp-range { flex: 1; width: auto; }
+.lp-val {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--accent);
+  width: 34px; text-align: right; flex-shrink: 0;
+}
+.lp-hint {
+  font-size: 10.5px; color: var(--fg-faint); line-height: 1.4;
+  margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line-soft);
+}
+.lp-sep {
+  height: 1px; background: var(--line-soft); margin: 10px 0 8px;
+}
+.lp-check {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 11.5px; color: var(--fg); margin-top: 2px;
+}
+.lp-check input { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+
+/* Un bloc de parametres par maillon de la chaine Houdini. */
+.hda-file-block + .hda-file-block { margin-top: 14px; }
+
+/* Choisir un modificateur sans quitter Stratum. Les trois livres sont dans la
+   liste ; l'explorateur de fichiers ne sert qu'a son propre HDA. */
+.hou-chain-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hda-doc-link {
+  background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit;
+  font-size: 11px; color: var(--accent); text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hda-doc-link:hover { color: var(--fg); }
+.hda-pick-head {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-faint); margin: 12px 0 6px;
+}
+.hda-pick-head:first-child { margin-top: 0; }
+.hda-pick-row {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 9px 11px; margin-bottom: 6px; cursor: pointer; font-family: inherit;
+  background: var(--bg-card); border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm); color: var(--fg);
+}
+.hda-pick-row:hover:not(.off) { border-color: var(--accent); background: var(--bg-card-hi); }
+.hda-pick-row.off { opacity: 0.5; cursor: default; }
+.hda-pick-name { font-weight: 600; font-size: 12.5px; white-space: nowrap; }
+.hda-pick-note { flex: 1; min-width: 0; font-size: 11px; color: var(--fg-dim); }
+.hda-pick-tier {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 999px;
+  color: var(--cta); border: 1px solid color-mix(in oklab, var(--cta) 40%, transparent);
+}
+
+/* Doc d'auteur : ce qu'il faut pour qu'un HDA tourne dans Stratum. */
+.hda-doc-step { padding: 9px 0; border-top: 1px solid var(--line-soft); }
+.hda-doc-step:first-child { border-top: 0; padding-top: 0; }
+.hda-doc-t { font-weight: 600; font-size: 12.5px; color: var(--accent); margin-bottom: 3px; }
+.hda-doc-b { font-size: 12px; line-height: 1.55; color: var(--fg-mid); }
+
+/* Styles auxquels un modificateur s'applique. La pastille prend la couleur du
+   style (meme code que la boutique) pour qu'on la reconnaisse partout. */
+.hda-styles {
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  margin: 2px 0 8px;
+}
+.hda-styles-lbl {
+  font-size: 10.5px; color: var(--fg-faint); margin-right: 3px;
+}
+.hda-styles-state {
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--fg-faint);
+  margin-left: 4px;
+}
+.style-chip {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 7px; border-radius: 3px;
+  border: 1px solid var(--line); color: var(--fg-faint);
+  cursor: pointer; user-select: none;
+  transition: color .12s, border-color .12s, background .12s;
+}
+.style-chip:hover { border-color: var(--chip); }
+.style-chip.on {
+  color: var(--chip);
+  border-color: color-mix(in oklab, var(--chip) 45%, transparent);
+  background: color-mix(in oklab, var(--chip) 10%, transparent);
+}
+
+/* Parametres d'un HDA. Une ligne par reglage, et une seule ligne pour les
+   reglages declines par style : cinq cases au lieu de cinq lignes. */
+.hda-param-row { display: flex; align-items: center; gap: 14px; padding: 2px 0; }
+.hda-param-lbl {
+  width: 130px; flex-shrink: 0; font-size: 11.5px; color: var(--fg-mid);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hda-style-group {
+  display: flex; align-items: center; gap: 6px 14px; flex-wrap: wrap;
+  padding: 5px 0; margin: 2px 0;
+  border-top: 1px solid color-mix(in oklab, var(--line) 45%, transparent);
+}
+.hda-style-cells {
+  /* auto-fit plutot que 5 colonnes fixes : dans un panneau etroit les cases
+     passent a la ligne au lieu d'ecraser les libelles en "R.. S.. P..". */
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(62px, 1fr));
+  gap: 6px 5px; flex: 1 1 250px; min-width: 0;
+}
+.hda-style-cell { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.hda-style-cell-lbl {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--chip); opacity: 0.9;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hda-style-cell .input { width: 100%; }
+.hda-style-cell .input input { width: 100%; text-align: center; }
+
+/* Un HDA a beaucoup de reglages peut depasser la hauteur de la fenetre : la
+   liste defile toute seule pour que le reste du panneau reste atteignable. */
+#hou-params-area { max-height: 52vh; overflow-y: auto; padding-right: 4px; }
+
+/* Jauge fine sous chaque valeur de style. Elle donne la lecture immediate du
+   reglage sans reprendre la place d'un curseur pleine ligne. */
+.hda-mini-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 3px; margin: 0; padding: 0;
+  background: var(--line); border-radius: 2px; cursor: pointer;
+}
+.hda-mini-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--chip); border: none; cursor: pointer;
+}
+.hda-mini-range:hover::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in oklab, var(--chip) 25%, transparent); }
+/* Les fleches du champ chiffre font doublon avec la jauge et grignotent la
+   largeur utile de la case. Les fleches du clavier continuent de marcher. */
+.hda-style-cell input[type="number"]::-webkit-inner-spin-button,
+.hda-style-cell input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; margin: 0;
+}
+
+/* En-tete du Pipeline reduit a ce qui agit : le selecteur de projet. Le titre
+   et le fil d'etapes ne faisaient que nommer la page ouverte, ce que la
+   navigation de gauche indique deja. */
+.page-head.compact {
+  align-items: center;
+  padding: var(--s-5) var(--s-7) var(--s-4);
+}
+.page-head-slot { min-width: 0; flex: 1; }
+.page-lastrun {
+  font-family: var(--font-mono); font-size: 10.5px;
+  color: var(--fg-faint); letter-spacing: 0.04em;
+}
+
+/* Carte de strate fermee : icone, titre, resume de config. Rien d'autre.
+   La description du logiciel est passee en infobulle, et les pastilles
+   "variantes"/"preset" ont laisse la place a ce que l'utilisateur a regle. */
+.strata-body { padding: 10px 14px; gap: 5px; }
+.strata-summary {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: 0 6px; margin-top: 0; min-width: 0;
+  font-size: 11.5px; line-height: 1.5; color: var(--fg-mid);
+}
+.strata-sum-bit { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* Le premier element est celui qui identifie la strate (le terrain, la chaine
+   de modificateurs, le materiau) : il porte l'accent, le reste est du detail. */
+.strata-sum-bit.lead {
+  color: var(--fg); font-weight: 600;
+  font-family: var(--font-mono); font-size: 11px;
+}
+.strata-sum-sep { color: var(--fg-faint); }
+
+/* Les feuilles de l'app posent des display: explicites sur beaucoup d'elements
+   (.stat, .page-head span...), ce qui l'emporte sur l'attribut hidden. */
+[hidden] { display: none !important; }
+
+/* ── Flow de strates resserre ──────────────────────────────────────
+   Le connecteur entre familles portait flex: 1 1 auto pour etirer la colonne
+   jusqu'a la hauteur du panneau de droite. Depuis que les cartes ont maigri,
+   il absorbait tout l'espace libre et creusait deux trous de la hauteur d'une
+   carte. Il redevient un simple raccord de hauteur fixe. */
+.zone-connector {
+  flex: 0 0 auto;
+  min-height: 0; height: 18px;
+}
+.zone-connector::before {
+  /* Le meme trait pointille que entre deux cartes d'une meme famille, aligne
+     sur la colonne des numeros : le flow se lit comme une seule chaine. */
+  content: "";
+  left: 27px; top: 0; bottom: 0;
+  width: 2px; transform: none;
+  background: repeating-linear-gradient(180deg,
+    var(--accent) 0, var(--accent) 2px, transparent 2px, transparent 5px);
+  opacity: 0.32;
+}
+/* Pas de fleche entre les familles : elle se posait par-dessus le trait
+   pointille, et son fond de masquage ne collait pas au fond reel. Le trait
+   seul dit deja que les familles s'enchainent, exactement comme entre deux
+   cartes d'une meme famille. */
+.zone-connector::after { content: none; }
+.strata-zone { padding: 2px 8px 6px; }
+.zone-head { padding: 2px 6px 5px; }
+.zone-body { gap: 0; }
+.strata-connector { height: 10px; }
+.project-strata-divider { margin: 6px 0 4px; }
+
+/* ── Resume en pastilles ───────────────────────────────────────────
+   La meme information qu'avant, mais lisible en diagonale : ce qui identifie
+   la strate ressort, le reste s'efface. */
+.strata-summary { gap: 4px; margin-top: 1px; }
+.strata-sum-bit {
+  padding: 2px 7px; border-radius: 4px;
+  border: 1px solid transparent;
+  background: color-mix(in oklab, var(--fg) 5%, transparent);
+  color: var(--fg-mid); font-size: 10.5px; line-height: 1.35;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.strata-sum-bit.lead {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.02em; color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 28%, transparent);
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+}
+/* La fleche relie deux pastilles : elle ne doit pas en etre une. */
+.strata-sum-bit.arrow {
+  padding: 0 1px; background: none; border: none;
+  color: var(--fg-faint); font-size: 11px;
+}
+.strata-sum-bit.muted {
+  background: none; border: 1px dashed var(--line);
+  color: var(--fg-faint); font-style: italic;
+}
+
+/* ── Onglet Apercu : trois bandes fixes, une seule qui defile ───────
+   L'entete et le viewer restent visibles ; seule la liste de meshes defile.
+   Le conteneur ne defile plus lui-meme quand cet onglet est actif, sinon on
+   aurait deux barres de defilement imbriquees. */
+#output-content.pane-fixed { overflow: hidden; display: flex; flex-direction: column; }
+.output-tab[data-tab="preview"] { flex: 1; min-height: 0; gap: 10px; }
+.output-tab[data-tab="preview"] > *:not(#assets-grid) { flex: 0 0 auto; }
+#preview-3d-wrap {
+  height: var(--preview-h, 300px);
+  min-height: 140px;
+}
+#assets-grid {
+  flex: 1 1 auto; min-height: 90px;
+  overflow-y: auto; overflow-x: hidden;
+  align-content: start; padding-right: 4px;
+}
+/* La poignee occupe toute la largeur pour etre facile a attraper, mais ne se
+   voit que par un petit trait au centre. */
+#preview-split {
+  height: 9px; margin: -4px 0 -3px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: ns-resize; flex-shrink: 0;
+}
+#preview-split span {
+  width: 46px; height: 3px; border-radius: 2px;
+  background: var(--line);
+  transition: background .12s, width .12s;
+}
+#preview-split:hover span, #preview-split.dragging span {
+  background: var(--accent); width: 64px;
+}
+
+/* ── Progression reelle ────────────────────────────────────────────
+   Une barre par strate, une globale dans l'en-tete. Le remplissage suit un
+   comptage d'elements ; quand le total n'est pas encore connu, la barre passe
+   en mode indetermine au lieu d'afficher un pourcentage invente. */
+.strata-bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 7px;
+}
+.strata-bar-track {
+  flex: 1; height: 4px; border-radius: 2px; overflow: hidden;
+  background: color-mix(in oklab, var(--fg) 8%, transparent);
+}
+.strata-bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg,
+    color-mix(in oklab, var(--ok) 70%, var(--accent)), var(--ok));
+  transition: width .3s ease-out;
+}
+/* Le compte a cote de la barre, pas au-dessus : au-dessus il passait derriere
+   les pastilles du resume. */
+.strata-bar-count {
+  font-family: var(--font-mono); font-size: 9.5px;
+  color: var(--fg-dim); letter-spacing: 0.04em;
+  min-width: 46px; text-align: right; flex-shrink: 0;
+}
+.strata-bar.indeterminate .strata-bar-fill {
+  background: linear-gradient(90deg, transparent,
+    color-mix(in oklab, var(--ok) 60%, transparent), transparent);
+  animation: strata-bar-sweep 1.3s linear infinite;
+}
+@keyframes strata-bar-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+#run-progress { display: flex; align-items: center; gap: 10px; max-width: 340px; }
+.run-progress-track {
+  flex: 1; height: 5px; border-radius: 3px; overflow: hidden;
+  background: color-mix(in oklab, var(--fg) 10%, transparent);
+}
+.run-progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--cta));
+  transition: width .35s ease-out;
+}
+.run-progress-pct {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--fg-mid); min-width: 34px; text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strata-bar.indeterminate .strata-bar-fill { animation: none; opacity: 0.5; }
+  .strata-bar-fill, .run-progress-fill { transition: none; }
+}
+
+/* ── Carte Projet ─────────────────────────────────────────────────
+   Elle porte la structure dont tout le reste depend, elle doit donc peser
+   plus que les cartes de strate : plus de hauteur, un vrai titre, un liseré
+   d'accent. Le nom du projet y figure meme s'il est aussi dans le selecteur :
+   ici c'est le sujet de la carte, pas une repetition. */
+.project-card {
+  padding: 16px 20px 18px;
+  margin-bottom: 12px;
+  border-left: 3px solid color-mix(in oklab, var(--accent) 55%, var(--line));
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--accent) 5%, var(--bg-card)), var(--bg-card));
+}
+#project-card-summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "ident actions" "path actions";
+  align-items: center;
+  gap: 4px 14px;
+  cursor: pointer;
+}
+.project-ident { grid-area: ident; display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.project-ident .section-label { color: var(--accent); flex-shrink: 0; }
+#project-summary-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--fg);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.project-path {
+  grid-area: path;
+  display: flex; align-items: center; gap: 7px; min-width: 0;
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg-dim);
+}
+.project-path svg { flex-shrink: 0; color: var(--fg-faint); }
+#project-summary-export { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.project-actions {
+  grid-area: actions;
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+
+/* Remise a zero des parametres d'un HDA. Desactive quand rien n'a ete touche :
+   l'etat du bouton dit deja si ce modificateur est regle ou d'origine. */
+.hda-reset {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 22px; padding: 0 8px;
+  background: none; border: 1px solid var(--line);
+  border-radius: var(--r-sm); cursor: pointer;
+  color: var(--fg-dim); font-family: var(--font-mono);
+  font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  transition: color .12s, border-color .12s, background .12s;
+}
+.hda-reset:hover:not(:disabled) {
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+.hda-reset:disabled { opacity: 0.3; cursor: default; }
+.hda-reset svg { flex-shrink: 0; }
+
+/* Barre figee sur un echec : elle marque l'endroit ou ca s'est arrete. */
+.strata-bar.failed .strata-bar-fill,
+#run-progress.failed .run-progress-fill {
+  background: var(--err);
+  animation: none;
+}
+#run-progress.failed .run-progress-pct { color: var(--err); }
+
+/* ── En-tete de l'apercu 3D ────────────────────────────────────────
+   Le titre se tronque, la barre d'outils ne se disloque pas : si la place
+   manque, elle passe entiere a la ligne suivante plutot que de laisser un
+   bouton se detacher du groupe. */
+.preview-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap;
+}
+.preview-head-ident { flex: 1 1 180px; min-width: 0; }
+#preview-title {
+  font-size: 15px; font-weight: 700; margin-top: 2px; min-height: 20px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.preview-head-tools {
+  display: flex; gap: 6px; align-items: center;
+  flex: 0 0 auto; flex-wrap: nowrap;
+}
+
+/* Blocs d'un panneau de moteur. Douze reglages en liste plate ne se lisent
+   pas ; regroupes par question (ou ca va, quels materiaux, quel mesh) ils se
+   parcourent en diagonale. */
+.cfg-section + .cfg-section {
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid color-mix(in oklab, var(--line) 55%, transparent);
+}
+
+/* Une section repliable est un bloc, pas un intertitre : le trait separateur
+   ne suffisait pas a dire ou un groupe finit et ou le suivant commence. */
+.cfg-section.foldable {
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--bg-card-hi) 45%, transparent);
+  padding: 0; margin-top: 10px;
+}
+.cfg-section.foldable + .cfg-section.foldable { padding-top: 0; border-top: 1px solid var(--line); }
+.cfg-section-head {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 9px 11px; background: transparent; border: 0;
+  cursor: pointer; text-align: left;
+}
+.cfg-section-head:hover .cfg-section-label { color: var(--fg-mid); }
+.cfg-section.foldable .cfg-section-label { margin-bottom: 0; transition: color .15s; }
+.cfg-section-chev {
+  display: inline-flex; color: var(--fg-faint);
+  transform: rotate(90deg);          /* ouvert : la section se deploie vers le bas */
+  transition: transform .18s ease;
+}
+.cfg-section-chev svg { width: 11px; height: 11px; }
+.cfg-section.folded .cfg-section-chev { transform: none; }  /* replie : vers la droite */
+.cfg-section-body { padding: 0 11px 10px; }
+.cfg-section.folded .cfg-section-body { display: none; }
+
+.cfg-section-label {
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--fg-faint); margin-bottom: 6px;
+}
+
+/* Element de resume signalant un reglage manquant qui empechera le run. */
+.strata-sum-bit.warn {
+  color: var(--warn); font-weight: 600;
+  border-color: color-mix(in oklab, var(--warn) 40%, transparent);
+  background: color-mix(in oklab, var(--warn) 10%, transparent);
+}
+
+/* Bande "versions nettoyees en attente". Ce n'est pas un reglage mais un etat
+   de sortie : elle n'apparait que quand il y a quelque chose a valider, et
+   prend toute la largeur au lieu de tenir dans la colonne de libelle. */
+.promote-strip {
+  display: flex; align-items: center; gap: 12px;
+  margin: 6px 0 2px; padding: 8px 10px;
+  border: 1px solid color-mix(in oklab, var(--accent) 32%, transparent);
+  border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--accent) 7%, transparent);
+}
+.promote-lbl {
+  flex: 1; min-width: 0; font-size: 12px; color: var(--fg-mid);
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.promote-strip .btn { height: 26px; padding: 0 12px; font-size: 11px; flex-shrink: 0; }
+
+/* Bande "a remettre a jour". Meme forme que .promote-strip, mais en jaune :
+   ce n'est pas quelque chose a valider, c'est un decalage entre une variante
+   et ce qui a ete fait apres elle. */
+.stale-strip {
+  display: flex; align-items: center; gap: 12px;
+  margin: 6px 0 2px; padding: 8px 10px;
+  border: 1px solid color-mix(in oklab, var(--warn) 34%, transparent);
+  border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--warn) 8%, transparent);
+}
+.stale-strip .btn { height: 26px; padding: 0 12px; font-size: 11px; flex-shrink: 0; }
+
+/* Etat d'un niveau neutralise par le dossier de base. Un mot, pas une phrase :
+   il repond a la question que pose la ligne grisee, sans alourdir la liste. */
+.layout-row-tag {
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--fg-faint); border: 1px solid var(--line);
+  border-radius: 3px; padding: 1px 5px; white-space: nowrap;
+}
+
+/* Chemin de destination : une seule colonne, racine comprise. Deux blocs
+   separes ne disaient pas qu'ils composaient un seul chemin. */
+.dest-chain { display: flex; flex-direction: column; gap: 4px; }
+.dest-chain .layout-preview-tree { margin-top: 8px; }
+
+/* La racine ne se deplace pas et ne s'eteint pas : ni poignee, ni curseur de
+   saisie, et un liseré qui la distingue des niveaux. */
+.dest-root-row {
+  cursor: default;
+  border-color: color-mix(in oklab, var(--accent) 30%, var(--line));
+  background: color-mix(in oklab, var(--accent) 5%, var(--bg-card-hi));
+  padding-top: 4px; padding-bottom: 4px;
+}
+.dest-root-prefix {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--fg-faint); flex-shrink: 0;
+}
+.dest-root-row input {
+  flex: 1; min-width: 0; height: 24px;
+  background: var(--bg-input); color: var(--fg);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 0 8px; font-family: var(--font-mono); font-size: 11px;
+}
+.dest-root-row input:focus { outline: none; border-color: var(--accent); }
+
+/* Prefixe d'un niveau. Discret et vide par defaut : la ligne se lit comme
+   avant tant qu'on ne s'en sert pas. */
+.dest-pfx {
+  width: 84px; flex-shrink: 0; height: 22px;
+  background: var(--bg-input); color: var(--fg);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 0 6px; font-family: var(--font-mono); font-size: 10.5px;
+  cursor: text;
+}
+.dest-pfx::placeholder { color: var(--fg-faint); opacity: .55; }
+.dest-pfx:focus { outline: none; border-color: var(--accent); }
+.layout-row.off .dest-pfx { opacity: .6; }
+
+/* Sous-dossier d'un niveau : seconde ligne dans la meme case, indentee sous le
+   niveau auquel il appartient. La case reste une case, donc le glisser-deposer
+   emporte le sous-dossier avec son niveau, ce qui est exactement ce qu'il fait
+   dans le chemin. */
+.layout-row.has-sub { flex-direction: column; align-items: stretch; gap: 6px; }
+.dest-row-main {
+  display: flex; align-items: center; gap: 10px;
+  flex: 1 1 auto; min-width: 0;
+}
+.dest-sub-line { display: flex; align-items: center; gap: 8px; padding-left: 22px; }
+.dest-sub-branch { color: var(--fg-faint); font-family: var(--font-mono); font-size: 11px; }
+.dest-sub {
+  flex: 1; min-width: 0; height: 22px;
+  background: var(--bg-input); color: var(--fg);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: 0 6px; font-family: var(--font-mono); font-size: 10.5px; cursor: text;
+}
+.dest-sub::placeholder { color: var(--fg-faint); opacity: .55; }
+.dest-sub:focus { outline: none; border-color: var(--accent); }
+
+/* Le bouton n'existe que tant qu'aucun sous-dossier n'est pose : discret, et il
+   disparait des qu'il a servi. */
+.dest-sub-add {
+  flex-shrink: 0; width: 20px; height: 20px; padding: 0;
+  background: transparent; color: var(--fg-faint);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  font-size: 13px; line-height: 1; cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.dest-sub-add:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Les champs suivaient la fin du libelle, donc ils flottaient d'une ligne a
+   l'autre selon la longueur du mot. Cet espace pousse tout ce qui suit contre
+   le bord droit, et la place du bouton est reservee meme quand il n'y en a
+   pas : les colonnes s'alignent. */
+.dest-row-gap { flex: 1 1 auto; min-width: 4px; }
+.dest-sub-slot { width: 20px; flex-shrink: 0; }
+.dest-sub-label {
+  width: 96px; flex-shrink: 0; font-size: 10.5px; color: var(--fg-faint);
+  font-family: var(--font-mono);
+}
+.dest-sub-add.open { color: var(--accent); border-color: var(--accent); }
+
+/* Grille des variantes de la carte Gaea.
+   Trois etats visibles d'un coup d'oeil : cochee (ce que le run produira),
+   existante (deja sur le disque), libre (rien encore). Le jaune signale une
+   variante refaite dont le travail aval n'a pas suivi. */
+.var-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 6px;
+  margin-top: 4px;
+}
+.var-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg-card);
+  color: var(--fg);
+  cursor: pointer;
+  font: inherit;
+  transition: border-color .12s, background .12s;
+  /* On balaye la grille bouton enfonce : sans ca, le glisse selectionnerait
+     le texte des pastilles au lieu de les cocher. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.var-chip:hover { border-color: var(--line-hi); }
+.var-chip-letter { font-size: 13px; font-weight: 700; line-height: 1; }
+.var-chip-note {
+  font-size: 10px;
+  line-height: 1;
+  color: var(--fg-dim);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.var-chip.on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+/* Le texte de la pastille cochee prend --fg et non --accent : sur le fond
+   accent-soft, l'accent tombe a 3,8 en theme sombre, sous le seuil pour du
+   10px. --fg tient 5,97 en sombre et 11,6 en clair. */
+.var-chip.on .var-chip-letter,
+.var-chip.on .var-chip-note { color: var(--fg); }
+.var-chip.free {
+  border-style: dashed;
+  background: transparent;
+}
+.var-chip.free .var-chip-letter { color: var(--fg-dim); font-weight: 500; }
+.var-chip.stale { border-color: var(--warn); }
+.var-chip.stale .var-chip-note { color: var(--warn); }
+/* Lettre au-dela de la limite de licence du projet : visible, pas cochable. */
+.var-chip.locked { opacity: 0.4; cursor: not-allowed; }
+.var-chip.locked:hover { border-color: var(--line); }
+.var-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 11px;
+}
+.var-foot .var-del { height: 26px; padding: 0 10px; font-size: 11px; }
+.var-foot .var-del[disabled] { opacity: .4; cursor: default; }
+
+/* Champ de seed, en mode Custom. Il vit SUR la pastille : le seed appartient
+   a la variante, et une liste positionnelle ne disait pas quel nombre allait
+   ou. Le placeholder montre la valeur Auto qui s'appliquera si on le laisse
+   vide, pour que le repli soit visible plutot que devine. */
+.var-seed {
+  width: 100%;
+  margin-top: 2px;
+  padding: 1px 2px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-app);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.var-seed::-webkit-outer-spin-button,
+.var-seed::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.var-seed:focus { outline: none; border-color: var(--accent); }
+.var-seed::placeholder { color: var(--fg-faint); }
+
+/* Ligne d'identite de la carte projet. Elle reste visible carte ouverte : le
+   nom du projet ne doit pas disparaitre sous le curseur qui vient de cliquer
+   dessus, et c'est elle qui referme. */
+.project-ident { cursor: pointer; }
+/* `display: flex` sur ces deux blocs l'emporte sur l'attribut hidden : sans
+   cette regle, masquer le chemin et les actions a l'ouverture ne faisait
+   rien du tout. */
+.project-path[hidden], .project-actions[hidden] { display: none !important; }
+.project-ident.is-open { padding-bottom: 4px; border-bottom: 1px solid var(--line-soft); margin-bottom: 6px; }
+
+/* Panneau Photo : meme cadre que le panneau lumiere. */
+.photo-panel { min-width: 290px; }
+.pp-seg { display: flex; gap: 4px; flex: 1; justify-content: flex-end; }
+.pp-seg button {
+  height: 24px; padding: 0 10px; font-size: 11px; font-family: inherit; cursor: pointer;
+  background: var(--bg-card); color: var(--fg-mid);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+}
+.pp-seg button.on { border-color: var(--accent); color: var(--accent); }
+.pp-select {
+  height: 24px; font-size: 11px; padding: 0 6px; margin-left: auto;
+  background: var(--bg-card); color: var(--fg);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+}
+.lp-check.off { opacity: 0.45; }
+.pp-actions { display: flex; gap: 6px; }
+.pp-actions .btn { flex: 1; height: 30px; font-size: 11.5px; }
+.pp-progress { font-size: 11px; color: var(--fg-mid); margin-top: 6px; font-family: var(--font-mono); }
+.pp-folder { display: flex; align-items: center; gap: 8px; }
+.pp-path {
+  flex: 1; min-width: 0; font-size: 10.5px; color: var(--fg-dim); font-family: var(--font-mono);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: rtl; text-align: left;
+}
+.lp-mini {
+  height: 22px; padding: 0 8px; font-size: 11px; font-family: inherit; cursor: pointer;
+  background: var(--bg-card); color: var(--fg); border: 1px solid var(--line); border-radius: var(--r-sm);
+}
+.lp-mini:hover { border-color: var(--accent); }
+.lp-color {
+  width: 44px; height: 22px; padding: 0; margin-left: auto; cursor: pointer;
+  background: none; border: 1px solid var(--line); border-radius: var(--r-sm);
+}
+.pp-folder-actions { display: flex; gap: 6px; justify-content: flex-end; margin-top: 6px; }
+
+/* Reglages photo partages (panneau 📷 et grande fenetre). */
+.ps-host { display: flex; flex-direction: column; gap: 6px; }
+.ps-row { display: flex; align-items: center; gap: 6px; }
+.ps-lbl { font-size: 11.5px; color: var(--fg-mid); margin-right: auto; }
+.ps-select {
+  height: 24px; font-size: 11px; padding: 0 6px;
+  background: var(--bg-card); color: var(--fg);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+}
+.ps-color {
+  width: 30px; height: 22px; padding: 0; cursor: pointer;
+  background: none; border: 1px solid var(--line); border-radius: var(--r-sm);
+}
+.ps-chk { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--fg); cursor: pointer; }
+.ps-chk.off { opacity: 0.45; }
+.ps-sub {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--fg-faint); margin-top: 6px;
+}
+.ps-hint { font-size: 10.5px; color: var(--fg-dim); line-height: 1.45; margin-top: 4px; }
+#pv-photo-panel { min-width: 280px; padding: 12px 14px; }
+

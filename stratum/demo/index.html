@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en" class="theme-dark">
+<head>
+  <meta charset="utf-8">
+  <title>Stratum by Kalysteon</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="stratum.ico">
+
+  <!-- Polices embarquees : memes fichiers woff2 que Google Fonts, mais sans
+       requete reseau. Un logiciel de bureau doit s'afficher correctement hors
+       ligne et derriere un pare-feu de studio. -->
+  <link href="./vendor/fonts/fonts.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Three.js pour preview 3D des meshes (ES modules, copie locale).
+       Stratum est un logiciel de bureau : le charger depuis un CDN rendait
+       l'apercu 3D inutilisable hors ligne et derriere un pare-feu de studio.
+       La copie vit dans web/vendor/three, version 0.159.0, imports transitifs
+       compris (fflate, NURBS, BufferGeometryUtils). -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three/build/three.module.js",
+      "three/addons/": "./vendor/three/examples/jsm/"
+    }
+  }
+  </script>
+
+  <style>
+    /* Override : pas de chrome custom (on garde celui de Windows), donc l'app est juste un shell direct */
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--bg-app); }
+    .app { display: block; grid-template-rows: none !important; height: 100vh; }
+    .shell { height: 100%; }
+    .main { display: flex; flex-direction: column; min-height: 0; }
+    .page { min-height: 0; }
+    .strata-card { width: 100%; transition: transform .15s ease-out, box-shadow .2s; }
+    .strata-card:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 12px 28px -10px rgba(0,0,0,.55); }
+
+    /* Animations : expansion inline d'une strata */
+    .strata-expand { overflow: hidden; max-height: 0; transition: max-height .35s ease-out, opacity .2s, margin-top .2s, padding-top .2s; opacity: 0; }
+    .strata-expand.open { max-height: 1400px; opacity: 1; }
+
+    /* Animation : ouverture/fermeture de la carte Projet (même logique) */
+    #project-card-form { overflow: hidden; max-height: 0; opacity: 0; margin-top: 0; padding-top: 0; border-top: 0 dashed transparent; transition: max-height .35s ease-out, opacity .2s, margin-top .2s, padding-top .2s; }
+    #project-card-form.open { max-height: 800px; opacity: 1; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
+
+    /* Anims diverses */
+    .nav-item { transition: background .15s, color .15s, padding-left .15s; }
+    .nav-item.active { padding-left: 16px; }
+    .btn { transition: background .15s, border-color .15s, transform .1s; }
+    .btn:active { transform: scale(0.98); }
+    .switch { transition: background .25s, border-color .25s; }
+    .switch::after { transition: transform .22s cubic-bezier(.4, 0, .2, 1), background .25s; }
+    .chip { transition: background .15s, border-color .15s; }
+    .tab { transition: background .15s, color .15s; }
+    .page { animation: fadeIn .2s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    /* Strata aside : on reduit la min-width pour pas manger d'espace au formulaire */
+    .strata-aside { min-width: 78px !important; padding: var(--s-3) var(--s-3) !important; gap: var(--s-2) !important; }
+    .strata-config-btn { font-size: 10.5px !important; height: 22px !important; padding: 0 6px !important; }
+
+    /* ── Settings layout ── */
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      padding: 0 28px 28px;
+      flex: 1;
+      min-height: 0;
+    }
+    .settings-nav {
+      display: flex; flex-direction: column; gap: 2px;
+      padding-top: 4px;
+    }
+    .settings-nav-item {
+      padding: 9px 14px;
+      border-radius: var(--r-md);
+      font-size: 13px;
+      color: var(--fg-mid);
+      cursor: pointer;
+      transition: background .15s, color .15s, padding-left .15s;
+      font-weight: 500;
+    }
+    .settings-nav-item:hover {
+      background: color-mix(in oklab, var(--fg) 5%, transparent);
+      color: var(--fg);
+    }
+    .settings-nav-item.active {
+      background: color-mix(in oklab, var(--accent) 14%, transparent);
+      color: var(--accent);
+      padding-left: 18px;
+    }
+    .settings-content { padding-right: 8px; }
+
+    /* DCC row */
+    .dcc-row {
+      display: grid;
+      grid-template-columns: 44px minmax(180px, 1.2fr) minmax(0, 1.4fr) auto auto auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .dcc-row:last-child { border-bottom: 0; }
+    .dcc-row .dcc-name { font-weight: 700; font-size: 14px; }
+    .dcc-row .dcc-version { color: var(--fg-faint); font-family: var(--font-mono); font-size: 11px; margin-left: 6px; font-weight: 500; }
+    .dcc-row .dcc-status { font-size: 11.5px; color: var(--fg-dim); margin-top: 2px; }
+    .dcc-row .dcc-path { font-family: var(--font-mono); font-size: 11px; color: var(--fg-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dcc-row .dcc-icon-block {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px; font-weight: 700;
+    }
+
+    /* Theme preview cards */
+    .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .theme-card {
+      border: 1px solid var(--line); border-radius: var(--r-md);
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color .2s, transform .1s, box-shadow .2s;
+      display: flex; flex-direction: column; gap: 8px;
+      background: var(--bg-card-hi);
+    }
+    .theme-card:hover { transform: translateY(-1px); }
+    .theme-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+    .theme-card .theme-preview {
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--line-soft);
+    }
+    .theme-card .theme-name { font-size: 11.5px; font-weight: 600; }
+    .theme-card.selected .theme-name { color: var(--accent); }
+
+    /* ── Library ── */
+    .lib-filters { padding: 0 28px 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .lib-filters .chip { cursor: pointer; height: 26px; padding: 0 12px; font-size: 11px; }
+    .lib-filters .chip.active { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 40%, transparent); background: color-mix(in oklab, var(--accent) 12%, transparent); }
+    .lib-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+      padding: 0 28px 28px;
+    }
+    .lib-card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      transition: transform .15s, box-shadow .2s, border-color .2s;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+    }
+    .lib-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -18px rgba(0,0,0,.65);
+      border-color: var(--line-hi);
+    }
+    .lib-thumb { aspect-ratio: 4/3; position: relative; background: var(--bg-card-hi); }
+    .lib-thumb svg { width: 100%; height: 100%; display: block; }
+    .lib-thumb-chip {
+      position: absolute; padding: 4px 8px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.05em;
+      backdrop-filter: blur(6px);
+      background: rgba(8, 19, 28, 0.62);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--fg);
+    }
+    .lib-thumb-seed {
+      position: absolute; bottom: 8px; left: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,.6);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .lib-thumb-seed .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cta); box-shadow: 0 0 8px var(--cta); }
+    .lib-meta { padding: 12px 14px 14px; }
+    .lib-meta .title { font-weight: 700; font-size: 14px; }
+    .lib-meta .sub { font-size: 11px; color: var(--fg-dim); margin-top: 3px; font-family: var(--font-mono); }
+    .lib-tags { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
+    .lib-tags .chip { height: 18px; padding: 0 8px; font-size: 9.5px; }
+
+    /* ── Store ── */
+    .store-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: var(--bg-card);
+      margin: 0 28px 24px;
+      min-height: 280px;
+    }
+    .store-featured .feat-body { padding: 28px 32px; display: flex; flex-direction: column; gap: 14px; }
+    .store-featured .feat-title { font-family: var(--font-display); font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+    .store-featured .feat-desc { font-size: 13px; color: var(--fg-mid); line-height: 1.55; max-width: 420px; }
+    .store-featured .feat-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .store-featured .feat-cta-row { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+    .store-featured .feat-visual { position: relative; overflow: hidden; }
+    .store-featured .feat-visual svg { width: 100%; height: 100%; display: block; }
+
+    .store-browse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      padding: 0 28px 28px;
+    }
+    .store-item {
+      background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--r-lg);
+      overflow: hidden; transition: transform .15s, box-shadow .2s, border-color .2s;
+      cursor: pointer; display: flex; flex-direction: column;
+    }
+    .store-item:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -18px rgba(0,0,0,.65); border-color: var(--line-hi); }
+    .store-item .item-thumb { aspect-ratio: 16/10; position: relative; background: var(--bg-card-hi); }
+    .store-item .item-thumb svg { width: 100%; height: 100%; display: block; }
+    .store-item .item-meta { padding: 12px 14px 14px; }
+    .store-item .item-title { font-weight: 700; font-size: 14px; }
+    .store-item .item-author { font-size: 11px; color: var(--fg-dim); margin-top: 2px; }
+
+    /* Console refondue */
+    .ctab {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--fg-dim);
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    .ctab:hover { background: color-mix(in oklab, var(--fg) 5%, transparent); color: var(--fg); }
+    .ctab.active { background: var(--bg-card-hi); color: var(--fg); box-shadow: 0 1px 0 rgba(255,255,255,.05) inset; }
+    .log-entry { transition: background .12s; cursor: default; }
+    .log-entry:hover { background: color-mix(in oklab, var(--accent) 4%, transparent); }
+    .log-entry .ok { color: var(--ok); font-weight: 600; }
+    .log-entry .err { color: var(--err); font-weight: 600; }
+    .log-entry .warn { color: var(--warn); font-weight: 600; }
+    .log-entry .acc { color: var(--accent); }
+    .log-entry .num { color: var(--accent); font-weight: 500; }
+  </style>
+  <script src="demo-data.js"></script>
+  <script src="eel-demo.js"></script>
+</head>
+<body>
+  <div class="app theme-dark">
+   <div class="shell">
+
+    <!-- ── SIDEBAR ────────────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="brand brand-compact">
+        <img src="assets/logo.png" alt="Stratum" style="width:54px;height:54px;display:block">
+        <div class="brand-name">STRATUM</div>
+        <div class="brand-tag">by Kalysteon</div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <div class="nav-item active" data-nav="pipeline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18 L12 14 L21 18 L12 22 Z"/>
+            <path d="M3 13 L12 9 L21 13 L12 17 Z"/>
+            <path d="M3 8 L12 4 L21 8 L12 12 Z"/>
+          </svg>
+          <span data-i18n="nav.pipeline">Pipeline</span>
+          <span class="nav-badge">4</span>
+        </div>
+        <div class="nav-item" data-nav="library">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span data-i18n="nav.library">Library</span>
+          <span class="nav-badge" id="nav-library-count">8</span>
+        </div>
+        <div class="nav-item" data-nav="store">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7 L6 3 L18 3 L21 7"/>
+            <path d="M3 7 L3 20 L21 20 L21 7"/>
+            <path d="M9 12 L15 12"/>
+          </svg>
+          <span data-i18n="nav.store">Store</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="nav-item" data-nav="settings" style="margin: 0 -8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v3m0 16v3M4.2 4.2l2.1 2.1m11.4 11.4l2.1 2.1M1 12h3m16 0h3M4.2 19.8l2.1-2.1m11.4-11.4l2.1-2.1"/>
+          </svg>
+          <span data-i18n="nav.settings">Settings</span>
+        </div>
+
+        <!-- DCC status compact (pastilles avec tooltips au hover) -->
+        <div class="dcc-pills" id="dcc-pills" style="margin-top: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 8px;">
+          <div class="dcc-pill" id="dcc-pill-gaea" data-status="online" title="Gaea 2"><span class="dot"></span><span class="lbl">Gaea</span></div>
+          <div class="dcc-pill" id="dcc-pill-houdini" data-status="online" title="Houdini 21"><span class="dot"></span><span class="lbl">Houdini</span></div>
+          <div class="dcc-pill" id="dcc-pill-unreal" data-status="idle" title="Unreal 5.6"><span class="dot"></span><span class="lbl">Unreal</span></div>
+          <div class="dcc-pill" id="dcc-pill-unity" data-status="idle" title="Unity 6"><span class="dot"></span><span class="lbl">Unity</span></div>
+        </div>
+
+        <div class="sidebar-version">
+          <span data-i18n="misc.version">VERSION</span>
+          <span id="app-version">1.0.0</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── MAIN ───────────────────────────────────────────────────── -->
+    <div class="main">
+      <!-- ── PAGE : PIPELINE ──────────────────────────────────────── -->
+      <div class="page" data-page="pipeline" style="display:flex;flex-direction:column;flex:1;min-height:0">
+      <div class="page-head compact">
+        <div class="page-head-slot">
+          <span id="project-name" hidden>Mountain</span>
+          <span id="last-run" class="page-lastrun"></span>
+          <!-- Avancement global du run. Cache au repos : l'en-tete reste vide
+               tant qu'il n'y a rien de vrai a y montrer. -->
+          <div id="run-progress" hidden>
+            <div class="run-progress-track"><div class="run-progress-fill"></div></div>
+            <span class="run-progress-pct">0%</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <!-- Project switcher -->
+          <button class="btn" id="btn-projects" style="height:32px;display:flex;align-items:center;gap:8px;min-width:180px;justify-content:flex-start" title="Switch / manage projects">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span id="btn-projects-name" style="flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Loading…</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Projects modal (overlay) -->
+      <div id="projects-modal" style="display:none;position:fixed;inset:0;background:rgba(5,13,20,0.72);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center">
+        <div class="card" style="width:520px;max-width:90vw;max-height:80vh;display:flex;flex-direction:column;overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line-soft)">
+            <div>
+              <div class="page-eyebrow" style="color:var(--cta)" data-i18n="projects.title">Projects</div>
+              <div style="font-size:16px;font-weight:700;margin-top:2px" data-i18n="projects.subtitle">Switch or manage</div>
+            </div>
+            <button class="btn ghost" id="projects-close" style="height:28px;padding:0 10px;font-size:11px" data-i18n="btn.close">Close</button>
+          </div>
+          <div style="padding:14px 20px;border-bottom:1px solid var(--line-soft);display:flex;gap:8px">
+            <div class="input" style="flex:1">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              <input id="projects-newname" data-i18n-placeholder="projects.new_placeholder" placeholder="New project name…">
+            </div>
+            <button class="btn cta" id="projects-create" style="height:32px" data-i18n="btn.create">Create</button>
+          </div>
+          <div id="projects-search-box" hidden style="padding:10px 20px 0">
+            <div class="input">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input id="projects-search" data-i18n-placeholder="projects.search" placeholder="Search a project…">
+            </div>
+          </div>
+          <div id="projects-list" class="scroll" style="flex:1;overflow-y:auto;padding:8px 8px 16px"></div>
+        </div>
+      </div>
+
+      <div class="pipeline-cols" style="display: grid; grid-template-columns: minmax(420px, 1.05fr) minmax(380px, 1fr); gap: 24px; padding: 0 28px 24px; min-height: 0; flex: 1; position: relative; z-index: 1;">
+
+        <!-- ── LEFT : pipeline column ───────────────────────────── -->
+        <div class="scroll" id="pipeline-col" style="display: flex; flex-direction: column; gap: 0; padding-right: 4px;">
+
+          <!-- Project header card (compact summary par défaut → Edit pour déplier) -->
+          <div class="card project-card" id="project-card" style="flex-shrink:0">
+            <!-- COMPACT mode : le nom du projet, son dossier, rien d'autre -->
+            <div id="project-card-summary">
+              <div class="project-ident">
+                <span class="section-label" data-i18n="project.section">Project</span>
+                <h2 id="project-summary-name">—</h2>
+              </div>
+              <div class="project-path">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <span id="project-summary-export">no working folder</span>
+                <span id="project-summary-layout" hidden></span>
+              </div>
+              <div class="project-actions">
+                <span class="chip muted" data-i18n="project.saved">Saved</span>
+                <button class="btn ghost" id="btn-project-edit" style="height:28px;padding:0 12px;font-size:11px">
+                  <span data-i18n="project.edit">Edit</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- EXPANDED mode : formulaire complet, caché par défaut -->
+            <div id="project-card-form" style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:110px;flex-shrink:0;font-size:12px;color:var(--fg-faint)" data-i18n="project.name">Name</span>
+                <div class="input" style="flex:1;min-width:0"><input id="input-project" value=""></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:110px;flex-shrink:0;font-size:12px;color:var(--fg-faint)" data-i18n="project.export">Working folder</span>
+                <div class="input" style="flex:1;min-width:0">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                  <input id="input-export" value="" style="min-width:0">
+                  <span class="key" id="btn-export-browse" style="cursor:pointer;flex-shrink:0">···</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:14px">
+                <span style="width:110px;flex-shrink:0;font-size:12px;color:var(--fg-faint);padding-top:7px" data-i18n="project.naming">Naming</span>
+                <!-- Compose par renderNamingSection(). Le nommage est une etape
+                     de Stratum, pas de Houdini : il a lieu meme sans modificateur. -->
+                <div id="naming-section" style="flex:1;min-width:0"></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:14px">
+                <span style="width:110px;flex-shrink:0;font-size:12px;color:var(--fg-faint);padding-top:7px;display:inline-flex;align-items:baseline;gap:2px"><span data-i18n="project.layout">Output layout</span><span id="layout-help"></span></span>
+                <!-- Compose par renderLayoutDesigner() : cartes de presets +
+                     composeur de niveaux + apercu d'arborescence en direct. -->
+                <div id="layout-designer" style="flex:1;min-width:0"></div>
+              </div>
+              <!-- Les cibles moteur sont desormais reglees dans le panneau de
+                   leur strate. Les champs restent ici, caches, pour que le code
+                   qui les lisait continue de fonctionner sans cas particulier. -->
+              <div hidden>
+                <input id="input-unreal-project" value="">
+                <span id="btn-unreal-browse"></span>
+                <input id="input-unity-project" value="">
+                <span id="btn-unity-browse"></span>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:4px">
+                <button class="btn" id="btn-project-collapse" style="height:26px;padding:0 12px;font-size:11px">
+                  <span data-i18n="project.collapse">Close</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Séparateur visuel : Project ↑ / Strata ↓ -->
+          <div class="project-strata-divider" aria-hidden="true">
+            <span class="line"></span>
+            <span class="label" data-i18n="strata.flow.label">PIPELINE FLOW</span>
+            <span class="line"></span>
+          </div>
+
+          <!-- Strata cards rendered by JS -->
+          <div id="strata-list"></div>
+
+        </div>
+
+        <!-- ── RIGHT : preview / console panel ─────────────────── -->
+        <div style="display: flex; flex-direction: column; min-height: 0;">
+          <div class="card" style="display: flex; flex-direction: column; height: 100%; overflow: hidden;">
+            <div style="display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line-soft); gap: 12px;">
+              <span class="section-label" style="color: var(--cta);" data-i18n="output.section">Output</span>
+              <div class="tabs">
+                <div class="tab active" data-tab="preview" data-i18n="output.tab.preview">Preview</div>
+                <div class="tab" data-tab="console" data-i18n="output.tab.console">Console</div>
+                <div class="tab" data-tab="files" data-i18n="output.tab.files">Files</div>
+              </div>
+              <div style="flex: 1;"></div>
+            </div>
+
+            <div class="scroll" id="output-content" style="padding: 16px;">
+              <!-- Preview tab content -->
+              <div class="output-tab" data-tab="preview" style="display:flex;flex-direction:column;gap:14px">
+                <div class="preview-head">
+                  <div class="preview-head-ident">
+                    <div style="font-family:var(--font-mono);font-size:10px;color:var(--fg-faint);letter-spacing:0.16em;text-transform:uppercase" id="preview-eyebrow" data-i18n="preview.eyebrow">3D PREVIEW</div>
+                    <!-- Vide au repos : le message central "Aucun asset" dit deja quoi faire,
+                         ce titre repetait la meme chose. Il porte le nom de l'asset des
+                         qu'un mesh est charge. -->
+                    <div id="preview-title"></div>
+                  </div>
+                  <div class="preview-head-tools">
+                    <!-- Toolbar viewer options -->
+                    <div class="viewer-tools" style="display:flex;gap:4px;align-items:center;padding:2px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg-card-hi)">
+                      <button class="viewer-tool active" data-tool="texture" title="Toggle texture">TEX</button>
+                      <button class="viewer-tool"        data-tool="normal" title="Toggle normal map" disabled style="opacity:0.35">NRM</button>
+                      <button class="viewer-tool"        data-tool="wireframe" title="Toggle wireframe">WIRE</button>
+                      <button class="viewer-tool active" data-tool="grid" title="Toggle grid">GRID</button>
+                      <button class="viewer-tool"        data-tool="rotate" title="Auto-rotate">ROT</button>
+                      <div style="width:1px;height:14px;background:var(--line);margin:0 2px"></div>
+                      <select id="viewer-lighting" title="Lighting preset" style="height:20px;background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:4px;font-size:10px;font-family:var(--font-mono);padding:0 4px">
+                        <option value="studio">STUDIO</option>
+                        <option value="showcase">SHOWCASE</option>
+                        <option value="dramatic">DRAMATIC</option>
+                      </select>
+                      <!-- Panneau lumiere : exposition + direction/hauteur du
+                           soleil (voir wireLightPanel). -->
+                      <button class="viewer-tool" id="btn-light-panel" title="Lighting">☀</button>
+                      <div style="width:1px;height:14px;background:var(--line);margin:0 2px"></div>
+                      <button class="viewer-tool" data-tool="reset" title="Reset camera">⟲</button>
+                      <button class="viewer-tool" data-tool="screenshot" title="Photo PNG">📷</button>
+                      <button class="viewer-tool" data-tool="popout" title="Open preview in its own window">↗</button>
+                    </div>
+                    <button class="btn ghost" id="btn-refresh-assets" style="height:24px;padding:0 8px;font-size:11px" title="Rescan working folder">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+                      <span data-i18n="btn.rescan">Rescan</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 3D Canvas -->
+                <div id="preview-3d-wrap" class="viewer-wrap" style="position:relative;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden">
+                  <div id="preview-3d-canvas" style="width:100%;height:100%"></div>
+                  <div id="preview-3d-empty" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:20px;pointer-events:none">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--fg-faint)">
+                      <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                      <path d="M3 12l9 4 9-4"/>
+                      <path d="M3 17l9 4 9-4"/>
+                    </svg>
+                    <div style="font-size:13px;color:var(--fg-dim);margin-top:6px" data-i18n="preview.no_asset">No asset yet</div>
+                    <div style="font-size:11px;color:var(--fg-faint);max-width:280px" data-i18n="preview.no_asset_hint">Run the pipeline to generate meshes. They'll appear here for live 3D preview.</div>
+                  </div>
+                  <!-- Overlay infos -->
+                  <div id="preview-3d-info" style="display:none;position:absolute;top:8px;left:10px;font-family:var(--font-mono);font-size:10px;color:var(--fg-mid);pointer-events:none">
+                    <div id="preview-3d-stats"></div>
+                  </div>
+                  <!-- Loading overlay -->
+                  <div id="preview-3d-loading" style="display:none;position:absolute;inset:0;background:rgba(8,19,28,0.7);align-items:center;justify-content:center;color:var(--accent);font-family:var(--font-mono);font-size:11px">
+                    <span data-i18n="preview.loading">Loading mesh…</span>
+                  </div>
+                </div>
+
+                <!-- Poignee de partage viewer / liste. La hauteur du viewer
+                     est un choix personnel (grand mesh a inspecter contre
+                     longue liste a parcourir) : l'utilisateur la regle. -->
+                <div id="preview-split" title="Drag to resize the 3D view"><span></span></div>
+
+                <!-- Source folder picker (compact bar) -->
+                <div id="preview-source-bar" style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg-card-hi);border:1px solid var(--line);border-radius:var(--r-sm);font-size:11px">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--fg-dim);flex-shrink:0"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                  <span id="preview-source-path" style="flex:1;font-family:var(--font-mono);font-size:10.5px;color:var(--fg-mid);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="">—</span>
+                  <span class="chip muted" id="assets-count" style="flex-shrink:0">0 found</span>
+                  <button class="btn ghost" id="btn-preview-refresh" style="height:22px;width:22px;padding:0;font-size:10px;display:inline-flex;align-items:center;justify-content:center" title="Refresh">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+                  </button>
+                  <button class="btn ghost" id="btn-preview-browse" style="height:22px;padding:0 8px;font-size:10px" data-i18n="btn.browse">Browse</button>
+                  <button class="btn ghost" id="btn-preview-reset" style="height:22px;padding:0 8px;font-size:10px;display:none" data-i18n="btn.reset">Reset</button>
+                </div>
+
+                <!-- Asset thumbnails grid -->
+                <div id="assets-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px"></div>
+              </div>
+
+              <!-- Console tab content -->
+              <div class="output-tab" data-tab="console" style="display:none;margin:-16px;height:calc(100% + 32px);flex-direction:column">
+                <div class="console-header" style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line-soft);flex-shrink:0">
+                  <span class="section-label" data-i18n="console.title">Console</span>
+                  <div class="tabs">
+                    <div class="ctab active" data-filter="all" data-i18n="console.filter_all">All</div>
+                    <div class="ctab" data-filter="errors" data-i18n="console.filter_err">Errors</div>
+                    <div class="ctab" data-filter="diff" data-i18n="console.filter_diff">Diff</div>
+                  </div>
+                  <div style="flex:1"></div>
+                  <button class="btn ghost" id="btn-console-copy" style="height:24px;padding:0 10px;font-size:11px" data-i18n="console.copy">Copy</button>
+                  <button class="btn ghost" id="btn-console-log" style="height:24px;padding:0 10px;font-size:11px" data-i18n="console.openlog">Log file</button>
+                  <button class="btn ghost" id="btn-console-clear" style="height:24px;padding:0 10px;font-size:11px" data-i18n="console.clear">Clear</button>
+                </div>
+                <div id="console-body" class="scroll" style="flex:1;min-height:0;padding:4px 0;font-family:var(--font-mono);font-size:11px">
+                  <div class="faint" style="padding:8px 16px;font-style:italic;font-size:11px" data-i18n="console.waiting">[waiting] Pipeline not started yet.</div>
+                </div>
+              </div>
+
+              <!-- Files tab content -->
+              <div class="output-tab" data-tab="files" style="display:none;flex-direction:column;gap:12px">
+                <!-- Header global -->
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg-card-hi);border:1px solid var(--line);border-radius:var(--r-sm)">
+                  <div style="display:flex;flex-direction:column;gap:2px;min-width:0;flex:1">
+                    <div id="files-stats-header" style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
+                    <div id="files-stats-detail" class="faint" style="font-size:10.5px;font-family:var(--font-mono)">—</div>
+                  </div>
+                  <button class="btn ghost" id="btn-files-open-folder" style="height:26px;padding:0 10px;font-size:11px;display:inline-flex;align-items:center;gap:6px">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    <span data-i18n="files.open_explorer">Open in Explorer</span>
+                  </button>
+                </div>
+
+                <!-- Variant tabs + filters -->
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                  <div id="files-variant-tabs" class="tabs" style="flex-shrink:0"></div>
+                  <div style="flex:1"></div>
+                  <div class="input" style="height:26px;width:160px">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input id="files-search" placeholder="Filter…" data-i18n-placeholder="files.filter_ph" style="font-size:11px">
+                  </div>
+                  <select id="files-type-filter" style="height:26px;background:var(--bg-input);color:var(--fg);border:1px solid var(--line);border-radius:var(--r-sm);font-size:11px;padding:0 6px">
+                    <option value="all" data-i18n="files.type_all">All types</option>
+                    <option value="mesh" data-i18n="files.type_mesh">Meshes</option>
+                    <option value="texture" data-i18n="files.type_texture">Textures</option>
+                    <option value="heightmap" data-i18n="files.type_heightmap">Heightmaps</option>
+                    <option value="other" data-i18n="files.type_other">Other</option>
+                  </select>
+                </div>
+
+                <!-- Bulk actions bar (visible quand sélection) -->
+                <div id="files-bulk-bar" style="display:none;align-items:center;gap:8px;padding:8px 12px;background:color-mix(in oklab, var(--accent) 14%, transparent);border:1px solid color-mix(in oklab, var(--accent) 35%, transparent);border-radius:var(--r-sm);font-size:11.5px">
+                  <span id="files-selected-count" style="font-weight:600">0 selected</span>
+                  <div style="flex:1"></div>
+                  <button class="btn ghost" id="btn-files-deselect" style="height:24px;padding:0 8px;font-size:10px" data-i18n="files.deselect">Deselect</button>
+                  <button class="btn ghost" id="btn-files-delete" style="height:24px;padding:0 10px;font-size:10.5px;color:var(--err)">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                    <span data-i18n="files.delete" style="margin-left:4px">Delete</span>
+                  </button>
+                </div>
+
+                <!-- Files list -->
+                <div id="files-list" style="display:flex;flex-direction:column;gap:2px;min-height:200px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RUN FOOTER (remodelé : stats + narrative inline + ETA + Run) ── -->
+      <div class="run-footer">
+        <div class="run-footer-stats">
+          <div class="stat"><span class="k" data-i18n="stats.strata">Strata</span><span class="v" id="stat-strata">1<span class="unit">/4 active</span></span></div>
+          <div class="stat" hidden><span class="k" data-i18n="stats.variants">Variants</span><span class="v" id="stat-variants">2</span></div>
+          <div class="stat" hidden><span class="k" data-i18n="stats.resolution">Resolution</span><span class="v" id="stat-res">4096<span class="unit">px</span></span></div>
+          <div class="stat"><span class="k" data-i18n="stats.output">Output</span><span class="v" style="font-size: 13px; font-family: var(--font-mono); font-weight: 500;" id="stat-output">~ —</span></div>
+        </div>
+
+        <div class="run-footer-narrative" id="run-narrative">
+          <span class="run-narrative-text" id="run-narrative-text">—</span>
+        </div>
+
+        <div class="run-footer-cta">
+          <div class="run-eta" id="run-eta" data-confidence="none">
+            <svg class="run-eta-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 2"/>
+            </svg>
+            <div class="run-eta-body">
+              <div class="run-eta-time">—</div>
+              <div class="run-eta-info"></div>
+            </div>
+          </div>
+          <div id="stale-row"></div>
+          <button class="btn primary run-btn" id="btn-run">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5 L19 12 L7 19 Z"/></svg>
+            <span class="run-btn-main" data-i18n="btn.run_pipeline">RUN PIPELINE</span>
+          </button>
+        </div>
+      </div>
+      </div><!-- /page pipeline -->
+
+      <!-- ── PAGE : SETTINGS ────────────────────────────────────── -->
+      <div class="page" data-page="settings" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden">
+        <div class="page-head" style="padding-bottom:8px">
+          <div>
+            <div class="page-eyebrow">Preferences · Integrations · License</div>
+            <h1 class="page-title" data-i18n="settings.title">Settings</h1>
+          </div>
+          <div id="settings-status" style="font-family:var(--font-mono);font-size:11px;color:var(--ok);min-height:14px"></div>
+        </div>
+
+        <div class="settings-layout">
+          <!-- Categories nav (left, inside Settings page) -->
+          <nav class="settings-nav">
+            <div class="settings-nav-item active" data-cat="integrations" data-i18n="set.nav.integrations">Integrations</div>
+            <div class="settings-nav-item" data-cat="pipeline-def" data-i18n="set.nav.pipeline_def">Pipeline defaults</div>
+            <div class="settings-nav-item" data-cat="export" data-i18n="set.nav.export">Export &amp; storage</div>
+            <div class="settings-nav-item" data-cat="theme" data-i18n="set.nav.theme">Theme</div>
+            <div class="settings-nav-item" data-cat="shortcuts" data-i18n="set.nav.shortcuts">Shortcuts</div>
+            <div class="settings-nav-item" data-cat="license" data-i18n="set.nav.license">License</div>
+            <div class="settings-nav-item" data-cat="about" data-i18n="set.nav.about">About</div>
+          </nav>
+
+          <!-- Content area (right) -->
+          <div class="settings-content scroll">
+            <div id="settings-cat-integrations" class="settings-cat" data-cat="integrations"></div>
+            <div id="settings-cat-pipeline-def" class="settings-cat" data-cat="pipeline-def" style="display:none"></div>
+            <div id="settings-cat-export" class="settings-cat" data-cat="export" style="display:none"></div>
+            <div id="settings-cat-theme" class="settings-cat" data-cat="theme" style="display:none"></div>
+            <div id="settings-cat-shortcuts" class="settings-cat" data-cat="shortcuts" style="display:none"></div>
+            <div id="settings-cat-license" class="settings-cat" data-cat="license" style="display:none"></div>
+            <div id="settings-cat-about" class="settings-cat" data-cat="about" style="display:none"></div>
+          </div>
+        </div>
+      </div><!-- /page settings -->
+
+      <!-- ── PAGE : LIBRARY ──────────────────────────────────── -->
+      <div class="page" data-page="library" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden">
+        <div class="page-head">
+          <div>
+            <div class="page-eyebrow">LOCAL · <span id="lib-count">—</span> · <span id="lib-size">—</span></div>
+            <h1 class="page-title" data-i18n="nav.library">Library</h1>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="input dim" style="width:240px">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input id="lib-search" placeholder="Search assets…" data-i18n-placeholder="lib.search_ph">
+            </div>
+            <button class="btn ghost" id="btn-lib-refresh" style="height:32px;width:32px;padding:0;display:inline-flex;align-items:center;justify-content:center" title="Refresh">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters bar -->
+        <div style="display:flex;gap:8px;align-items:center;padding:0 28px 12px;flex-wrap:wrap">
+          <span class="faint" style="font-size:10.5px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.06em" data-i18n="lib.filters">FILTERS</span>
+          <select id="lib-filter-project" style="height:26px;background:var(--bg-input);color:var(--fg);border:1px solid var(--line);border-radius:var(--r-sm);font-size:11px;padding:0 6px"></select>
+          <select id="lib-filter-style" style="height:26px;background:var(--bg-input);color:var(--fg);border:1px solid var(--line);border-radius:var(--r-sm);font-size:11px;padding:0 6px"></select>
+          <select id="lib-filter-format" style="height:26px;background:var(--bg-input);color:var(--fg);border:1px solid var(--line);border-radius:var(--r-sm);font-size:11px;padding:0 6px"></select>
+          <div style="flex:1"></div>
+          <select id="lib-sort" style="height:26px;background:var(--bg-input);color:var(--fg);border:1px solid var(--line);border-radius:var(--r-sm);font-size:11px;padding:0 6px"></select>
+          <input id="lib-size-slider" type="range" min="140" max="380" step="20" value="220" style="width:110px;accent-color:var(--accent)">
+          <span class="faint" style="font-size:10.5px;font-family:var(--font-mono)" id="lib-result-count">— results</span>
+        </div>
+
+        <div id="lib-grid" class="scroll" style="flex:1;overflow:auto;padding:0 28px 24px"></div>
+      </div>
+
+      <!-- Library asset drawer (slide from right) -->
+      <div id="lib-drawer-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:80;backdrop-filter:blur(2px)"></div>
+      <aside id="lib-drawer" style="position:fixed;top:0;right:-540px;width:520px;max-width:90vw;height:100vh;background:var(--bg-card);border-left:1px solid var(--line);box-shadow:-12px 0 32px -8px rgba(0,0,0,0.4);z-index:90;display:flex;flex-direction:column;transition:right .3s cubic-bezier(.4,0,.2,1)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line-soft)">
+          <div>
+            <div class="page-eyebrow" id="lib-drawer-eyebrow" style="color:var(--cta)">ASSET</div>
+            <div id="lib-drawer-title" style="font-size:16px;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:380px">—</div>
+          </div>
+          <button class="btn ghost" id="lib-drawer-close" style="width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="scroll" id="lib-drawer-body" style="flex:1;overflow-y:auto;padding:18px 20px"></div>
+      </aside>
+
+      <!-- ── PAGE : STORE ────────────────────────────────────── -->
+      <div class="page" data-page="store" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden">
+        <div class="page-head">
+          <div>
+            <div class="page-eyebrow" data-i18n="store.eyebrow">TERRAIN PACKS · PRESETS · HDAS</div>
+            <h1 class="page-title" data-i18n="nav.store">Store</h1>
+          </div>
+        </div>
+        <!-- Le Store revient dans une mise a jour. En attendant, aucun pack,
+             aucun prix ni aucun chiffre invente : seulement ce qui est vrai. -->
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px 28px">
+          <div class="card" style="max-width:460px;padding:28px 26px;text-align:center">
+            <span class="chip accent" data-i18n="store.soon.chip">In preparation</span>
+            <div style="font-size:18px;font-weight:700;margin:14px 0 8px" data-i18n="store.soon.title">The Store is coming</div>
+            <div class="faint" style="font-size:12.5px;line-height:1.6" data-i18n="store.soon.body">Terrain packs ready to drop into your projects will arrive in an update. Stratum keeps growing.</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /main -->
+   </div><!-- /shell -->
+  </div><!-- /app -->
+
+  <!-- ── MODAL CONFIGURE STRATA ──────────────────────────────────── -->
+  <div id="modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center">
+    <div id="modal-card" class="card" style="width:560px;max-width:90vw;max-height:80vh;display:flex;flex-direction:column;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line-soft)">
+        <div>
+          <div class="section-label" id="modal-eyebrow">STRATA</div>
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-top:2px" id="modal-title">Configure</div>
+        </div>
+        <button class="btn ghost" id="modal-close" style="width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;line-height:1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="modal-body" class="scroll" style="padding:20px;display:flex;flex-direction:column;gap:14px"></div>
+    </div>
+  </div>
+
+  <script type="module" src="viewer3d.js"></script>
+  <script src="i18n.js"></script>
+  <script src="photo.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

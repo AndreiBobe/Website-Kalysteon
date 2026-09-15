@@ -1,0 +1,319 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stratum Preview</title>
+<!--
+  Fenetre de previsualisation detachee.
+
+  Elle n'est PAS une copie de l'apercu de la fenetre principale : c'est le meme
+  module viewer3d.js, monte dans une page a part. Une carte de 400 pixels ne
+  permet pas de juger une silhouette de terrain ; sur un deuxieme ecran en
+  plein format, si.
+
+  La selection suit la fenetre principale par interrogation reguliere plutot
+  que par diffusion : une fenetre qu'on ferme, qu'on rouvre ou qui rate un
+  message se resynchronise toute seule au tour suivant, sans etat a tenir des
+  deux cotes.
+-->
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/build/three.module.js",
+    "three/addons/": "./vendor/three/examples/jsm/"
+  }
+}
+</script>
+<link rel="stylesheet" href="styles.css">
+<style>
+  html, body { height: 100%; margin: 0; overflow: hidden; }
+  body { background: var(--bg-app); color: var(--fg); font-family: var(--font-ui, system-ui); }
+  #pv-stage { position: absolute; inset: 0; }
+  #pv-bar {
+    position: absolute; left: 0; right: 0; top: 0; z-index: 5;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, rgba(0,0,0,.45), transparent);
+    pointer-events: none;
+  }
+  #pv-bar > * { pointer-events: auto; }
+  #pv-name {
+    font-family: var(--font-display, inherit); font-size: 14px; font-weight: 700;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0;
+  }
+  #pv-stats { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--fg-dim); }
+  .pv-btn {
+    height: 26px; padding: 0 10px; font-size: 11px;
+    background: var(--bg-card); color: var(--fg);
+    border: 1px solid var(--line); border-radius: var(--r-sm, 6px); cursor: pointer;
+  }
+  .pv-btn:hover { border-color: var(--line-hi); }
+  .pv-btn.on { border-color: var(--accent); color: var(--accent); }
+  .pv-sel {
+    height: 26px; padding: 0 6px; font-size: 11px;
+    background: var(--bg-card); color: var(--fg);
+    border: 1px solid var(--line); border-radius: var(--r-sm, 6px);
+  }
+  .pv-chk { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--fg-mid); }
+  .pv-chk.off { opacity: 0.4; }
+  #pv-photo-panel { position: absolute; top: 44px; right: 12px; z-index: 6; }
+  #pv-photo-msg { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--fg-mid); }
+  #pv-empty {
+    position: absolute; inset: 0; display: flex; align-items: center;
+    justify-content: center; color: var(--fg-dim); font-size: 13px;
+  }
+</style>
+</head>
+<body class="theme-dark">
+  <div id="pv-stage"></div>
+  <div id="pv-empty">aucun asset sélectionné</div>
+  <div id="pv-photo-panel" class="light-panel photo-panel" hidden>
+    <div class="ps-host" id="pv-photo-settings"></div>
+  </div>
+  <div id="pv-bar">
+    <span id="pv-name">—</span>
+    <span id="pv-stats"></span>
+    <!--
+      Aucun reglage ici : ils viennent tous de la fenetre principale. Deux jeux
+      de boutons pour la meme scene, ce serait deux verites a tenir. Seule la
+      camera reste locale : l'angle de vue n'est pas un reglage de la scene, et
+      un grand ecran ne se cadre pas comme une carte de 400 pixels.
+    -->
+    <button class="pv-btn" data-tool="reset">Recadrer</button>
+    <!--
+      Les photos se prennent ICI : c'est la fenetre ou l'on cadre. Leurs
+      reglages (fond, resolution) restent dans le panneau Photo de la fenetre
+      principale, comme tous les autres.
+    -->
+    <span id="pv-photo-msg"></span>
+    <!-- Reglages de la photo : les memes que dans le panneau 📷 de la
+         principale, dessines par photo.js. La barre ne deborde plus. -->
+    <button class="pv-btn" data-tool="photo-settings">Réglages ▾</button>
+    <button class="pv-btn" data-tool="photo">Photo</button>
+    <select class="pv-sel" id="pv-scope" title="Ce que photographie la série"></select>
+    <button class="pv-btn" data-tool="photo-all">Tout photographier</button>
+    <button class="pv-btn" data-tool="photo-folder">Dossier</button>
+  </div>
+
+  <script type="module" src="viewer3d.js"></script>
+  <script src="/eel.js"></script>
+  <script src="i18n.js"></script>
+  <script src="photo.js"></script>
+  <script type="module">
+    const V = () => window.Viewer3D;
+    const stage = document.getElementById("pv-stage");
+    const nameEl = document.getElementById("pv-name");
+    const statsEl = document.getElementById("pv-stats");
+    const emptyEl = document.getElementById("pv-empty");
+
+    let started = false;
+    let currentKey = null;     // mesh_url deja chargee, pour ne pas recharger
+    let assets = [];
+    let lastView = "";         // dernier etat applique, en JSON, pour ne rien refaire
+    // Pendant une serie de photos, la fenetre ne suit plus la selection de la
+    // principale : elle rechargerait l'asset choisi la-bas au milieu de la serie.
+    let batching = null;
+    let appliedTheme = "";     // classe de theme deja posee, pour ne rien refaire
+    let rotateOn = false;      // suit la principale, R le bascule ici
+
+    // Le theme de la fenetre principale s'applique ici aussi : deux fenetres
+    // du meme logiciel ne doivent pas avoir deux fonds differents.
+    async function syncTheme() {
+      try {
+        const cfg = await eel.get_config()();
+        let t = (cfg && cfg.ui && cfg.ui.theme) || "dark";
+        // Meme correspondance que la fenetre principale : les sombres derives
+        // portent theme-dark, et "auto" suit Windows.
+        if (t === "auto") {
+          t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches
+            ? "light" : "dark";
+        }
+        const cls = { light: "theme-light", midnight: "theme-dark theme-midnight",
+                      graphite: "theme-dark theme-graphite",
+                      ash: "theme-dark theme-ash" }[t] || "theme-dark";
+        setThemeClass(cls);
+      } catch (e) { /* la fenetre reste lisible en sombre */ }
+    }
+
+    // Recopie les reglages de la fenetre principale. On ne applique que si
+    // quelque chose a change : rejouer les memes appels dix fois par seconde
+    // ferait travailler le moteur de rendu pour rien.
+    // Theme recu de la fenetre principale. Pose AVANT le test `started` :
+    // meme sans mesh charge, le fond de la fenetre doit changer de couleur.
+    function setThemeClass(cls) {
+      if (!cls || cls === appliedTheme) return;
+      appliedTheme = cls;
+      document.body.className = cls;
+      // Le viewer 3D lit la classe sur <html> pour son fond.
+      document.documentElement.className = cls;
+      if (started) V()?.applyTheme();
+    }
+
+    function applyView(v) {
+      if (v && v.theme) setThemeClass(v.theme);
+      if (!v || !started) return;
+      const sig = JSON.stringify(v);
+      if (sig === lastView) return;
+      lastView = sig;
+      const V3 = V();
+      try {
+        V3.setTextureEnabled(!!v.texture);
+        V3.setNormalEnabled(!!v.normal);
+        V3.setWireframe(!!v.wireframe);
+        V3.setGrid(!!v.grid);
+        rotateOn = !!v.rotate;
+        V3.setAutoRotate(rotateOn);
+        if (v.normalSettings) {
+          if (v.normalSettings.scale != null) V3.setNormalScale?.(v.normalSettings.scale);
+          if (v.normalSettings.flipY != null) V3.setNormalFlipY?.(v.normalSettings.flipY);
+        }
+        if (v.fog) V3.setFog?.(v.fog);
+        if (v.ao) V3.setAO?.(v.ao);
+        const L = v.lighting;
+        if (L) {
+          if (L.preset) V3.applyLightingPreset(L.preset);
+          if (L.exposure != null) V3.setExposure(L.exposure);
+          if (L.shadow != null) V3.setShadowStrength(L.shadow);
+          if (L.az != null || L.el != null) V3.setSun(L.az, L.el);
+        }
+      } catch (e) { /* un reglage absent ne doit pas figer la fenetre */ }
+    }
+
+    async function show(a) {
+      if (!a || !a.mesh_url) {
+        currentKey = null;
+        emptyEl.style.display = "flex";
+        nameEl.textContent = "—";
+        statsEl.textContent = "";
+        V()?.clearAsset?.();
+        return;
+      }
+      if (a.mesh_url === currentKey) return;
+      currentKey = a.mesh_url;
+      if (!started) { V().init(stage); started = true; }
+      emptyEl.style.display = "none";
+      nameEl.textContent = a.name || "";
+      nameEl.title = a.name || "";
+      statsEl.textContent = "…";
+      try {
+        const s = await V().loadAsset(a.mesh_url, a.texture_url, a.ext, a.normal_url);
+        if (!s) return;
+        statsEl.textContent =
+          `${s.vertices.toLocaleString()} verts · ${s.triangles.toLocaleString()} tris`;
+        // La normale, comme le reste, vient de la fenetre principale : on
+        // force le prochain tour a la reappliquer sur le nouveau maillage.
+        lastView = "";
+      } catch (e) {
+        statsEl.textContent = "chargement impossible";
+      }
+    }
+
+    async function poll() {
+      if (batching) return;
+      try {
+        const sync = await eel.get_preview_sync()();
+        const idx = sync ? sync.idx : -1;
+        if (!assets.length || idx >= assets.length) {
+          assets = await eel.list_assets()();
+          fillScope();
+        }
+        await show(idx >= 0 ? assets[idx] : null);
+        applyView(sync && sync.view);
+      } catch (e) { /* fenetre principale fermee : on garde le dernier etat */ }
+    }
+
+    document.querySelector('.pv-btn[data-tool="reset"]')
+      .addEventListener("click", () => { if (started) V().resetView(); });
+
+    // Reglages de la photo, dessines par photo.js comme dans la principale.
+    // Les libelles suivent la langue choisie dans Stratum.
+    const photoPanel = document.getElementById("pv-photo-panel");
+    const tr = (k, fb) => {
+      const out = window.I18N ? window.I18N.t(k) : "";
+      return out && out !== k ? out : fb;
+    };
+    document.querySelector('.pv-btn[data-tool="photo-settings"]').addEventListener("click", async () => {
+      if (!photoPanel.hidden) { photoPanel.hidden = true; return; }
+      try {
+        const cfg = await eel.get_config()();
+        const lang = cfg && cfg.ui && cfg.ui.language;
+        if (lang && window.I18N) window.I18N.setLang(lang);
+      } catch (_) { /* francais par defaut */ }
+      await window.StratumPhoto.renderSettings(document.getElementById("pv-photo-settings"), tr);
+      photoPanel.hidden = false;
+    });
+
+    // Portee de la serie : tout, un style ou une variante.
+    const scopeSel = document.getElementById("pv-scope");
+    let savedScope = "all";
+    function fillScope() {
+      const opts = window.StratumPhoto.scopeOptions(assets);
+      const want = scopeSel.value || savedScope;
+      scopeSel.innerHTML = opts.map(o =>
+        `<option value="${o.value}">${o.label || "Tout"} (${o.count})</option>`).join("");
+      scopeSel.value = opts.some(o => o.value === want) ? want : "all";
+    }
+    scopeSel.addEventListener("change", async () => {
+      savedScope = scopeSel.value;
+      try { await eel.save_field("ui.photo_scope", savedScope)(); } catch (_) { /* hors app */ }
+    });
+    window.StratumPhoto.settings().then(s => { savedScope = s.scope || "all"; fillScope(); });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code !== "KeyR" || e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+      const tag = (e.target && e.target.tagName) || "";
+      if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+      if (!started || batching) return;
+      rotateOn = !rotateOn;
+      V().setAutoRotate(rotateOn);
+    });
+
+    const photoMsg = document.getElementById("pv-photo-msg");
+    const say = (t) => { photoMsg.textContent = t || ""; };
+
+    document.querySelector('.pv-btn[data-tool="photo"]').addEventListener("click", async () => {
+      const a = assets.find(x => x && x.mesh_url === currentKey);
+      if (!started || !a) { say("aucun asset"); return; }
+      say("…");
+      const r = await window.StratumPhoto.shoot(a);
+      say(r && r.ok ? `photo ${r.width}×${r.height}` : "échec de la photo");
+    });
+
+    document.querySelector('.pv-btn[data-tool="photo-all"]').addEventListener("click", async (e) => {
+      const btn = e.currentTarget;
+      if (batching) { batching.cancel = true; return; }
+      try { assets = await eel.list_assets()(); fillScope(); } catch (_) { /* on garde la liste connue */ }
+      const chosen = window.StratumPhoto.filterAssets(assets, scopeSel.value);
+      if (!chosen.length) { say("aucun asset"); return; }
+      if (!started) { V().init(stage); started = true; }
+      batching = { cancel: false };
+      btn.textContent = "Arrêter";
+      // Une serie homogene : meme angle pour tout le monde.
+      V().setAutoRotate(false);
+      const r = await window.StratumPhoto.shootAll(chosen,
+        (a) => { currentKey = null; return show(a); },
+        (i, n, a) => say(`${i + 1} / ${n} · ${a.name}`),
+        () => !!(batching && batching.cancel));
+      batching = null;
+      btn.textContent = "Tout photographier";
+      say(`${r.ok} photo(s)`);
+      // Reapplique la rotation et les reglages de la principale au tour suivant.
+      lastView = "";
+    });
+
+    document.querySelector('.pv-btn[data-tool="photo-folder"]').addEventListener("click", async () => {
+      try { await eel.open_photos_folder()(); } catch (_) { /* hors app */ }
+    });
+
+    // viewer3d.js est un module : il peut ne pas etre pret au premier tour.
+    const boot = setInterval(() => {
+      if (!window.Viewer3D) return;
+      clearInterval(boot);
+      syncTheme();
+      poll();
+      setInterval(poll, 500);
+      setInterval(syncTheme, 3000);
+    }, 60);
+  </script>
+</body>
+</html>
