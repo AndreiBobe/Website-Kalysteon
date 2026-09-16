@@ -207,15 +207,86 @@
   });
 
   // #library, #settings... : ouvre directement cette page de l'interface.
+  // #fonction : on ouvre la bonne zone, puis on la met en lumiere.
+  var SPOTS = {
+    gaea:     { open: '[data-config="gaea"]',    target: '[data-strata="gaea"]',    en: "Tick the variants to build here", fr: "Coche ici les variantes à construire" },
+    houdini:  { open: '[data-config="houdini"]', target: '[data-strata="houdini"]', en: "Your modifiers, chained in order", fr: "Tes modificateurs, enchaînés dans l'ordre" },
+    unreal:   { open: '[data-config="unreal"]',  target: '[data-strata="unreal"]',  en: "Import settings: one material per variant", fr: "Réglages d'import : un matériau par variante" },
+    naming:   { open: "#btn-project-edit",        target: "#naming-section",         en: "Your naming rules, from Gaea to the engine", fr: "Tes règles de nommage, de Gaea au moteur" },
+    preview:  { nav: "pipeline", tab: "preview",  target: '.output-tab[data-tab="preview"]', en: "Inspect every mesh in 3D, then shoot 4K", fr: "Inspecte chaque mesh en 3D, puis photographie en 4K" },
+    library:  { nav: "library",                   target: "#lib-grid",               en: "Every mesh from every project", fr: "Chaque mesh de chaque projet" },
+    settings: { nav: "settings",                  target: ".dcc-row", parent: true,  en: "Your tools, found automatically", fr: "Tes logiciels, trouvés automatiquement" },
+  };
+  var spot = { el: null, label: null, timer: null };
+  function spotClear() {
+    clearInterval(spot.timer);
+    if (spot.el) spot.el.remove();
+    if (spot.label) spot.label.remove();
+    spot.el = spot.label = null;
+    document.removeEventListener("mousedown", spotClear, true);
+  }
+  function spotShow(cfgSpot) {
+    var t = document.querySelector(cfgSpot.target);
+    if (t && cfgSpot.parent) t = t.parentElement;
+    if (!t) return;
+    coachStyle();
+    spotClear();
+    var box = document.createElement("div");
+    box.style.cssText = "position:fixed;z-index:99980;pointer-events:none;border:2px solid #5DEFD5;border-radius:12px;"
+      + "box-shadow:0 0 0 9999px rgba(2,8,16,.66),0 0 26px rgba(93,239,213,.45);transition:all .25s ease";
+    var label = document.createElement("div");
+    label.className = "coach";
+    label.innerHTML = "<span>" + cfgSpot[curLang()] + "</span>"
+      + '<svg viewBox="0 0 46 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transform:rotate(90deg)"><path d="M3 8c14-4 28 2 38 14"/><path d="m33 20 8 3 1-9"/></svg>';
+    document.body.appendChild(box);
+    document.body.appendChild(label);
+    spot.el = box;
+    spot.label = label;
+    function place() {
+      var r = t.getBoundingClientRect();
+      if (!r.width) return;
+      var top = Math.max(6, r.top - 6), left = Math.max(6, r.left - 6);
+      var bottom = Math.min(innerHeight - 6, r.bottom + 6), right = Math.min(innerWidth - 6, r.right + 6);
+      box.style.left = left + "px";
+      box.style.top = top + "px";
+      box.style.width = (right - left) + "px";
+      box.style.height = (bottom - top) + "px";
+      var lw = label.offsetWidth, lh = label.offsetHeight;
+      var ly = top - lh - 12;
+      if (ly < 8) ly = Math.min(innerHeight - lh - 8, bottom + 12);
+      var lx = Math.min(innerWidth - lw - 8, Math.max(8, left + (right - left) / 2 - lw / 2));
+      label.style.left = lx + "px";
+      label.style.top = ly + "px";
+    }
+    place();
+    spot.timer = setInterval(place, 300);
+    // Le premier clic du visiteur rend la main : la zone reste, le voile part.
+    setTimeout(function () { document.addEventListener("mousedown", spotClear, true); }, 400);
+  }
   function openHashPage(delay) {
     var page = (location.hash || "").slice(1);
     if (!page) return;
+    var sp = SPOTS[page];
     setTimeout(function () {
-      // #gaea, #houdini... : ouvre la carte de cette strate sur la page Pipeline.
-      var card = document.querySelector('[data-config="' + page + '"]');
-      if (card) { card.click(); return; }
-      var nav = document.querySelector('[data-nav="' + page + '"]');
-      if (nav) nav.click();
+      if (sp && sp.nav) {
+        var nav = document.querySelector('[data-nav="' + sp.nav + '"]');
+        if (nav) nav.click();
+      }
+      if (sp && sp.tab) {
+        var tab = document.querySelector('.tab[data-tab="' + sp.tab + '"]');
+        if (tab) tab.click();
+      }
+      if (sp && sp.open) {
+        var btn = document.querySelector(sp.open);
+        if (btn) btn.click();
+      }
+      if (!sp) {
+        var fallback = document.querySelector('[data-config="' + page + '"]') || document.querySelector('[data-nav="' + page + '"]');
+        if (fallback) fallback.click();
+        return;
+      }
+      // Laisse l'interface s'ouvrir et se poser avant d'encadrer.
+      setTimeout(function () { spotShow(sp); }, 900);
     }, delay);
   }
   // Filet : le premier mesh se charge une seule fois au demarrage. Si le
@@ -282,7 +353,12 @@
   function coachPlace() {
     if (!coach.target || !coach.el) return;
     var r = coach.target.getBoundingClientRect();
-    if (!r.width) return;
+    // Zone cachee (autre page de l'interface, Reglages...) : la bulle et son
+    // anneau disparaissent, et reviennent quand la zone est de nouveau la.
+    var visible = r.width > 0 && coach.target.offsetParent !== null;
+    coach.el.style.display = visible ? "flex" : "none";
+    coach.ring.style.display = visible ? "block" : "none";
+    if (!visible) return;
     coach.ring.style.cssText = "left:" + (r.left - 5) + "px;top:" + (r.top - 5) + "px;width:" + (r.width + 10) + "px;height:" + (r.height + 10) + "px";
     var w = coach.el.offsetWidth;
     var left = r.left - w - 14;

@@ -7,7 +7,7 @@
 <meta name="description" content="Stratum by Kalysteon, the terrain pipeline software. Gaea, Houdini, Unreal Engine 5 and Unity, automated end to end. Free download for Windows.">
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500&family=Rajdhani:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
 @keyframes rotateBorder { to { --angle: 360deg; } }
@@ -152,7 +152,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(58px,12vw,148px);l
 .btn-s{background:transparent;color:var(--teal-br);border-color:var(--line)}
 .btn-s:hover{border-color:var(--teal);color:var(--teal-br);background:rgba(31,184,171,0.06)}
 .btn-lg{font-size:14px;padding:18px 38px}
-.hero-shot{margin:62px auto 0;max-width:1100px;padding:0 32px}
+.hero-shot{margin:124px auto 0;max-width:1100px;padding:0 32px}
 .shot{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);box-shadow:0 40px 90px -30px rgba(0,0,0,0.9),0 0 0 1px rgba(255,255,255,0.02)}
 .shot-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--line-soft);background:rgba(2,10,22,0.6)}
 .shot-bar i{width:9px;height:9px;border-radius:50%;background:rgba(140,158,176,0.22)}
@@ -309,11 +309,116 @@ main .btn-s{color:var(--teal-br)}
 .slot-box img{width:100%;height:100%;object-fit:cover;object-position:top left}
 .hero-shot .slot-box img{object-position:top center}
 .faq-more a{color:var(--teal-br)}
+/* ============ ROUND 7 ============ */
+.story-guy{position:absolute;right:34px;bottom:14px;width:92px;height:115px;color:#F2A15C;opacity:.9;transform:rotate(4deg);filter:drop-shadow(0 0 10px rgba(242,161,92,.25))}
+.story-guy .guy-arm{transform-origin:53px 82px;animation:guyThumb 2.4s ease-in-out infinite}
+@keyframes guyThumb{0%,70%,100%{transform:rotate(0)}80%{transform:rotate(-10deg)}90%{transform:rotate(4deg)}}
+.story figcaption{padding-right:120px}
+@media (max-width:760px){.story-guy{width:66px;height:84px;right:14px;bottom:10px}}
+/* ============ ROUND 6 ============ */
+.ver-note{top:auto!important;bottom:6px;right:-10px!important;transform:translateX(100%) rotate(-9deg)!important;font-family:'Caveat',cursive!important;font-style:normal!important;font-weight:700!important;font-size:clamp(34px,4.4vw,52px)!important;letter-spacing:0!important;color:#F2A15C!important;display:block!important;line-height:1;text-shadow:0 0 18px rgba(242,161,92,.3)}
+.ver-note svg{width:78px!important;height:14px!important;transform:translate(-4px,-4px)!important;display:block!important;opacity:.85}
+.story-q{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.6vw,28px);color:#F2A15C;margin-bottom:14px}
+.tl-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tl-tool{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:7px;background:var(--navy-2);border:1px solid var(--line-soft);text-decoration:none;font-size:12px;transition:.2s}
+.tl-tool i{width:7px;height:7px;border-radius:2px;background:var(--tc)}
+.tl-tool b{color:var(--text);font-weight:600}
+.tl-tool span{color:var(--dim);font-family:var(--mono);font-size:10.5px}
+.tl-tool:hover{border-color:var(--tc);transform:translateY(-1px)}
+.t-gaea{--tc:var(--gaea)}.t-hou{--tc:var(--houdini)}.t-ue{--tc:var(--unreal)}.t-unity{--tc:var(--unity)}
+.tl-note{font-family:var(--mono);font-size:11px!important;letter-spacing:.08em;color:var(--dim)!important;margin-top:10px}
+.vs-table{border-radius:14px;box-shadow:0 30px 70px -40px rgba(0,0,0,.9);font-size:15px}
+.vs-table thead th{padding:18px 22px}
+.vs-table thead th.bad span,.vs-table thead th.good span{display:inline-block;padding:6px 12px;border-radius:30px}
+.vs-table thead th.bad span{background:rgba(232,140,140,.1);border:1px solid rgba(232,140,140,.3)}
+.vs-table thead th.good span{background:rgba(31,184,171,.14);border:1px solid rgba(93,239,213,.4)}
+.vs-table tbody tr{transition:background .2s}
+.vs-table tbody tr:hover th,.vs-table tbody tr:hover td.bad{background:rgba(255,255,255,.025)}
+.vs-table tbody tr:hover td.good{background:rgba(31,184,171,.1)}
+.vs-table td.bad::before,.vs-table td.good::before{content:none!important}
+.vs-table tbody th{width:30%;font-size:16px}
+.vs-table td.good{border-left:1px solid rgba(93,239,213,.25)}
+.vs-feat{display:flex;align-items:center;gap:12px}
+.vs-ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;background:rgba(31,184,171,.1);border:1px solid rgba(93,239,213,.22);color:var(--teal-br)}
+.vs-ico svg{width:19px;height:19px}
+.vs-tip{position:relative;flex-shrink:0;width:19px;height:19px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--dim);font:600 11px/1 var(--mono);cursor:help;padding:0}
+.vs-tip:hover,.vs-tip:focus{color:var(--teal-br);border-color:var(--teal)}
+.vs-tip-text{position:absolute;left:50%;top:calc(100% + 10px);transform:translateX(-50%);width:260px;padding:11px 13px;border-radius:9px;background:#06131f;border:1px solid rgba(93,239,213,.35);box-shadow:0 14px 34px rgba(0,0,0,.6);font:400 13.5px/1.5 var(--sans);color:var(--text);text-align:left;white-space:normal;opacity:0;pointer-events:none;transition:opacity .18s;z-index:5}
+.vs-tip:hover .vs-tip-text,.vs-tip:focus .vs-tip-text{opacity:1}
+.vs-cell{display:flex;align-items:center;gap:10px}
+.vs-cell i{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700}
+td.bad .vs-cell i{background:rgba(232,140,140,.14);color:#e88c8c}
+td.good .vs-cell i{background:rgba(31,184,171,.2);color:var(--teal-br)}
+.vs-live{margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:30px;border:1px solid rgba(93,239,213,.35);background:transparent;color:var(--teal-br);font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.vs-live svg{width:10px;height:10px}
+.vs-live:hover{background:var(--teal);color:#021A18;border-color:var(--teal)}
+.dl-steps2{display:flex;align-items:stretch;gap:10px;margin-top:56px;text-align:left}
+.dls{flex:1;position:relative;padding:26px 24px 24px;border-radius:14px;background:linear-gradient(165deg,rgba(31,184,171,.08),var(--navy-2) 55%);border:1px solid var(--line-soft);transition:.25s}
+.dls:hover{border-color:rgba(93,239,213,.35);transform:translateY(-3px)}
+.dls-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.dls-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(31,184,171,.14);border:1px solid rgba(93,239,213,.3);color:var(--teal-br)}
+.dls-ico svg{width:22px;height:22px}
+.dls-n{font-family:var(--display);font-weight:700;font-size:34px;line-height:1;color:rgba(93,239,213,.14)}
+.dls h4{font-family:var(--display);font-weight:600;font-size:21px;margin-bottom:6px}
+.dls p{color:var(--muted);font-size:14.5px;line-height:1.55}
+.dls-tip{margin-top:12px;padding:8px 10px;border-radius:8px;background:rgba(242,161,92,.08);border:1px dashed rgba(242,161,92,.35);color:#f2b08f;font-size:12.5px;line-height:1.45}
+.dls-arrow{display:flex;align-items:center;color:rgba(93,239,213,.45)}
+.dls-arrow svg{width:30px;height:12px}
+@media (min-width:761px){.vs-scroll{overflow:visible}.vs-table{overflow:visible}}
+@media (max-width:860px){.dl-steps2{flex-direction:column}.dls-arrow{justify-content:center;transform:rotate(90deg);height:22px}}
+@media (max-width:760px){.ver-note{position:absolute!important;right:4px!important;bottom:-26px!important;transform:rotate(-8deg)!important;font-size:34px!important}.vs-tip-text{left:0;transform:none;width:220px}}
+/* ============ ROUND 5 ============ */
+.title-wrap{position:relative;display:inline-block}
+.ver-note{position:absolute;right:-8px;top:-50px;transform:translateX(80%) rotate(-7deg);display:inline-flex;align-items:flex-end;gap:2px;font-family:var(--display);font-style:italic;font-weight:500;font-size:19px;letter-spacing:.02em;color:#F2A15C;white-space:nowrap;text-shadow:0 0 14px rgba(242,161,92,.35)}
+.ver-note svg{width:34px;height:26px;margin-left:2px;transform:translateY(16px)}
+.hero-steps{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px 12px;margin:26px auto 0}
+.hero-steps span{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-br);border:1px solid rgba(93,239,213,.28);background:rgba(31,184,171,.07);padding:8px 14px;border-radius:30px}
+.hero-steps i{font-style:normal;color:var(--dim)}
+.hero-sub{max-width:46ch;text-wrap:balance;font-size:17px;margin-top:18px}
+.hero-sub b{color:var(--text);font-weight:600}
+.free-badge{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:10px 18px;border-radius:40px;background:linear-gradient(90deg,rgba(31,184,171,.14),rgba(31,184,171,.04));border:1px solid rgba(93,239,213,.35);color:var(--muted);font-size:15px}
+.free-badge svg{width:18px;height:18px;color:var(--teal-br);flex-shrink:0}
+.free-badge b{color:var(--teal-br);font-weight:600}
+.ess-ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(31,184,171,.1);border:1px solid rgba(93,239,213,.25);color:var(--teal-br);margin-bottom:18px}
+.ess-ico svg{width:26px;height:26px}
+.ess-big{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.15;color:var(--text);margin-bottom:8px}
+.ess-big s{color:#e88c8c;text-decoration-thickness:2px;opacity:.85}
+.ess-big span{color:var(--dim)}
+.ess-hl{background:linear-gradient(160deg,rgba(31,184,171,.12),var(--navy-2) 60%)}
+.ess-hl .ess-big{color:var(--teal-br)}
+.story{position:relative;max-width:820px;margin:72px auto 0;padding:40px 44px 34px;border-radius:16px;background:linear-gradient(160deg,rgba(242,161,92,.07),var(--navy-2) 45%);border:1px solid rgba(242,161,92,.22)}
+.story-mark{position:absolute;top:-6px;left:26px;font-family:Georgia,serif;font-size:110px;line-height:1;color:rgba(242,161,92,.35)}
+.story .eyebrow{color:#F2A15C}
+.story .eyebrow::before{background:#F2A15C}
+.story blockquote{font-family:var(--display);font-weight:500;font-size:clamp(19px,2.1vw,23px);line-height:1.5;color:var(--text)}
+.story blockquote b{color:#F2A15C;font-weight:600}
+.story figcaption{display:flex;align-items:center;gap:12px;margin-top:24px}
+.story figcaption img{width:40px;height:40px;object-fit:contain}
+.story figcaption span{display:flex;flex-direction:column;line-height:1.3}
+.story figcaption b{color:var(--text);font-weight:600}
+.story figcaption em{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.vs{padding:104px 0;border-top:1px solid var(--line-soft)}
+.vs-scroll{overflow-x:auto}
+.vs-table{width:100%;min-width:620px;border-collapse:separate;border-spacing:0;border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden;font-size:15px}
+.vs-table th,.vs-table td{padding:16px 22px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.vs-table tbody tr:last-child th,.vs-table tbody tr:last-child td{border-bottom:0}
+.vs-table thead th{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;background:var(--navy-2)}
+.vs-table thead th.bad{color:#e88c8c}
+.vs-table thead th.good{color:var(--teal-br);background:rgba(31,184,171,.08)}
+.vs-table tbody th{font-family:var(--display);font-weight:600;font-size:17px;color:var(--text);width:18%;background:var(--navy-2)}
+.vs-table td{color:var(--muted);line-height:1.5}
+.vs-table td.bad::before{content:'✕';color:#e88c8c;margin-right:10px;font-weight:700}
+.vs-table td.good{background:rgba(31,184,171,.05);color:var(--text)}
+.vs-table td.good::before{content:'✓';color:var(--teal-br);margin-right:10px;font-weight:700}
+.vs-total th,.vs-total td{font-family:var(--display);font-size:20px!important;font-weight:600}
+.vs-total td.bad{color:#e88c8c}
+.vs-total td.good{color:var(--teal-br)!important;background:rgba(31,184,171,.12)!important}
+@media (max-width:760px){.ver-note{position:static;transform:rotate(-4deg);margin-top:8px}.ver-note svg{display:none}.title-wrap{display:flex;flex-direction:column;align-items:center}.story{padding:34px 24px 28px}.vs{padding:72px 0}}
 /* ============ ANNOTATION DEMO ============ */
 .hero-shot{position:relative}
-.try-note{position:absolute;top:-58px;right:max(32px,calc(50% - 520px));display:flex;align-items:flex-start;gap:4px;color:var(--teal-br);pointer-events:none;transform:rotate(-2deg);animation:tryFloat 3.2s ease-in-out infinite}
+.try-note{position:absolute;top:-78px;right:max(32px,calc(50% - 520px));display:flex;align-items:flex-start;gap:4px;color:var(--teal-br);pointer-events:none;transform:rotate(-2deg);animation:tryFloat 3.2s ease-in-out infinite}
 .try-note span{font-family:var(--display);font-weight:500;font-style:italic;font-size:19px;letter-spacing:.01em;white-space:nowrap;text-shadow:0 0 18px rgba(93,239,213,.35)}
-.try-note svg{width:62px;height:44px;margin-top:10px;flex-shrink:0}
+.try-note svg{width:54px;height:64px;margin-top:8px;flex-shrink:0}
 @keyframes tryFloat{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-4px)}}
 @media (max-width:760px){.try-note{display:none}}
 /* ============ TIMELINE ============ */
@@ -495,22 +600,26 @@ main .btn-s.btn-hero:hover{background:rgba(31,184,171,0.10);border-color:var(--t
 <!-- ============ HERO ============ -->
 <section class="hero" id="str-top">
   <div class="wrap hero-inner">
-    <div class="hero-tag"><b></b><span>v<span class="str-ver">1.0.0</span> · Windows</span></div>
     <div class="hero-logo"><img src="img/stratum/logo.png" alt="Stratum" onerror="this.style.display='none'"></div>
-    <h1>STRATUM</h1>
+    <div class="title-wrap"><h1>STRATUM</h1><span class="ver-note">v<span class="str-ver-short">1.0</span><svg viewBox="0 0 90 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11c18-7 40-9 84-4"/></svg></span></div>
     <div class="hero-by"><span data-en="by" data-fr="par">by</span> <span>Kalysteon</span></div>
-    <p class="hero-line" data-en="Your Gaea terrain, engine-ready in one click." data-fr="Votre terrain Gaea, prêt pour le moteur en un clic.">Your Gaea terrain, engine-ready in one click.</p>
-    <p class="hero-sub" data-en="Pick a graph, tick your variants, run. Your terrains land in Unreal Engine or Unity with meshes, textures and materials already set up." data-fr="Choisissez un graphe, cochez vos variantes, lancez. Vos terrains arrivent dans Unreal Engine ou Unity avec meshes, textures et matériaux déjà prêts.">Pick a graph, tick your variants, run. Your terrains land in Unreal Engine or Unity with meshes, textures and materials already set up.</p>
+    <p class="hero-line" data-en="Your terrain workflow, on autopilot." data-fr="Votre workflow terrain, en pilote automatique.">Your terrain workflow, on autopilot.</p>
+    <div class="hero-steps">
+      <span data-en="Pick a graph" data-fr="Choisissez un graphe">Pick a graph</span><i>→</i>
+      <span data-en="Tick your variants" data-fr="Cochez vos variantes">Tick your variants</span><i>→</i>
+      <span data-en="Run" data-fr="Lancez">Run</span>
+    </div>
+    <p class="hero-sub" data-en="Your terrains land in &lt;b&gt;Unreal Engine&lt;/b&gt; or &lt;b&gt;Unity&lt;/b&gt; with meshes, textures and materials already set up." data-fr="Vos terrains arrivent dans &lt;b&gt;Unreal Engine&lt;/b&gt; ou &lt;b&gt;Unity&lt;/b&gt; avec meshes, textures et matériaux déjà prêts.">Your terrains land in <b>Unreal Engine</b> or <b>Unity</b> with meshes, textures and materials already set up.</p>
     <div class="hero-btns">
       <a class="btn btn-p btn-hero" href="#str-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg><span data-en="Download free" data-fr="Télécharger gratuitement">Download free</span></a>
       <a class="btn btn-s btn-hero" href="#str-pricing"><span data-en="See pricing" data-fr="Voir les tarifs">See pricing</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
     </div>
-    <p class="hero-note" data-en="Free forever · No account needed" data-fr="Gratuit pour toujours · Aucun compte requis">Free forever · No account needed</p>
+    <div class="free-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-en="&lt;b&gt;Free forever.&lt;/b&gt; No account, no watermark, no time limit." data-fr="&lt;b&gt;Gratuit pour toujours.&lt;/b&gt; Sans compte, sans filigrane, sans limite de temps."><b>Free forever.</b> No account, no watermark, no time limit.</span></div>
   </div>
   <div class="hero-shot">
     <div class="try-note" aria-hidden="true">
       <span data-en="Go ahead, click anything. It's the real thing." data-fr="Vas-y, clique partout. C'est le vrai logiciel.">Go ahead, click anything. It's the real thing.</span>
-      <svg viewBox="0 0 90 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 6c30 2 58 14 70 44"/><path d="m68 44 10 7 3-12"/></svg>
+      <svg viewBox="0 0 70 70" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c28-6 48 6 52 50"/><path d="m46 52 10 12 9-14"/></svg>
     </div>
     <div class="shot">
       <div class="shot-bar"><i></i><i></i><i></i><em class="demo-badge" data-en="Live demo" data-fr="Démo live">Live demo</em><span>Stratum</span></div>
@@ -531,44 +640,33 @@ main .btn-s.btn-hero:hover{background:rgba(31,184,171,0.10);border-color:var(--t
 
     <div class="essence">
       <div class="ess">
+        <div class="ess-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.6 3-5.6 6-5.6s5.4 2 6 5.6"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.5c2.4.2 4 1.9 4.5 4.6"/></svg></div>
         <b data-en="Made for" data-fr="Fait pour">Made for</b>
-        <p data-en="Artists and studios who produce terrains in batches: packs, variants, whole biomes." data-fr="Les artistes et studios qui produisent des terrains en série : packs, variantes, biomes entiers.">Artists and studios who produce terrains in batches: packs, variants, whole biomes.</p>
+        <div class="ess-big" data-en="Terrain artists &amp; studios" data-fr="Artistes &amp; studios terrain">Terrain artists &amp; studios</div>
+        <p data-en="Who produce in batches: packs, variants, whole biomes." data-fr="Qui produisent en série : packs, variantes, biomes entiers.">Who produce in batches: packs, variants, whole biomes.</p>
       </div>
       <div class="ess">
+        <div class="ess-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.6"/><path d="M20 4v4.6h-4.6"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.4"/><path d="M4 20v-4.6h4.6"/><path d="m3 3 18 18" stroke-width="1.8"/></svg></div>
         <b data-en="It removes" data-fr="Il supprime">It removes</b>
-        <p data-en="The repetitive work between tools, done by hand for every single asset." data-fr="Le travail répétitif entre les logiciels, fait à la main pour chaque asset.">The repetitive work between tools, done by hand for every single asset.</p>
+        <div class="ess-big" data-en="The busywork" data-fr="Le travail répétitif">The busywork</div>
+        <p data-en="Renaming, sorting, re-importing, building materials, by hand." data-fr="Renommer, trier, réimporter, créer les matériaux, à la main.">Renaming, sorting, re-importing, building materials, by hand.</p>
       </div>
-      <div class="ess">
+      <div class="ess ess-hl">
+        <div class="ess-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M9 2.5h6"/></svg></div>
         <b data-en="You get" data-fr="Vous gagnez">You get</b>
-        <p data-en="Hours back on every set, and assets that land named, sorted and ready to use." data-fr="Des heures sur chaque série, et des assets qui arrivent nommés, triés et prêts à l'emploi.">Hours back on every set, and assets that land named, sorted and ready to use.</p>
+        <div class="ess-big"><s>4-6 h</s> <span>→</span> ~5 min</div>
+        <p data-en="Per terrain set. Your assets land named, sorted and ready." data-fr="Par série de terrains. Vos assets arrivent nommés, triés et prêts.">Per terrain set. Your assets land named, sorted and ready.</p>
       </div>
     </div>
 
-    <div class="flow">
-      <a class="node" href="https://quadspinner.com" target="_blank" rel="noopener">
-        <div class="dot" style="background:rgba(232,192,79,0.14);color:var(--gaea)">G</div>
-        <h4>Gaea</h4>
-        <p>Gaea 2 · Professional / Enterprise</p>
-      </a>
-      <div class="arrow"></div>
-      <a class="node opt" href="https://www.sidefx.com" target="_blank" rel="noopener">
-        <div class="dot" style="background:rgba(232,156,63,0.14);color:var(--houdini)">H</div>
-        <h4>Houdini</h4>
-        <p data-en="Houdini 21 · optional" data-fr="Houdini 21 · optionnel">Houdini 21 · optional</p>
-      </a>
-      <div class="arrow"></div>
-      <div class="node-pair">
-        <a class="node" href="https://www.unrealengine.com" target="_blank" rel="noopener">
-          <div class="dot" style="background:rgba(181,137,240,0.14);color:var(--unreal)">UE</div>
-          <div><h4>Unreal</h4><p>Unreal Engine 5</p></div>
-        </a>
-        <a class="node" href="https://unity.com" target="_blank" rel="noopener">
-          <div class="dot" style="background:rgba(91,164,245,0.14);color:var(--unity)">U</div>
-          <div><h4>Unity</h4><p>Unity 6 · URP / HDRP</p></div>
-        </a>
-      </div>
-    </div>
-    <p class="flow-note" data-en="Only Gaea and Unity? Turn the rest off. The chain adapts to your tools." data-fr="Seulement Gaea et Unity ? Coupez le reste. La chaîne s'adapte à vos outils.">Only Gaea and Unity? Turn the rest off. The chain adapts to your tools.</p>
+
+    <figure class="story">
+      <div class="story-mark">“</div>
+      <h3 class="story-q" data-en="Why did I build this tool?" data-fr="Pourquoi ai-je créé cet outil ?">Why did I build this tool?</h3>
+      <blockquote data-en="Simple: Stratum started as a personal tool I built while making terrain packs. The thing is, I spent far more time &lt;b&gt;juggling between software&lt;/b&gt; than actually working in it: exporting each variant, renaming files, organizing folders, re-importing everything into the game engine, building materials... I repeated the same clicks for hours on every pack, it was a huge time sink. So I automated the process, step by step, until a single click did it all. Today every Kalysteon pack goes through this tool, and now it's yours to use. Hopefully it helps you too!" data-fr="Simple, à l'origine, Stratum était un outil personnel que j'ai conçu lorsque je créais des packs de terrain. Le truc, c'est que je passais bien plus de temps &lt;b&gt;à jongler entre les logiciels&lt;/b&gt; qu'à travailler réellement dedans : exporter chaque variante, renommer les fichiers, organiser les dossiers, réimporter le tout dans le moteur de jeu, créer les matériaux... Je répétais les mêmes clics pendant des heures pour chaque pack, c'est super chronophage. J'ai donc automatisé le processus, étape par étape, jusqu'à ce qu'un seul clic suffise à tout accomplir. Aujourd'hui, tous les packs Kalysteon passent par cet outil, et il est désormais à votre disposition. En espérant que ça puisse vous servir également !">Simple: Stratum started as a personal tool I built while making terrain packs. The thing is, I spent far more time <b>juggling between software</b> than actually working in it: exporting each variant, renaming files, organizing folders, re-importing everything into the game engine, building materials... I repeated the same clicks for hours on every pack, it was a huge time sink. So I automated the process, step by step, until a single click did it all. Today every Kalysteon pack goes through this tool, and now it's yours to use. Hopefully it helps you too!</blockquote>
+      <svg class="story-guy" viewBox="0 0 120 150" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="52" cy="40" r="25"/><path d="M40 36h7"/><circle cx="61" cy="35" r="2.6" fill="currentColor" stroke="none"/><path d="M40 49c7 8 18 7 23-2"/><path d="M51 65c-3 20-3 40 1 60"/><path d="M50 84c-12 5-20 14-25 27"/><path class="guy-arm" d="M53 82c15-2 26-10 31-23"/><path class="guy-arm" d="M84 59c-2-8 0-15 4-20"/><circle class="guy-arm" cx="87" cy="61" r="7"/><path d="M52 125c-8 6-12 14-14 22M52 125c8 6 12 14 13 22"/></svg>
+      <figcaption><img src="img/stratum/logo.png" alt="" onerror="this.style.display='none'"><span><b>Andrei Bobe</b><em data-en="Founder of Kalysteon" data-fr="Fondateur de Kalysteon">Founder of Kalysteon</em></span></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -584,7 +682,7 @@ main .btn-s.btn-hero:hover{background:rgba(31,184,171,0.10);border-color:var(--t
         <div class="tl-dot"><span>01</span></div>
         <h3 data-en="Pick your graph" data-fr="Choisissez votre graphe">Pick your graph</h3>
         <p data-en="Point Stratum at a Gaea file. Your tools are detected on their own." data-fr="Indiquez un fichier Gaea. Vos outils sont détectés tout seuls.">Point Stratum at a Gaea file. Your tools are detected on their own.</p>
-        
+        <div class="tl-tools"><a class="tl-tool t-gaea" href="https://quadspinner.com" target="_blank" rel="noopener"><i></i><b>Gaea 2</b><span data-en="Pro / Enterprise" data-fr="Pro / Enterprise">Pro / Enterprise</span></a></div>
       </div>
       <div class="tl-step">
         <div class="tl-dot"><span>02</span></div>
@@ -602,58 +700,68 @@ main .btn-s.btn-hero:hover{background:rgba(31,184,171,0.10);border-color:var(--t
         <div class="tl-dot"><span>04</span></div>
         <h3 data-en="Run" data-fr="Lancez">Run</h3>
         <p data-en="Assets land in Unreal or Unity, sorted and set up." data-fr="Les assets arrivent dans Unreal ou Unity, rangés et configurés.">Assets land in Unreal or Unity, sorted and set up.</p>
-        
+        <div class="tl-tools"><a class="tl-tool t-hou" href="https://www.sidefx.com" target="_blank" rel="noopener"><i></i><b>Houdini 21</b><span data-en="optional" data-fr="optionnel">optional</span></a><a class="tl-tool t-ue" href="https://www.unrealengine.com" target="_blank" rel="noopener"><i></i><b>Unreal 5</b><span data-en="Nanite" data-fr="Nanite">Nanite</span></a><a class="tl-tool t-unity" href="https://unity.com" target="_blank" rel="noopener"><i></i><b>Unity 6</b><span data-en="URP / HDRP" data-fr="URP / HDRP">URP / HDRP</span></a></div>
+        <p class="tl-note" data-en="Only Gaea and Unity? Turn the rest off." data-fr="Seulement Gaea et Unity ? Coupez le reste.">Only Gaea and Unity? Turn the rest off.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ FEATURES ============ -->
-<section class="feat" id="str-features">
+<!-- ============ FONCTIONS : AVANT / APRES ============ -->
+<section class="vs" id="str-features">
   <div class="wrap">
-    <div class="feat-head">
-      <div>
-        <div class="eyebrow" data-en="Features" data-fr="Fonctions">Features</div>
-        <h2 data-en="Built for real production." data-fr="Pensé pour la vraie production.">Built for real production.</h2>
-      </div>
+    <div class="steps-head">
+      <div class="eyebrow mid" data-en="Features" data-fr="Fonctions">Features</div>
+      <h2 data-en="Same terrain set. Two workflows." data-fr="Même série de terrains. Deux workflows.">Same terrain set. Two workflows.</h2>
     </div>
-    <div class="feat-grid">
-      <button class="fcell" type="button" data-demo-page="gaea">
-        <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7.5" height="7.5" rx="1"></rect><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"></rect><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"></rect><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"></rect></svg></div>
-        <h4 data-en="Variant grid" data-fr="Grille de variantes">Variant grid</h4>
-        <p data-en="Up to 26 terrains per project. See what is done or out of date, redo only that." data-fr="Jusqu'à 26 terrains par projet. Voyez ce qui est fait ou périmé, refaites seulement ça.">Up to 26 terrains per project. See what is done or out of date, redo only that.</p>
-        <span class="fsee" data-en="See it live" data-fr="Voir en direct">See it live</span>
-      </button>
-      <button class="fcell" type="button" data-demo-page="pipeline">
-        <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2.5 21 7.5v9L12 21.5 3 16.5v-9z"></path><path d="M12 12 21 7.5M12 12v9.5M12 12 3 7.5"></path></svg></div>
-        <h4 data-en="3D preview &amp; photo studio" data-fr="Aperçu 3D &amp; studio photo">3D preview &amp; photo studio</h4>
-        <p data-en="Inspect every mesh before your engine does, then shoot 4K images for your store page." data-fr="Inspectez chaque mesh avant votre moteur, puis photographiez des images 4K pour votre fiche store.">Inspect every mesh before your engine does, then shoot 4K images for your store page.</p>
-        <span class="fsee" data-en="See it live" data-fr="Voir en direct">See it live</span>
-      </button>
-      <button class="fcell" type="button" data-demo-page="library">
-        <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7.5a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 11.5h18"></path></svg></div>
-        <h4 data-en="Asset library" data-fr="Bibliothèque d'assets">Asset library</h4>
-        <p data-en="Every mesh from every project, with 3D thumbnails. Filter, sort, pack." data-fr="Chaque mesh de chaque projet, avec vignettes 3D. Filtrez, triez, packez.">Every mesh from every project, with 3D thumbnails. Filter, sort, pack.</p>
-        <span class="fsee" data-en="See it live" data-fr="Voir en direct">See it live</span>
-      </button>
-      <button class="fcell" type="button" data-demo-page="houdini">
-        <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m12 3 9 5-9 5-9-5z"></path><path d="m3 13 9 5 9-5"></path></svg></div>
-        <h4 data-en="Houdini modifiers" data-fr="Modificateurs Houdini">Houdini modifiers</h4>
-        <p data-en="Reduce polycount, fix normals, smooth edges, or plug in your own HDA. No Houdini window opened." data-fr="Réduire les polygones, corriger les normales, adoucir les arêtes, ou brancher votre propre HDA. Sans ouvrir Houdini.">Reduce polycount, fix normals, smooth edges, or plug in your own HDA. No Houdini window opened.</p>
-        <span class="fsee" data-en="See it live" data-fr="Voir en direct">See it live</span>
-      </button>
-      <button class="fcell" type="button" data-demo-page="unreal">
-        <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path><path d="m9.5 9 2.5 2.5L16 7.5"></path></svg></div>
-        <h4 data-en="Ready in Unreal &amp; Unity" data-fr="Prêt dans Unreal &amp; Unity">Ready in Unreal &amp; Unity</h4>
-        <p data-en="Meshes, textures and one material per variant, imported and set up for you." data-fr="Meshes, textures et un matériau par variante, importés et réglés pour vous.">Meshes, textures and one material per variant, imported and set up for you.</p>
-        <span class="fsee" data-en="See it live" data-fr="Voir en direct">See it live</span>
-      </button>
-      <button class="fcell" type="button" data-demo-page="settings">
-        <div class="fico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path></svg></div>
-        <h4 data-en="Tools auto-detected" data-fr="Outils détectés">Tools auto-detected</h4>
-        <p data-en="Stratum finds Gaea, Houdini, Unreal and Unity, and opens each project with the right version." data-fr="Stratum trouve Gaea, Houdini, Unreal et Unity, et ouvre chaque projet avec la bonne version.">Stratum finds Gaea, Houdini, Unreal and Unity, and opens each project with the right version.</p>
-        <span class="fsee" data-en="See it live" data-fr="Voir en direct">See it live</span>
-      </button>
+    <div class="vs-scroll">
+    <table class="vs-table">
+      <thead><tr><th></th><th class="bad"><span data-en="Without Stratum" data-fr="Sans Stratum">Without Stratum</span></th><th class="good"><span data-en="With Stratum" data-fr="Avec Stratum">With Stratum</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"/></svg></span><span class="vs-feat-name" data-en="Variant grid" data-fr="Grille de variantes">Variant grid</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Up to 26 terrains per project. See what is done or out of date, redo only that." data-fr="Jusqu'à 26 terrains par projet. Voyez ce qui est fait ou périmé, refaites seulement ça.">Up to 26 terrains per project. See what is done or out of date, redo only that.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Change the seed, build, export, one by one" data-fr="Changer la seed, builder, exporter, une par une">Change the seed, build, export, one by one</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Tick them, one run builds them all" data-fr="Cochez-les, un run les builde toutes">Tick them, one run builds them all</span><button class="vs-live" type="button" data-demo-page="gaea"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span><span class="vs-feat-name" data-en="Naming" data-fr="Nommage">Naming</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="You control every file and asset name, from Gaea to your engine. Or keep the original names." data-fr="Vous contrôlez le nom de chaque fichier et asset, de Gaea jusqu'au moteur. Ou gardez les noms d'origine.">You control every file and asset name, from Gaea to your engine. Or keep the original names.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Rename every file by hand" data-fr="Renommer chaque fichier à la main">Rename every file by hand</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Your naming rules, applied everywhere" data-fr="Vos règles de nommage, appliquées partout">Your naming rules, applied everywhere</span><button class="vs-live" type="button" data-demo-page="naming"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 11.5h18"/></svg></span><span class="vs-feat-name" data-en="Asset library" data-fr="Bibliothèque d'assets">Asset library</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Every mesh from every project, with 3D thumbnails. Filter, sort, pack." data-fr="Chaque mesh de chaque projet, avec vignettes 3D. Filtrez, triez, packez.">Every mesh from every project, with 3D thumbnails. Filter, sort, pack.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Hunt through folders for the right file" data-fr="Fouiller les dossiers pour trouver le bon fichier">Hunt through folders for the right file</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Sorted automatically, all in one library" data-fr="Rangé automatiquement, tout dans une bibliothèque">Sorted automatically, all in one library</span><button class="vs-live" type="button" data-demo-page="library"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></span><span class="vs-feat-name" data-en="Houdini modifiers" data-fr="Modificateurs Houdini">Houdini modifiers</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Reduce polycount, fix normals, smooth edges, or plug in your own HDA." data-fr="Réduire les polygones, corriger les normales, adoucir les arêtes, ou brancher votre propre HDA.">Reduce polycount, fix normals, smooth edges, or plug in your own HDA.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Open, load the HDA, cook, export each mesh" data-fr="Ouvrir, charger le HDA, cuire, exporter chaque mesh">Open, load the HDA, cook, export each mesh</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Chained in the background, no window opened" data-fr="Enchaîné en arrière-plan, sans ouvrir Houdini">Chained in the background, no window opened</span><button class="vs-live" type="button" data-demo-page="houdini"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m9.5 9 2.5 2.5L16 7.5"/></svg></span><span class="vs-feat-name" data-en="Ready in Unreal &amp; Unity" data-fr="Prêt dans Unreal &amp; Unity">Ready in Unreal &amp; Unity</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Meshes, textures and one material per variant, imported and set up for you." data-fr="Meshes, textures et un matériau par variante, importés et réglés pour vous.">Meshes, textures and one material per variant, imported and set up for you.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Import, Nanite, collision, materials per asset" data-fr="Import, Nanite, collision, matériaux par asset">Import, Nanite, collision, materials per asset</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Imported, one material per variant" data-fr="Importé, un matériau par variante">Imported, one material per variant</span><button class="vs-live" type="button" data-demo-page="unreal"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 21 7.5v9L12 21.5 3 16.5v-9z"/><path d="M12 12 21 7.5M12 12v9.5M12 12 3 7.5"/></svg></span><span class="vs-feat-name" data-en="3D preview &amp; photo studio" data-fr="Aperçu 3D &amp; studio photo">3D preview &amp; photo studio</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Inspect every mesh before your engine does, then shoot 4K images for your store page." data-fr="Inspectez chaque mesh avant votre moteur, puis photographiez des images 4K pour votre fiche store.">Inspect every mesh before your engine does, then shoot 4K images for your store page.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Import into the engine just to check a mesh" data-fr="Importer dans le moteur juste pour vérifier un mesh">Import into the engine just to check a mesh</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Checked in 3D, 4K store shots in one click" data-fr="Vérifié en 3D, photos 4K pour le store en un clic">Checked in 3D, 4K store shots in one click</span><button class="vs-live" type="button" data-demo-page="preview"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span><span class="vs-feat-name" data-en="Tools auto-detected" data-fr="Outils détectés">Tools auto-detected</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Stratum finds Gaea, Houdini, Unreal and Unity, and opens each project with the right version." data-fr="Stratum trouve Gaea, Houdini, Unreal et Unity, et ouvre chaque projet avec la bonne version.">Stratum finds Gaea, Houdini, Unreal and Unity, and opens each project with the right version.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Set every tool path by hand" data-fr="Renseigner chaque chemin d'outil à la main">Set every tool path by hand</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Found automatically" data-fr="Trouvés automatiquement">Found automatically</span><button class="vs-live" type="button" data-demo-page="settings"><span data-en="See it" data-fr="Voir">See it</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg></button></div></td>
+        </tr>
+        <tr>
+          <th><div class="vs-feat"><span class="vs-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg></span><span class="vs-feat-name" data-en="Pre-flight checks" data-fr="Vérifications avant run">Pre-flight checks</span><button class="vs-tip" type="button" aria-label="?">?<span class="vs-tip-text" data-en="Tools, paths, disk space and graph outputs verified before the run, not after." data-fr="Outils, chemins, espace disque et sorties du graphe vérifiés avant le run, pas après.">Tools, paths, disk space and graph outputs verified before the run, not after.</span></button></div></th>
+          <td class="bad"><div class="vs-cell"><i>✕</i><span data-en="Mistakes found after the import, redo everything" data-fr="Erreurs découvertes après l'import, tout refaire">Mistakes found after the import, redo everything</span></div></td>
+          <td class="good"><div class="vs-cell"><i>✓</i><span data-en="Caught before the run" data-fr="Repérées avant le run">Caught before the run</span></div></td>
+        </tr>
+        <tr class="vs-total"><th><span data-en="Time per set" data-fr="Temps par série">Time per set</span></th><td class="bad"><div class="vs-cell"><span data-en="4 to 6 hours" data-fr="4 à 6 heures">4 to 6 hours</span></div></td><td class="good"><div class="vs-cell"><span data-en="~5 minutes of setup" data-fr="~5 minutes de réglage">~5 minutes of setup</span></div></td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 </section>
@@ -764,20 +872,7 @@ main .btn-s.btn-hero:hover{background:rgba(31,184,171,0.10);border-color:var(--t
       <div class="dl-ver">v<span class="str-ver">1.0.0</span> · ~22 MB</div>
       <a class="btn btn-p btn-lg" href="stratum/download" data-en="Download Stratum" data-fr="Télécharger Stratum">Download Stratum</a>
       <p class="dl-req" data-en="Windows 10/11 · 64-bit · Gaea 2 Professional or Enterprise required" data-fr="Windows 10/11 · 64 bits · Gaea 2 Professional ou Enterprise requis">Windows 10/11 · 64-bit · Gaea 2 Professional or Enterprise required</p>
-      <div class="dl-steps">
-        <div>
-          <b>01</b>
-          <p data-en="Run the installer. If Windows warns you, click More info, then Run anyway." data-fr="Lancez l'installeur. Si Windows vous avertit, cliquez sur Informations complémentaires, puis Exécuter quand même.">Run the installer. If Windows warns you, click More info, then Run anyway.</p>
-        </div>
-        <div>
-          <b>02</b>
-          <p data-en="Confirm the tools it detected on your machine." data-fr="Confirmez les outils détectés sur votre machine.">Confirm the tools it detected on your machine.</p>
-        </div>
-        <div>
-          <b>03</b>
-          <p data-en="Open a Gaea graph and run your first batch." data-fr="Ouvrez un graphe Gaea et lancez votre premier batch.">Open a Gaea graph and run your first batch.</p>
-        </div>
-      </div>
+      <div class="dl-steps2"><div class="dls"><div class="dls-top"><span class="dls-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg></span><span class="dls-n">01</span></div><h4 data-en="Install" data-fr="Installez">Install</h4><p data-en="Run the installer. No admin rights needed." data-fr="Lancez l'installeur. Pas besoin de droits admin.">Run the installer. No admin rights needed.</p><div class="dls-tip" data-en="Windows warns you? More info, then Run anyway." data-fr="Windows vous avertit ? Informations complémentaires, puis Exécuter quand même.">Windows warns you? More info, then Run anyway.</div></div><div class="dls-arrow" aria-hidden="true"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 6h34M30 1l6 5-6 5"/></svg></div><div class="dls"><div class="dls-top"><span class="dls-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span><span class="dls-n">02</span></div><h4 data-en="Detect" data-fr="Détectez">Detect</h4><p data-en="Stratum finds Gaea, Houdini, Unreal and Unity on its own." data-fr="Stratum trouve Gaea, Houdini, Unreal et Unity tout seul.">Stratum finds Gaea, Houdini, Unreal and Unity on its own.</p></div><div class="dls-arrow" aria-hidden="true"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 6h34M30 1l6 5-6 5"/></svg></div><div class="dls"><div class="dls-top"><span class="dls-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span><span class="dls-n">03</span></div><h4 data-en="Run" data-fr="Lancez">Run</h4><p data-en="Open a Gaea graph and run your first batch." data-fr="Ouvrez un graphe Gaea et lancez votre première série.">Open a Gaea graph and run your first batch.</p></div></div>
     </div>
   </div>
 </section>
@@ -855,7 +950,8 @@ setLang(localStorage.getItem('kalysteon-lang') || 'en');
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (d) {
       if (!d || !d.version) return;
-      document.querySelectorAll('.str-ver').forEach(function (el) { el.textContent = d.version; });    })
+      document.querySelectorAll('.str-ver').forEach(function (el) { el.textContent = d.version; });
+      document.querySelectorAll('.str-ver-short').forEach(function (el) { el.textContent = d.version.split('.').slice(0, 2).join('.'); });    })
     .catch(function () {});
 })();
 
@@ -958,8 +1054,9 @@ window.stratumDemoFrame = function (url) {
     if (f) f.style.transform = 'scale(' + (box.clientWidth / 1440) + ')';
   }
   function open(cell) {
-    document.getElementById('demo-modal-title').innerHTML = cell.querySelector('h4').innerHTML;
-    document.getElementById('demo-modal-text').innerHTML = cell.querySelector('p').innerHTML;
+    var row = cell.closest('tr') || cell;
+    document.getElementById('demo-modal-title').innerHTML = (row.querySelector('.vs-feat-name') || row.querySelector('h4')).innerHTML;
+    document.getElementById('demo-modal-text').innerHTML = (row.querySelector('.vs-tip-text') || row.querySelector('p')).innerHTML;
     box.innerHTML = '';
     // Nouvelle iframe a chaque ouverture : la demo repart propre sur la bonne page.
     var f = window.stratumDemoFrame('stratum/demo/index.html#' + cell.getAttribute('data-demo-page'));
@@ -973,7 +1070,7 @@ window.stratumDemoFrame = function (url) {
     box.innerHTML = '';
     document.body.style.overflow = '';
   }
-  document.querySelectorAll('.fcell[data-demo-page]').forEach(function (c) {
+  document.querySelectorAll('button[data-demo-page]').forEach(function (c) {
     c.addEventListener('click', function () { open(c); });
   });
   modal.querySelector('.demo-modal-x').addEventListener('click', close);
