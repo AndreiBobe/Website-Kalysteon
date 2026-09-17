@@ -1,5 +1,6 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "date": "2026-09-17",
   "url": "https://kalysteon.com/stratum/download",
-  "notes": "Premiere version publique de Stratum."
+  "notes": "Stratum 1.0.1\n- Les licences achetées sont bien reconnues.\n- Mises à jour incluses : la date de fin est affichée dans Réglages, Licence, avec un bouton pour renouveler.\n- Numéro de version corrigé à l'installation."
 }
