@@ -6,7 +6,7 @@
 <title>Kalysteon</title>
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.webp">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.webp">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Orbitron:wght@700;800&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Orbitron:wght@700;800&family=Rajdhani:wght@400;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after {
   box-sizing: border-box;
@@ -288,6 +288,8 @@ main {
 /* per-slide ambient backgrounds */
 .ns-slide--opening    { background: radial-gradient(ellipse 85% 75% at 78% 55%, #0D2040 0%, #020B18 65%); }
 .ns-slide--commission { background: radial-gradient(ellipse 85% 75% at 28% 50%, #091A15 0%, #020B18 65%); }
+.ns-slide--stratum    { background: radial-gradient(ellipse 85% 75% at 76% 50%, #06282C 0%, #020B18 65%); }
+.ns-slide--bundles    { background: radial-gradient(ellipse 85% 75% at 70% 45%, #22150A 0%, #020B18 65%); }
 .ns-slide--arctic     { background: radial-gradient(ellipse 85% 75% at 62% 28%, #091528 0%, #020B18 65%); }
 
 /* grid layer */
@@ -317,6 +319,8 @@ main {
 .ns-glow { position:absolute; inset:0; z-index:3; pointer-events:none; }
 .ns-slide--opening    .ns-glow { background: radial-gradient(ellipse 45% 60% at 78% 55%, rgba(212,175,55,0.11) 0%, transparent 70%); }
 .ns-slide--commission .ns-glow { background: radial-gradient(ellipse 42% 55% at 25% 50%, rgba(140,210,160,0.08) 0%, transparent 70%); }
+.ns-slide--stratum    .ns-glow { background: radial-gradient(ellipse 40% 60% at 76% 50%, rgba(94,211,216,0.16) 0%, transparent 70%); }
+.ns-slide--bundles    .ns-glow { background: radial-gradient(ellipse 45% 55% at 70% 45%, rgba(232,131,91,0.11) 0%, transparent 70%); }
 .ns-slide--arctic     .ns-glow { background: radial-gradient(ellipse 45% 50% at 60% 28%, rgba(160,200,220,0.09) 0%, transparent 70%); }
 
 /* ── slot image — fond droit avec fondu gauche ──
@@ -338,6 +342,37 @@ main {
   opacity: 0.88;
 }
 .ns-slide.active .ns-img { transform: scale(1.05); }
+/* Stratum : logo a la place de l'image */
+.ns-stratum-art { position:absolute; top:50%; right:5%; width:min(440px,44%); aspect-ratio:440/340; transform:translateY(-50%); z-index:3; opacity:0; transition:opacity .8s ease; }
+.ns-slide.active .ns-stratum-art { opacity:1; }
+.ns-slide--stratum .ns-hl { color:#5ED3D8; }
+.nsa-links { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.nsa-ring { fill:none; stroke:rgba(94,211,216,.22); stroke-width:1; stroke-dasharray:3 7; transform-origin:220px 170px; animation:nsaSpin 38s linear infinite; }
+.nsa-ring--b { stroke:rgba(94,211,216,.12); animation-duration:60s; animation-direction:reverse; }
+.nsa-line { fill:none; stroke:rgba(94,211,216,.35); stroke-width:1.2; stroke-dasharray:4 5; }
+.nsa-dot { fill:#5ED3D8; filter:drop-shadow(0 0 6px #5ED3D8); }
+@keyframes nsaSpin { to { transform:rotate(360deg); } }
+.nsa-logo { position:absolute; left:50%; top:50%; width:46%; transform:translate(-50%,-50%) scale(.9); filter:drop-shadow(0 0 40px rgba(94,211,216,.4)); transition:transform 7s cubic-bezier(0.23,1,0.32,1); }
+.ns-slide.active .nsa-logo { transform:translate(-50%,-50%) scale(1); }
+.nsa-chip { position:absolute; display:inline-flex; align-items:center; gap:.5rem; padding:.36rem .8rem .36rem .36rem; border-radius:30px;
+  background:rgba(4,16,28,.82); border:1px solid rgba(94,211,216,.28); color:rgba(255,255,255,.86);
+  font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.03em; white-space:nowrap;
+  box-shadow:0 6px 20px rgba(0,0,0,.35); opacity:0; transition:opacity .5s ease, transform .5s ease; }
+.nsa-chip b { width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:.62rem; color:#04101C; }
+.nsa-chip--tl { left:0; top:9%; transform:translate(-40%,-50%); }
+.nsa-chip--tr { right:0; top:9%; transform:translate(40%,-50%); }
+.nsa-chip--bl { left:0; top:84%; transform:translate(-40%,-50%); }
+.nsa-chip--br { right:0; top:84%; transform:translate(40%,-50%); }
+.ns-slide.active .nsa-chip { opacity:1; }
+.ns-slide.active .nsa-chip--tl { transition-delay:.25s; } .ns-slide.active .nsa-chip--bl { transition-delay:.45s; }
+.ns-slide.active .nsa-chip--tr { transition-delay:.65s; } .ns-slide.active .nsa-chip--br { transition-delay:.75s; }
+.nsa-time { position:absolute; left:50%; bottom:3%; transform:translateX(-50%); font-family:'IBM Plex Mono','Courier New',monospace; font-size:.64rem; letter-spacing:.14em; color:rgba(94,211,216,.7); white-space:nowrap; }
+.ns-ver { display:inline-block; margin-left:.35rem; font-family:'Caveat',cursive; font-weight:700; font-size:.62em; letter-spacing:0; color:#F2A15C; text-shadow:0 0 16px rgba(242,161,92,.35); transform:rotate(-9deg) translateY(-.45em); vertical-align:top; }
+@media (max-width:760px) {
+  .ns-stratum-art { top:1.2rem; right:1rem; width:110px; transform:none; aspect-ratio:1; }
+  .nsa-links, .nsa-chip, .nsa-time { display:none; }
+  .nsa-logo { width:100%; }
+}
 
 /* scan line */
 .ns-scan { position:absolute; inset:0; overflow:hidden; z-index:4; pointer-events:none; }
@@ -733,6 +768,7 @@ footer {
         <a class="nav-dd-item" href="products.html#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
         <a class="nav-dd-item" href="products.html#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
         <a class="nav-dd-item" href="products.html#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Arctic Landscapes" data-fr="Paysages Arctiques">Arctic Landscapes</span></a>
+        <a class="nav-dd-item" href="products.html#coll-card-bundles"><span class="nav-dd-icon">&#9635;</span><span data-en="Asset Bundles" data-fr="Asset Bundles">Asset Bundles</span></a>
         <div class="nav-dd-divider"></div>
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
@@ -811,13 +847,29 @@ footer {
     <div class="ns-track" id="nsTrack">
 
       <!-- ══════════════════════════════════════
-           SLIDE 1 — Grand Opening
-           Thème : ns-slide--opening / --commission / --arctic
-           Image  : img/slides/slide-opening.jpg  (16:9, min 1280×720)
+           SLIDE 1 : Lancement de Stratum
       ══════════════════════════════════════ -->
-      <div class="ns-slide ns-slide--opening active">
+      <div class="ns-slide ns-slide--stratum active">
         <div class="ns-grid"></div>
-        <img class="ns-img" src="img/slides/slide-opening.jpg" alt="">
+        <div class="ns-stratum-art" aria-hidden="true">
+          <svg class="nsa-links" viewBox="0 0 440 340" preserveAspectRatio="none">
+            <circle class="nsa-ring nsa-ring--a" cx="220" cy="170" r="118"/>
+            <circle class="nsa-ring nsa-ring--b" cx="220" cy="170" r="152"/>
+            <defs><marker id="nsaArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="rgba(94,211,216,.7)"/></marker></defs>
+            <path class="nsa-line" d="M70 76 L70 266" marker-end="url(#nsaArrow)"/>
+            <path class="nsa-line" d="M104 286 C160 280 180 220 196 190" marker-end="url(#nsaArrow)"/>
+            <path class="nsa-line" d="M244 150 C262 110 290 64 330 58" marker-end="url(#nsaArrow)"/>
+            <path class="nsa-line" d="M244 190 C262 230 290 280 330 286" marker-end="url(#nsaArrow)"/>
+            <circle class="nsa-dot" r="3"><animateMotion dur="3.2s" repeatCount="indefinite" path="M70 76 L70 272 C150 280 180 220 220 170 C262 110 290 64 336 58"/></circle>
+            <circle class="nsa-dot" r="3"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M70 76 L70 272 C150 280 180 220 220 170 C262 230 290 280 336 286"/></circle>
+          </svg>
+          <img class="nsa-logo" src="img/stratum/logo.png" alt="">
+          <span class="nsa-chip nsa-chip--tl"><b style="background:#6BA8E8">1</b>Gaea 2</span>
+          <span class="nsa-chip nsa-chip--bl"><b style="background:#F2A15C">2</b>Houdini 21</span>
+          <span class="nsa-chip nsa-chip--tr"><b style="background:#D6DCE4;color:#0B1624">3</b>Unreal 5</span>
+          <span class="nsa-chip nsa-chip--br"><b style="background:#5ED3D8;color:#0B1624">3</b>Unity 6</span>
+          <span class="nsa-time">4-6 h &rarr; ~5 min</span>
+        </div>
         <div class="ns-glow"></div>
         <div class="ns-scan"></div>
         <div class="ns-corners">
@@ -827,15 +879,38 @@ footer {
           <span class="ns-corner ns-corner--br"></span>
         </div>
         <div class="ns-content">
-          <div class="ns-badge" data-en="Grand Opening" data-fr="Grand Opening">Grand Opening</div>
-          <div class="ns-title" data-en="THE GRAND<br>OPENING" data-fr="LA GRANDE<br>OUVERTURE">THE GRAND<br>OPENING</div>
-          <div class="ns-sub" data-en="Kalysteon is officially open. Explore the full store and enjoy &lt;span class='ns-hl'&gt;-10% off&lt;/span&gt; to celebrate the launch." data-fr="Kalysteon est officiellement ouvert. Explorez la boutique et profitez de &lt;span class='ns-hl'&gt;-10%&lt;/span&gt; pour fêter le lancement.">Kalysteon is officially open. Explore the full store and enjoy <span class="ns-hl">-10% off</span> to celebrate the launch.</div>
-          <a class="ns-cta" href="products.html" data-en="Access the Store →" data-fr="Accéder au Store →">Access the Store →</a>
+          <div class="ns-badge" data-en="Out now" data-fr="Disponible">Out now</div>
+          <div class="ns-title" data-en="STRATUM&lt;span class='ns-ver'&gt;v1.0&lt;/span&gt;&lt;br&gt;IS LIVE" data-fr="STRATUM&lt;span class='ns-ver'&gt;v1.0&lt;/span&gt;&lt;br&gt;EST LÀ">STRATUM<span class="ns-ver">v1.0</span><br>IS LIVE</div>
+          <div class="ns-sub" data-en="Our terrain workflow tool is out. From Gaea to Unreal or Unity, &lt;span class='ns-hl'&gt;on autopilot&lt;/span&gt;. Free forever." data-fr="Notre outil de workflow terrain est sorti. De Gaea à Unreal ou Unity, &lt;span class='ns-hl'&gt;en pilote automatique&lt;/span&gt;. Gratuit pour toujours.">Our terrain workflow tool is out. From Gaea to Unreal or Unity, <span class="ns-hl">on autopilot</span>. Free forever.</div>
+          <a class="ns-cta" href="stratum.html" data-en="Discover Stratum →" data-fr="Découvrir Stratum →">Discover Stratum →</a>
         </div>
       </div>
 
       <!-- ══════════════════════════════════════
-           SLIDE 2 — Bespoke Environments
+           SLIDE 2 : 5 nouveaux Asset Bundles
+           Image  : img/slides/slide-bundles.jpg (16:9, min 1280×720)
+      ══════════════════════════════════════ -->
+      <div class="ns-slide ns-slide--bundles">
+        <div class="ns-grid"></div>
+        <img class="ns-img" src="img/slides/slide-bundles.jpg" alt="" style="object-position:62% 40%" onerror="this.remove()">
+        <div class="ns-glow"></div>
+        <div class="ns-scan"></div>
+        <div class="ns-corners">
+          <span class="ns-corner ns-corner--tl"></span>
+          <span class="ns-corner ns-corner--tr"></span>
+          <span class="ns-corner ns-corner--bl"></span>
+          <span class="ns-corner ns-corner--br"></span>
+        </div>
+        <div class="ns-content">
+          <div class="ns-badge" data-en="New arrivals" data-fr="Nouveautés">New arrivals</div>
+          <div class="ns-title" data-en="5 NEW<br>ASSET BUNDLES" data-fr="5 NOUVEAUX<br>ASSET BUNDLES">5 NEW<br>ASSET BUNDLES</div>
+          <div class="ns-sub" data-en="Ready-to-use terrains at &lt;span class='ns-hl'&gt;small prices&lt;/span&gt;. Pick one, drop it into Unreal Engine 5 or Unity, keep building." data-fr="Des terrains prêts à l'emploi, à &lt;span class='ns-hl'&gt;petits prix&lt;/span&gt;. Prenez-en un, glissez-le dans Unreal Engine 5 ou Unity, et continuez.">Ready-to-use terrains at <span class="ns-hl">small prices</span>. Pick one, drop it into Unreal Engine 5 or Unity, keep building.</div>
+          <a class="ns-cta" href="products.html#coll-card-bundles" data-en="See the Bundles →" data-fr="Voir les bundles →">See the Bundles →</a>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 3 : Bespoke Environments
            Image  : img/slides/slide-commission.jpg
       ══════════════════════════════════════ -->
       <div class="ns-slide ns-slide--commission">
@@ -858,7 +933,7 @@ footer {
       </div>
 
       <!-- ══════════════════════════════════════
-           SLIDE 3 — Arctic Landscapes
+           SLIDE 4 : Arctic Landscapes
            Image  : img/slides/slide-arctic.jpg
       ══════════════════════════════════════ -->
       <div class="ns-slide ns-slide--arctic">
@@ -882,8 +957,37 @@ footer {
 
     </div><!-- /ns-track -->
 
+    <!-- Banniere mise de cote : Grand Opening. Pour la remettre, replacer ce bloc dans #nsTrack
+         et ajouter un .ns-dot. -->
+    <template id="ns-archive-opening">
+      <!-- ══════════════════════════════════════
+           SLIDE 1 — Grand Opening
+           Thème : ns-slide--opening / --commission / --arctic
+           Image  : img/slides/slide-opening.jpg  (16:9, min 1280×720)
+      ══════════════════════════════════════ -->
+      <div class="ns-slide ns-slide--opening">
+        <div class="ns-grid"></div>
+        <img class="ns-img" src="img/slides/slide-opening.jpg" alt="">
+        <div class="ns-glow"></div>
+        <div class="ns-scan"></div>
+        <div class="ns-corners">
+          <span class="ns-corner ns-corner--tl"></span>
+          <span class="ns-corner ns-corner--tr"></span>
+          <span class="ns-corner ns-corner--bl"></span>
+          <span class="ns-corner ns-corner--br"></span>
+        </div>
+        <div class="ns-content">
+          <div class="ns-badge" data-en="Grand Opening" data-fr="Grand Opening">Grand Opening</div>
+          <div class="ns-title" data-en="THE GRAND<br>OPENING" data-fr="LA GRANDE<br>OUVERTURE">THE GRAND<br>OPENING</div>
+          <div class="ns-sub" data-en="Kalysteon is officially open. Explore the full store and enjoy &lt;span class='ns-hl'&gt;-10% off&lt;/span&gt; to celebrate the launch." data-fr="Kalysteon est officiellement ouvert. Explorez la boutique et profitez de &lt;span class='ns-hl'&gt;-10%&lt;/span&gt; pour fêter le lancement.">Kalysteon is officially open. Explore the full store and enjoy <span class="ns-hl">-10% off</span> to celebrate the launch.</div>
+          <a class="ns-cta" href="products.html" data-en="Access the Store →" data-fr="Accéder au Store →">Access the Store →</a>
+        </div>
+      </div>
+
+    </template>
+
     <!-- counter -->
-    <div class="ns-counter"><span id="nsCurrent">1</span> / <span id="nsTotal">3</span></div>
+    <div class="ns-counter"><span id="nsCurrent">1</span> / <span id="nsTotal">4</span></div>
 
     <!-- arrows -->
     <button class="ns-arrow ns-arrow-prev" id="nsArrowPrev" aria-label="Previous">&#8592;</button>
@@ -897,6 +1001,7 @@ footer {
       <button class="ns-dot active" data-idx="0" aria-label="Slide 1"></button>
       <button class="ns-dot" data-idx="1" aria-label="Slide 2"></button>
       <button class="ns-dot" data-idx="2" aria-label="Slide 3"></button>
+      <button class="ns-dot" data-idx="3" aria-label="Slide 4"></button>
     </div>
 
     <!-- progress bar -->

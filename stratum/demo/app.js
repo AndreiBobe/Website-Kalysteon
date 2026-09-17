@@ -2934,14 +2934,31 @@ async function _buildLicensePanel() {
   }).join("");
 
   const accent = tiers[status.tier]?.color || "var(--accent)";
+  // Mises a jour incluses : date de fin, et renouvellement quand elle approche.
+  const _fmtDay = iso => { try { return new Date(iso + "T00:00:00").toLocaleDateString(window.I18N?.getLang?.() || undefined); } catch (e) { return iso; } };
+  const _until = status.updates_until || "";
+  const _soon = _until && (new Date(_until + "T00:00:00") - Date.now()) < 45 * 86400000;
+  const _I = (k, vars, fb) => (window.I18N ? window.I18N.t(k, vars) : fb);
+  const updatesBlock = !status.activated ? "" : status.locked
+    ? `<div style="margin-top:12px;padding:10px 12px;border:1px solid color-mix(in oklab,var(--warn) 40%,transparent);border-radius:8px;background:color-mix(in oklab,var(--warn) 10%,transparent);font-size:12px;color:var(--fg-mid)">
+         ${_I("set.lic.locked", {d: _fmtDay(_until)}, "This version came out after your updates ended. Renew to unlock it.")}
+         <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+           ${status.renew_url ? `<button class="btn primary" id="lic-renew" style="height:30px;padding:0 14px;font-size:12px">${_t("set.lic.renew","Renew updates")}</button>` : ""}
+           <button class="btn ghost" id="lic-recheck" style="height:30px;padding:0 14px;font-size:12px">${_t("set.lic.recheck","I renewed, check again")}</button>
+         </div>
+       </div>`
+    : (_until ? `<div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
+         <span class="faint" style="font-size:11.5px">${_I("set.lic.updates_until", {d: _fmtDay(_until)}, "Updates included until " + _until)}</span>
+         ${(_soon && status.renew_url) ? `<button class="btn" id="lic-renew" style="height:26px;padding:0 10px;font-size:11px">${_t("set.lic.renew","Renew updates")}</button>` : ""}
+       </div>` : "");
   const activationCard = status.activated
     ? `<div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
          <div>
-           <div style="font-size:14px">${_t("set.lic.activated_as","Activated")} · <strong style="color:${accent}">${status.tier_name}</strong></div>
+           <div style="font-size:14px">${_t("set.lic.activated_as","Activated")} · <strong style="color:${tiers[status.licensed_tier || status.tier]?.color || accent}">${status.licensed_name || status.tier_name}</strong></div>
            <div class="faint" style="font-size:11.5px;font-family:var(--font-mono);margin-top:3px">${_t("set.lic.key","Key")}: ${status.key_masked}</div>
          </div>
          <button class="btn ghost" id="lic-deactivate" style="height:32px;padding:0 14px;font-size:12px;color:var(--err)">${_t("set.lic.deactivate","Deactivate")}</button>
-       </div>`
+       </div>${updatesBlock}`
     : `<div class="faint" style="font-size:12px;margin-bottom:10px">${_t("set.lic.activate.hint","Paste the license key from your purchase email to unlock Indie & Pro or Studio.")}</div>
        <div style="display:flex;gap:8px;align-items:center">
          <div class="input" style="flex:1"><input id="lic-key-input" placeholder="${_t("set.lic.activate.ph","Paste your license key…")}" style="font-family:var(--font-mono);font-size:12px"></div>
@@ -2991,6 +3008,22 @@ async function _buildLicensePanel() {
     };
     _activateBtn.addEventListener("click", doActivate);
     $("#lic-key-input")?.addEventListener("keydown", e => { if (e.key === "Enter") doActivate(); });
+  }
+  $("#lic-renew")?.addEventListener("click", () => { try { eel.open_url(status.renew_url)(); } catch (e) {} });
+  const _recheckBtn = $("#lic-recheck");
+  if (_recheckBtn) {
+    _recheckBtn.addEventListener("click", async () => {
+      _recheckBtn.disabled = true;
+      let r = {};
+      try { r = await eel.refresh_license_entitlement()(); } catch (e) { /* hors ligne */ }
+      if (r.ok && !r.locked) {
+        flashStatus(_t("set.lic.renewed_ok", "Updates unlocked. Thank you!"));
+        await _refreshAfterTierChange();
+      } else {
+        flashStatus(_t("set.lic.renewed_not_yet", "No renewal found yet. Use the same email as your purchase."), "var(--warn)");
+      }
+      _buildLicensePanel();
+    });
   }
   const _deactivateBtn = $("#lic-deactivate");
   if (_deactivateBtn) {
@@ -8159,14 +8192,17 @@ async function bootstrap() {
     try {
       const u = await eel.check_updates()();
       if (!u || !u.ok || !u.update) return;
+      const renew = u.covered === false && u.renew_url;
       const foot = document.querySelector(".sidebar-foot");
       if (!foot || $("#update-banner")) return;
       const el = document.createElement("div");
       el.id = "update-banner";
       el.style.cssText = "margin:8px 0;padding:7px 10px;border:1px solid color-mix(in oklab,var(--accent) 35%,transparent);border-radius:6px;background:color-mix(in oklab,var(--accent) 10%,transparent);font-size:11px;color:var(--accent);cursor:pointer;text-align:center;font-family:var(--font-mono)";
-      el.textContent = window.I18N ? window.I18N.t("update.available", { v: u.latest }) : `Update available: v${u.latest}`;
+      el.textContent = renew
+        ? (window.I18N ? window.I18N.t("update.renew", { v: u.latest }) : `v${u.latest} out: renew your updates`)
+        : (window.I18N ? window.I18N.t("update.available", { v: u.latest }) : `Update available: v${u.latest}`);
       if (u.notes) el.title = u.notes;
-      el.addEventListener("click", () => { try { eel.open_url(u.url)(); } catch (e) {} });
+      el.addEventListener("click", () => { try { eel.open_url(renew ? u.renew_url : u.url)(); } catch (e) {} });
       foot.prepend(el);
     } catch (e) { /* silencieux */ }
   }, 2500);

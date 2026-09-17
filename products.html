@@ -196,6 +196,8 @@ header { display: flex; align-items: center; justify-content: space-between; pad
 #coll-card-8k:hover { border-color: rgba(185,135,65,0.60); }
 #coll-card-arctic { border: 1px solid rgba(110,185,230,0.32); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4), 0 0 18px rgba(100,180,230,0.06); }
 #coll-card-arctic:hover { border-color: rgba(130,200,245,0.55); }
+#coll-card-bundles { grid-column: 1 / -1; min-height: 220px; background: radial-gradient(ellipse 70% 90% at 80% 40%, #2a180b 0%, #07101a 70%); border: 1px solid rgba(232,131,91,0.32); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4), 0 0 18px rgba(232,131,91,0.06); }
+#coll-card-bundles:hover { border-color: rgba(232,131,91,0.55); }
 
 /* FEATURED COLLECTION */
 .featured-collection { position: relative; border-radius: 32px; overflow: hidden; cursor: pointer; transition: transform 0.35s, box-shadow 0.35s; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5); margin-bottom: 1.5rem; }
@@ -1012,6 +1014,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
         <a class="nav-dd-item" href="#coll-card-frostholm"><span class="nav-dd-icon">❄</span><span data-en="Frosthölm Collection" data-fr="Collection Frosthölm">Frosthölm Collection</span></a>
         <a class="nav-dd-item" href="#coll-card-8k"><span class="nav-dd-icon">⛰</span><span data-en="8K Terrain Packs" data-fr="Packs Terrain 8K">8K Terrain Packs</span></a>
         <a class="nav-dd-item" href="#coll-card-arctic"><span class="nav-dd-icon">🏔</span><span data-en="Complete Landscapes" data-fr="Paysages Complets">Complete Landscapes</span></a>
+        <a class="nav-dd-item" href="#coll-card-bundles"><span class="nav-dd-icon">&#9635;</span><span data-en="Asset Bundles" data-fr="Asset Bundles">Asset Bundles</span></a>
         <div class="nav-dd-divider"></div>
         <a class="nav-dd-item nav-dd-reviews" href="reviews.html"><span class="nav-dd-icon">★</span><span data-en="Client Reviews" data-fr="Avis Clients">Client Reviews</span></a>
       </div>
@@ -1194,6 +1197,14 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
           <div class="collection-cta" data-en="Discover →" data-fr="Découvrir →">Discover →</div>
         </div>
       </div>
+      <div class="collection-card" id="coll-card-bundles" data-bg="img/products/bundle-arctic-mountain-realistic.webp" onclick="openCollection('bundles')">
+        <div class="collection-overlay"></div>
+        <div class="collection-content">
+          <div class="collection-title">ASSET BUNDLES</div>
+          <div class="collection-desc" data-en="A wide choice of ready-to-use terrains at small prices. Grab one, drop it into Unreal Engine 5 or Unity, keep building." data-fr="Un large choix de terrains prêts à l'emploi, à petits prix. Prenez-en un, glissez-le dans Unreal Engine 5 ou Unity, et continuez.">A wide choice of ready-to-use terrains at small prices. Grab one, drop it into Unreal Engine 5 or Unity, keep building.</div>
+          <div class="collection-cta" data-en="Discover →" data-fr="Découvrir →">Discover →</div>
+        </div>
+      </div>
     </div>
 
     <!-- Section Prochainement -->
@@ -1232,6 +1243,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       <button class="store-tab active" data-col="frostholm" onclick="switchCollection('frostholm')" data-en="Frosth&#246;lm" data-fr="Frosth&#246;lm">Frosth&#246;lm <span class="tab-count">16</span></button>
       <button class="store-tab" data-col="8k" onclick="switchCollection('8k')" data-en="8K Terrain Packs" data-fr="8K Terrain Packs">8K Terrain Packs <span class="tab-count">21</span></button>
       <button class="store-tab" data-col="arctic" onclick="switchCollection('arctic')" data-en="Complete Landscapes" data-fr="Paysages Complets">Complete Landscapes <span class="tab-count">5</span></button>
+      <button class="store-tab" data-col="bundles" onclick="switchCollection('bundles')" data-en="Asset Bundles" data-fr="Asset Bundles">Asset Bundles <span class="tab-count">5</span></button>
     </div>
 
     <div class="store-filters" id="filters-style">
@@ -1288,6 +1300,14 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
       <div class="vol-8k-tabs" id="volArcticTabs">
         <button class="vol-tab-arctic all-tab active" data-v="all" onclick="applyFilterArctic('all')" data-en="All" data-fr="Tout">All <span class="vol-cnt-arctic" id="varc-cnt-all">5</span></button>
         <button class="vol-tab-arctic" data-v="1" onclick="applyFilterArctic('1')" data-en="Arctic" data-fr="Arctique">Arctic <span class="vol-cnt-arctic">5</span></button>
+      </div>
+    </div>
+
+    <!-- Asset Bundles Vol tabs (meme logique que Arctic) -->
+    <div class="vol-8k-wrap" id="filters-bundles-vol" style="display:none">
+      <div class="vol-8k-tabs" id="volBundlesTabs">
+        <button class="vol-tab-arctic all-tab active" data-v="all" onclick="applyFilterArctic('all')" data-en="All" data-fr="Tout">All <span class="vol-cnt-arctic">5</span></button>
+        <button class="vol-tab-arctic" data-v="1" onclick="applyFilterArctic('1')" data-en="Arctic Mountain" data-fr="Arctic Mountain">Arctic Mountain <span class="vol-cnt-arctic">5</span></button>
       </div>
     </div>
 
@@ -1605,8 +1625,9 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 /* ═══ CURRENCY ═══ */
 var CURRENCY = 'EUR';
 
-function formatProductPrice(eur) {
+function formatProductPrice(eur, usdExact) {
   if (CURRENCY === 'USD') {
+    if (usdExact != null && !isNaN(usdExact)) return '$' + (+usdExact).toFixed(2);
     var usd = Math.ceil(eur * 1.15) - 0.01;
     return '$' + usd.toFixed(2);
   }
@@ -1618,10 +1639,10 @@ function setCurrency(curr) {
   document.getElementById('curr-btn-usd').classList.toggle('active', curr === 'USD');
   document.getElementById('curr-btn-eur').classList.toggle('active', curr === 'EUR');
   document.querySelectorAll('.pc-price[data-eur], .na-price[data-eur], .fh-vol-master-eur[data-eur], .vp-col-price[data-eur]').forEach(function(el) {
-    el.textContent = formatProductPrice(parseFloat(el.dataset.eur));
+    el.textContent = formatProductPrice(parseFloat(el.dataset.eur), el.dataset.usd ? parseFloat(el.dataset.usd) : null);
   });
   var dpEl = document.getElementById('drawer-price');
-  if (dpEl && dpEl.dataset.eur) dpEl.textContent = formatProductPrice(parseFloat(dpEl.dataset.eur));
+  if (dpEl && dpEl.dataset.eur) dpEl.textContent = formatProductPrice(parseFloat(dpEl.dataset.eur), dpEl.dataset.usd ? parseFloat(dpEl.dataset.usd) : null);
   document.querySelectorAll('[data-coll-eur]').forEach(function(el) {
     var eur = parseFloat(el.dataset.collEur);
     el.textContent = el.dataset.collPrefix + formatProductPrice(eur) + '+';
@@ -1702,7 +1723,12 @@ var PRODUCTS = [
   {id:'5e439f0f-f6f2-4104-873a-245a60aec3ff',t:'Arctic Landscape Stylized',p:59.99,col:'arctic',st:'stylized',thl:'img/products/arctic-stylized.webp',th:'https://media.fab.com/image_previews/gallery_images/06807a5b-7cc4-4579-8dee-c1e8ccc7f90b/eaebf142-cded-4d32-916f-961f95f7e639.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-stylized-364268',pa:'https://www.artstation.com/marketplace/p/npDN1/arctic-landscape-realistic',pd:'https://drive.google.com/file/d/1sb8Eq6rx2tEhYh3CkRTncr_tV0eomHwc/view'},
   {id:'14e34309-cb57-4901-be0e-11e60494cc56',t:'Arctic Landscape Polygonal',p:49.99,col:'arctic',st:'polygonal',thl:'img/products/arctic-polygonal.webp',th:'https://media.fab.com/image_previews/gallery_images/c845301e-8c3c-47a0-8db1-f1b5f54f09da/a2d85eca-af38-4f68-ab54-026ea85752cb.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-polygonal-364270',pa:'https://www.artstation.com/marketplace/p/zRDaR/arctic-landscape-polygonal',pd:'https://drive.google.com/file/d/1qWHGUIWAShhQMd8uB7nHAK9xlQIE9IDL/view'},
   {id:'3d96a640-b331-4bd8-ab4f-1b7d01fd3ace',t:'Arctic Landscape Cartoon',p:39.99,col:'arctic',st:'cartoon',thl:'img/products/arctic-cartoon.webp',th:'https://media.fab.com/image_previews/gallery_images/672b01ac-c243-4f32-abd5-9e9094101509/213f0996-8942-42ef-a719-5495da103558.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-cartoon-364272',pa:'https://www.artstation.com/marketplace/p/6egnq/arctic-landscape-cartoon',pd:'https://drive.google.com/file/d/1QKRKlxZTqSyM6N11YweTqj5qqhKm0IhW/view'},
-  {id:'af813c5f-5482-4d22-8e4a-90ac4e1d83eb',t:'Arctic Landscape Retro',p:29.99,col:'arctic',st:'retro',thl:'img/products/arctic-retro.webp',th:'https://media.fab.com/image_previews/gallery_images/0e65a55f-3067-4e30-9ceb-3bb539d6c8a3/f4d800bf-c2a4-4543-a2d5-77cab864f40c.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-retro-364274',pa:'https://www.artstation.com/marketplace/p/bDvAd/arctic-landscape-retro',pd:'https://drive.google.com/file/d/13Q7upxLBmfW3w4tXfHZdbgfjZrZd0wy1/view'}
+  {id:'af813c5f-5482-4d22-8e4a-90ac4e1d83eb',t:'Arctic Landscape Retro',p:29.99,col:'arctic',st:'retro',thl:'img/products/arctic-retro.webp',th:'https://media.fab.com/image_previews/gallery_images/0e65a55f-3067-4e30-9ceb-3bb539d6c8a3/f4d800bf-c2a4-4543-a2d5-77cab864f40c.jpg',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pu:'https://assetstore.unity.com/packages/3d/environments/landscapes/arctic-landscape-retro-364274',pa:'https://www.artstation.com/marketplace/p/bDvAd/arctic-landscape-retro',pd:'https://drive.google.com/file/d/13Q7upxLBmfW3w4tXfHZdbgfjZrZd0wy1/view'},
+  {id:'bd100001-0000-4000-8000-000000000001',t:'Arctic Mountain Bundle Realistic',p:15.99,pp:17.99,pusd:15.99,ppusd:17.99,col:'bundles',st:'realistic',thl:'img/products/bundle-arctic-mountain-realistic.webp',th:'https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/327/large/file.jpg?1789463167',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pa:'https://www.artstation.com/marketplace/p/7awad/arctic-mountain-bundle-realistic',nofab:true,nocart:true},
+  {id:'bd100002-0000-4000-8000-000000000002',t:'Arctic Mountain Bundle Stylized',p:12.99,pp:14.99,pusd:12.99,ppusd:14.99,col:'bundles',st:'stylized',thl:'img/products/bundle-arctic-mountain-stylized.webp',th:'https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/357/large/file.jpg?1789464530',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pa:'https://www.artstation.com/marketplace/p/Dplek/arctic-mountain-bundle-stylized',nofab:true,nocart:true},
+  {id:'bd100003-0000-4000-8000-000000000003',t:'Arctic Mountain Bundle Polygonal',p:9.99,pp:11.99,pusd:9.99,ppusd:11.99,col:'bundles',st:'polygonal',thl:'img/products/bundle-arctic-mountain-polygonal.webp',th:'https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/364/large/file.jpg?1789464614',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pa:'https://www.artstation.com/marketplace/p/N8j7d/arctic-mountain-bundle-polygonal',nofab:true,nocart:true},
+  {id:'bd100004-0000-4000-8000-000000000004',t:'Arctic Mountain Bundle Cartoon',p:8.99,pp:9.99,pusd:8.99,ppusd:9.99,col:'bundles',st:'cartoon',thl:'img/products/bundle-arctic-mountain-cartoon.webp',th:'https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/371/large/file.jpg?1789464650',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pa:'https://www.artstation.com/marketplace/p/g8VNV/arctic-mountain-bundle-cartoon',nofab:true,nocart:true},
+  {id:'bd100005-0000-4000-8000-000000000005',t:'Arctic Mountain Bundle Retro',p:6.99,pp:7.99,pusd:6.99,ppusd:7.99,col:'bundles',st:'retro',thl:'img/products/bundle-arctic-mountain-retro.webp',th:'https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/387/large/file.jpg?1789464730',vf:'6TlRJ0xKaTw',vfth:'https://img.youtube.com/vi/2Eqfn3Di64M/mqdefault.jpg',pa:'https://www.artstation.com/marketplace/p/vxvB9/arctic-mountain-bundle-retro',nofab:true,nocart:true}
 ];
 
 /* ═══ DESCRIPTIONS ═══ */
@@ -2380,6 +2406,12 @@ var VOL_ARCTIC = [
     slots:[{id:'897b47f0'},{id:'5e439f0f'},{id:'14e34309'},{id:'3d96a640'},{id:'af813c5f'}] }
 ];
 
+/* Asset Bundles : copie de Complete Landscapes en attendant les vraies fiches */
+var VOL_BUNDLES = [
+  { v:1, name:'Arctic Mountain', sub:'Asset Bundles',
+    slots:[{id:'bd100001'},{id:'bd100002'},{id:'bd100003'},{id:'bd100004'},{id:'bd100005'}] }
+];
+
 function findProdArctic(idPrefix) {
   return PRODUCTS.find(function(p){ return p.id.indexOf(idPrefix) === 0; });
 }
@@ -2549,8 +2581,8 @@ function makeCard(p, idx, animDelay) {
       '<div class="pc-footer">' +
         '<div class="badge-wrap">' + badges + '</div>' +
         '<div class="pc-footer-right">' +
-          '<span class="pc-price" data-eur="' + p.p + '">' + formatProductPrice(p.p) + '</span>' +
-          '<button class="pc-add-btn' + (cart.includes(p.id) ? ' in-cart' : '') + '" ' +
+          '<span class="pc-price" data-eur="' + p.p + '"' + (p.pusd ? ' data-usd="' + p.pusd + '"' : '') + '>' + formatProductPrice(p.p, p.pusd) + '</span>' +
+          '<button class="pc-add-btn' + (cart.includes(p.id) ? ' in-cart' : '') + '" ' + (p.nocart ? 'style="display:none" ' : '') +
             'title="' + (cart.includes(p.id) ? 'In cart' : 'Add to cart') + '" ' +
             'data-pid="' + p.id + '" ' +
             'onclick="event.stopPropagation(); pcQuickAdd(this, \'' + p.id + '\')">' +
@@ -2567,7 +2599,7 @@ var _filter = 'all';
 
 /* ═══ COLLECTION PICKER ═══ */
 (function initCollCards() {
-  ['frostholm', '8k', 'arctic'].forEach(function(col) {
+  ['frostholm', '8k', 'arctic', 'bundles'].forEach(function(col) {
     var card = document.getElementById('coll-card-' + col);
     if (!card) return;
     var bg = card.dataset.bg;
@@ -2647,15 +2679,16 @@ function renderStore() {
     applyFilter8k(_vol8k);
     return;
   }
-  if (_col === 'arctic') {
+  if (_col === 'arctic' || _col === 'bundles') {
+    var VOLS = _col === 'bundles' ? VOL_BUNDLES : VOL_ARCTIC;
     var grid = document.getElementById('store-grid');
     grid.className = '';
     if (_volArctic === 'all') {
       grid.innerHTML = '<div style="animation:slideUpFade 0.32s ease both">' +
-        VOL_ARCTIC.map(makeVolSectionArctic).join('') +
+        VOLS.map(makeVolSectionArctic).join('') +
       '</div>';
     } else {
-      var vd = VOL_ARCTIC.find(function(d){ return String(d.v) === _volArctic; });
+      var vd = VOLS.find(function(d){ return String(d.v) === _volArctic; });
       if (vd) {
         grid.innerHTML = '<div style="animation:slideUpFade 0.28s ease both">' +
           makeVolSingleArctic(vd) +
@@ -2708,17 +2741,19 @@ function renderStore() {
 function switchCollection(col) {
   _col = col; _filter = 'all';
   document.querySelectorAll('.store-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.col === col); });
-  document.getElementById('filters-style').style.display   = col === 'arctic'    ? '' : 'none';
+  var arcLike = col === 'arctic' || col === 'bundles';
+  document.getElementById('filters-style').style.display   = arcLike ? '' : 'none';
   document.getElementById('fh-filter-row').style.display      = col === 'frostholm' ? 'flex' : 'none';
   document.getElementById('filters-fh-vol').style.display     = col === 'frostholm' ? ''     : 'none';
   document.getElementById('filters-biome').style.display      = 'none';
   document.getElementById('filters-8k-vol').style.display     = col === '8k'        ? ''     : 'none';
   document.getElementById('filters-arctic-vol').style.display = col === 'arctic'    ? ''     : 'none';
+  document.getElementById('filters-bundles-vol').style.display = col === 'bundles'  ? ''     : 'none';
   if (col === '8k') {
     _vol8k = 'all';
     document.querySelectorAll('.vol-tab-8k').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
   }
-  if (col === 'arctic') {
+  if (arcLike) {
     _volArctic = 'all';
     document.querySelectorAll('.vol-tab-arctic').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
   }
@@ -2726,7 +2761,7 @@ function switchCollection(col) {
     _fhVol = 'all';
     document.querySelectorAll('.vol-tab-fh').forEach(function(t){ t.classList.toggle('active', t.dataset.v === 'all'); });
   }
-  document.querySelector('.filter-pill[data-filter="retro"]').style.display = col === 'arctic' ? '' : 'none';
+  document.querySelector('.filter-pill[data-filter="retro"]').style.display = arcLike ? '' : 'none';
   document.querySelectorAll('.filter-pill').forEach(function(p){ p.classList.toggle('active', p.dataset.filter === 'all'); });
   renderStore();
 }
@@ -3447,7 +3482,8 @@ function openDrawer(idx) {
   document.getElementById('drawer-title').textContent = p.t;
 
   // Price
-  var dpEl = document.getElementById('drawer-price'); dpEl.textContent = formatProductPrice(p.p); dpEl.dataset.eur = p.p;
+  var dpEl = document.getElementById('drawer-price'); dpEl.textContent = formatProductPrice(p.p, p.pusd); dpEl.dataset.eur = p.p;
+  if (p.pusd) dpEl.dataset.usd = p.pusd; else delete dpEl.dataset.usd;
 
   // Badge
   var badgeHtml = '';
@@ -3477,7 +3513,7 @@ function openDrawer(idx) {
       styleNote = p.st ? STYLE_DESC[p.st] || '' : '';
     } else if (p.col === '8k') {
       desc = DESC_8K[p.id.substring(0, 8)] || 'Production-ready 8K landscape heightmaps for Unreal Engine 5.';
-    } else if (p.col === 'arctic') {
+    } else if (p.col === 'arctic' || p.col === 'bundles') {
       desc = 'Complete ready-to-play Arctic environment. Open the project and start building immediately. Designed for indie developers and small studios who need production-ready environments without heavy setup.';
       styleNote = p.st ? STYLE_DESC[p.st] || '' : '';
     }
@@ -3541,9 +3577,16 @@ function openDrawer(idx) {
   var btnUnity = document.getElementById('drawer-btn-unity');
   var btnArt   = document.getElementById('drawer-btn-art');
 
-  // Fab always available
-  btnFab.href = fabUrl;
-  btnFab.classList.remove('btn-store--na');
+  // Fab : grise tant que la fiche n'y est pas (nofab)
+  if (p.nofab) {
+    btnFab.href = '#';
+    btnFab.title = 'Coming soon on Fab';
+    btnFab.classList.add('btn-store--na');
+  } else {
+    btnFab.href = fabUrl;
+    btnFab.removeAttribute('title');
+    btnFab.classList.remove('btn-store--na');
+  }
 
   // Unity — use p.pu if defined, else N/A
   if (p.pu) {
@@ -3569,6 +3612,7 @@ function openDrawer(idx) {
 
   // Add to Cart button — wire up & reflect current cart state
   var addCartBtn = document.getElementById('drawer-btn-add-cart');
+  addCartBtn.style.display = p.nocart ? 'none' : '';
   addCartBtn.setAttribute('data-product-id', p.id);
   addCartBtn.onclick = function() { addToCart(p.id); };
   var inCart = cart.includes(p.id);
@@ -3610,8 +3654,24 @@ function openDrawer(idx) {
   // Savings panel prices
   var vpDirectEl = document.getElementById('vp-direct-price');
   var vpPlatformEl = document.getElementById('vp-platform-price');
-  if (vpDirectEl) { vpDirectEl.textContent = formatProductPrice(p.p); vpDirectEl.dataset.eur = p.p; }
-  if (vpPlatformEl) { vpPlatformEl.textContent = formatProductPrice(p.p); vpPlatformEl.dataset.eur = p.p; }
+  // Direct = prix Kalysteon. Plateforme = p.pp quand la fiche l'indique (Asset Bundles).
+  var platEur = p.pp || p.p, platUsd = p.pp ? p.ppusd : null;
+  function _setPrice(el, eur, usd) {
+    if (!el) return;
+    el.textContent = formatProductPrice(eur, usd);
+    el.dataset.eur = eur;
+    if (usd != null) el.dataset.usd = usd; else delete el.dataset.usd;
+  }
+  _setPrice(vpDirectEl, p.p, p.pusd || null);
+  _setPrice(vpPlatformEl, platEur, platUsd);
+  var vpDirectSub = document.querySelector('.vp-col-sub--direct');
+  if (vpDirectSub) {
+    var pct = p.pp ? Math.round((p.pp - p.p) / p.pp * 100) : 0;
+    var subEn = pct ? '-' + pct + '% · 0% commission' : '0% commission';
+    var subFr = pct ? '-' + pct + '% · 0% de commission' : '0% de commission';
+    vpDirectSub.dataset.en = subEn; vpDirectSub.dataset.fr = subFr;
+    vpDirectSub.textContent = (document.documentElement.lang === 'fr') ? subFr : subEn;
+  }
 
   // Dynamic bundles row in VP table
   var vpBundlesDirect = document.getElementById('vp-bundles-direct');
@@ -4318,6 +4378,9 @@ function populateDrawerArcticBundles(p) {
 
 /* ── Add / Remove ── */
 function addToCart(productId) {
+  /* Pas encore livrable depuis le site (Asset Bundles) : achat sur ArtStation */
+  var _nc = PRODUCTS.find(function(x){ return x.id === productId; });
+  if (_nc && _nc.nocart) return;
   if (!cart.includes(productId)) {
     cart.push(productId);
     saveCart();
@@ -4503,6 +4566,15 @@ function computeCartPricing() {
                isFree:false, fhBiomeId:biomeId };
     }
 
+    if (p.pp) {
+      /* Prix Kalysteon deja remise (Asset Bundles) : on part du prix plateforme */
+      var bpct = Math.round((p.pp - p.p) / p.pp * 100);
+      return { id:id, product:p, basePrice:p.pp, finalPrice:p.p,
+               baseUsd:p.ppusd, finalUsd:p.pusd,
+               discountPct:bpct, label:'-' + bpct + '%', tierClass:'tier1',
+               tier:null, inBundle:false, isFree:false };
+    }
+
     var tier     = bundleTier[id] || null;
     var inBundle = tier && k8groups[p.p.toFixed(2)] && k8groups[p.p.toFixed(2)].length > 1;
     var pct      = inBundle ? TIER_PCT[tier] : 10;
@@ -4515,10 +4587,27 @@ function computeCartPricing() {
   }).filter(Boolean);
 }
 
+/* Total USD d'un panier : conversion habituelle + prix dollars exacts */
+function cartUsdTotal(eurTotal, items, field) {
+  var exactEur = 0, exactUsd = 0, hasExact = false;
+  items.forEach(function(it) {
+    var usdKey = field === 'base' ? 'baseUsd' : 'finalUsd';
+    if (it[usdKey] != null && !it.isFree) {
+      hasExact = true;
+      exactEur += field === 'base' ? it.basePrice : it.finalPrice;
+      exactUsd += it[usdKey];
+    }
+  });
+  if (!hasExact) return null;
+  var rest = Math.round((eurTotal - exactEur) * 100) / 100;
+  return Math.round(((rest > 0.009 ? Math.ceil(rest * 1.15) - 0.01 : 0) + exactUsd) * 100) / 100;
+}
+
 /* Format discounted EUR price respecting current currency setting */
-function formatFinalPrice(eurPrice, isFree) {
+function formatFinalPrice(eurPrice, isFree, usdExact) {
   if (isFree) return (CURRENCY === 'USD') ? 'FREE' : 'GRATUIT';
   if (CURRENCY === 'USD') {
+    if (usdExact != null && !isNaN(usdExact)) return '$' + (+usdExact).toFixed(2);
     return '$' + (Math.ceil(eurPrice * 1.15) - 0.01).toFixed(2);
   }
   return '€' + eurPrice.toFixed(2);
@@ -4749,6 +4838,7 @@ function renderCart() {
     frostholm: { en:'Frosthölm Collection', fr:'Collection Frosthölm' },
     '8k':      { en:'8K Terrain Packs',    fr:'Packs Terrain 8K'     },
     arctic:    { en:'Complete Landscapes',  fr:'Paysages Complets'     },
+    bundles:   { en:'Asset Bundles',        fr:'Asset Bundles'         },
   };
   var volMap = {};
   VOL_8K.forEach(function(vd) {
@@ -4781,8 +4871,8 @@ function renderCart() {
     } else if (p.st) {
       metaParts = [p.st.charAt(0).toUpperCase() + p.st.slice(1)];
     }
-    var origFmt    = formatProductPrice(p.p);
-    var finalFmt   = formatFinalPrice(it.finalPrice, it.isFree);
+    var origFmt    = formatProductPrice(it.basePrice, it.baseUsd);
+    var finalFmt   = formatFinalPrice(it.finalPrice, it.isFree, it.finalUsd);
     var tagHtml    = '<span class="discount-tag ' + it.tierClass + '">' + it.label + '</span>';
     var priceClass = 'cart-item-price-final' + (it.isFree ? ' is-free' : '');
     return '<div class="cart-item">' +
@@ -4914,14 +5004,17 @@ function renderCart() {
   discountTotal  += fhBundleTotal;
   rawTotal       += fhBundleTotal;
 
-  if (totalEl) totalEl.textContent = formatFinalPrice(discountTotal, false);
+  var usdFinalTotal = cartUsdTotal(discountTotal, pricing, 'final');
+  var usdRawTotal   = cartUsdTotal(rawTotal, pricing, 'base');
+  if (totalEl) totalEl.textContent = formatFinalPrice(discountTotal, false, usdFinalTotal);
 
   /* Show original total & savings only when there's an actual discount */
   if (saved > 0.009) {
-    if (origEl)       origEl.textContent  = formatProductPrice(rawTotal);
+    if (origEl)       origEl.textContent  = formatProductPrice(rawTotal, usdRawTotal);
     if (origRowEl)    origRowEl.style.display = '';
     if (savingsRowEl) savingsRowEl.style.display = '';
-    if (savingsAmtEl) savingsAmtEl.textContent  = '−' + formatFinalPrice(saved, false);
+    if (savingsAmtEl) savingsAmtEl.textContent  = '−' + formatFinalPrice(saved, false,
+      (usdRawTotal != null && usdFinalTotal != null) ? Math.round((usdRawTotal - usdFinalTotal) * 100) / 100 : null);
   } else {
     if (origRowEl)    origRowEl.style.display    = 'none';
     if (savingsRowEl) savingsRowEl.style.display  = 'none';
@@ -4999,7 +5092,7 @@ function proceedToCheckout() {
 
   var items = pricingItems.map(function(it) {
     var priceEur = it.isFree ? 0 : it.finalPrice;
-    var priceUsd = it.isFree ? 0 : (Math.ceil(it.finalPrice * 1.15) - 0.01);
+    var priceUsd = it.isFree ? 0 : (it.finalUsd != null ? it.finalUsd : (Math.ceil(it.finalPrice * 1.15) - 0.01));
     return {
       id: it.id,
       name: it.product.t,
@@ -5084,8 +5177,10 @@ function proceedToCheckout() {
   var totalFinalEur = pricingItems.reduce(function(s, it) { return s + (it.isFree ? 0 : it.finalPrice); }, 0)
     + cartBundles.reduce(function(s, b) { return s + b.price; }, 0)
     + frostholmBundles.reduce(function(s, b) { return s + b.price; }, 0);
-  var totalOrigUsd  = Math.ceil(totalOrigEur * 1.15) - 0.01;
-  var totalFinalUsd = Math.ceil(totalFinalEur * 1.15) - 0.01;
+  var totalOrigUsd  = cartUsdTotal(totalOrigEur, pricingItems, 'base');
+  var totalFinalUsd = cartUsdTotal(totalFinalEur, pricingItems, 'final');
+  if (totalOrigUsd == null)  totalOrigUsd  = Math.ceil(totalOrigEur * 1.15) - 0.01;
+  if (totalFinalUsd == null) totalFinalUsd = Math.ceil(totalFinalEur * 1.15) - 0.01;
 
   var payload = {
     currency: CURRENCY.toLowerCase(),
@@ -5158,11 +5253,37 @@ window.addEventListener('pageshow', function(e) {
   }
 });
 
+// ── Asset Bundles : fiches reprises d'ArtStation ──
+(function() {
+  GALLERY['bd100001'] = ["https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/327/large/file.jpg?1789463167", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/835/167/large/file.jpg?1789631604", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/835/168/large/file.jpg?1789631616", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/835/169/large/file.jpg?1789631628", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/835/170/large/file.jpg?1789631641", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/835/171/large/file.jpg?1789631652", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/835/172/large/file.jpg?1789631665", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/835/173/large/file.jpg?1789631679", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/835/174/large/file.jpg?1789631690", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/835/175/large/file.jpg?1789631702", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/835/176/large/file.jpg?1789631713", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/835/177/large/file.jpg?1789631725", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/835/178/large/file.jpg?1789631738"];
+  PRODUCT_RICH_DESC['bd100001'] = "<p class=\"rdesc-intro\">A set of <b>12 unique distant/background meshes</b>, built to fill your horizon fast, perfect as <b>skyline filler</b> or silhouette scenery behind your main gameplay area. Designed specifically for distant placement, so you get <span style=\"color:var(--gold-bright)\">variety and visual quality</span> without the poly cost of foreground assets. Compatible with the <b>Arctic Landscape Collection</b>.</p><div class=\"rdesc-block\"><div class=\"rdesc-label\">Who is it for?</div><p class=\"rdesc-intro\" style=\"margin-bottom:0\"><b>Looking for a grounded, immersive Arctic world that feels physically believable?</b> The Realistic style is built for projects that aim for cinematic depth and environmental credibility. Natural scale, subtle material variation and lifelike snow behavior create a cold atmosphere that feels authentic and immersive. Ideal for <b>PC</b> and <b>console games</b>, narrative experiences, simulations or high-end productions that demand visual precision and atmospheric weight.</p></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Highlights</div><div class=\"rdesc-features\"><span class=\"rdesc-feature\">12 Unique Meshes</span><span class=\"rdesc-feature\">Distant Scenery</span><span class=\"rdesc-feature\">Low Poly Cost</span><span class=\"rdesc-feature\">Realistic Style</span></div></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Package Contents</div><div class=\"rdesc-mats\"><div class=\"rdesc-mat\"><b>Raw Files</b>Source meshes, textures and terrain data · 1.5 GB</div><div class=\"rdesc-mat\"><b>Engine-Ready Versions</b>Unreal Engine (Fab) and Unity HDRP/URP (Unity Asset Store) versions coming soon</div></div></div><div class=\"rdesc-cta-row\" style=\"grid-template-columns:1fr\"><a class=\"rdesc-cta-btn rdesc-cta-showcase\" href=\"https://www.youtube.com/watch?v=6TlRJ0xKaTw\" target=\"_blank\" rel=\"noopener\">🎥 Arctic Landscape Showcase</a></div>";
+  PRODUCT_SPECS['bd100001'] = [{"k": "Content", "v": "12 distant meshes"}, {"k": "Style", "v": "Realistic"}, {"k": "Files", "v": "Raw meshes · textures · terrain data"}, {"k": "Pairs with", "v": "Arctic Landscape Collection"}, {"k": "Size", "v": "1.5 GB"}];
+  PRODUCT_TAGS['bd100001-0000-4000-8000-000000000001'] = ["Bundle", "Arctic", "Mountain", "Distant", "Skyline", "Terrain", "Environment", "Realistic"];
+  GALLERY['bd100002'] = ["https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/357/large/file.jpg?1789464530", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/358/large/file.jpg?1789464539", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/359/large/file.jpg?1789464552", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/360/large/file.jpg?1789464564", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/361/large/file.jpg?1789464577", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/362/large/file.jpg?1789464589", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/363/large/file.jpg?1789464602", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/365/large/file.jpg?1789464615", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/367/large/file.jpg?1789464631", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/369/large/file.jpg?1789464643", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/373/large/file.jpg?1789464656", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/376/large/file.jpg?1789464672", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/379/large/file.jpg?1789464685"];
+  PRODUCT_RICH_DESC['bd100002'] = "<p class=\"rdesc-intro\">A set of <b>12 unique distant/background meshes</b>, built to fill your horizon fast, perfect as <b>skyline filler</b> or silhouette scenery behind your main gameplay area. Designed specifically for distant placement, so you get <span style=\"color:var(--gold-bright)\">variety and visual quality</span> without the poly cost of foreground assets. Compatible with the <b>Arctic Landscape Collection</b>.</p><div class=\"rdesc-block\"><div class=\"rdesc-label\">Who is it for?</div><p class=\"rdesc-intro\" style=\"margin-bottom:0\"><b>Looking for a strong artistic Arctic identity with clarity and personality?</b> The Stylized version simplifies forms while preserving structure and readability. Shapes are cleaner, contrasts are intentional, and the environment feels crafted rather than simulated. Perfect for adventure games, <b>stylized RPGs</b>, <b>MMOs</b> or console projects that need a distinct visual signature without losing environmental depth.</p></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Highlights</div><div class=\"rdesc-features\"><span class=\"rdesc-feature\">12 Unique Meshes</span><span class=\"rdesc-feature\">Distant Scenery</span><span class=\"rdesc-feature\">Low Poly Cost</span><span class=\"rdesc-feature\">Stylized Style</span></div></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Package Contents</div><div class=\"rdesc-mats\"><div class=\"rdesc-mat\"><b>Raw Files</b>Source meshes, textures and terrain data · 1 GB</div><div class=\"rdesc-mat\"><b>Engine-Ready Versions</b>Unreal Engine (Fab) and Unity HDRP/URP (Unity Asset Store) versions coming soon</div></div></div><div class=\"rdesc-cta-row\" style=\"grid-template-columns:1fr\"><a class=\"rdesc-cta-btn rdesc-cta-showcase\" href=\"https://www.youtube.com/watch?v=6TlRJ0xKaTw\" target=\"_blank\" rel=\"noopener\">🎥 Arctic Landscape Showcase</a></div>";
+  PRODUCT_SPECS['bd100002'] = [{"k": "Content", "v": "12 distant meshes"}, {"k": "Style", "v": "Stylized"}, {"k": "Files", "v": "Raw meshes · textures · terrain data"}, {"k": "Pairs with", "v": "Arctic Landscape Collection"}, {"k": "Size", "v": "1 GB"}];
+  PRODUCT_TAGS['bd100002-0000-4000-8000-000000000002'] = ["Bundle", "Arctic", "Mountain", "Distant", "Skyline", "Terrain", "Environment", "Stylized"];
+  GALLERY['bd100003'] = ["https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/364/large/file.jpg?1789464614", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/366/large/file.jpg?1789464620", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/368/large/file.jpg?1789464634", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/370/large/file.jpg?1789464646", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/374/large/file.jpg?1789464660", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/377/large/file.jpg?1789464676", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/380/large/file.jpg?1789464690", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/382/large/file.jpg?1789464703", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/384/large/file.jpg?1789464716", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/386/large/file.jpg?1789464728", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/390/large/file.jpg?1789464742", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/393/large/file.jpg?1789464754", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/397/large/file.jpg?1789464770"];
+  PRODUCT_RICH_DESC['bd100003'] = "<p class=\"rdesc-intro\">A set of <b>12 unique distant/background meshes</b>, built to fill your horizon fast, perfect as <b>skyline filler</b> or silhouette scenery behind your main gameplay area. Designed specifically for distant placement, so you get <span style=\"color:var(--gold-bright)\">variety and visual quality</span> without the poly cost of foreground assets. Compatible with the <b>Arctic Landscape Collection</b>.</p><div class=\"rdesc-block\"><div class=\"rdesc-label\">Who is it for?</div><p class=\"rdesc-intro\" style=\"margin-bottom:0\"><b>Looking for a clean, geometric Arctic aesthetic with strong visual structure?</b> The Polygonal style highlights deliberate facets and simplified geometry. Light interacts clearly with angular surfaces, creating bold readability and a modern low-poly identity. Well suited for <b>minimalist games</b>, strategy titles, mobile projects, or productions seeking performance-friendly visuals with strong stylistic direction.</p></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Highlights</div><div class=\"rdesc-features\"><span class=\"rdesc-feature\">12 Unique Meshes</span><span class=\"rdesc-feature\">Distant Scenery</span><span class=\"rdesc-feature\">Low Poly Cost</span><span class=\"rdesc-feature\">Polygonal Style</span></div></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Package Contents</div><div class=\"rdesc-mats\"><div class=\"rdesc-mat\"><b>Raw Files</b>Source meshes, textures and terrain data · 550 MB</div><div class=\"rdesc-mat\"><b>Engine-Ready Versions</b>Unreal Engine (Fab) and Unity HDRP/URP (Unity Asset Store) versions coming soon</div></div></div><div class=\"rdesc-cta-row\" style=\"grid-template-columns:1fr\"><a class=\"rdesc-cta-btn rdesc-cta-showcase\" href=\"https://www.youtube.com/watch?v=6TlRJ0xKaTw\" target=\"_blank\" rel=\"noopener\">🎥 Arctic Landscape Showcase</a></div>";
+  PRODUCT_SPECS['bd100003'] = [{"k": "Content", "v": "12 distant meshes"}, {"k": "Style", "v": "Polygonal"}, {"k": "Files", "v": "Raw meshes · textures · terrain data"}, {"k": "Pairs with", "v": "Arctic Landscape Collection"}, {"k": "Size", "v": "550 MB"}];
+  PRODUCT_TAGS['bd100003-0000-4000-8000-000000000003'] = ["Bundle", "Arctic", "Mountain", "Distant", "Skyline", "Terrain", "Environment", "Polygonal"];
+  GALLERY['bd100004'] = ["https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/371/large/file.jpg?1789464650", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/372/large/file.jpg?1789464656", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/375/large/file.jpg?1789464669", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/378/large/file.jpg?1789464684", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/381/large/file.jpg?1789464695", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/383/large/file.jpg?1789464708", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/385/large/file.jpg?1789464721", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/388/large/file.jpg?1789464733", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/391/large/file.jpg?1789464745", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/394/large/file.jpg?1789464757", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/396/large/file.jpg?1789464770", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/399/large/file.jpg?1789464784", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/401/large/file.jpg?1789464797"];
+  PRODUCT_RICH_DESC['bd100004'] = "<p class=\"rdesc-intro\">A set of <b>12 unique distant/background meshes</b>, built to fill your horizon fast, perfect as <b>skyline filler</b> or silhouette scenery behind your main gameplay area. Designed specifically for distant placement, so you get <span style=\"color:var(--gold-bright)\">variety and visual quality</span> without the poly cost of foreground assets. Compatible with the <b>Arctic Landscape Collection</b>.</p><div class=\"rdesc-block\"><div class=\"rdesc-label\">Who is it for?</div><p class=\"rdesc-intro\" style=\"margin-bottom:0\"><b>Looking for a softer, more expressive Arctic world with warmth and charm?</b> The Cartoon style emphasizes rounded silhouettes, smoother transitions and playful proportions. Snow volumes feel fuller, shapes feel friendlier, and the biome becomes visually accessible. Great for <b>mobile games</b>, family-friendly projects, top-down adventures or colorful indie titles that benefit from clarity and approachability.</p></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Highlights</div><div class=\"rdesc-features\"><span class=\"rdesc-feature\">12 Unique Meshes</span><span class=\"rdesc-feature\">Distant Scenery</span><span class=\"rdesc-feature\">Low Poly Cost</span><span class=\"rdesc-feature\">Cartoon Style</span></div></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Package Contents</div><div class=\"rdesc-mats\"><div class=\"rdesc-mat\"><b>Raw Files</b>Source meshes, textures and terrain data · 480 MB</div><div class=\"rdesc-mat\"><b>Engine-Ready Versions</b>Unreal Engine (Fab) and Unity HDRP/URP (Unity Asset Store) versions coming soon</div></div></div><div class=\"rdesc-cta-row\" style=\"grid-template-columns:1fr\"><a class=\"rdesc-cta-btn rdesc-cta-showcase\" href=\"https://www.youtube.com/watch?v=6TlRJ0xKaTw\" target=\"_blank\" rel=\"noopener\">🎥 Arctic Landscape Showcase</a></div>";
+  PRODUCT_SPECS['bd100004'] = [{"k": "Content", "v": "12 distant meshes"}, {"k": "Style", "v": "Cartoon"}, {"k": "Files", "v": "Raw meshes · textures · terrain data"}, {"k": "Pairs with", "v": "Arctic Landscape Collection"}, {"k": "Size", "v": "480 MB"}];
+  PRODUCT_TAGS['bd100004-0000-4000-8000-000000000004'] = ["Bundle", "Arctic", "Mountain", "Distant", "Skyline", "Terrain", "Environment", "Cartoon"];
+  GALLERY['bd100005'] = ["https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/387/large/file.jpg?1789464730", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/389/large/file.jpg?1789464741", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/392/large/file.jpg?1789464753", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/395/large/file.jpg?1789464769", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/398/large/file.jpg?1789464783", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/400/large/file.jpg?1789464796", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/402/large/file.jpg?1789464808", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/403/large/file.jpg?1789464820", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/404/large/file.jpg?1789464832", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/405/large/file.jpg?1789464843", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/406/large/file.jpg?1789464855", "https://cdnb.artstation.com/p/marketplace/presentation_assets/005/832/407/large/file.jpg?1789464867", "https://cdna.artstation.com/p/marketplace/presentation_assets/005/832/408/large/file.jpg?1789464879"];
+  PRODUCT_RICH_DESC['bd100005'] = "<p class=\"rdesc-intro\">A set of <b>12 unique distant/background meshes</b>, built to fill your horizon fast, perfect as <b>skyline filler</b> or silhouette scenery behind your main gameplay area. Designed specifically for distant placement, so you get <span style=\"color:var(--gold-bright)\">variety and visual quality</span> without the poly cost of foreground assets. Compatible with the <b>Arctic Landscape Collection</b>.</p><div class=\"rdesc-block\"><div class=\"rdesc-label\">Who is it for?</div><p class=\"rdesc-intro\" style=\"margin-bottom:0\"><b>Looking for a nostalgic PSX Arctic atmosphere inspired by early 3D eras?</b> The Retro style embraces simplified forms, expressive textures and deliberate visual restraint. It captures the charm of classic 3D worlds while remaining fully usable in modern pipelines. Ideal for horror projects, <b>experimental</b> indie games, <b>old-school</b> adventures or developers aiming for a distinctive vintage vibe.</p></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Highlights</div><div class=\"rdesc-features\"><span class=\"rdesc-feature\">12 Unique Meshes</span><span class=\"rdesc-feature\">Distant Scenery</span><span class=\"rdesc-feature\">Low Poly Cost</span><span class=\"rdesc-feature\">Retro Style</span></div></div><div class=\"rdesc-block\"><div class=\"rdesc-label\">Package Contents</div><div class=\"rdesc-mats\"><div class=\"rdesc-mat\"><b>Raw Files</b>Source meshes, textures and terrain data · 310 MB</div><div class=\"rdesc-mat\"><b>Engine-Ready Versions</b>Unreal Engine (Fab) and Unity HDRP/URP (Unity Asset Store) versions coming soon</div></div></div><div class=\"rdesc-cta-row\" style=\"grid-template-columns:1fr\"><a class=\"rdesc-cta-btn rdesc-cta-showcase\" href=\"https://www.youtube.com/watch?v=6TlRJ0xKaTw\" target=\"_blank\" rel=\"noopener\">🎥 Arctic Landscape Showcase</a></div>";
+  PRODUCT_SPECS['bd100005'] = [{"k": "Content", "v": "12 distant meshes"}, {"k": "Style", "v": "Retro"}, {"k": "Files", "v": "Raw meshes · textures · terrain data"}, {"k": "Pairs with", "v": "Arctic Landscape Collection"}, {"k": "Size", "v": "310 MB"}];
+  PRODUCT_TAGS['bd100005-0000-4000-8000-000000000005'] = ["Bundle", "Arctic", "Mountain", "Distant", "Skyline", "Terrain", "Environment", "Retro"];
+  if (SPECS_DATA && SPECS_DATA.arctic && !SPECS_DATA.bundles) SPECS_DATA.bundles = SPECS_DATA.arctic;
+})();
+
 // ── Deep-link / nav-dropdown collection routing ──
 var _hashToCol = {
   '#coll-card-frostholm': 'frostholm',
   '#coll-card-8k':        '8k',
-  '#coll-card-arctic':    'arctic'
+  '#coll-card-arctic':    'arctic',
+  '#coll-card-bundles':   'bundles'
 };
 
 // 1. On page load (arriving from another page with a hash)
@@ -5522,6 +5643,8 @@ function refreshNaButtons() {
 }
 
 function pcQuickAdd(btn, productId) {
+  var _nc = PRODUCTS.find(function(x){ return x.id === productId; });
+  if (_nc && _nc.nocart) return;
   if (cart.includes(productId)) return;
   addToCart(productId);
   btn.textContent = '✓';
